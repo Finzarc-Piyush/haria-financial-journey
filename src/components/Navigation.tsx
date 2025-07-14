@@ -92,26 +92,36 @@ const Navigation = () => {
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-background/95 backdrop-blur-md rounded-lg mt-2 p-4 shadow-elegant">
-            <div className="flex flex-col space-y-4">
+          <div className="lg:hidden fixed top-0 left-0 w-full min-h-screen bg-background/95 backdrop-blur-md rounded-none p-4 shadow-elegant z-[100] animate-slide-down overflow-y-auto">
+            <div className="flex flex-col space-y-6 pt-24 pb-12">
               {navItems.map((item) => (
                 <button
                   key={item.name}
                   onClick={() => scrollToSection(item.id)}
-                  className="text-left text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium py-2"
+                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 w-full text-left border-b border-muted"
+                  style={{ minHeight: '48px' }}
                 >
                   {item.name}
                 </button>
               ))}
-              <div className="pt-4 border-t border-muted">
+              <div className="pt-6">
                 <Button
                   onClick={() => scrollToSection('contact')}
-                  className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold"
+                  className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-lg py-4"
+                  style={{ minHeight: '48px' }}
                 >
                   Schedule Consultation
                 </Button>
               </div>
             </div>
+            {/* Keep hamburger/X always visible */}
+            <button
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="absolute top-6 right-6 text-tertiary hover:text-secondary transition-colors duration-300 z-[101] bg-background/80 rounded-full p-2 shadow"
+              aria-label="Close menu"
+            >
+              <X className="h-8 w-8" />
+            </button>
           </div>
         )}
       </div>
