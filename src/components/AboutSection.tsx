@@ -29,67 +29,60 @@ const AboutSection = () => {
     <section id="about" className="py-20 bg-tertiary text-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16" data-aos="fade-down">
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
           <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6">
-            Your Trusted Financial Partner
+            Personal Connection & Deep Expertise
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto" data-aos="fade-right" data-aos-delay="200"></div>
+          <div className="w-24 h-1 bg-secondary mx-auto"></div>
         </div>
 
-        {/* Professional Biography Block */}
-        <div className="mb-16">
+        {/* Block 1: Professional Biography */}
+        <div className={`mb-20 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6" data-aos="fade-right">
-              <div>
-                <h3 className="font-playfair text-3xl font-bold text-champagne mb-4">
-                  Heritage of Excellence Since 1957
-                </h3>
-                <p className="font-crimson text-lg text-cream/90 leading-relaxed">
-                  At Haria Investments, we've been providing trusted investment advice since 1957. 
-                  Founded by Late Shri Ramesh Haria, our firm has evolved from a small family office 
-                  to a comprehensive wealth management practice serving multiple generations of clients.
-                </p>
+            <div className="order-2 lg:order-1">
+              <img
+                src={advisorHeadshot}
+                alt="Rajesh Haria, Financial Advisor"
+                className="w-full max-w-md mx-auto rounded-lg shadow-floating"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="flex items-center mb-6">
+                <Building2 className="w-6 h-6 text-secondary mr-3" />
+                <h3 className="font-playfair text-2xl font-semibold">Our Heritage</h3>
               </div>
-              
-              <div>
-                <p className="font-crimson text-lg text-cream/90 leading-relaxed mb-6">
-                  We believe in building lasting relationships through transparency, expertise, and 
-                  unwavering commitment to our clients' financial success. Our approach combines 
-                  time-tested investment principles with modern portfolio management techniques.
-                </p>
-              </div>
-
+              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
+                At Haria Investments, we've been providing trusted investment advice since 1957. 
+                Founded by Late Shri Ramesh Haria, our firm has evolved from a small family office 
+                to a comprehensive wealth management practice serving multiple generations of clients.
+              </p>
+              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
+                We believe in building lasting relationships through transparency, expertise, and 
+                unwavering commitment to our clients' financial success. Our approach combines 
+                time-tested investment principles with modern portfolio management techniques.
+              </p>
               <div className="flex flex-wrap gap-3">
-                <Badge className="bg-secondary text-secondary-foreground transition-transform duration-300 hover:scale-105">
+                <Badge className="bg-secondary text-secondary-foreground">
                   <GraduationCap className="w-4 h-4 mr-2" />
                   MBA Finance
                 </Badge>
-                <Badge className="bg-secondary text-secondary-foreground transition-transform duration-300 hover:scale-105">
+                <Badge className="bg-secondary text-secondary-foreground">
                   <Award className="w-4 h-4 mr-2" />
                   CFA Charter
                 </Badge>
-                <Badge className="bg-secondary text-secondary-foreground transition-transform duration-300 hover:scale-105">
+                <Badge className="bg-secondary text-secondary-foreground">
                   <Star className="w-4 h-4 mr-2" />
                   CFP Certification
                 </Badge>
               </div>
             </div>
-            
-            <div className="relative" data-aos="fade-left">
-              <img 
-                src={teamPhoto}
-                alt="Haria Investments professional team"
-                className="rounded-lg shadow-elegant w-full h-80 object-cover transition-transform duration-300 hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-tertiary/50 to-transparent rounded-lg"></div>
-            </div>
           </div>
         </div>
 
-        {/* Professional Credentials Block */}
-        <div className="mb-16">
+        {/* Block 2: Professional Credentials */}
+        <div className={`mb-20 transition-all duration-1000 delay-400 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div data-aos="fade-right" data-aos-delay="200">
+            <div>
               <div className="flex items-center mb-6">
                 <Award className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Professional Excellence</h3>
@@ -120,29 +113,28 @@ const AboutSection = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="premium-card p-4 text-center bg-cream/10 hover-lift">
+                <div className="premium-card p-4 text-center bg-cream/10">
                   <div className="font-playfair text-2xl font-bold text-secondary mb-1">95%</div>
                   <div className="font-crimson text-sm text-cream/80">Client Retention</div>
                 </div>
-                <div className="premium-card p-4 text-center bg-cream/10 hover-lift">
+                <div className="premium-card p-4 text-center bg-cream/10">
                   <div className="font-playfair text-2xl font-bold text-secondary mb-1">12 Yrs</div>
                   <div className="font-crimson text-sm text-cream/80">Avg Relationship</div>
                 </div>
               </div>
             </div>
-            
-            <div data-aos="fade-left" data-aos-delay="200">
-              <img 
-                src={advisorHeadshot}
-                alt="Rajesh Haria - Professional Financial Advisor"
-                className="w-full max-w-md mx-auto rounded-lg shadow-elegant transition-transform duration-300 hover:scale-105"
+            <div>
+              <img
+                src={teamPhoto}
+                alt="Haria Investments Team"
+                className="w-full rounded-lg shadow-floating"
               />
             </div>
           </div>
         </div>
 
-        {/* Personal Connection Block */}
-        <div data-aos="fade-up" data-aos-delay="400">
+        {/* Block 3: Personal Touch */}
+        <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex items-center justify-center mb-6">
               <Heart className="w-6 h-6 text-secondary mr-3" />
@@ -157,7 +149,7 @@ const AboutSection = () => {
             </p>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="premium-card p-6 text-center bg-cream/10 hover-lift" data-aos="fade-up" data-aos-delay="500">
+              <div className="premium-card p-6 text-center bg-cream/10">
                 <Users className="w-8 h-8 text-secondary mx-auto mb-4" />
                 <h4 className="font-playfair text-lg font-semibold mb-2">Community Leader</h4>
                 <p className="font-crimson text-sm text-cream/80">
@@ -165,7 +157,7 @@ const AboutSection = () => {
                 </p>
               </div>
               
-              <div className="premium-card p-6 text-center bg-cream/10 hover-lift" data-aos="fade-up" data-aos-delay="600">
+              <div className="premium-card p-6 text-center bg-cream/10">
                 <Heart className="w-8 h-8 text-secondary mx-auto mb-4" />
                 <h4 className="font-playfair text-lg font-semibold mb-2">Family Values</h4>
                 <p className="font-crimson text-sm text-cream/80">
@@ -173,7 +165,7 @@ const AboutSection = () => {
                 </p>
               </div>
               
-              <div className="premium-card p-6 text-center bg-cream/10 hover-lift" data-aos="fade-up" data-aos-delay="700">
+              <div className="premium-card p-6 text-center bg-cream/10">
                 <Star className="w-8 h-8 text-secondary mx-auto mb-4" />
                 <h4 className="font-playfair text-lg font-semibold mb-2">Recognition</h4>
                 <p className="font-crimson text-sm text-cream/80">

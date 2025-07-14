@@ -161,11 +161,11 @@ const ProcessSection = () => {
     <section id="process" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16" data-aos="fade-down">
+        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
             Our Client-Focused Process
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6" data-aos="fade-right" data-aos-delay="200"></div>
+          <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
           <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
             A systematic, transparent approach designed to reduce anxiety and build confidence 
             throughout your financial planning journey.
@@ -173,19 +173,19 @@ const ProcessSection = () => {
         </div>
 
         {/* Process Steps */}
-        <div className="mb-16">
+        <div className={`mb-16 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
           <div className="space-y-12">
             {processSteps.map((step, index) => (
-              <div key={step.id} data-aos="fade-up" data-aos-delay={index * 150}>
-                <Card className="premium-card hover-lift group">
+              <div key={step.id} className={`transition-all duration-500 delay-${index * 200}`}>
+                <Card className="premium-card hover-lift">
                   <CardHeader>
                     <div className="flex items-start gap-6">
                       <div className="flex-shrink-0">
-                        <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                        <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center">
                           <step.icon className="w-8 h-8 text-secondary-foreground" />
                         </div>
                         <div className="text-center mt-2">
-                          <Badge className="bg-tertiary text-cream font-playfair font-bold transition-transform duration-300 group-hover:scale-105">
+                          <Badge className="bg-tertiary text-cream font-playfair font-bold">
                             {step.number}
                           </Badge>
                         </div>
