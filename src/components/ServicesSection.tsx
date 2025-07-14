@@ -132,18 +132,18 @@ const ServicesSection = () => {
     <section id="services" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div className="text-center mb-16" data-aos="fade-down">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
             Our Comprehensive Financial Services
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-secondary mx-auto mb-6" data-aos="fade-right" data-aos-delay="200"></div>
           <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
-            Transparent, comprehensive financial planning with clear fee structure and proven results
+            Transparent, fee-only financial planning with fiduciary responsibility
           </p>
         </div>
 
         {/* Wealth Management Services */}
-        <div className={`mb-16 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Wealth Management Services
@@ -154,20 +154,11 @@ const ServicesSection = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {wealthServices.map((service, index) => (
-              <Card 
-                key={service.id}
-                className={`premium-card hover-lift cursor-pointer transition-all duration-500 delay-${index * 100}`}
-                onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-              >
+              <Card key={index} className="premium-card hover-lift group" data-aos="fade-up" data-aos-delay={index * 100}>
                 <CardHeader>
-                  <div className="flex items-center justify-between mb-4">
-                    <service.icon className="w-8 h-8 text-secondary" />
-                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${
-                      expandedService === service.id ? 'rotate-90' : ''
-                    }`} />
-                  </div>
+                  <service.icon className="w-8 h-8 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                   <CardTitle className="font-playfair text-xl text-tertiary">
                     {service.title}
                   </CardTitle>
@@ -175,44 +166,26 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                
-                {expandedService === service.id && (
-                  <CardContent className="pt-0">
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
-                        <ul className="space-y-1">
-                          {service.process.map((step, i) => (
-                            <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-center">
-                              <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></div>
-                              {step}
-                            </li>
-                          ))}
-                        </ul>
+                <CardContent>
+                  <div className="space-y-3 mb-4">
+                    {service.process.map((step, i) => (
+                      <div key={i} className="flex items-start">
+                        <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
+                        <span className="font-crimson text-sm text-tertiary/80">{step}</span>
                       </div>
-                      
-                      <div>
-                        <p className="font-crimson text-sm text-tertiary/70 mb-3">
-                          {service.details}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {service.specializations.map((spec, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {spec}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                )}
+                    ))}
+                  </div>
+                  <Badge className="bg-secondary text-secondary-foreground transition-transform duration-300 group-hover:scale-105">
+                    {service.specializations[0]}
+                  </Badge>
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
 
         {/* Insurance & Protection Services */}
-        <div className={`mb-16 transition-all duration-1000 delay-400 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Insurance & Protection Services
@@ -223,20 +196,11 @@ const ServicesSection = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {insuranceServices.map((service, index) => (
-              <Card 
-                key={service.id}
-                className={`premium-card hover-lift cursor-pointer transition-all duration-500 delay-${index * 100}`}
-                onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
-              >
+              <Card key={index} className="premium-card hover-lift group" data-aos="fade-up" data-aos-delay={index * 100}>
                 <CardHeader>
-                  <div className="flex items-center justify-between mb-4">
-                    <service.icon className="w-8 h-8 text-secondary" />
-                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${
-                      expandedService === service.id ? 'rotate-90' : ''
-                    }`} />
-                  </div>
+                  <service.icon className="w-8 h-8 text-secondary mb-4 transition-transform duration-300 group-hover:scale-110" />
                   <CardTitle className="font-playfair text-xl text-tertiary">
                     {service.title}
                   </CardTitle>
@@ -244,44 +208,26 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                
-                {expandedService === service.id && (
-                  <CardContent className="pt-0">
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
-                        <ul className="space-y-1">
-                          {service.process.map((step, i) => (
-                            <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-center">
-                              <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2"></div>
-                              {step}
-                            </li>
-                          ))}
-                        </ul>
+                <CardContent>
+                  <div className="space-y-3 mb-4">
+                    {service.process.map((step, i) => (
+                      <div key={i} className="flex items-start">
+                        <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
+                        <span className="font-crimson text-sm text-tertiary/80">{step}</span>
                       </div>
-                      
-                      <div>
-                        <p className="font-crimson text-sm text-tertiary/70 mb-3">
-                          {service.details}
-                        </p>
-                        <div className="flex flex-wrap gap-2">
-                          {service.specializations.map((spec, i) => (
-                            <Badge key={i} variant="secondary" className="text-xs">
-                              {spec}
-                            </Badge>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                )}
+                    ))}
+                  </div>
+                  <Badge className="bg-secondary text-secondary-foreground transition-transform duration-300 group-hover:scale-105">
+                    {service.specializations[0]}
+                  </Badge>
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
 
         {/* Fee Transparency Section */}
-        <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-up" data-aos-delay="600">
           <Card className="premium-card bg-champagne border-secondary">
             <CardHeader className="text-center">
               <div className="flex items-center justify-center mb-4">
@@ -296,26 +242,26 @@ const ServicesSection = () => {
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div className="text-center">
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">1.25%</div>
+                <div className="text-center group">
+                  <div className="font-playfair text-2xl font-bold text-secondary mb-2 transition-transform duration-300 group-hover:scale-110">1.25%</div>
                   <div className="font-crimson text-sm text-tertiary/70">
                     Annual fee on AUM
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">1%</div>
+                <div className="text-center group">
+                  <div className="font-playfair text-2xl font-bold text-secondary mb-2 transition-transform duration-300 group-hover:scale-110">1%</div>
                   <div className="font-crimson text-sm text-tertiary/70">
                     For accounts over ₹2 Cr
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">2-3%</div>
+                <div className="text-center group">
+                  <div className="font-playfair text-2xl font-bold text-secondary mb-2 transition-transform duration-300 group-hover:scale-110">2-3%</div>
                   <div className="font-crimson text-sm text-tertiary/70">
                     Typical annual return improvement
                   </div>
                 </div>
-                <div className="text-center">
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">100%</div>
+                <div className="text-center group">
+                  <div className="font-playfair text-2xl font-bold text-secondary mb-2 transition-transform duration-300 group-hover:scale-110">100%</div>
                   <div className="font-crimson text-sm text-tertiary/70">
                     Cost disclosure upfront
                   </div>
