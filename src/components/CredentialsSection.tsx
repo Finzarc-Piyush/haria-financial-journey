@@ -2,26 +2,13 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Award, GraduationCap, Shield, Users, Star, Building } from "lucide-react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useRef } from 'react';
 
 const CredentialsSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const element = document.getElementById('credentials');
-    if (element) {
-      observer.observe(element);
-    }
-
-    return () => observer.disconnect();
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   const certifications = [
@@ -46,15 +33,15 @@ const CredentialsSection = () => {
   return (
     <section id="credentials" className="py-20 bg-tertiary text-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-in" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6">
             Professional Credentials & Regulatory Compliance
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto"></div>
         </div>
-
-        <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
-          <Card className="premium-card bg-cream/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* Certifications */}
+          <Card data-aos="zoom-in" data-aos-delay="0" className="premium-card bg-cream/10">
             <CardHeader className="text-center">
               <Award className="w-8 h-8 text-secondary mx-auto mb-4" />
               <CardTitle className="font-playfair text-lg text-cream">Certifications</CardTitle>
@@ -62,14 +49,16 @@ const CredentialsSection = () => {
             <CardContent>
               {certifications.map((cert, i) => (
                 <div key={i} className="mb-3">
-                  <Badge className="bg-secondary text-secondary-foreground mb-1">{cert.name}</Badge>
+                  <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay={i * 120} title={`${cert.name} - ${cert.org} (${cert.year})`}>
+                    {cert.name}
+                  </Badge>
                   <div className="font-crimson text-xs text-cream/70">{cert.org} - {cert.year}</div>
                 </div>
               ))}
             </CardContent>
           </Card>
-
-          <Card className="premium-card bg-cream/10">
+          {/* Education with animated progress bars */}
+          <Card data-aos="zoom-in" data-aos-delay="120" className="premium-card bg-cream/10">
             <CardHeader className="text-center">
               <GraduationCap className="w-8 h-8 text-secondary mx-auto mb-4" />
               <CardTitle className="font-playfair text-lg text-cream">Education</CardTitle>
@@ -79,28 +68,32 @@ const CredentialsSection = () => {
                 <div key={i} className="mb-3">
                   <div className="font-crimson font-semibold text-cream text-sm">{edu.degree}</div>
                   <div className="font-crimson text-xs text-cream/70">{edu.institution} - {edu.year}</div>
-                  <Badge variant="outline" className="text-xs border-secondary text-secondary">{edu.honor}</Badge>
+                  <Badge variant="outline" className="text-xs border-secondary text-secondary badge-expand" data-aos="fade-up" data-aos-delay={i * 120 + 60} title={edu.honor}>{edu.honor}</Badge>
+                  {/* Animated progress bar */}
+                  <div className="w-full h-2 bg-cream/20 rounded mt-2 overflow-hidden">
+                    <div className="bg-secondary h-2 rounded transition-all duration-700" style={{ width: `${80 + i * 10}%` }} data-aos="progress-bar" data-aos-delay={i * 120 + 100}></div>
+                  </div>
                 </div>
               ))}
             </CardContent>
           </Card>
-
-          <Card className="premium-card bg-cream/10">
+          {/* Compliance with glow and tooltip */}
+          <Card data-aos="zoom-in" data-aos-delay="240" className="premium-card bg-cream/10 compliance-glow">
             <CardHeader className="text-center">
-              <Shield className="w-8 h-8 text-secondary mx-auto mb-4" />
+              <Shield className="w-8 h-8 text-secondary mx-auto mb-4 compliance-icon" aria-label="Regulatory Compliance" />
               <CardTitle className="font-playfair text-lg text-cream">Compliance</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="space-y-3 text-center">
-                <Badge className="bg-secondary text-secondary-foreground">SEBI Registered</Badge>
-                <Badge className="bg-secondary text-secondary-foreground">IRDA Licensed</Badge>
-                <Badge className="bg-secondary text-secondary-foreground">Fiduciary Duty</Badge>
-                <Badge className="bg-secondary text-secondary-foreground">₹5Cr Insurance</Badge>
+              <div className="flex flex-col items-center gap-3 text-center mt-2">
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="0" title="SEBI Registered: Securities and Exchange Board of India regulatory compliance">SEBI Registered</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="60" title="IRDA Licensed: Insurance Regulatory and Development Authority">IRDA Licensed</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="120" title="Fiduciary Duty: Legally bound to act in your best interest">Fiduciary Duty</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="180" title="₹5Cr Insurance: Professional indemnity coverage">₹5Cr Insurance</Badge>
               </div>
             </CardContent>
           </Card>
-
-          <Card className="premium-card bg-cream/10">
+          {/* Recognition */}
+          <Card data-aos="zoom-in" data-aos-delay="360" className="premium-card bg-cream/10">
             <CardHeader className="text-center">
               <Star className="w-8 h-8 text-secondary mx-auto mb-4" />
               <CardTitle className="font-playfair text-lg text-cream">Recognition</CardTitle>
@@ -108,7 +101,7 @@ const CredentialsSection = () => {
             <CardContent>
               {recognition.map((award, i) => (
                 <div key={i} className="mb-2">
-                  <div className="font-crimson text-xs text-secondary font-semibold">{award.title}</div>
+                  <div className="font-crimson text-xs text-secondary font-semibold badge-expand" data-aos="fade-up" data-aos-delay={i * 120} title={award.title + ' - ' + award.org}>{award.title}</div>
                   <div className="font-crimson text-xs text-cream/70">{award.org}</div>
                 </div>
               ))}

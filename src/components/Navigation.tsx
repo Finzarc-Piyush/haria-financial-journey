@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X, Phone } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -29,28 +30,30 @@ const Navigation = () => {
     { name: 'Results', id: 'results' },
     { name: 'Insights', id: 'insights' },
     { name: 'Process', id: 'process' },
-    { name: 'Credentials', id: 'credentials' },
-    { name: 'Contact', id: 'contact' }
+    { name: 'Contact', id: 'contact' },
+    { name: 'Credentials', id: 'credentials' }
   ];
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-      isScrolled ? 'bg-background/95 backdrop-blur-md shadow-elegant' : 'bg-transparent'
-    }`}>
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-background/95 backdrop-blur-md shadow-elegant' : 'bg-transparent'
+      }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
-          <div className="flex-shrink-0">
-            <div className="font-playfair font-bold text-2xl text-tertiary">
-              HARIA INVESTMENTS
-            </div>
-            <div className="text-xs text-muted-foreground font-crimson">
-              Your trusted financial partner since 1957
+          <div className="flex-shrink-0 flex items-center gap-3">
+            <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 object-contain" />
+            <div>
+              <div className="font-playfair font-bold text-2xl text-tertiary">
+                HARIA INVESTMENTS
+              </div>
+              <div className="text-xs text-muted-foreground font-crimson">
+                Your trusted financial partner since 1957
+              </div>
             </div>
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center space-x-8">
+          <div className="flex-1 hidden lg:flex items-center justify-center space-x-8">
             {navItems.map((item) => (
               <button
                 key={item.name}
@@ -63,14 +66,7 @@ const Navigation = () => {
           </div>
 
           {/* Desktop CTA */}
-          <div className="hidden lg:flex items-center space-x-4">
-            <a
-              href="tel:+919876543210"
-              className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300"
-            >
-              <Phone className="w-4 h-4 mr-2" />
-              <span className="font-crimson">+91 98765 43210</span>
-            </a>
+          <div className="hidden lg:flex items-center" style={{ marginLeft: 'auto' }}>
             <Button
               onClick={() => scrollToSection('contact')}
               className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6"
@@ -108,13 +104,6 @@ const Navigation = () => {
                 </button>
               ))}
               <div className="pt-4 border-t border-muted">
-                <a
-                  href="tel:+919876543210"
-                  className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300 mb-4"
-                >
-                  <Phone className="w-4 h-4 mr-2" />
-                  <span className="font-crimson">+91 98765 43210</span>
-                </a>
                 <Button
                   onClick={() => scrollToSection('contact')}
                   className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold"

@@ -1,36 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  TrendingUp, 
-  Building, 
-  Users, 
-  Star, 
+import {
+  TrendingUp,
+  Building,
+  Users,
+  Star,
   Quote,
   ArrowRight,
   CheckCircle
 } from "lucide-react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import gsap from 'gsap';
+import { useRef } from 'react';
 
 const ResultsSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [selectedCase, setSelectedCase] = useState<string | null>(null);
-
+  const bgRef = useRef(null);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const element = document.getElementById('results');
-    if (element) {
-      observer.observe(element);
+    AOS.init({ duration: 500, once: true });
+    if (bgRef.current) {
+      gsap.fromTo(bgRef.current, { y: 40, opacity: 0.7 }, { y: 0, opacity: 1, duration: 1.2, ease: 'power2.out' });
     }
-
-    return () => observer.disconnect();
   }, []);
 
   const caseStudies = [
@@ -108,116 +100,119 @@ const ResultsSection = () => {
   ];
 
   return (
-    <section id="results" className="py-20 bg-tertiary text-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="results" className="py-20 bg-tertiary text-cream relative overflow-hidden">
+      <div ref={bgRef} className="absolute inset-0 w-full h-full z-0" aria-hidden="true" />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-in" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6">
             Proven Results & Client Success Stories
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
           <p className="font-crimson text-lg text-cream/80 max-w-3xl mx-auto">
-            Real clients, real results. See how our comprehensive approach has transformed 
+            Real clients, real results. See how our comprehensive approach has transformed
             the financial futures of professionals just like you.
           </p>
         </div>
 
         {/* Case Studies */}
-        <div className={`mb-16 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {caseStudies.map((study, index) => (
-              <Card 
+              <div
                 key={study.id}
-                className={`premium-card hover-lift cursor-pointer transition-all duration-500 delay-${index * 100} bg-cream/10 border-secondary/20`}
-                onClick={() => setSelectedCase(selectedCase === study.id ? null : study.id)}
+                data-aos={index % 2 === 0 ? 'fade-right' : 'fade-left'}
+                data-aos-delay={index * 120}
+                className="relative"
               >
-                <CardHeader>
-                  <div className="flex items-center mb-4">
-                    <study.icon className="w-8 h-8 text-secondary mr-3" />
-                    <Badge className="bg-secondary text-secondary-foreground">
-                      Case Study {index + 1}
-                    </Badge>
-                  </div>
-                  <CardTitle className="font-playfair text-xl text-cream">
-                    {study.title}
-                  </CardTitle>
-                  <CardDescription className="font-crimson text-cream/70">
-                    {study.clientProfile}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent>
-                  <div className="space-y-4">
-                    <div>
-                      <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
-                        <ArrowRight className="w-4 h-4 mr-2 text-secondary" />
-                        Challenge:
-                      </h4>
-                      <p className="font-crimson text-sm text-cream/80">
-                        {study.challenge}
-                      </p>
+                <Card
+                  className={`premium-card hover-lift cursor-pointer transition-all duration-500 bg-cream/10 border-secondary/20 group`}
+                  onClick={() => setSelectedCase(selectedCase === study.id ? null : study.id)}
+                  tabIndex={0}
+                  aria-label={`Open details for ${study.title}`}
+                >
+                  <CardHeader>
+                    <div className="flex items-center mb-4">
+                      <study.icon className="w-8 h-8 text-secondary mr-3" />
+                      <Badge className="bg-secondary text-secondary-foreground">
+                        Case Study {index + 1}
+                      </Badge>
                     </div>
-                    
-                    {selectedCase === study.id && (
-                      <div className="space-y-4 animate-fade-in">
-                        <div>
-                          <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
-                            <CheckCircle className="w-4 h-4 mr-2 text-secondary" />
-                            Strategy Implementation:
-                          </h4>
-                          <ul className="space-y-1">
-                            {study.strategy.map((item, i) => (
-                              <li key={i} className="font-crimson text-sm text-cream/80 flex items-start">
-                                <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        
-                        <div className="grid grid-cols-3 gap-4">
-                          {study.metrics.map((metric, i) => (
-                            <div key={i} className="text-center p-3 bg-cream/5 rounded">
-                              <div className="font-playfair text-lg font-bold text-secondary">
-                                {metric.value}
-                              </div>
-                              <div className="font-crimson text-xs text-cream/70">
-                                {metric.label}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                    <CardTitle className="font-playfair text-xl text-cream">
+                      {study.title}
+                    </CardTitle>
+                    <CardDescription className="font-crimson text-cream/70">
+                      {study.clientProfile}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
+                          <ArrowRight className="w-4 h-4 mr-2 text-secondary" />
+                          Challenge:
+                        </h4>
+                        <p className="font-crimson text-sm text-cream/80">
+                          {study.challenge}
+                        </p>
                       </div>
-                    )}
-                    
-                    <div>
-                      <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
-                        <Star className="w-4 h-4 mr-2 text-secondary" />
-                        Results:
-                      </h4>
-                      <p className="font-crimson text-sm text-secondary font-medium">
-                        {study.results}
-                      </p>
+                      {selectedCase === study.id && (
+                        <div className="space-y-4 animate-fade-in">
+                          <div>
+                            <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
+                              <CheckCircle className="w-4 h-4 mr-2 text-secondary" />
+                              Strategy Implementation:
+                            </h4>
+                            <ul className="space-y-1">
+                              {study.strategy.map((item, i) => (
+                                <li key={i} className="font-crimson text-sm text-cream/80 flex items-start">
+                                  <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
+                                  {item}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="grid grid-cols-3 gap-4">
+                            {study.metrics.map((metric, i) => (
+                              <div key={i} className="text-center p-3 bg-cream/5 rounded">
+                                <div className="font-playfair text-lg font-bold text-secondary">
+                                  {metric.value}
+                                </div>
+                                <div className="font-crimson text-xs text-cream/70">
+                                  {metric.label}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+                      <div>
+                        <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
+                          <Star className="w-4 h-4 mr-2 text-secondary" />
+                          Results:
+                        </h4>
+                        <p className="font-crimson text-sm text-secondary font-medium">
+                          {study.results}
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div className="bg-cream/5 p-4 rounded-lg">
-                      <Quote className="w-5 h-5 text-secondary mb-2" />
-                      <p className="font-crimson text-sm text-cream/90 italic mb-2">
-                        "{study.testimonial}"
-                      </p>
-                      <p className="font-crimson text-xs text-secondary text-right">
-                        - {study.client}
-                      </p>
+                  </CardContent>
+                  {/* Testimonial Overlay on hover */}
+                  <div className="absolute inset-0 flex items-center justify-center bg-tertiary/90 text-cream text-center px-6 opacity-0 group-hover:opacity-100 transition-opacity duration-400 z-10 pointer-events-none">
+                    <div>
+                      <Quote className="w-8 h-8 mx-auto mb-2 text-secondary" />
+                      <div className="font-crimson text-lg italic mb-2">“{study.testimonial}”</div>
+                      <div className="font-crimson text-sm text-secondary">— {study.client}</div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </Card>
+              </div>
             ))}
           </div>
         </div>
 
         {/* Performance Metrics */}
-        <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-in" className="transition-all duration-1000 delay-600">
           <Card className="premium-card bg-champagne/10 border-secondary/20">
             <CardHeader className="text-center">
               <CardTitle className="font-playfair text-3xl text-cream mb-4">
@@ -230,7 +225,7 @@ const ResultsSection = () => {
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                 {performanceMetrics.map((metric, index) => (
-                  <div 
+                  <div
                     key={index}
                     className={`text-center p-6 bg-cream/5 rounded-lg hover-lift transition-all duration-300 delay-${index * 100}`}
                   >
@@ -246,11 +241,11 @@ const ResultsSection = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="mt-8 text-center">
                 <p className="font-crimson text-cream/80 max-w-2xl mx-auto">
-                  These results represent actual client outcomes and demonstrate our commitment 
-                  to delivering measurable value through disciplined investment management and 
+                  These results represent actual client outcomes and demonstrate our commitment
+                  to delivering measurable value through disciplined investment management and
                   comprehensive financial planning.
                 </p>
               </div>

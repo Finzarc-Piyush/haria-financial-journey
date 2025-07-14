@@ -9,57 +9,70 @@ All colors MUST be HSL. Professional financial advisory theme.
 @layer base {
   :root {
     /* Primary Brand Colors */
-    --primary: 43 29% 91%; /* Boho Beige #F5F1E8 */
-    --primary-foreground: 0 0% 23%; /* Warm Charcoal */
-    
+    --primary: 43 29% 91%;
+    /* Boho Beige #F5F1E8 */
+    --primary-foreground: 0 0% 23%;
+    /* Warm Charcoal */
+
     /* Secondary Brand Colors */
-    --secondary: 31 42% 64%; /* Boho Terracotta #D4A574 */
-    --secondary-foreground: 43 29% 91%; /* Boho Beige */
-    
+    --secondary: 31 42% 64%;
+    /* Boho Terracotta #D4A574 */
+    --secondary-foreground: 43 29% 91%;
+    /* Boho Beige */
+
     /* Tertiary Brand Colors */
-    --tertiary: 0 0% 23%; /* Warm Charcoal #3A3A3A */
+    --tertiary: 0 0% 23%;
+    /* Warm Charcoal #3A3A3A */
     --tertiary-foreground: 43 29% 91%;
-    
+
     /* Luxury Newspaper Inspiration */
-    --cream: 50 67% 97%; /* Cream #FAF7F0 */
-    --champagne: 39 51% 90%; /* Champagne Gold #F7E7CE */
-    --deep-charcoal: 0 0% 17%; /* Deep Charcoal #2C2C2C */
-    
+    --cream: 50 67% 97%;
+    /* Cream #FAF7F0 */
+    --champagne: 39 51% 90%;
+    /* Champagne Gold #F7E7CE */
+    --deep-charcoal: 0 0% 17%;
+    /* Deep Charcoal #2C2C2C */
+
     /* System Colors */
-    --background: 43 29% 91%; /* Boho Beige */
-    --foreground: 0 0% 23%; /* Warm Charcoal */
-    
-    --card: 50 67% 97%; /* Cream */
+    --background: 43 29% 91%;
+    /* Boho Beige */
+    --foreground: 0 0% 23%;
+    /* Warm Charcoal */
+
+    --card: 50 67% 97%;
+    /* Cream */
     --card-foreground: 0 0% 23%;
-    
+
     --popover: 50 67% 97%;
     --popover-foreground: 0 0% 23%;
-    
-    --muted: 39 51% 90%; /* Champagne */
+
+    --muted: 39 51% 90%;
+    /* Champagne */
     --muted-foreground: 0 0% 23%;
-    
-    --accent: 31 42% 64%; /* Terracotta */
+
+    --accent: 31 42% 64%;
+    /* Terracotta */
     --accent-foreground: 43 29% 91%;
-    
+
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 43 29% 91%;
-    
+
     --border: 39 51% 85%;
     --input: 39 51% 85%;
     --ring: 31 42% 64%;
-    
+
     --radius: 0.75rem;
-    
+
     /* Premium Gradients */
     --gradient-hero: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--champagne)));
     --gradient-premium: linear-gradient(180deg, hsl(var(--cream)), hsl(var(--primary)));
     --gradient-accent: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--tertiary)));
-    
+
     /* Premium Shadows */
     --shadow-elegant: 0 20px 40px -10px hsl(var(--tertiary) / 0.15);
     --shadow-card: 0 10px 30px -5px hsl(var(--tertiary) / 0.1);
     --shadow-floating: 0 25px 50px -12px hsl(var(--tertiary) / 0.25);
-    
+
     /* Professional Animations */
     --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     --transition-elegant: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
@@ -126,39 +139,39 @@ All colors MUST be HSL. Professional financial advisory theme.
   .animate-fade-in {
     animation: fade-in 0.8s ease-out forwards;
   }
-  
+
   .animate-slide-up {
     animation: slide-up 0.6s ease-out forwards;
   }
-  
+
   .animate-scale-in {
     animation: scale-in 0.4s ease-out forwards;
   }
-  
+
   .animate-typewriter {
     animation: typewriter 3s steps(40) forwards;
   }
-  
+
   .hover-lift {
     transition: var(--transition-professional);
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-8px);
     box-shadow: var(--shadow-floating);
   }
-  
+
   .professional-gradient {
     background: var(--gradient-hero);
   }
-  
+
   .premium-card {
     background: hsl(var(--card));
     box-shadow: var(--shadow-card);
     border-radius: var(--radius);
     transition: var(--transition-smooth);
   }
-  
+
   .premium-card:hover {
     box-shadow: var(--shadow-elegant);
     transform: translateY(-4px);
@@ -174,8 +187,13 @@ All colors MUST be HSL. Professional financial advisory theme.
     @apply bg-background text-foreground;
     font-family: 'Crimson Text', serif;
   }
-  
-  h1, h2, h3, h4, h5, h6 {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-family: 'Playfair Display', serif;
     font-weight: 600;
   }
@@ -187,6 +205,7 @@ All colors MUST be HSL. Professional financial advisory theme.
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -198,6 +217,7 @@ All colors MUST be HSL. Professional financial advisory theme.
     opacity: 0;
     transform: translateY(50px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -209,6 +229,7 @@ All colors MUST be HSL. Professional financial advisory theme.
     opacity: 0;
     transform: scale(0.9);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
@@ -219,6 +240,7 @@ All colors MUST be HSL. Professional financial advisory theme.
   from {
     width: 0;
   }
+
   to {
     width: 100%;
   }
@@ -229,8 +251,232 @@ All colors MUST be HSL. Professional financial advisory theme.
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* Terracotta underline draw-in animation */
+.underline-animate {
+  position: relative;
+  overflow: hidden;
+}
+
+.underline-animate::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background: hsl(var(--secondary));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 1;
+}
+
+.underline-animate.in-view::after {
+  transform: scaleX(1);
+}
+
+/* Card hover/active microinteractions */
+.premium-card:hover,
+.premium-card:focus {
+  box-shadow: 0 8px 32px -4px hsl(var(--secondary) / 0.18), 0 0 0 2px hsl(var(--secondary));
+  border-color: hsl(var(--secondary));
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+.premium-card[aria-expanded="true"] {
+  box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.18);
+  border-color: hsl(var(--secondary));
+}
+
+/* Accordion expand animation */
+.animate-accordion-expand {
+  animation: accordion-expand 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes accordion-expand {
+  from {
+    opacity: 0;
+    transform: scaleY(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* Pulse animation for icons */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.group:hover .group-hover\:animate-pulse {
+  animation: pulse 0.7s;
+}
+
+/* Badge microanimation for hover/expand */
+.badge-micro {
+  transition: transform 0.3s, background 0.3s, box-shadow 0.3s, color 0.3s;
+}
+
+.badge-micro:hover,
+.group:hover .badge-micro {
+  transform: scale(1.12);
+  background: hsl(var(--secondary) / 0.95);
+  color: hsl(var(--secondary-foreground));
+  box-shadow: 0 2px 8px hsl(var(--secondary) / 0.18);
+}
+
+/* Badge expand on hover */
+.badge-expand {
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s, color 0.3s;
+}
+
+.badge-expand:hover,
+.badge-expand:focus {
+  transform: scale(1.13);
+  box-shadow: 0 2px 12px hsl(var(--secondary) / 0.18);
+  background: hsl(var(--secondary) / 0.95);
+  color: hsl(var(--secondary-foreground));
+  z-index: 2;
+}
+
+/* Compliance icon and card glow on scroll */
+.compliance-glow[data-aos="zoom-in"].aos-animate {
+  box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.22), 0 8px 32px -4px hsl(var(--secondary) / 0.18);
+  border-color: hsl(var(--secondary));
+  transition: box-shadow 0.4s, border-color 0.4s;
+}
+
+.compliance-icon.aos-animate {
+  filter: drop-shadow(0 0 8px hsl(var(--secondary)));
+  transition: filter 0.4s;
+}
+
+/* Progress bar animation (AOS triggers width) */
+[data-aos="progress-bar"] {
+  width: 0 !important;
+}
+
+[data-aos="progress-bar"].aos-animate {
+  width: var(--progress-bar-width, 100%) !important;
+  transition: width 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Blog card image zoom-in and overlay reveal */
+.group:hover .group-hover\:scale-105 {
+  transform: scale(1.05);
+}
+
+.group:hover .group-hover\:opacity-100 {
+  opacity: 1;
+}
+
+/* Button glow and Terracotta accent border */
+.btn-glow {
+  transition: box-shadow 0.3s, border-color 0.3s;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-glow:hover,
+.btn-glow:focus {
+  box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.18), 0 8px 32px -4px hsl(var(--secondary) / 0.18);
+  border-color: hsl(var(--secondary));
+}
+
+/* Ripple effect on click (JS sets box-shadow, see component) */
+
+/* Floating label for form fields */
+.floating-label-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.floating-label-group input:focus+label,
+.floating-label-group input:not(:placeholder-shown)+label {
+  transform: translateY(-1.5rem) scale(0.85);
+  color: hsl(var(--secondary));
+}
+
+.floating-label-group label {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  background: transparent;
+  color: #888;
+  pointer-events: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Calendar widget fade-in */
+.calendar-widget[data-aos="fade-up"] {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.calendar-widget.aos-animate {
+  opacity: 1;
+  transform: none;
+}
+
+/* Slot hover pulse animation */
+.calendar-slot {
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.calendar-slot:hover {
+  animation: pulse 0.7s;
+  box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.18);
+  transform: scale(1.05);
+}
+
+/* Footer column title underline animation */
+.footer-col-title {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.footer-col-title::after {
+  content: '';
+  display: block;
+  position: absolute;
+  left: 50%;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: hsl(var(--champagne));
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.footer-col-title:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+/* Newsletter input Champagne Gold glow on focus */
+.footer-newsletter-input:focus {
+  border-color: hsl(var(--champagne));
+  box-shadow: 0 0 0 3px hsl(var(--champagne) / 0.35);
+  outline: none;
 }

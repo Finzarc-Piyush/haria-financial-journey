@@ -1,39 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { 
-  TrendingUp, 
-  Shield, 
-  Calculator, 
-  PiggyBank, 
-  FileText, 
+import {
+  TrendingUp,
+  Shield,
+  Calculator,
+  PiggyBank,
+  FileText,
   Building,
   Heart,
   Users,
   ChevronRight,
   DollarSign
 } from "lucide-react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const ServicesSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
   const [expandedService, setExpandedService] = useState<string | null>(null);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const element = document.getElementById('services');
-    if (element) {
-      observer.observe(element);
-    }
-
-    return () => observer.disconnect();
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   const wealthServices = [
@@ -132,18 +118,18 @@ const ServicesSection = () => {
     <section id="services" className="py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-down" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
             Our Comprehensive Financial Services
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
+          <div className="w-24 h-1 bg-secondary mx-auto mb-6 underline-animate"></div>
           <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
             Transparent, comprehensive financial planning with clear fee structure and proven results
           </p>
         </div>
 
         {/* Wealth Management Services */}
-        <div className={`mb-16 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Wealth Management Services
@@ -153,20 +139,20 @@ const ServicesSection = () => {
               <span className="font-crimson text-tertiary/70">Comprehensive Portfolio Solutions</span>
             </div>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {wealthServices.map((service, index) => (
-              <Card 
+              <Card
                 key={service.id}
-                className={`premium-card hover-lift cursor-pointer transition-all duration-500 delay-${index * 100}`}
+                data-aos="fade-up"
+                data-aos-delay={index * 120}
+                className={`premium-card cursor-pointer transition-all duration-500 group hover:shadow-lg hover:shadow-secondary/40 hover:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 ${expandedService === service.id ? 'border-2 border-secondary shadow-secondary/40' : ''}`}
+                style={{ boxShadow: expandedService === service.id ? '0 0 0 4px rgba(212,165,116,0.18)' : undefined }}
                 onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    <service.icon className="w-8 h-8 text-secondary" />
-                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${
-                      expandedService === service.id ? 'rotate-90' : ''
-                    }`} />
+                    <service.icon className="w-8 h-8 text-secondary group-hover:animate-pulse group-hover:text-secondary cursor-pointer transition-all duration-300" />
+                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${expandedService === service.id ? 'rotate-90' : ''}`} />
                   </div>
                   <CardTitle className="font-playfair text-xl text-tertiary">
                     {service.title}
@@ -175,9 +161,8 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                
                 {expandedService === service.id && (
-                  <CardContent className="pt-0">
+                  <CardContent className="pt-0 animate-accordion-expand">
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
@@ -190,7 +175,6 @@ const ServicesSection = () => {
                           ))}
                         </ul>
                       </div>
-                      
                       <div>
                         <p className="font-crimson text-sm text-tertiary/70 mb-3">
                           {service.details}
@@ -212,7 +196,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Insurance & Protection Services */}
-        <div className={`mb-16 transition-all duration-1000 delay-400 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Insurance & Protection Services
@@ -222,20 +206,20 @@ const ServicesSection = () => {
               <span className="font-crimson text-tertiary/70">Comprehensive Risk Management</span>
             </div>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {insuranceServices.map((service, index) => (
-              <Card 
+              <Card
                 key={service.id}
-                className={`premium-card hover-lift cursor-pointer transition-all duration-500 delay-${index * 100}`}
+                data-aos="fade-up"
+                data-aos-delay={index * 120 + 100}
+                className={`premium-card cursor-pointer transition-all duration-500 group hover:shadow-lg hover:shadow-secondary/40 hover:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 ${expandedService === service.id ? 'border-2 border-secondary shadow-secondary/40' : ''}`}
+                style={{ boxShadow: expandedService === service.id ? '0 0 0 4px rgba(212,165,116,0.18)' : undefined }}
                 onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
-                    <service.icon className="w-8 h-8 text-secondary" />
-                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${
-                      expandedService === service.id ? 'rotate-90' : ''
-                    }`} />
+                    <service.icon className="w-8 h-8 text-secondary group-hover:animate-pulse group-hover:text-secondary cursor-pointer transition-all duration-300" />
+                    <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${expandedService === service.id ? 'rotate-90' : ''}`} />
                   </div>
                   <CardTitle className="font-playfair text-xl text-tertiary">
                     {service.title}
@@ -244,9 +228,8 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                
                 {expandedService === service.id && (
-                  <CardContent className="pt-0">
+                  <CardContent className="pt-0 animate-accordion-expand">
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
@@ -259,7 +242,6 @@ const ServicesSection = () => {
                           ))}
                         </ul>
                       </div>
-                      
                       <div>
                         <p className="font-crimson text-sm text-tertiary/70 mb-3">
                           {service.details}
@@ -281,7 +263,7 @@ const ServicesSection = () => {
         </div>
 
         {/* Fee Transparency Section */}
-        <div className={`transition-all duration-1000 delay-600 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-up" data-aos-delay="600" className="transition-all duration-1000 delay-600">
           <Card className="premium-card bg-champagne border-secondary">
             <CardHeader className="text-center">
               <div className="flex items-center justify-center mb-4">
@@ -321,11 +303,11 @@ const ServicesSection = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="mt-6 p-4 bg-primary/50 rounded-lg">
                 <p className="font-crimson text-center text-tertiary/80">
-                  <strong>Value Proposition:</strong> Our fee structure is competitive with industry standards 
-                  while providing superior service and fiduciary commitment. Most clients see significant 
+                  <strong>Value Proposition:</strong> Our fee structure is competitive with industry standards
+                  while providing superior service and fiduciary commitment. Most clients see significant
                   value through tax optimization and strategic portfolio management.
                 </p>
               </div>

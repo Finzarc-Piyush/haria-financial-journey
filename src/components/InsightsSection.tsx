@@ -2,38 +2,24 @@ import { useEffect, useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { 
-  TrendingUp, 
-  FileText, 
-  Calendar, 
-  Clock, 
-  User, 
+import {
+  TrendingUp,
+  FileText,
+  Calendar,
+  Clock,
+  User,
   ArrowRight,
   BarChart3,
   Newspaper,
   BookOpen,
   Mail
 } from "lucide-react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const InsightsSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
-
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
-
-    const element = document.getElementById('insights');
-    if (element) {
-      observer.observe(element);
-    }
-
-    return () => observer.disconnect();
+    AOS.init({ duration: 500, once: true });
   }, []);
 
   const featuredArticles = [
@@ -124,36 +110,46 @@ const InsightsSection = () => {
     <section id="insights" className="py-20 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-in" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
             Market Insights & Financial Commentary
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
           <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
-            Stay informed with our latest market analysis, investment insights, and 
+            Stay informed with our latest market analysis, investment insights, and
             educational content designed for successful professionals.
           </p>
         </div>
 
         {/* Featured Articles */}
-        <div className={`mb-16 transition-all duration-1000 delay-200 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="flex items-center mb-8">
             <Newspaper className="w-6 h-6 text-secondary mr-3" />
             <h3 className="font-playfair text-2xl font-bold text-tertiary">
               Featured Articles
             </h3>
           </div>
-          
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {featuredArticles.map((article, index) => (
-              <Card 
+              <Card
                 key={article.id}
-                className={`premium-card hover-lift transition-all duration-500 delay-${index * 100}`}
+                data-aos={index % 2 === 0 ? 'fade-right' : 'fade-left'}
+                data-aos-delay={index * 120}
+                className="premium-card hover-lift transition-all duration-500 group overflow-hidden"
               >
+                {/* Blog Card Image Placeholder (replace with real image if available) */}
+                <div className="relative h-40 w-full mb-4 overflow-hidden rounded-lg">
+                  <div className="absolute inset-0 bg-secondary/10 group-hover:scale-105 transition-transform duration-400 z-0" />
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 bg-secondary/80 transition-opacity duration-400 z-10">
+                    <span className="font-playfair text-lg text-secondary-foreground">Read Article</span>
+                  </div>
+                </div>
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
                     <article.icon className="w-6 h-6 text-secondary" />
-                    <Badge variant="secondary">{article.category}</Badge>
+                    <Badge variant="secondary" className="transition-all duration-300 badge-micro group-hover:scale-110 group-hover:bg-secondary/90 group-hover:shadow-lg">
+                      {article.category}
+                    </Badge>
                   </div>
                   <CardTitle className="font-playfair text-lg text-tertiary line-clamp-2">
                     {article.title}
@@ -162,7 +158,6 @@ const InsightsSection = () => {
                     {article.summary}
                   </CardDescription>
                 </CardHeader>
-                
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between text-sm text-tertiary/60">
@@ -172,15 +167,15 @@ const InsightsSection = () => {
                       </div>
                       <div className="flex items-center">
                         <Clock className="w-4 h-4 mr-1" />
-                        {article.readTime}
+                        <span className="badge-micro group-hover:bg-secondary/80 group-hover:text-secondary-foreground px-2 py-0.5 rounded transition-all duration-300 cursor-pointer">
+                          {article.readTime}
+                        </span>
                       </div>
                     </div>
-                    
                     <div className="flex items-center text-sm text-tertiary/60">
                       <User className="w-4 h-4 mr-1" />
                       {article.author}
                     </div>
-                    
                     <div>
                       <h4 className="font-crimson font-semibold text-tertiary text-sm mb-2">
                         Key Takeaways:
@@ -194,13 +189,11 @@ const InsightsSection = () => {
                         ))}
                       </ul>
                     </div>
-                    
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
                     >
-                      Read Full Article
-                      <ArrowRight className="w-4 h-4 ml-2" />
+                      Read More
                     </Button>
                   </div>
                 </CardContent>
@@ -210,19 +203,19 @@ const InsightsSection = () => {
         </div>
 
         {/* Market Commentary */}
-        <div className={`mb-16 transition-all duration-1000 delay-400 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="flex items-center mb-8">
             <BarChart3 className="w-6 h-6 text-secondary mr-3" />
             <h3 className="font-playfair text-2xl font-bold text-tertiary">
               Current Market Commentary
             </h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {marketCommentary.map((item, index) => (
-              <Card 
+              <Card
                 key={index}
-                className={`premium-card hover-lift transition-all duration-300 delay-${index * 100}`}
+                className="premium-card hover-lift transition-all duration-300"
               >
                 <CardHeader className="pb-4">
                   <div className="flex items-center justify-between">
@@ -243,19 +236,19 @@ const InsightsSection = () => {
         </div>
 
         {/* Educational Content */}
-        <div className={`mb-16 transition-all duration-1000 delay-600 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div className="mb-16">
           <div className="flex items-center mb-8">
             <BookOpen className="w-6 h-6 text-secondary mr-3" />
             <h3 className="font-playfair text-2xl font-bold text-tertiary">
               Educational Resources
             </h3>
           </div>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {educationalContent.map((item, index) => (
-              <Card 
+              <Card
                 key={index}
-                className={`premium-card hover-lift transition-all duration-300 delay-${index * 100}`}
+                className="premium-card hover-lift transition-all duration-300"
               >
                 <CardHeader>
                   <div className="flex items-center justify-between mb-2">
@@ -276,7 +269,7 @@ const InsightsSection = () => {
         </div>
 
         {/* Newsletter Signup */}
-        <div className={`transition-all duration-1000 delay-800 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+        <div data-aos="fade-in" className="transition-all duration-1000 delay-800">
           <Card className="premium-card bg-champagne border-secondary">
             <CardHeader className="text-center">
               <div className="flex items-center justify-center mb-4">
@@ -316,7 +309,7 @@ const InsightsSection = () => {
                   </div>
                 </div>
               </div>
-              
+
               <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
@@ -327,7 +320,7 @@ const InsightsSection = () => {
                   Subscribe
                 </Button>
               </div>
-              
+
               <p className="text-center text-xs text-tertiary/60 mt-4 font-crimson">
                 We respect your privacy. Unsubscribe at any time.
               </p>
