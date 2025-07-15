@@ -30,6 +30,8 @@ const AboutSection = () => {
                 src={advisorHeadshot}
                 alt="Rajesh Haria, Financial Advisor"
                 className="w-full max-w-md mx-auto rounded-lg shadow-floating"
+                data-aos="fade-right"
+                data-aos-delay="100"
               />
             </div>
             <div className="order-1 lg:order-2">
