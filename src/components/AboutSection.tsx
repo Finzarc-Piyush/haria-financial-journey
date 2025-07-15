@@ -99,8 +99,8 @@ const AboutSection = () => {
               </div>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="premium-card p-4 text-center bg-cream/10" data-aos="zoom-in" data-aos-delay="0" title="95% client retention rate">
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-1">95%</div>
+                <div className="premium-card p-4 text-center bg-cream/10" data-aos="zoom-in" data-aos-delay="0" title="99% client retention rate">
+                  <div className="font-playfair text-2xl font-bold text-secondary mb-1">99%</div>
                   <div className="font-crimson text-sm text-cream/80">Client Retention</div>
                 </div>
                 <div className="premium-card p-4 text-center bg-cream/10" data-aos="zoom-in" data-aos-delay="100" title="12 years average client relationship">

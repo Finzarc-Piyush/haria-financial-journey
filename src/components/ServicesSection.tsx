@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -16,6 +16,31 @@ import {
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
+// Improved ExpandableCardContent for smooth expand/collapse (including collapse)
+const ExpandableCardContent = ({ expanded, children }) => {
+  const contentRef = useRef(null);
+  const [maxHeight, setMaxHeight] = useState(0);
+
+  useEffect(() => {
+    if (expanded && contentRef.current) {
+      setMaxHeight(contentRef.current.scrollHeight);
+    } else if (!expanded && contentRef.current) {
+      setMaxHeight(contentRef.current.scrollHeight);
+      requestAnimationFrame(() => {
+        setMaxHeight(0);
+      });
+    }
+  }, [expanded, children]);
+
+  return (
+    <div style={{ overflow: 'hidden', transition: 'max-height 0.5s cubic-bezier(0.4,0,0.2,1)', maxHeight }}>
+      <div ref={contentRef} aria-hidden={!expanded} style={!expanded ? { pointerEvents: 'none', opacity: 0 } : {}}>
+        {children}
+      </div>
+    </div>
+  );
+};
+
 const ServicesSection = () => {
   const [expandedService, setExpandedService] = useState<string | null>(null);
   useEffect(() => {
@@ -24,7 +49,7 @@ const ServicesSection = () => {
 
   const wealthServices = [
     {
-      id: 'portfolio',
+      id: 'wealth-portfolio',
       icon: TrendingUp,
       title: 'Investment Portfolio Management',
       description: 'Customized portfolio construction using modern portfolio theory and tactical asset allocation',
@@ -39,7 +64,7 @@ const ServicesSection = () => {
       specializations: ['Equity portfolio management', 'Fixed income strategies', 'Alternative investments']
     },
     {
-      id: 'retirement',
+      id: 'wealth-retirement',
       icon: PiggyBank,
       title: 'Retirement Planning',
       description: 'Comprehensive approach including PF optimization, pension planning, and retirement income strategies',
@@ -54,7 +79,7 @@ const ServicesSection = () => {
       specializations: ['Early retirement planning', 'Executive compensation', 'Tax-efficient withdrawals']
     },
     {
-      id: 'tax',
+      id: 'wealth-tax',
       icon: Calculator,
       title: 'Tax Optimization Strategies',
       description: 'Tax-loss harvesting, charitable giving strategies, and estate planning coordination',
@@ -71,7 +96,7 @@ const ServicesSection = () => {
 
   const insuranceServices = [
     {
-      id: 'life',
+      id: 'insurance-life',
       icon: Shield,
       title: 'Life Insurance Analysis',
       description: 'Comprehensive review of term vs. permanent insurance, beneficiary optimization, estate planning integration',
@@ -85,7 +110,7 @@ const ServicesSection = () => {
       specializations: ['Executive life insurance', 'Key person coverage', 'Business succession']
     },
     {
-      id: 'health',
+      id: 'insurance-health',
       icon: Heart,
       title: 'Health & Disability Insurance',
       description: 'Group benefits optimization, supplemental coverage analysis, disability income planning',
@@ -99,7 +124,7 @@ const ServicesSection = () => {
       specializations: ['Group benefits optimization', 'Supplemental coverage', 'Disability planning']
     },
     {
-      id: 'estate',
+      id: 'insurance-estate',
       icon: FileText,
       title: 'Estate Planning Coordination',
       description: 'Will and trust review, beneficiary coordination, tax-efficient wealth transfer',
@@ -113,6 +138,14 @@ const ServicesSection = () => {
       specializations: ['Will optimization', 'Trust structures', 'Beneficiary planning']
     }
   ];
+
+  const handleServiceClick = useCallback((serviceId) => {
+    setExpandedService(prev => {
+      const newValue = prev === serviceId ? null : serviceId;
+      setTimeout(() => { AOS.refresh(); }, 0);
+      return newValue;
+    });
+  }, []);
 
   return (
     <section id="services" className="py-20 bg-primary">
@@ -147,7 +180,7 @@ const ServicesSection = () => {
                 data-aos-delay={index * 120}
                 className={`premium-card cursor-pointer transition-all duration-500 group hover:shadow-lg hover:shadow-secondary/40 hover:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 ${expandedService === service.id ? 'border-2 border-secondary shadow-secondary/40' : ''}`}
                 style={{ boxShadow: expandedService === service.id ? '0 0 0 4px rgba(212,165,116,0.18)' : undefined }}
-                onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
+                onClick={() => handleServiceClick(service.id)}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
@@ -161,8 +194,8 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                {expandedService === service.id && (
-                  <CardContent className="pt-0 animate-accordion-expand">
+                <ExpandableCardContent expanded={expandedService === service.id}>
+                  <CardContent className="pt-0">
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
@@ -189,7 +222,7 @@ const ServicesSection = () => {
                       </div>
                     </div>
                   </CardContent>
-                )}
+                </ExpandableCardContent>
               </Card>
             ))}
           </div>
@@ -214,7 +247,7 @@ const ServicesSection = () => {
                 data-aos-delay={index * 120 + 100}
                 className={`premium-card cursor-pointer transition-all duration-500 group hover:shadow-lg hover:shadow-secondary/40 hover:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 ${expandedService === service.id ? 'border-2 border-secondary shadow-secondary/40' : ''}`}
                 style={{ boxShadow: expandedService === service.id ? '0 0 0 4px rgba(212,165,116,0.18)' : undefined }}
-                onClick={() => setExpandedService(expandedService === service.id ? null : service.id)}
+                onClick={() => handleServiceClick(service.id)}
               >
                 <CardHeader>
                   <div className="flex items-center justify-between mb-4">
@@ -228,8 +261,8 @@ const ServicesSection = () => {
                     {service.description}
                   </CardDescription>
                 </CardHeader>
-                {expandedService === service.id && (
-                  <CardContent className="pt-0 animate-accordion-expand">
+                <ExpandableCardContent expanded={expandedService === service.id}>
+                  <CardContent className="pt-0">
                     <div className="space-y-4">
                       <div>
                         <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
@@ -256,7 +289,7 @@ const ServicesSection = () => {
                       </div>
                     </div>
                   </CardContent>
-                )}
+                </ExpandableCardContent>
               </Card>
             ))}
           </div>

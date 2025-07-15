@@ -97,41 +97,51 @@ const ContactSection = () => {
                 Book a Free Consultation
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex flex-col gap-6">
-              <Button
-                size="lg"
-                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold btn-glow transform transition-transform duration-200 hover:scale-105 focus:scale-105"
-                style={{ boxShadow: '0 0 0 0 rgba(212,165,116,0.5)', transition: 'box-shadow 0.3s' }}
-                onMouseDown={e => {
-                  const btn = e.currentTarget;
-                  btn.style.boxShadow = '0 0 0 8px rgba(212,165,116,0.25)';
-                  setTimeout(() => { btn.style.boxShadow = '0 0 0 0 rgba(212,165,116,0.5)'; }, 400);
-                }}
-              >
-                Book Online Appointment
-              </Button>
-              <div className="relative group w-full">
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="w-full border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson btn-glow transform transition-transform duration-200 hover:scale-105 focus:scale-105"
-                  style={{ boxShadow: '0 0 0 0 rgba(212,165,116,0.5)', transition: 'box-shadow 0.3s' }}
-                  onMouseDown={e => {
-                    const btn = e.currentTarget;
-                    btn.style.boxShadow = '0 0 0 8px rgba(212,165,116,0.25)';
-                    setTimeout(() => { btn.style.boxShadow = '0 0 0 0 rgba(212,165,116,0.5)'; }, 400);
-                  }}
-                  tabIndex={0}
-                >
-                  Call Now: +91 98765 43210
-                </Button>
-                <span className="absolute left-1/2 -bottom-7 -translate-x-1/2 bg-tertiary text-cream text-xs rounded px-3 py-1 shadow-md opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity duration-200 z-10">
-                  Tap to call directly
-                </span>
-              </div>
-              <div className="text-center text-base text-tertiary/80 font-crimson mt-2">
-                Initial 30-minute consultation is complimentary
-              </div>
+            <CardContent>
+              <form className="flex flex-col gap-6" autoComplete="off" noValidate>
+                {/* Name fields */}
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="flex-1">
+                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1">First Name <span className="text-red-500">*</span></label>
+                    <input id="firstName" name="firstName" type="text" required className="w-full rounded-md border border-champagne/60 bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40" autoComplete="given-name" />
+                  </div>
+                  <div className="flex-1">
+                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1">Last Name <span className="text-red-500">*</span></label>
+                    <input id="lastName" name="lastName" type="text" required className="w-full rounded-md border border-champagne/60 bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40" autoComplete="family-name" />
+                  </div>
+                </div>
+                {/* Email */}
+                <div>
+                  <label htmlFor="email" className="block font-crimson text-tertiary mb-1">Email <span className="text-red-500">*</span></label>
+                  <input id="email" name="email" type="email" required className="w-full rounded-md border border-champagne/60 bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40" autoComplete="email" />
+                </div>
+                {/* Services checkboxes */}
+                <div>
+                  <label className="block font-crimson text-tertiary mb-2">Which services are you looking for? <span className="text-red-500">*</span></label>
+                  <div className="flex flex-wrap gap-6">
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
+                      <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" /> Insurance
+                    </label>
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
+                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" /> Mutual Funds
+                    </label>
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
+                      <input type="checkbox" name="services" value="Equity Broking" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" /> Equity Broking
+                    </label>
+                  </div>
+                </div>
+                {/* Comment/Message */}
+                <div>
+                  <label htmlFor="message" className="block font-crimson text-tertiary mb-1">Comment or Message <span className="text-red-500">*</span></label>
+                  <textarea id="message" name="message" required rows={4} className="w-full rounded-md border border-champagne/60 bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none" />
+                </div>
+                {/* Submit Button */}
+                <div className="pt-2">
+                  <Button type="submit" size="lg" className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6 py-3 text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2">
+                    Submit
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
         </div>

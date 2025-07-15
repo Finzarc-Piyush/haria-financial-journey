@@ -9,8 +9,9 @@ import 'aos/dist/aos.css';
 import gsap from 'gsap';
 
 const HeroSection = () => {
+  const currentYear = new Date().getFullYear();
   const [counters, setCounters] = useState({
-    years: 0,
+    year: currentYear,
     aum: 0,
     clients: 0,
     generations: 0
@@ -51,6 +52,18 @@ const HeroSection = () => {
       ([entry]) => {
         if (entry.isIntersecting && !triggered) {
           triggered = true;
+          const animateYearCounter = (key, startYear, endYear, duration) => {
+            let current = startYear;
+            const step = (startYear - endYear) / (duration / 16);
+            const timer = setInterval(() => {
+              current -= step;
+              if (current <= endYear) {
+                current = endYear;
+                clearInterval(timer);
+              }
+              setCounters(prev => ({ ...prev, [key]: Math.floor(current) }));
+            }, 16);
+          };
           const animateCounter = (key, target, duration) => {
             let start = 0;
             const increment = target / (duration / 16);
@@ -63,10 +76,10 @@ const HeroSection = () => {
               setCounters(prev => ({ ...prev, [key]: Math.floor(start) }));
             }, 16);
           };
-          animateCounter('years', 67, 2000);
-          animateCounter('aum', 500, 2500);
+          animateYearCounter('year', currentYear, 1957, 2000);
+          animateCounter('aum', 100, 2500);
           animateCounter('clients', 1000, 2000);
-          animateCounter('generations', 3, 1500);
+          animateCounter('generations', 5, 1500);
         }
       },
       { threshold: 0.3 }
@@ -172,7 +185,7 @@ const HeroSection = () => {
             <div className="premium-card p-6 text-center hover-lift">
               <Building className="w-8 h-8 text-secondary mx-auto mb-3" />
               <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
-                Since {2024 - counters.years}
+                Since {counters.year}
               </div>
               <div className="font-crimson text-sm text-muted-foreground">
                 Years of Heritage

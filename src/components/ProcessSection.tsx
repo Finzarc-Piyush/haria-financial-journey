@@ -255,7 +255,7 @@ const ProcessSection = () => {
         </div>
 
         {/* Communication Standards */}
-        <div data-aos="fade-up" data-aos-delay="400" className={`mb-16 transition-all duration-1000 delay-600 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
+        <div data-aos="fade-up" data-aos-delay="400" className={`mb-16 mt-16 transition-all duration-1000 delay-600 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
           <div className="text-center mb-8">
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Our Communication Standards
