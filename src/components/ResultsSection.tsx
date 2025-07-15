@@ -15,6 +15,35 @@ import 'aos/dist/aos.css';
 import gsap from 'gsap';
 import { useRef } from 'react';
 
+// ExpandableCardContent for smooth expand/collapse animation
+import { useRef as useRefReact, useState as useStateReact, useEffect as useEffectReact } from 'react';
+const ExpandableCardContent = ({ expanded, children }) => {
+  const contentRef = useRefReact(null);
+  const [maxHeight, setMaxHeight] = useStateReact(0);
+  const [opacity, setOpacity] = useStateReact(0);
+  useEffectReact(() => {
+    if (expanded && contentRef.current) {
+      setMaxHeight(contentRef.current.scrollHeight);
+      setTimeout(() => setOpacity(1), 10);
+    } else if (!expanded && contentRef.current) {
+      setOpacity(0);
+      setTimeout(() => setMaxHeight(0), 400);
+    }
+  }, [expanded, children]);
+  return (
+    <div
+      style={{
+        overflow: 'hidden',
+        transition: 'max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.4s cubic-bezier(0.4,0,0.2,1)',
+        maxHeight,
+        opacity,
+      }}
+    >
+      <div ref={contentRef}>{children}</div>
+    </div>
+  );
+};
+
 const ResultsSection = () => {
   const [selectedCase, setSelectedCase] = useState<string | null>(null);
   const bgRef = useRef(null);
@@ -156,8 +185,8 @@ const ResultsSection = () => {
                           {study.challenge}
                         </p>
                       </div>
-                      {selectedCase === study.id && (
-                        <div className="space-y-4 animate-fade-in">
+                      <ExpandableCardContent expanded={selectedCase === study.id}>
+                        <div className="space-y-4">
                           <div>
                             <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
                               <CheckCircle className="w-4 h-4 mr-2 text-secondary" />
@@ -185,7 +214,7 @@ const ResultsSection = () => {
                             ))}
                           </div>
                         </div>
-                      )}
+                      </ExpandableCardContent>
                       <div>
                         <h4 className="font-playfair font-semibold text-cream mb-2 flex items-center">
                           <Star className="w-4 h-4 mr-2 text-secondary" />
