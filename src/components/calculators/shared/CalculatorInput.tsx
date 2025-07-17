@@ -36,14 +36,25 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
     name,
     disabled,
 }) => {
+    const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = type === 'range' ? Number(e.target.value) : e.target.value;
+        onChange(newValue);
+    };
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const newValue = type === 'range' ? Number(e.target.value) : e.target.value;
+        onChange(newValue);
+    };
+
     return (
         <div className="w-full max-w-xl mx-auto mb-6 flex flex-col">
             <label
                 htmlFor={name}
-                className="block mb-2 font-playfair text-base md:text-lg text-tertiary px-1"
+                className="block mb-3 font-playfair text-base md:text-lg text-tertiary px-1 font-semibold"
             >
                 {label}
             </label>
+
             {type === 'select' ? (
                 <select
                     id={name}
@@ -51,7 +62,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     value={value}
                     onChange={e => onChange(e.target.value)}
                     className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
-            border-gray-300 focus:outline-none focus:border-[#E6C674] ${error ? 'border-red-500' : ''}`}
+            border-gray-300 focus:outline-none focus:border-[${GOLD}] ${error ? 'border-red-500' : ''}`}
                     disabled={disabled}
                 >
                     <option value="" disabled hidden>
@@ -62,26 +73,48 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     ))}
                 </select>
             ) : (
-                <div className="relative flex items-center">
-                    <input
-                        id={name}
-                        name={name}
-                        type={type}
-                        value={value}
-                        min={min}
-                        max={max}
-                        step={step}
-                        onChange={e => onChange(type === 'range' ? Number(e.target.value) : e.target.value)}
-                        className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
-              border-gray-300 focus:outline-none focus:border-[#E6C674] ${error ? 'border-red-500' : ''}`}
-                        disabled={disabled}
-                        aria-invalid={!!error}
-                        aria-describedby={error ? `${name}-error` : undefined}
-                    />
-                    {currency && type === 'number' && (
-                        <span className="absolute right-3 top-1/2 -translate-y-1/2 font-crimson text-base text-gray-500 select-none pointer-events-none">
-                            {formatCurrency(value)}
-                        </span>
+                <div className="space-y-3">
+                    {/* Input Field */}
+                    <div className="relative flex items-center">
+                        <input
+                            id={name}
+                            name={name}
+                            type="number"
+                            value={value}
+                            min={min}
+                            max={max}
+                            step={step}
+                            onChange={handleInputChange}
+                            className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
+              border-gray-300 focus:outline-none focus:border-[${GOLD}] ${error ? 'border-red-500' : ''}`}
+                            disabled={disabled}
+                            aria-invalid={!!error}
+                            aria-describedby={error ? `${name}-error` : undefined}
+                        />
+                        {currency && (
+                            <span className="absolute right-3 top-1/2 -translate-y-1/2 font-crimson text-base text-gray-500 select-none pointer-events-none">
+                                {formatCurrency(value)}
+                            </span>
+                        )}
+                    </div>
+
+                    {/* Slider */}
+                    {min !== undefined && max !== undefined && (
+                        <div className="relative">
+                            <input
+                                type="range"
+                                min={min}
+                                max={max}
+                                step={step || 1}
+                                value={value}
+                                onChange={handleSliderChange}
+                                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E6C674]/50"
+                                style={{
+                                    background: `linear-gradient(to right, ${GOLD} 0%, ${GOLD} ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb 100%)`
+                                }}
+                                disabled={disabled}
+                            />
+                        </div>
                     )}
                 </div>
             )}

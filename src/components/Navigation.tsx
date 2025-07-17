@@ -136,8 +136,6 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
         </div>
       </nav>
 
-      {/* Spacer div to push content below navbar unless transparent */}
-      <div style={{ height: isTransparent ? '0px' : '40px' }} />
     </>
   );
 };
