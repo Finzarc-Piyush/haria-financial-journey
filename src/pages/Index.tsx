@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
@@ -10,9 +11,22 @@ import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const [heroInView, setHeroInView] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById("hero");
+    if (!hero) return;
+    const observer = new window.IntersectionObserver(
+      ([entry]) => setHeroInView(entry.isIntersecting),
+      { threshold: 0.3 }
+    );
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <div className="min-h-screen">
-      <Navigation />
+      <Navigation isTransparent={heroInView} />
       <HeroSection />
       <AboutSection />
       <ServicesSection />
@@ -21,7 +35,6 @@ const Index = () => {
       <ProcessSection />
       <CredentialsSection />
       <ContactSection />
-      <Footer />
     </div>
   );
 };
