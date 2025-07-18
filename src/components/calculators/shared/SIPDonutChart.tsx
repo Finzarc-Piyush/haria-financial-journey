@@ -12,7 +12,7 @@ function formatINR(num: number) {
 }
 
 // Custom hook to animate a value smoothly
-export function useAnimatedValue(target: number, duration = 600) {
+function useAnimatedValue(target: number, duration = 600) {
     const [value, setValue] = useState(target);
     const raf = useRef<number | null>(null);
     const prev = useRef(target);
@@ -41,11 +41,20 @@ export function useAnimatedValue(target: number, duration = 600) {
 }
 
 export default function SIPDonutChart({ invested, returns }: { invested: number; returns: number; }) {
+    // Animate both values
     const animatedInvested = useAnimatedValue(invested);
     const animatedReturns = useAnimatedValue(returns);
+
+    // Calculate animated percentages for arc
     const corpus = animatedInvested + animatedReturns;
-    const investedPct = corpus ? (animatedInvested / corpus) * 100 : 0;
-    const returnsPct = corpus ? (animatedReturns / corpus) * 100 : 0;
+    const investedPct = corpus > 0 ? Math.max(0, Math.min(100, (animatedInvested / corpus) * 100)) : 0;
+    const returnsPct = corpus > 0 ? Math.max(0, Math.min(100, (animatedReturns / corpus) * 100)) : 0;
+
+    // Calculate the actual, correct center value (final results)
+    const actualCorpus = invested + returns;
+    const actualReturnsPct = actualCorpus > 0 ? (returns / actualCorpus) * 100 : 0;
+    // Animate the center value from previous to new correct value
+    const animatedCenter = useAnimatedValue(actualReturnsPct);
 
     // Tooltip state
     const [hovered, setHovered] = useState<number | null>(null);
@@ -73,7 +82,6 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                 style={{ width: 220, height: 220 }}
             >
                 <PieChart
-                    key={Math.round(animatedInvested) + '-' + Math.round(animatedReturns)}
                     data={data}
                     lineWidth={35}
                     rounded
@@ -99,14 +107,14 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                 <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                     <AnimatePresence mode="wait" initial={false}>
                         <motion.div
-                            key={Math.round(returnsPct)}
+                            key={Math.round(actualReturnsPct)}
                             initial={{ opacity: 0, y: 10 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.4 }}
                             className="font-playfair text-2xl font-bold text-[#D7B56D]"
                         >
-                            {Math.round(returnsPct)}%
+                            {isNaN(animatedCenter) || !isFinite(animatedCenter) ? 0 : Math.round(animatedCenter)}%
                         </motion.div>
                     </AnimatePresence>
                     <div className="font-crimson text-base text-tertiary">Returns</div>
@@ -138,4 +146,4 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
             </div>
         </div>
     );
-} 
+}

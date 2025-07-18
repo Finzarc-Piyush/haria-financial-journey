@@ -3,7 +3,7 @@ import React from 'react';
 interface CalculatorInputProps {
     label: string;
     value: number | string;
-    onChange: (value: number | string) => void;
+    onChange: (value: number) => void; // Changed to number
     type?: 'number' | 'range' | 'select';
     min?: number;
     max?: number;
@@ -18,8 +18,8 @@ interface CalculatorInputProps {
 const GOLD = '#E6C674';
 
 const formatCurrency = (val: number | string) => {
-    if (typeof val !== 'number') val = Number(val);
-    return val.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+    const num = typeof val === 'string' ? Number(val) : val;
+    return num.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 };
 
 const CalculatorInput: React.FC<CalculatorInputProps> = ({
@@ -37,12 +37,14 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
     disabled,
 }) => {
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = type === 'range' ? Number(e.target.value) : e.target.value;
+        const newValue = Number(e.target.value);
+        console.log('CalculatorInput: Slider change', { label, value: newValue });
         onChange(newValue);
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newValue = type === 'range' ? Number(e.target.value) : e.target.value;
+        const newValue = Number(e.target.value);
+        console.log('CalculatorInput: Input change', { label, value: newValue });
         onChange(newValue);
     };
 
@@ -60,7 +62,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     id={name}
                     name={name}
                     value={value}
-                    onChange={e => onChange(e.target.value)}
+                    onChange={(e) => onChange(Number(e.target.value))}
                     className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
             border-gray-300 focus:outline-none focus:border-[${GOLD}] ${error ? 'border-red-500' : ''}`}
                     disabled={disabled}
@@ -68,13 +70,14 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     <option value="" disabled hidden>
                         {label}
                     </option>
-                    {options.map(opt => (
-                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    {options.map((opt) => (
+                        <option key={opt.value} value={opt.value}>
+                            {opt.label}
+                        </option>
                     ))}
                 </select>
             ) : (
                 <div className="space-y-3">
-                    {/* Input Field */}
                     <div className="relative flex items-center">
                         <input
                             id={name}
@@ -97,8 +100,6 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                             </span>
                         )}
                     </div>
-
-                    {/* Slider */}
                     {min !== undefined && max !== undefined && (
                         <div className="relative">
                             <input
@@ -110,7 +111,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                                 onChange={handleSliderChange}
                                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E6C674]/50"
                                 style={{
-                                    background: `linear-gradient(to right, ${GOLD} 0%, ${GOLD} ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb 100%)`
+                                    background: `linear-gradient(to right, ${GOLD} 0%, ${GOLD} ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
                                 }}
                                 disabled={disabled}
                             />
@@ -118,9 +119,13 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     )}
                 </div>
             )}
-            {error && <div id={`${name}-error`} className="text-red-500 text-xs mt-1 font-crimson">{error}</div>}
+            {error && (
+                <div id={`${name}-error`} className="text-red-500 text-xs mt-1 font-crimson">
+                    {error}
+                </div>
+            )}
         </div>
     );
 };
 
-export default CalculatorInput; 
+export default CalculatorInput;
