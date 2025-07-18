@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import logo from "@/assets/logo.png";
+import { Link } from 'react-router-dom';
+import { FaRupeeSign, FaUniversity, FaUserClock, FaHeartbeat } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion';
+import logo from '@/assets/logo.png';
 
 interface NavigationProps {
   isTransparent?: boolean;
@@ -10,6 +13,8 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCalcDropdownOpen, setIsCalcDropdownOpen] = useState(false);
+  const [isCalcDropdownMobile, setIsCalcDropdownMobile] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,6 +41,29 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
     { name: 'Process', id: 'process' },
     { name: 'Contact', id: 'contact' },
     { name: 'Credentials', id: 'credentials' }
+  ];
+
+  const calculatorLinks = [
+    {
+      label: 'SIP Calculator',
+      to: '/sip-calculator',
+      icon: <FaRupeeSign className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'FD Calculator',
+      to: '/fd-calculator',
+      icon: <FaUniversity className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'Retirement Calculator',
+      to: '/retirement-calculator',
+      icon: <FaUserClock className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'Emergency Fund Calculator',
+      to: '/emergency-fund-calculator',
+      icon: <FaHeartbeat className="text-secondary w-5 h-5 mr-2" />,
+    },
   ];
 
   const navbarClass = isTransparent && !isScrolled
@@ -72,6 +100,42 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   {item.name}
                 </button>
               ))}
+              {/* Calculators Dropdown (Desktop) */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsCalcDropdownOpen(true)}
+                onMouseLeave={() => setIsCalcDropdownOpen(false)}
+              >
+                <button
+                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+                  type="button"
+                >
+                  Calculators
+                  <svg className={`ml-1 w-4 h-4 transition-transform duration-200 ${isCalcDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                </button>
+                <AnimatePresence>
+                  {isCalcDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-lg rounded-xl p-4 z-50"
+                    >
+                      {calculatorLinks.map(link => (
+                        <Link
+                          key={link.to}
+                          to={link.to}
+                          className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                        >
+                          {link.icon}
+                          {link.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
 
             {/* Desktop CTA */}
@@ -113,6 +177,39 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                     {item.name}
                   </button>
                 ))}
+                {/* Calculators Dropdown (Mobile) */}
+                <div>
+                  <button
+                    onClick={() => setIsCalcDropdownMobile(v => !v)}
+                    className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 border-b border-muted"
+                  >
+                    <span>Calculators</span>
+                    <svg className={`ml-2 w-5 h-5 transition-transform duration-200 ${isCalcDropdownMobile ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  </button>
+                  <AnimatePresence>
+                    {isCalcDropdownMobile && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.18 }}
+                        className="pl-2 pr-2 pt-2 pb-2"
+                      >
+                        {calculatorLinks.map(link => (
+                          <Link
+                            key={link.to}
+                            to={link.to}
+                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {link.icon}
+                            {link.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
                 <div className="pt-6">
                   <Button
                     onClick={() => scrollToSection('contact')}
