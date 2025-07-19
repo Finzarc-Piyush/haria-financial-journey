@@ -13,6 +13,12 @@ const SIPCalculator = lazy(() => import("./pages/SIPCalculator"));
 const FDCalculator = lazy(() => import("./pages/FDCalculator"));
 const RetirementCalculator = lazy(() => import("./pages/RetirementCalculator"));
 const EmergencyFundCalculator = lazy(() => import("./pages/EmergencyFundCalculator"));
+const LifeInsurance = lazy(() => import("./pages/LifeInsurance"));
+const GeneralInsurance = lazy(() => import("./pages/GeneralInsurance"));
+const MutualFunds = lazy(() => import("./pages/MutualFunds"));
+const EquityInvestment = lazy(() => import("./pages/EquityInvestment"));
+const FixedIncome = lazy(() => import("./pages/FixedIncome"));
+const CommodityTrading = lazy(() => import("./pages/CommodityTrading"));
 
 // ErrorBoundary component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { hasError: boolean; }> {
@@ -52,6 +58,12 @@ const App = () => (
               <Route path="/fd-calculator" element={<FDCalculator />} />
               <Route path="/retirement-calculator" element={<RetirementCalculator />} />
               <Route path="/emergency-fund-calculator" element={<EmergencyFundCalculator />} />
+              <Route path="/life-insurance" element={<LifeInsurance />} />
+              <Route path="/general-insurance" element={<GeneralInsurance />} />
+              <Route path="/mutual-funds" element={<MutualFunds />} />
+              <Route path="/equity-investment" element={<EquityInvestment />} />
+              <Route path="/fixed-income" element={<FixedIncome />} />
+              <Route path="/commodity-trading" element={<CommodityTrading />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>
