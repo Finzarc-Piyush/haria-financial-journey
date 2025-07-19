@@ -194,7 +194,7 @@ const LifeInsurance = () => {
 
                     <Button
                         size="lg"
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg animate-pulse hover:animate-none transition-all duration-300 hover:scale-105"
+                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105"
                     >
                         Get Free Consultation
                         <ArrowRight className="ml-2 h-5 w-5" />

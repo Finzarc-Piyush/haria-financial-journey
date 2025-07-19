@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ChevronDown, Shield, BarChart3, PiggyBank, Zap, Home, Calculator, Heart, Umbrella, TrendingUp, PieChart, Plus, Minus } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { FaRupeeSign, FaUniversity, FaUserClock, FaHeartbeat } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -13,8 +13,10 @@ interface NavigationProps {
 const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isInsuranceDropdownOpen, setIsInsuranceDropdownOpen] = useState(false);
+  const [isInvestmentDropdownOpen, setIsInvestmentDropdownOpen] = useState(false);
   const [isCalcDropdownOpen, setIsCalcDropdownOpen] = useState(false);
-  const [isCalcDropdownMobile, setIsCalcDropdownMobile] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -24,6 +26,25 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Disable body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      // Disable scrolling on body and html
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+    } else {
+      // Re-enable scrolling
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    return () => {
+      // Cleanup on unmount
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
@@ -32,15 +53,30 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
     }
   };
 
-  const navItems = [
-    { name: 'Home', id: 'hero' },
-    { name: 'About Us', id: 'about' },
-    { name: 'Services', id: 'services' },
-    { name: 'Results', id: 'results' },
-    { name: 'Insights', id: 'insights' },
-    { name: 'Process', id: 'process' },
-    { name: 'Contact', id: 'contact' },
-    { name: 'Credentials', id: 'credentials' }
+  const insuranceLinks = [
+    {
+      label: 'Life Insurance',
+      to: '/life-insurance',
+      icon: <Heart className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'General Insurance',
+      to: '/general-insurance',
+      icon: <Umbrella className="text-secondary w-5 h-5 mr-2" />,
+    },
+  ];
+
+  const investmentLinks = [
+    {
+      label: 'Mutual Funds',
+      to: '/mutual-funds',
+      icon: <TrendingUp className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'Equity Investment',
+      to: '/equity-investment',
+      icon: <PieChart className="text-secondary w-5 h-5 mr-2" />,
+    },
   ];
 
   const calculatorLinks = [
@@ -90,17 +126,111 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
             </div>
 
             {/* Desktop Navigation */}
-            <div className="flex-1 hidden lg:flex items-center justify-center space-x-8">
-              {navItems.map((item) => (
+            <div className="flex-1 hidden lg:flex items-center justify-center space-x-6">
+              {/* Home Link */}
+              <Link
+                to="/"
+                className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+              >
+                <Home className="w-4 h-4" />
+                Home
+              </Link>
+
+              {/* Insurance Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsInsuranceDropdownOpen(true)}
+                onMouseLeave={() => setIsInsuranceDropdownOpen(false)}
+              >
                 <button
-                  key={item.name}
-                  onClick={() => scrollToSection(item.id)}
-                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium"
+                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+                  type="button"
                 >
-                  {item.name}
+                  <Shield className="w-4 h-4" />
+                  Insurance
+                  <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isInsuranceDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
-              ))}
-              {/* Calculators Dropdown (Desktop) */}
+                <AnimatePresence>
+                  {isInsuranceDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-lg rounded-xl p-4 z-50"
+                    >
+                      {insuranceLinks.map(link => (
+                        <Link
+                          key={link.to}
+                          to={link.to}
+                          className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                        >
+                          {link.icon}
+                          {link.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Investment Dropdown */}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsInvestmentDropdownOpen(true)}
+                onMouseLeave={() => setIsInvestmentDropdownOpen(false)}
+              >
+                <button
+                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+                  type="button"
+                >
+                  <BarChart3 className="w-4 h-4" />
+                  Investment
+                  <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isInvestmentDropdownOpen ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {isInvestmentDropdownOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: 10 }}
+                      transition={{ duration: 0.18 }}
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-lg rounded-xl p-4 z-50"
+                    >
+                      {investmentLinks.map(link => (
+                        <Link
+                          key={link.to}
+                          to={link.to}
+                          className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                        >
+                          {link.icon}
+                          {link.label}
+                        </Link>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Fixed Income */}
+              <Link
+                to="/fixed-income"
+                className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+              >
+                <PiggyBank className="w-4 h-4" />
+                Fixed Income
+              </Link>
+
+              {/* Commodity Trading */}
+              <Link
+                to="/commodity-trading"
+                className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
+              >
+                <Zap className="w-4 h-4" />
+                Trading
+              </Link>
+
+              {/* Calculators Dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsCalcDropdownOpen(true)}
@@ -110,8 +240,9 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
                   type="button"
                 >
-                  Calculators
-                  <svg className={`ml-1 w-4 h-4 transition-transform duration-200 ${isCalcDropdownOpen ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                  <Calculator className="w-4 h-4" />
+                  Calculator
+                  <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isCalcDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
                 <AnimatePresence>
                   {isCalcDropdownOpen && (
@@ -165,35 +296,149 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
 
           {/* Mobile Menu */}
           {isMobileMenuOpen && (
-            <div className="lg:hidden fixed top-0 left-0 w-full min-h-screen bg-background/95 backdrop-blur-md rounded-none p-4 shadow-elegant z-[100] animate-slide-down overflow-y-auto">
-              <div className="flex flex-col space-y-6 pt-24 pb-12">
-                {navItems.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => scrollToSection(item.id)}
-                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 w-full text-left border-b border-muted"
-                    style={{ minHeight: '48px' }}
-                  >
-                    {item.name}
-                  </button>
-                ))}
-                {/* Calculators Dropdown (Mobile) */}
+            <div className="lg:hidden fixed top-0 left-0 w-full h-screen bg-background rounded-none shadow-elegant z-[100] animate-slide-down flex flex-col">
+              <div className="flex flex-col flex-1 overflow-y-auto px-4 pt-16 pb-4">
+                {/* Home Link */}
+                <Link
+                  to="/"
+                  className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 w-full text-left"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Home className="w-5 h-5 mr-3" />
+                  Home
+                </Link>
+                <hr className="border-gray-400 my-3" />
+
+                {/* Insurance Dropdown (Mobile) */}
                 <div>
                   <button
-                    onClick={() => setIsCalcDropdownMobile(v => !v)}
-                    className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 border-b border-muted"
+                    onClick={() => setOpenDropdown(openDropdown === 'insurance' ? null : 'insurance')}
+                    className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4"
                   >
-                    <span>Calculators</span>
-                    <svg className={`ml-2 w-5 h-5 transition-transform duration-200 ${isCalcDropdownMobile ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
+                    <span className="flex items-center">
+                      <Shield className="w-5 h-5 mr-3" />
+                      Insurance
+                    </span>
+                    {openDropdown === 'insurance' ? (
+                      <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    ) : (
+                      <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    )}
                   </button>
                   <AnimatePresence>
-                    {isCalcDropdownMobile && (
+                    {openDropdown === 'insurance' && (
                       <motion.div
                         initial={{ opacity: 0, height: 0 }}
                         animate={{ opacity: 1, height: 'auto' }}
                         exit={{ opacity: 0, height: 0 }}
                         transition={{ duration: 0.18 }}
-                        className="pl-2 pr-2 pt-2 pb-2"
+                        className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                      >
+                        {insuranceLinks.map(link => (
+                          <Link
+                            key={link.to}
+                            to={link.to}
+                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {link.icon}
+                            {link.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <hr className="border-gray-400 my-3" />
+
+                {/* Investment Dropdown (Mobile) */}
+                <div>
+                  <button
+                    onClick={() => setOpenDropdown(openDropdown === 'investment' ? null : 'investment')}
+                    className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4"
+                  >
+                    <span className="flex items-center">
+                      <BarChart3 className="w-5 h-5 mr-3" />
+                      Investment
+                    </span>
+                    {openDropdown === 'investment' ? (
+                      <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    ) : (
+                      <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    )}
+                  </button>
+                  <AnimatePresence>
+                    {openDropdown === 'investment' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.18 }}
+                        className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                      >
+                        {investmentLinks.map(link => (
+                          <Link
+                            key={link.to}
+                            to={link.to}
+                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {link.icon}
+                            {link.label}
+                          </Link>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+                <hr className="border-gray-400 my-3" />
+
+                {/* Fixed Income */}
+                <Link
+                  to="/fixed-income"
+                  className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 w-full text-left"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <PiggyBank className="w-5 h-5 mr-3" />
+                  Fixed Income
+                </Link>
+                <hr className="border-gray-400 my-3" />
+
+                {/* Commodity Trading */}
+                <Link
+                  to="/commodity-trading"
+                  className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4 w-full text-left"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <Zap className="w-5 h-5 mr-3" />
+                  Trading
+                </Link>
+                <hr className="border-gray-400 my-3" />
+
+                {/* Calculators Dropdown (Mobile) */}
+                <div>
+                  <button
+                    onClick={() => setOpenDropdown(openDropdown === 'calculator' ? null : 'calculator')}
+                    className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium text-xl py-4"
+                  >
+                    <span className="flex items-center">
+                      <Calculator className="w-5 h-5 mr-3" />
+                      Calculator
+                    </span>
+                    {openDropdown === 'calculator' ? (
+                      <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    ) : (
+                      <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                    )}
+                  </button>
+                  <AnimatePresence>
+                    {openDropdown === 'calculator' && (
+                      <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.18 }}
+                        className="pl-8 pr-2 pt-2 pb-2 space-y-2"
                       >
                         {calculatorLinks.map(link => (
                           <Link
@@ -210,7 +455,9 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                     )}
                   </AnimatePresence>
                 </div>
-                <div className="pt-6">
+                <hr className="border-gray-400 my-3" />
+
+                <div className="pt-6 pb-4">
                   <Button
                     onClick={() => scrollToSection('contact')}
                     className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-lg py-4"
