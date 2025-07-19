@@ -1,14 +1,18 @@
-import { useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { useCalculator } from '@/hooks';
-import { calculateRetirementCorpus } from '@/utils';
-import { validateRange } from '@/utils';
-import { CalculatorInput, ResultsDisplay, CalculatorButton, TrustBadge } from '@/components/calculators/shared';
-import Navigation from '@/components/Navigation';
-import { Card, CardHeader, CardContent } from '@/components/ui/card';
+import { useMemo } from 'react';
 import { FaUserTie } from 'react-icons/fa';
-import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from '@/components/ui/breadcrumb';
+import { useCalculator } from '@/hooks/useCalculator';
+import { calculateRetirementCorpus } from '@/utils';
+import { validateRange } from '@/utils/validators';
+import CalculatorPageLayout from '@/components/calculators/shared/CalculatorPageLayout';
+import CalculatorHero from '@/components/calculators/shared/CalculatorHero';
+import CalculatorFormCard from '@/components/calculators/shared/CalculatorFormCard';
+import CalculatorResultCard from '@/components/calculators/shared/CalculatorResultCard';
+import ChartWrapper from '@/components/calculators/shared/ChartWrapper';
+import CalculatorInput from '@/components/calculators/shared/CalculatorInput';
+import FAQSection from '@/components/calculators/shared/FAQSection';
+import TrustBadge from '@/components/calculators/shared/TrustBadge';
+import CalculatorButton from '@/components/calculators/shared/CalculatorButton';
+import RetirementBarChart from '@/components/calculators/shared/RetirementBarChart';
 
 const defaultInputs = {
     currentCorpus: 500000,
@@ -22,182 +26,157 @@ const defaultInputs = {
 };
 
 const validationRules = {
-    currentAge: (v: number) => validateRange(v, 18, 70, 'Current Age'),
-    retirementAge: (v: number) => validateRange(v, 45, 80, 'Retirement Age'),
-    monthlyExpense: (v: number) => validateRange(v, 10000, 500000, 'Monthly Expense'),
-    currentCorpus: (v: number) => validateRange(v, 0, 10000000, 'Current Savings'),
-    expectedReturns: (v: number) => validateRange(v, 6, 15, 'Expected Returns'),
+    currentAge: (v: number) => validateRange(v, 18, 70, 'Current Age') || null,
+    retirementAge: (v: number) => validateRange(v, 45, 80, 'Retirement Age') || null,
+    monthlyExpenses: (v: number) => validateRange(v, 10000, 500000, 'Monthly Expense') || null,
+    currentCorpus: (v: number) => validateRange(v, 0, 10000000, 'Current Savings') || null,
+    expectedReturns: (v: number) => validateRange(v, 6, 15, 'Expected Returns') || null,
 };
 
-const RetirementCalculator = () => {
-    useEffect(() => {
-        AOS.init({ duration: 600, easing: 'ease-out-cubic', once: true });
-        AOS.refresh();
-    }, []);
+const faqList = [
+    { question: 'How is the retirement corpus calculated?', answer: 'The calculator estimates the corpus you’ll need for retirement based on your current age, retirement age, monthly expenses, savings, and expected returns.' },
+    { question: 'What is the 25x rule?', answer: 'The 25x rule is a guideline suggesting you need 25 times your annual expenses saved to retire comfortably.' },
+    { question: 'Can I change my retirement age later?', answer: 'Yes, you can adjust your retirement age and see how it affects your required corpus.' },
+    { question: 'Are the results guaranteed?', answer: 'No, results are estimates and actual needs may vary based on inflation, lifestyle, and market returns.' },
+];
 
+function formatINR(num: number) {
+    return num.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
+}
+
+const RetirementCalculator = () => {
     const { inputs, setInputs, errors, results, warnings } = useCalculator(
         defaultInputs,
         calculateRetirementCorpus,
         validationRules
     );
 
-    type RetirementResults = {
-        corpus: number;
-        invested: number;
-        returns: number;
+    const corpus = results?.corpus || 0;
+    // Fallback to 0 if not present, since results may not have these properties
+    const invested = (results && 'invested' in results) ? (results as any).invested || 0 : 0;
+    const returns = (results && 'returns' in results) ? (results as any).returns || 0 : 0;
+
+    const metrics = useMemo(() => [
+        { label: 'Corpus Needed', value: Math.round(corpus), currency: true },
+        { label: 'Total Invested', value: Math.round(invested), currency: true },
+        { label: 'Returns Earned', value: Math.round(returns), currency: true },
+        { label: 'Expected Returns (%)', value: inputs.expectedReturns, currency: false },
+    ], [corpus, invested, returns, inputs.expectedReturns]);
+
+    const explanations = useMemo(() => [
+        {
+            label: 'Corpus Needed',
+            value: formatINR(corpus),
+            description: 'Estimated amount you need at retirement to cover your expenses.'
+        },
+        {
+            label: 'Total Invested',
+            value: formatINR(invested),
+            description: 'Total money you will invest until retirement.'
+        },
+        {
+            label: 'Returns Earned',
+            value: formatINR(returns),
+            description: 'Estimated profit earned on your investments.'
+        },
+        {
+            label: 'Expected Returns (%)',
+            value: inputs.expectedReturns + '%',
+            description: 'Annual rate of return assumed for your investments.'
+        },
+    ], [corpus, invested, returns, inputs.expectedReturns]);
+
+    const handleInputChange = (key) => (value) => {
+        setInputs((prev) => ({ ...prev, [key]: value }));
     };
 
-    const safeResults = (results ?? {}) as RetirementResults;
-
-    const corpus = safeResults.corpus || 0;
-    const invested = safeResults.invested || 0;
-    const returns = safeResults.returns || 0;
-
     return (
-        <>
-            <Navigation isTransparent={false} />
-            <div className="pt-20">
-                {/* Breadcrumb Navigation */}
-                <div className="w-full max-w-6xl mx-auto px-4 mb-8" data-aos="fade-down" data-aos-duration="600" data-aos-easing="ease-out-cubic">
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem>
-                                <BreadcrumbLink href="/">Home</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Retirement Calculator</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
+        <CalculatorPageLayout>
+            <CalculatorHero
+                title="Retirement Calculator"
+                subtitle="Plan your financial freedom with confidence"
+                breadcrumbs={[
+                    { label: 'Invest Smart', to: '/' },
+                    { label: 'Retirement Calculator' }
+                ]}
+                icon={<FaUserTie />}
+            />
+            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 px-4 items-stretch">
+                {/* Left: Form */}
+                <div className="col-span-1 flex items-center">
+                    <CalculatorFormCard
+                        title="Retirement Details"
+                        subtitle="Enter your retirement planning details below"
+                    >
+                        <CalculatorInput
+                            label="Current Age"
+                            value={inputs.currentAge}
+                            onChange={handleInputChange('currentAge')}
+                            min={18}
+                            max={70}
+                            error={errors.currentAge}
+                        />
+                        <CalculatorInput
+                            label="Retirement Age"
+                            value={inputs.retirementAge}
+                            onChange={handleInputChange('retirementAge')}
+                            min={45}
+                            max={80}
+                            error={errors.retirementAge}
+                        />
+                        <CalculatorInput
+                            label="Monthly Expense (₹)"
+                            value={inputs.monthlyExpenses}
+                            onChange={handleInputChange('monthlyExpenses')}
+                            min={10000}
+                            max={500000}
+                            step={1000}
+                            currency
+                            error={errors.monthlyExpenses}
+                        />
+                        <CalculatorInput
+                            label="Current Savings (₹)"
+                            value={inputs.currentCorpus}
+                            onChange={handleInputChange('currentCorpus')}
+                            min={0}
+                            max={10000000}
+                            step={10000}
+                            currency
+                            error={errors.currentCorpus}
+                        />
+                        <CalculatorInput
+                            label="Expected Returns (%)"
+                            value={inputs.expectedReturns}
+                            onChange={handleInputChange('expectedReturns')}
+                            min={6}
+                            max={15}
+                            step={0.5}
+                            error={errors.expectedReturns}
+                        />
+                        {warnings.length > 0 && (
+                            <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
+                                {warnings.map((w, i) => <div key={i}>{w}</div>)}
+                            </div>
+                        )}
+                    </CalculatorFormCard>
                 </div>
-                <div className="max-w-7xl mx-auto grid grid-cols-12 gap-8 py-12 px-4 items-stretch">
-                    {/* Input Section */}
-                    <div className="col-span-12 lg:col-span-6 flex items-center" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-out-cubic">
-                        <Card className="w-full max-w-xl mx-auto h-full bg-white/80 backdrop-blur-lg shadow-xl rounded-2xl border border-[#E6C674]/30 overflow-hidden">
-                            <CardHeader className="pb-6 bg-gradient-to-r from-[#F5F1E8] to-[#E6C674]/20">
-                                <div className="flex items-center gap-3">
-                                    <FaUserTie className="text-2xl text-[#E6C674]" />
-                                    <div>
-                                        <h2 className="font-playfair text-2xl font-bold text-secondary">Retirement Details</h2>
-                                        <p className="font-crimson text-base text-tertiary">Enter your retirement planning details below</p>
-                                    </div>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="p-8 space-y-6">
-                                <div data-aos="fade-up" data-aos-delay="0">
-                                    <CalculatorInput
-                                        label="Current Age"
-                                        value={inputs.currentAge}
-                                        onChange={v => setInputs(i => ({ ...i, currentAge: Number(v) }))}
-                                        min={18}
-                                        max={70}
-                                        error={errors.currentAge}
-                                    />
-                                </div>
-                                <div data-aos="fade-up" data-aos-delay="100">
-                                    <CalculatorInput
-                                        label="Retirement Age"
-                                        value={inputs.retirementAge}
-                                        onChange={v => setInputs(i => ({ ...i, retirementAge: Number(v) }))}
-                                        min={45}
-                                        max={80}
-                                        error={errors.retirementAge}
-                                    />
-                                </div>
-                                <div data-aos="fade-up" data-aos-delay="200">
-                                    <CalculatorInput
-                                        label="Monthly Expense (₹)"
-                                        value={inputs.monthlyExpenses}
-                                        onChange={v => setInputs(i => ({ ...i, monthlyExpenses: Number(v) }))}
-                                        min={10000}
-                                        max={500000}
-                                        step={1000}
-                                        currency
-                                        error={errors.monthlyExpense}
-                                    />
-                                </div>
-                                <div data-aos="fade-up" data-aos-delay="300">
-                                    <CalculatorInput
-                                        label="Current Savings (₹)"
-                                        value={inputs.currentCorpus}
-                                        onChange={v => setInputs(i => ({ ...i, currentCorpus: Number(v) }))}
-                                        min={0}
-                                        max={10000000}
-                                        step={10000}
-                                        currency
-                                        error={errors.currentCorpus}
-                                    />
-                                </div>
-                                <div data-aos="fade-up" data-aos-delay="400">
-                                    <CalculatorInput
-                                        label="Expected Returns (%)"
-                                        value={inputs.expectedReturns}
-                                        onChange={v => setInputs(i => ({ ...i, expectedReturns: Number(v) }))}
-                                        min={6}
-                                        max={15}
-                                        step={0.5}
-                                        error={errors.expectedReturns}
-                                    />
-                                </div>
-                                {warnings.length > 0 && (
-                                    <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
-                                        {warnings.map(w => <div key={w}>{w}</div>)}
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Card>
-                    </div>
-                    {/* Results Section */}
-                    <div className="col-span-12 lg:col-span-5 flex items-center" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-out-cubic">
-                        <Card className="w-full max-w-xl mx-auto h-full bg-gradient-to-br from-[#F5F1E8]/90 to-white/80 backdrop-blur-lg rounded-2xl shadow-xl border border-[#E6C674]/30 overflow-hidden">
-                            <CardHeader className="pb-6 bg-gradient-to-r from-[#E6C674]/10 to-[#E7BBA3]/10">
-                                <div className="text-center">
-                                    <h2 className="font-playfair text-2xl font-bold text-secondary mb-1">Retirement Summary</h2>
-                                    <p className="font-crimson text-sm text-tertiary">Your retirement projection</p>
-                                </div>
-                            </CardHeader>
-                            <CardContent className="p-8 space-y-6">
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div data-aos="fade-up" data-aos-delay="0">
-                                        <ResultsDisplay value={Math.round(corpus)} label="Corpus Needed" currency={true} />
-                                    </div>
-                                    <div data-aos="fade-up" data-aos-delay="100">
-                                        <ResultsDisplay value={Math.round(invested)} label="Total Invested" currency={true} />
-                                    </div>
-                                    <div data-aos="fade-up" data-aos-delay="200">
-                                        <ResultsDisplay value={Math.round(returns)} label="Returns Earned" currency={true} />
-                                    </div>
-                                    <div data-aos="fade-up" data-aos-delay="300">
-                                        <ResultsDisplay value={Math.round(inputs.expectedReturns)} label="Expected Returns (%)" currency={false} />
-                                    </div>
-                                </div>
-                                {/* You can add a donut/pie chart here if desired, matching SIP style */}
-                            </CardContent>
-                        </Card>
-                    </div>
+                {/* Right: Results/Chart */}
+                <div className="col-span-1 flex items-center">
+                    <CalculatorResultCard
+                        title="Retirement Summary"
+                        subtitle="Your retirement projection"
+                        metrics={metrics}
+                        chart={
+                            <ChartWrapper>
+                                <RetirementBarChart corpus={corpus} invested={invested} returns={returns} />
+                            </ChartWrapper>
+                        }
+                        explanations={explanations}
+                    />
                 </div>
-                {/* How this calculator works section */}
-                <section className="max-w-4xl mx-auto my-12 bg-[#f9f5ef] rounded-2xl shadow p-8 md:p-12" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-out-cubic">
-                    <h3 className="font-playfair text-xl md:text-2xl font-semibold text-[#7b5e3e] mb-2">How this calculator works</h3>
-                    <p className="font-crimson text-base md:text-lg text-[#7b5e3e]/80">The Retirement Calculator estimates the corpus you’ll need for retirement based on your current age, retirement age, monthly expenses, savings, and expected returns. Adjust the inputs to see how your plan changes.</p>
-                </section>
-                {/* FAQ Section */}
-                <section className="max-w-4xl mx-auto px-4 py-12" data-aos="fade-up" data-aos-duration="600" data-aos-easing="ease-out-cubic">
-                    <div className="bg-[#f9f5ef] rounded-2xl shadow-lg p-8 md:p-12">
-                        <div className="text-center mb-8">
-                            <h2 className="font-playfair text-2xl md:text-3xl font-semibold text-[#7b5e3e] mb-2">Frequently Asked Questions</h2>
-                            <p className="font-crimson text-base md:text-lg text-[#b6a48a]">Everything you need to know about retirement planning</p>
-                        </div>
-                        {/* Use the same Accordion/FAQ structure as SIPCalculator */}
-                    </div>
-                </section>
-                <CalculatorButton className="mt-6">Get personalized retirement roadmap</CalculatorButton>
-                <TrustBadge className="mt-8" />
-                {/* Disclaimer (if present in SIP) */}
-                <div className="max-w-4xl mx-auto text-xs text-[#7b5e3e]/70 mt-8 text-center">*Disclaimer: The results provided by this calculator are for informational purposes only and do not constitute financial advice. Please consult a qualified advisor for personalized recommendations.</div>
             </div>
-        </>
+            <FAQSection faqs={faqList} />
+        </CalculatorPageLayout>
     );
 };
 
