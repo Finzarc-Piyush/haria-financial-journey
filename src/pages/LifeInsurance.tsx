@@ -312,30 +312,32 @@ const LifeInsurance = () => {
                     </div>
 
                     {/* Testimonials Carousel */}
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-premium p-8">
-                        <div className="flex transition-transform duration-500 ease-in-out" style={{
-                            transform: `translateX(-${testimonialIndex * 100}%)`
-                        }}>
-                            {testimonials.map((testimonial, index) => (
-                                <div key={index} className="w-full flex-shrink-0 text-center">
-                                    <div className="flex justify-center mb-4">
-                                        {[...Array(testimonial.rating)].map((_, i) => (
-                                            <Star key={i} className="h-6 w-6 text-accent fill-current" />
-                                        ))}
-                                    </div>
-                                    <p className="text-xl font-crimson text-foreground mb-6 italic">
-                                        "{testimonial.text}"
-                                    </p>
-                                    <div>
-                                        <div className="font-playfair font-semibold text-foreground">
-                                            {testimonial.name}
+                    <div className="relative overflow-hidden rounded-2xl bg-gradient-premium p-4 md:p-8">
+                        <div className="w-full overflow-hidden">
+                            <div className="flex transition-transform duration-500 ease-in-out" style={{
+                                transform: `translateX(-${testimonialIndex * 100}%)`
+                            }}>
+                                {testimonials.map((testimonial, index) => (
+                                    <div key={index} className="w-full flex-shrink-0 text-center px-4">
+                                        <div className="flex justify-center mb-4">
+                                            {[...Array(testimonial.rating)].map((_, i) => (
+                                                <Star key={i} className="h-6 w-6 text-accent fill-current" />
+                                            ))}
                                         </div>
-                                        <div className="text-sm text-muted-foreground">
-                                            {testimonial.role}
+                                        <p className="text-lg md:text-xl font-crimson text-foreground mb-6 italic">
+                                            "{testimonial.text}"
+                                        </p>
+                                        <div>
+                                            <div className="font-playfair font-semibold text-foreground">
+                                                {testimonial.name}
+                                            </div>
+                                            <div className="text-sm text-muted-foreground">
+                                                {testimonial.role}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
+                                ))}
+                            </div>
                         </div>
 
                         {/* Carousel Indicators */}
@@ -373,8 +375,7 @@ const LifeInsurance = () => {
                             {processSteps.map((step, index) => (
                                 <div
                                     key={index}
-                                    className={`process-step text-center relative ${index <= currentStep ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                                        } transition-all duration-700`}
+                                    className="process-step text-center relative opacity-100 translate-y-0 transition-all duration-700"
                                     style={{ transitionDelay: `${index * 200}ms` }}
                                 >
                                     <div className="relative z-10">
