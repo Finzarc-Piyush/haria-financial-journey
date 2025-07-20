@@ -8,6 +8,7 @@ import { Suspense, lazy } from "react";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Footer from "@/components/Footer";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const SIPCalculator = lazy(() => import("./pages/SIPCalculator"));
 const FDCalculator = lazy(() => import("./pages/FDCalculator"));
@@ -51,6 +52,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <Suspense fallback={<div className="w-full text-center py-16 text-lg font-playfair">Loading calculator...</div>}>
             <Routes>
               <Route path="/" element={<Index />} />
