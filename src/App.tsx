@@ -68,8 +68,8 @@ const App = () => (
               <Route path="/commodity-trading" element={<CommodityTrading />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <Footer />
           </Suspense>
-          <Footer />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

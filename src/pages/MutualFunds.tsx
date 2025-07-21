@@ -24,10 +24,38 @@ import {
     Calendar,
     Users
 } from "lucide-react";
+import { motion, useInView } from 'framer-motion';
+
+// Animation variants
+const staggerContainer = {
+    hidden: {},
+    show: {
+        transition: {
+            staggerChildren: 0.15,
+            delayChildren: 0.1
+        }
+    }
+};
+const fadeIn = {
+    hidden: { opacity: 0 },
+    show: { opacity: 1, transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } }
+};
+const slideUp = {
+    hidden: { opacity: 0, y: 40 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } }
+};
+const zoomIn = {
+    hidden: { opacity: 0, scale: 0.95 },
+    show: { opacity: 1, scale: 1, transition: { duration: 0.6, ease: [0.42, 0, 0.58, 1] as [number, number, number, number] } }
+};
 
 const MutualFunds = () => {
     const [heroInView, setHeroInView] = useState(true);
-    const [morphingText, setMorphingText] = useState("Grow");
+    const [morphingText, setMorphingText] = useState("");
+    const [typewriterIndex, setTypewriterIndex] = useState(0);
+    const [typewriterChar, setTypewriterChar] = useState(0);
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [isPaused, setIsPaused] = useState(false);
     const [sipAmount, setSipAmount] = useState(5000);
     const [sipDuration, setSipDuration] = useState(10);
     const [expectedReturn, setExpectedReturn] = useState(12);
@@ -39,6 +67,36 @@ const MutualFunds = () => {
 
     const morphingTexts = ["Grow", "Prosper", "Achieve"];
     const morphingIndex = Math.floor((Date.now() / 2000) % 3);
+
+    useEffect(() => {
+        let timeout: NodeJS.Timeout | undefined;
+        const currentWord = morphingTexts[typewriterIndex];
+        if (!isDeleting && typewriterChar < currentWord.length) {
+            timeout = setTimeout(() => {
+                setMorphingText(currentWord.slice(0, typewriterChar + 1));
+                setTypewriterChar(typewriterChar + 1);
+            }, 90);
+        } else if (!isDeleting && typewriterChar === currentWord.length) {
+            timeout = setTimeout(() => setIsDeleting(true), 300); // increased pause
+        } else if (isDeleting && typewriterChar > 0) {
+            timeout = setTimeout(() => {
+                setMorphingText(currentWord.slice(0, typewriterChar - 1));
+                setTypewriterChar(typewriterChar - 1);
+            }, 90);
+        } else if (isDeleting && typewriterChar === 0) {
+            setIsDeleting(false);
+            setTypewriterIndex((prev) => (prev + 1) % morphingTexts.length);
+        }
+        return () => {
+            if (timeout) clearTimeout(timeout);
+        };
+    }, [typewriterChar, isDeleting, typewriterIndex, morphingTexts]);
+
+    // Reset typewriterChar and morphingText when typewriterIndex changes
+    useEffect(() => {
+        setTypewriterChar(0);
+        setMorphingText("");
+    }, [typewriterIndex]);
 
     const fundTypes = [
         {
@@ -155,6 +213,40 @@ const MutualFunds = () => {
         return "text-red-500";
     };
 
+    // --- HERO SECTION ---
+    const heroHeadingRef = useRef(null);
+    const heroHeadingInView = useInView(heroHeadingRef, { once: true, amount: 0.3 });
+    const heroPRef = useRef(null);
+    const heroPInView = useInView(heroPRef, { once: true, amount: 0.3 });
+
+    // --- SIP CALCULATOR SECTION ---
+    const sipHeadingRef = useRef(null);
+    const sipHeadingInView = useInView(sipHeadingRef, { once: true, amount: 0.3 });
+    const sipPRef = useRef(null);
+    const sipPInView = useInView(sipPRef, { once: true, amount: 0.3 });
+
+    // --- FUND TYPES SECTION ---
+    const fundTypesHeadingRef = useRef(null);
+    const fundTypesHeadingInView = useInView(fundTypesHeadingRef, { once: true, amount: 0.3 });
+    const fundTypesPRef = useRef(null);
+    const fundTypesPInView = useInView(fundTypesPRef, { once: true, amount: 0.3 });
+    const fundTypesGridRef = useRef(null);
+    const fundTypesGridInView = useInView(fundTypesGridRef, { once: true, amount: 0.3 });
+
+    // --- TOP FUNDS SECTION ---
+    const topFundsHeadingRef = useRef(null);
+    const topFundsHeadingInView = useInView(topFundsHeadingRef, { once: true, amount: 0.3 });
+    const topFundsPRef = useRef(null);
+    const topFundsPInView = useInView(topFundsPRef, { once: true, amount: 0.3 });
+    const topFundsGridRef = useRef(null);
+    const topFundsGridInView = useInView(topFundsGridRef, { once: true, amount: 0.3 });
+
+    // --- CTA SECTION ---
+    const ctaHeadingRef = useRef(null);
+    const ctaHeadingInView = useInView(ctaHeadingRef, { once: true, amount: 0.3 });
+    const ctaPRef = useRef(null);
+    const ctaPInView = useInView(ctaPRef, { once: true, amount: 0.3 });
+
     return (
         <div className="min-h-screen bg-background">
             <Navigation isTransparent={heroInView} />
@@ -186,7 +278,13 @@ const MutualFunds = () => {
                 </div>
 
                 <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6">
+                    <motion.h1
+                        ref={heroHeadingRef}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate={heroHeadingInView ? "show" : "hidden"}
+                        className="text-5xl md:text-7xl font-playfair font-bold mb-6"
+                    >
                         <span className="inline-block mr-4">Grow</span>
                         <span className="inline-block mr-4 text-accent">→</span>
                         <span className="inline-block mr-4">Prosper</span>
@@ -194,11 +292,17 @@ const MutualFunds = () => {
                         <span className="inline-block text-accent animate-pulse">
                             {morphingText}
                         </span>
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-xl md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p
+                        ref={heroPRef}
+                        variants={fadeIn}
+                        initial="hidden"
+                        animate={heroPInView ? "show" : "hidden"}
+                        className="text-xl md:text-2xl font-crimson mb-8 text-white/90"
+                    >
                         Build wealth through systematic investment in mutual funds
-                    </p>
+                    </motion.p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
@@ -222,14 +326,20 @@ const MutualFunds = () => {
             {/* SIP Calculator Section */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div
+                        ref={sipHeadingRef}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate={sipHeadingInView ? "show" : "hidden"}
+                        className="text-center mb-16"
+                    >
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             SIP Calculator
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Plan your investments and see the power of compounding
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Calculator Inputs */}
@@ -359,153 +469,191 @@ const MutualFunds = () => {
             {/* Fund Types Section */}
             <section className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div
+                        ref={fundTypesHeadingRef}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate={fundTypesHeadingInView ? "show" : "hidden"}
+                        className="text-center mb-16"
+                    >
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Investment Categories
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Choose the right fund type based on your goals and risk appetite
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div
+                        ref={fundTypesGridRef}
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate={fundTypesGridInView ? "show" : "hidden"}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    >
                         {fundTypes.map((fund, index) => (
-                            <Card
-                                key={fund.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedFund === fund.id ? 'border-accent/50 bg-accent/5' : ''
-                                    }`}
-                                onClick={() => setSelectedFund(fund.id)}
-                                style={{
-                                    animationDelay: `${index * 0.1}s`
-                                }}
-                            >
-                                <div className={`absolute inset-0 bg-gradient-to-br ${fund.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                            <motion.div key={fund.id} variants={zoomIn}>
+                                <Card
+                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedFund === fund.id ? 'border-accent/50 bg-accent/5' : ''
+                                        }`}
+                                    onClick={() => setSelectedFund(fund.id)}
+                                    style={{
+                                        animationDelay: `${index * 0.1}s`
+                                    }}
+                                >
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${fund.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
-                                <CardHeader className="relative z-10">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <fund.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
-                                        <Badge className={`${fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
-                                            fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
-                                                'bg-green-500/20 text-green-600'
-                                            }`}>
-                                            {fund.risk} Risk
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
-                                        {fund.title}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-4 font-crimson text-sm">
-                                        {fund.description}
-                                    </p>
-
-                                    <div className="mb-4">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm text-muted-foreground">Expected Returns</span>
-                                            <span className="font-semibold text-accent">{fund.returns}</span>
+                                    <CardHeader className="relative z-10">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <fund.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                            <Badge className={`${fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
+                                                fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
+                                                    'bg-green-500/20 text-green-600'
+                                                }`}>
+                                                {fund.risk} Risk
+                                            </Badge>
                                         </div>
-                                    </div>
+                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                            {fund.title}
+                                        </CardTitle>
+                                    </CardHeader>
 
-                                    <div className="space-y-2 mb-6">
-                                        {fund.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-sm">
-                                                <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2 flex-shrink-0" />
-                                                <span className="text-muted-foreground">{feature}</span>
+                                    <CardContent className="relative z-10">
+                                        <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                            {fund.description}
+                                        </p>
+
+                                        <div className="mb-4">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-sm text-muted-foreground">Expected Returns</span>
+                                                <span className="font-semibold text-accent">{fund.returns}</span>
                                             </div>
-                                        ))}
-                                    </div>
+                                        </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
-                                        Explore Funds
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                        <div className="space-y-2 mb-6">
+                                            {fund.features.map((feature, idx) => (
+                                                <div key={idx} className="flex items-center text-sm">
+                                                    <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2 flex-shrink-0" />
+                                                    <span className="text-muted-foreground">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                            Explore Funds
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Top Performing Funds */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div
+                        ref={topFundsHeadingRef}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate={topFundsHeadingInView ? "show" : "hidden"}
+                        className="text-center mb-16"
+                    >
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Top Performing Funds
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Our best-performing mutual fund schemes
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div
+                        ref={topFundsGridRef}
+                        variants={staggerContainer}
+                        initial="hidden"
+                        animate={topFundsGridInView ? "show" : "hidden"}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    >
                         {topFunds.map((fund, index) => (
-                            <Card
-                                key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`
-                                }}
-                            >
-                                <CardHeader>
-                                    <div className="flex items-center justify-between mb-2">
-                                        <Badge className="bg-accent/20 text-accent border-accent/30">
-                                            {fund.category}
-                                        </Badge>
-                                        <div className="flex items-center">
-                                            <Star className="h-4 w-4 text-yellow-500 fill-current mr-1" />
-                                            <span className="text-sm font-semibold">{fund.rating}</span>
-                                        </div>
-                                    </div>
-                                    <CardTitle className="text-lg font-playfair text-foreground">
-                                        {fund.name}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">NAV</span>
-                                            <span className="font-semibold text-foreground">{fund.nav}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">1 Year Returns</span>
-                                            <span className="font-semibold text-green-600">{fund.returns}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Risk Level</span>
-                                            <Badge variant="secondary" className={
-                                                fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
-                                                    fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
-                                                        'bg-green-500/20 text-green-600'
-                                            }>
-                                                {fund.risk}
+                            <motion.div key={index} variants={zoomIn}>
+                                <Card
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                    style={{
+                                        animationDelay: `${index * 0.1}s`
+                                    }}
+                                >
+                                    <CardHeader>
+                                        <div className="flex items-center justify-between mb-2">
+                                            <Badge className="bg-accent/20 text-accent border-accent/30">
+                                                {fund.category}
                                             </Badge>
+                                            <div className="flex items-center">
+                                                <Star className="h-4 w-4 text-yellow-500 fill-current mr-1" />
+                                                <span className="text-sm font-semibold">{fund.rating}</span>
+                                            </div>
                                         </div>
-                                    </div>
+                                        <CardTitle className="text-lg font-playfair text-foreground">
+                                            {fund.name}
+                                        </CardTitle>
+                                    </CardHeader>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
-                                        Invest Now
-                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                    <CardContent>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-muted-foreground">NAV</span>
+                                                <span className="font-semibold text-foreground">{fund.nav}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-muted-foreground">1 Year Returns</span>
+                                                <span className="font-semibold text-green-600">{fund.returns}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-muted-foreground">Risk Level</span>
+                                                <Badge variant="secondary" className={
+                                                    fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
+                                                        fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
+                                                            'bg-green-500/20 text-green-600'
+                                                }>
+                                                    {fund.risk}
+                                                </Badge>
+                                            </div>
+                                        </div>
+
+                                        <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+                                            Invest Now
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* CTA Section */}
             <section className="py-20 px-4 bg-gradient-accent">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
+                    <motion.h2
+                        ref={ctaHeadingRef}
+                        variants={slideUp}
+                        initial="hidden"
+                        animate={ctaHeadingInView ? "show" : "hidden"}
+                        className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6"
+                    >
                         Start Your Investment Journey Today
-                    </h2>
-                    <p className="text-xl font-crimson text-white/80 mb-8">
+                    </motion.h2>
+                    <motion.p
+                        ref={ctaPRef}
+                        variants={fadeIn}
+                        initial="hidden"
+                        animate={ctaPInView ? "show" : "hidden"}
+                        className="text-xl font-crimson text-white/80 mb-8"
+                    >
                         Begin with as little as ₹500 and watch your wealth grow
-                    </p>
+                    </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
                             Start SIP
