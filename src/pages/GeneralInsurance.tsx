@@ -22,6 +22,7 @@ import {
     Award,
     TrendingUp
 } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const GeneralInsurance = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -29,6 +30,9 @@ const GeneralInsurance = () => {
     const [animatedText, setAnimatedText] = useState("");
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+    const [activeTabRect, setActiveTabRect] = useState({ left: 0, width: 0 });
+    const tabsListRef = useRef<HTMLDivElement>(null);
+    const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
     const fullText = "Complete Protection for Your Assets";
 
@@ -164,7 +168,7 @@ const GeneralInsurance = () => {
             } else {
                 clearInterval(timer);
             }
-        }, 100);
+        }, 50);
         return () => clearInterval(timer);
     }, []);
 
@@ -176,6 +180,22 @@ const GeneralInsurance = () => {
         window.addEventListener('mousemove', handleMouseMove);
         return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
+
+    // Update active tab indicator position on tab change or resize
+    useEffect(() => {
+        function updateIndicator() {
+            const activeTab = tabRefs.current[selectedService];
+            const list = tabsListRef.current;
+            if (activeTab && list) {
+                const tabRect = activeTab.getBoundingClientRect();
+                const listRect = list.getBoundingClientRect();
+                setActiveTabRect({ left: tabRect.left - listRect.left, width: tabRect.width });
+            }
+        }
+        updateIndicator();
+        window.addEventListener('resize', updateIndicator);
+        return () => window.removeEventListener('resize', updateIndicator);
+    }, [selectedService]);
 
     const currentService = services.find(s => s.id === selectedService);
 
@@ -196,24 +216,47 @@ const GeneralInsurance = () => {
                 </div>
 
                 <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden">
+                    <motion.h1
+                        className="text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                    >
                         <span className="inline-block animate-typewriter">
                             {animatedText}
                             <span className="animate-pulse">|</span>
                         </span>
-                    </h1>
-
-                    <p className="text-xl md:text-2xl font-crimson mb-12 text-white/90">
+                    </motion.h1>
+                    <motion.p
+                        className="text-xl md:text-2xl font-crimson mb-12 text-white/90"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+                    >
                         Comprehensive insurance solutions for all your assets and needs
-                    </p>
-
-                    {/* Interactive Service Selector */}
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
-                        {services.map((service) => (
-                            <button
+                    </motion.p>
+                    <motion.div
+                        className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        variants={{
+                            hidden: {},
+                            show: {
+                                transition: {
+                                    staggerChildren: 0.12,
+                                    delayChildren: 0.1
+                                }
+                            }
+                        }}
+                    >
+                        {services.map((service, index) => (
+                            <motion.button
                                 key={service.id}
                                 onClick={() => setSelectedService(service.id)}
-                                className={`group relative p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 ${selectedService === service.id
+                                className={`group relative p-6 rounded-2xl transition-all duration-500 transform w-full ${selectedService === service.id
                                     ? 'bg-white/20 backdrop-blur-sm border-2 border-white/50'
                                     : 'bg-white/10 backdrop-blur-sm border-2 border-transparent hover:border-white/30'
                                     }`}
@@ -223,19 +266,37 @@ const GeneralInsurance = () => {
                                 }}
                                 onMouseEnter={() => setHoveredCard(service.id)}
                                 onMouseLeave={() => setHoveredCard(null)}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                                whileHover={{ scale: 1.05, transition: { duration: 0.01 } }}
+                                whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
                             >
-                                <service.icon className="h-8 w-8 mx-auto mb-3 text-white group-hover:scale-110 transition-transform duration-300" />
-                                <div className="text-sm font-semibold text-white">{service.title}</div>
-                            </button>
+                                <div>
+                                    <service.icon className="h-8 w-8 mx-auto mb-3 text-white group-hover:scale-110 transition-transform duration-300" />
+                                </div>
+                                <div>
+                                    <div className="text-sm font-semibold text-white truncate" style={{ width: '8.5rem', display: 'inline-block' }}>{service.title}</div>
+                                </div>
+                            </motion.button>
                         ))}
-                    </div>
-
+                    </motion.div>
                     <Button
-                        size="lg"
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105"
+                        asChild
+                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg hover:scale-105"
                     >
-                        Get Instant Quote
-                        <ArrowRight className="ml-2 h-5 w-5" />
+                        <motion.button
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.7, delay: 0.2 }}
+                            whileHover={{ scale: 1.05, transition: { duration: 0.01 } }}
+                            whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
+                        >
+                            Get Instant Quote
+                            <ArrowRight className="ml-2 h-5 w-5" />
+                        </motion.button>
                     </Button>
                 </div>
             </section>
@@ -244,115 +305,167 @@ const GeneralInsurance = () => {
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                        <motion.h2
+                            className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                        >
                             {currentService?.title}
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p
+                            className="text-xl font-crimson text-muted-foreground"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+                        >
                             {currentService?.description}
-                        </p>
+                        </motion.p>
                     </div>
 
                     {/* Service Cards with Advanced Animations */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <motion.div
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        variants={{
+                            hidden: {},
+                            show: {
+                                transition: {
+                                    staggerChildren: 0.12,
+                                    delayChildren: 0.1
+                                }
+                            }
+                        }}
+                    >
                         {currentService?.subCategories.map((subCategory, index) => (
-                            <Card
+                            <motion.div
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden relative"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`,
-                                    transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(`${currentService.id}-${index}`)}
-                                onMouseLeave={() => setHoveredCard(null)}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                             >
-                                {/* Animated Background Gradient */}
-                                <div className={`absolute inset-0 bg-gradient-to-br ${currentService.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                                <Card
+                                    key={index}
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden relative"
+                                    style={{
+                                        animationDelay: `${index * 0.1}s`,
+                                        transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                    }}
+                                    onMouseEnter={() => setHoveredCard(`${currentService.id}-${index}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
+                                >
+                                    {/* Animated Background Gradient */}
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${currentService.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
-                                <CardHeader className="relative z-10">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="relative">
-                                            <subCategory.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
-                                            {subCategory.badge === "99% claims settled" && (
-                                                <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                                    <CheckCircle className="h-3 w-3 text-white" />
+                                    <CardHeader className="relative z-10">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <div className="relative">
+                                                <subCategory.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                                {subCategory.badge === "99% claims settled" && (
+                                                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                                                        <CheckCircle className="h-3 w-3 text-white" />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <Badge className="bg-accent/20 text-accent border-accent/30 animate-pulse">
+                                                {subCategory.badge}
+                                            </Badge>
+                                        </div>
+                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                            {subCategory.name}
+                                        </CardTitle>
+                                    </CardHeader>
+
+                                    <CardContent className="relative z-10">
+                                        <p className="text-muted-foreground mb-6 font-crimson">
+                                            {subCategory.description}
+                                        </p>
+
+                                        {/* Animated Progress Bar for Claims Settlement */}
+                                        {subCategory.badge === "99% claims settled" && (
+                                            <div className="mb-6">
+                                                <div className="flex justify-between text-sm mb-2">
+                                                    <span className="text-muted-foreground">Claims Settlement Rate</span>
+                                                    <span className="font-semibold text-accent">99%</span>
                                                 </div>
-                                            )}
-                                        </div>
-                                        <Badge className="bg-accent/20 text-accent border-accent/30 animate-pulse">
-                                            {subCategory.badge}
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
-                                        {subCategory.name}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-6 font-crimson">
-                                        {subCategory.description}
-                                    </p>
-
-                                    {/* Animated Progress Bar for Claims Settlement */}
-                                    {subCategory.badge === "99% claims settled" && (
-                                        <div className="mb-6">
-                                            <div className="flex justify-between text-sm mb-2">
-                                                <span className="text-muted-foreground">Claims Settlement Rate</span>
-                                                <span className="font-semibold text-accent">99%</span>
+                                                <div className="w-full bg-muted rounded-full h-2">
+                                                    <div
+                                                        className="bg-gradient-to-r from-green-500 to-accent h-2 rounded-full transition-all duration-1000 ease-out"
+                                                        style={{ width: '99%' }}
+                                                    />
+                                                </div>
                                             </div>
-                                            <div className="w-full bg-muted rounded-full h-2">
-                                                <div
-                                                    className="bg-gradient-to-r from-green-500 to-accent h-2 rounded-full transition-all duration-1000 ease-out"
-                                                    style={{ width: '99%' }}
-                                                />
-                                            </div>
-                                        </div>
-                                    )}
+                                        )}
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
-                                        Get Quote
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                            Get Quote
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
 
                     {/* Service-specific Features */}
-                    <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8">
-                        <h3 className="text-2xl font-playfair font-bold text-foreground mb-6 text-center">
+                    <motion.div
+                        className="bg-white/50 backdrop-blur-sm rounded-2xl p-8"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                    >
+                        <motion.h3
+                            className="text-2xl font-playfair font-bold text-foreground mb-6 text-center"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                        >
                             Why Choose Our {currentService?.title}?
-                        </h3>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                            <div className="text-center">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
-                                    <Shield className="h-8 w-8 text-accent" />
-                                </div>
-                                <h4 className="font-playfair font-semibold text-foreground mb-2">Comprehensive Coverage</h4>
-                                <p className="text-sm text-muted-foreground font-crimson">
-                                    Complete protection with extensive coverage options
-                                </p>
-                            </div>
-                            <div className="text-center">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
-                                    <Clock className="h-8 w-8 text-accent" />
-                                </div>
-                                <h4 className="font-playfair font-semibold text-foreground mb-2">Quick Claims</h4>
-                                <p className="text-sm text-muted-foreground font-crimson">
-                                    Fast and hassle-free claims settlement process
-                                </p>
-                            </div>
-                            <div className="text-center">
-                                <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
-                                    <Award className="h-8 w-8 text-accent" />
-                                </div>
-                                <h4 className="font-playfair font-semibold text-foreground mb-2">Expert Support</h4>
-                                <p className="text-sm text-muted-foreground font-crimson">
-                                    24/7 customer support and expert guidance
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                        </motion.h3>
+                        <motion.div
+                            className="grid grid-cols-1 md:grid-cols-3 gap-6"
+                            initial="hidden"
+                            whileInView="show"
+                            viewport={{ once: true, amount: 0.3 }}
+                            variants={{
+                                hidden: {},
+                                show: {
+                                    transition: {
+                                        staggerChildren: 0.12,
+                                        delayChildren: 0.1
+                                    }
+                                }
+                            }}
+                        >
+                            {[0, 1, 2].map((i) => (
+                                <motion.div
+                                    key={i}
+                                    initial={{ opacity: 0, y: 40 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true, amount: 0.3 }}
+                                    transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                                >
+                                    <div className="text-center">
+                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
+                                            <Shield className="h-8 w-8 text-accent" />
+                                        </div>
+                                        <h4 className="font-playfair font-semibold text-foreground mb-2">Comprehensive Coverage</h4>
+                                        <p className="text-sm text-muted-foreground font-crimson">
+                                            Complete protection with extensive coverage options
+                                        </p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
 
@@ -360,21 +473,41 @@ const GeneralInsurance = () => {
             <section className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                        <motion.h2
+                            className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                        >
                             All Insurance Services
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p
+                            className="text-xl font-crimson text-muted-foreground"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+                        >
                             Complete protection for every aspect of your life
-                        </p>
+                        </motion.p>
                     </div>
 
-                    <Tabs defaultValue="car" className="w-full">
-                        <TabsList className="grid w-full grid-cols-4 bg-muted/50">
+                    <Tabs value={selectedService} onValueChange={setSelectedService} className="w-full">
+                        <TabsList ref={tabsListRef} className="grid w-full grid-cols-4 bg-muted/50 relative overflow-hidden">
+                            {/* Sliding indicator */}
+                            <motion.div
+                                className="absolute top-0 left-0 h-full rounded-md bg-accent z-0 transition-colors"
+                                animate={{ left: activeTabRect.left, width: activeTabRect.width }}
+                                transition={{ type: 'tween', duration: 0.45, ease: [0.42, 0, 0.58, 1] }}
+                                style={{ pointerEvents: 'none' }}
+                            />
                             {services.map((service) => (
                                 <TabsTrigger
                                     key={service.id}
                                     value={service.id}
-                                    className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                                    ref={el => (tabRefs.current[service.id] = el)}
+                                    className="data-[state=active]:bg-transparent data-[state=active]:text-accent-foreground data-[state=active]:z-10 relative transition-colors"
                                 >
                                     <service.icon className="h-4 w-4 mr-2" />
                                     {service.title}
@@ -384,31 +517,53 @@ const GeneralInsurance = () => {
 
                         {services.map((service) => (
                             <TabsContent key={service.id} value={service.id} className="mt-8">
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                <motion.div
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                    initial="hidden"
+                                    whileInView="show"
+                                    viewport={{ once: true, amount: 0.3 }}
+                                    variants={{
+                                        hidden: {},
+                                        show: {
+                                            transition: {
+                                                staggerChildren: 0.12,
+                                                delayChildren: 0.1
+                                            }
+                                        }
+                                    }}
+                                >
                                     {service.subCategories.map((subCategory, index) => (
-                                        <Card
+                                        <motion.div
                                             key={index}
-                                            className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                            initial={{ opacity: 0, y: 40 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, amount: 0.3 }}
+                                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                                         >
-                                            <CardHeader>
-                                                <div className="flex items-center justify-between">
-                                                    <subCategory.icon className="h-8 w-8 text-accent" />
-                                                    <Badge variant="secondary">{subCategory.badge}</Badge>
-                                                </div>
-                                                <CardTitle className="text-lg font-playfair">{subCategory.name}</CardTitle>
-                                            </CardHeader>
-                                            <CardContent>
-                                                <p className="text-sm text-muted-foreground font-crimson mb-4">
-                                                    {subCategory.description}
-                                                </p>
-                                                <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
-                                                    Learn More
-                                                    <ArrowRight className="ml-2 h-3 w-3" />
-                                                </Button>
-                                            </CardContent>
-                                        </Card>
+                                            <Card
+                                                key={index}
+                                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                            >
+                                                <CardHeader>
+                                                    <div className="flex items-center justify-between">
+                                                        <subCategory.icon className="h-8 w-8 text-accent" />
+                                                        <Badge variant="secondary">{subCategory.badge}</Badge>
+                                                    </div>
+                                                    <CardTitle className="text-lg font-playfair">{subCategory.name}</CardTitle>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <p className="text-sm text-muted-foreground font-crimson mb-4">
+                                                        {subCategory.description}
+                                                    </p>
+                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                                        Learn More
+                                                        <ArrowRight className="ml-2 h-3 w-3" />
+                                                    </Button>
+                                                </CardContent>
+                                            </Card>
+                                        </motion.div>
                                     ))}
-                                </div>
+                                </motion.div>
                             </TabsContent>
                         ))}
                     </Tabs>
@@ -418,20 +573,60 @@ const GeneralInsurance = () => {
             {/* CTA Section */}
             <section className="py-20 px-4 bg-gradient-accent">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
+                    <motion.h2
+                        className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                    >
                         Get Protected Today
-                    </h2>
-                    <p className="text-xl font-crimson text-white/80 mb-8">
+                    </motion.h2>
+                    <motion.p
+                        className="text-xl font-crimson text-white/80 mb-8"
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.3 }}
+                        transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+                    >
                         Choose the right insurance plan for your needs and get instant quotes
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
-                            Get Instant Quote
-                        </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
-                            Talk to Expert
-                        </Button>
-                    </div>
+                    </motion.p>
+                    <motion.div
+                        className="flex flex-col sm:flex-row gap-4 justify-center"
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.3 }}
+                        variants={{
+                            hidden: {},
+                            show: {
+                                transition: {
+                                    staggerChildren: 0.12,
+                                    delayChildren: 0.1
+                                }
+                            }
+                        }}
+                    >
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                        >
+                            <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                                Get Instant Quote
+                            </Button>
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                        >
+                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                                Talk to Expert
+                            </Button>
+                        </motion.div>
+                    </motion.div>
                 </div>
             </section>
         </div>
