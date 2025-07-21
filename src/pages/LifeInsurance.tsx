@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Shield, TrendingUp, PiggyBank, Users, Star, Award, Clock, ArrowRight } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const LifeInsurance = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -15,7 +16,7 @@ const LifeInsurance = () => {
     const [testimonialIndex, setTestimonialIndex] = useState(0);
 
     const fullText = "Secure Your Family's Future with Life Insurance";
-    const targetCounter = 500;
+    const targetCounter = 100;
 
     const testimonials = [
         {
@@ -118,7 +119,7 @@ const LifeInsurance = () => {
                 clearInterval(timer);
                 setTimeout(() => setSubtitleVisible(true), 500);
             }
-        }, 100);
+        }, 60);
         return () => clearInterval(timer);
     }, []);
 
@@ -167,7 +168,11 @@ const LifeInsurance = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <section
+                id="hero"
+                className="relative min-h-screen flex items-center justify-center overflow-hidden"
+                style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
+            >
                 {/* Background Image with Parallax */}
                 <div
                     className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -179,7 +184,13 @@ const LifeInsurance = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/80" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.2 }}
+                    transition={{ duration: 0.8 }}
+                    className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto"
+                >
                     <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden">
                         <span className="inline-block animate-typewriter">
                             {typewriterText}
@@ -199,29 +210,58 @@ const LifeInsurance = () => {
                         Get Free Consultation
                         <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
-                </div>
+                </motion.div>
             </section>
 
             {/* Product Cards Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <section
+                className="py-20 px-4 bg-gradient-premium"
+                style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
+            >
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <motion.h2
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4"
+                        >
                             Choose Your Protection Plan
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            className="text-xl font-crimson text-muted-foreground"
+                        >
                             Tailored solutions for every life stage and financial goal
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8, delay: 0.1 }}
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    >
                         {products.map((product, index) => (
-                            <Card
+                            <motion.div
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`
-                                }}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6, delay: index * 0.12 }}
+                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:scale-105 hover:ring-2 hover:ring-accent/30"
+                                style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
@@ -267,16 +307,25 @@ const LifeInsurance = () => {
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 </CardContent>
-                            </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Trust Elements Section */}
-            <section className="py-20 px-4 bg-background">
+            <section
+                className="py-20 px-4 bg-background"
+                style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
+            >
                 <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+                    >
                         {/* Animated Counter */}
                         <div className="text-center">
                             <div className="text-4xl md:text-6xl font-playfair font-bold text-accent mb-2">
@@ -309,10 +358,16 @@ const LifeInsurance = () => {
                                 Client Satisfaction
                             </p>
                         </div>
-                    </div>
+                    </motion.div>
 
                     {/* Testimonials Carousel */}
-                    <div className="relative overflow-hidden rounded-2xl bg-gradient-premium p-4 md:p-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="relative overflow-hidden rounded-2xl bg-gradient-premium p-4 md:p-8"
+                    >
                         <div className="w-full overflow-hidden">
                             <div className="flex transition-transform duration-500 ease-in-out" style={{
                                 transform: `translateX(-${testimonialIndex * 100}%)`
@@ -351,73 +406,97 @@ const LifeInsurance = () => {
                                 />
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Process Flow Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <section
+                className="py-20 px-4 bg-gradient-accent"
+                style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
+            >
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-4">
                             Simple 4-Step Process
                         </h2>
                         <p className="text-xl font-crimson text-white/80">
                             Get your life insurance policy in just 4 easy steps
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="relative">
-                        {/* Connecting Lines */}
-                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-white/30 transform -translate-y-1/2 hidden lg:block" />
-
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            {processSteps.map((step, index) => (
-                                <div
-                                    key={index}
-                                    className="process-step text-center relative opacity-100 translate-y-0 transition-all duration-700"
-                                    style={{ transitionDelay: `${index * 200}ms` }}
-                                >
-                                    <div className="relative z-10">
-                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto shadow-lg">
-                                            <step.icon className="h-8 w-8 text-accent" />
-                                        </div>
-                                        <h3 className="text-xl font-playfair font-bold text-white mb-3">
-                                            {step.title}
-                                        </h3>
-                                        <p className="text-white/80 font-crimson">
-                                            {step.description}
-                                        </p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8, delay: 0.1 }}
+                        className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                    >
+                        {processSteps.map((step, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, scale: 0.95 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true, amount: 0.2 }}
+                                transition={{ duration: 0.6, delay: index * 0.15 }}
+                                className="process-step text-center relative opacity-100 translate-y-0 transition-all duration-700"
+                                style={{ transitionDelay: `${index * 100}ms` }}
+                            >
+                                <div className="relative z-10">
+                                    <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto shadow-lg">
+                                        <step.icon className="h-8 w-8 text-accent" />
                                     </div>
-
-                                    {/* Step Number */}
-                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        {index + 1}
-                                    </div>
+                                    <h3 className="text-xl font-playfair font-bold text-white mb-3">
+                                        {step.title}
+                                    </h3>
+                                    <p className="text-white/80 font-crimson">
+                                        {step.description}
+                                    </p>
                                 </div>
-                            ))}
-                        </div>
-                    </div>
+
+                                {/* Step Number */}
+                                <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                    {index + 1}
+                                </div>
+                            </motion.div>
+                        ))}
+                    </motion.div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-background">
+            <section
+                className="py-20 px-4 bg-background"
+                style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
+            >
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-6">
-                        Ready to Secure Your Family's Future?
-                    </h2>
-                    <p className="text-xl font-crimson text-muted-foreground mb-8">
-                        Get a free consultation and personalized quote today
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg">
-                            Get Free Quote
-                        </Button>
-                        <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-4 text-lg">
-                            Schedule Consultation
-                        </Button>
-                    </div>
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                    >
+                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-6">
+                            Ready to Secure Your Family's Future?
+                        </h2>
+                        <p className="text-xl font-crimson text-muted-foreground mb-8">
+                            Get a free consultation and personalized quote today
+                        </p>
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg">
+                                Get Free Quote
+                            </Button>
+                            <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-4 text-lg">
+                                Schedule Consultation
+                            </Button>
+                        </div>
+                    </motion.div>
                 </div>
             </section>
         </div>
