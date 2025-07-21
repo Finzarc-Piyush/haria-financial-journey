@@ -327,7 +327,7 @@ const GeneralInsurance = () => {
 
                     {/* Service Cards with Advanced Animations */}
                     <motion.div
-                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 items-stretch"
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.3 }}
@@ -348,10 +348,11 @@ const GeneralInsurance = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                                className="h-full"
                             >
                                 <Card
                                     key={index}
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden relative"
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden relative h-full"
                                     style={{
                                         animationDelay: `${index * 0.1}s`,
                                         transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
@@ -510,7 +511,8 @@ const GeneralInsurance = () => {
                                     className="data-[state=active]:bg-transparent data-[state=active]:text-accent-foreground data-[state=active]:z-10 relative transition-colors"
                                 >
                                     <service.icon className="h-4 w-4 mr-2" />
-                                    {service.title}
+                                    <span className="md:hidden">{service.title.split(' ')[0]}</span>
+                                    <span className="hidden md:inline">{service.title}</span>
                                 </TabsTrigger>
                             ))}
                         </TabsList>
