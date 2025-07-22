@@ -108,13 +108,13 @@ const ServicesSection = () => {
       specializations: ['Equity portfolio management', 'Fixed income strategies', 'Alternative investments']
     },
     {
-      id: 'retirement',
+      id: 'swp',
       icon: PiggyBank,
-      title: 'Retirement Planning',
-      description: 'Comprehensive approach including PF optimization, pension planning, and retirement income strategies',
+      title: 'SWP Calculator',
+      description: 'Plan your regular withdrawals with a Systematic Withdrawal Plan (SWP) for steady income.',
       process: ['Current analysis', 'Goal setting', 'Gap analysis', 'Strategy implementation', 'Annual reviews'],
-      details: 'Specializing in early retirement planning and tax-efficient withdrawal strategies.',
-      specializations: ['Early retirement planning', 'Executive compensation', 'Tax-efficient withdrawals']
+      details: 'Specializing in SWP strategies and tax-efficient withdrawal planning.',
+      specializations: ['Systematic Withdrawal Plan', 'Retirement income', 'Tax-efficient withdrawals']
     },
     {
       id: 'tax',

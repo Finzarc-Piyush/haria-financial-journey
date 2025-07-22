@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, Shield, BarChart3, PiggyBank, Zap, Home, Calculator, Heart, Umbrella, TrendingUp, PieChart, Plus, Minus } from "lucide-react";
+import { Menu, X, ChevronDown, Shield, BarChart3, PiggyBank, Zap, Home, Calculator, Heart, Umbrella, TrendingUp, PieChart, Plus, Minus, Coins, LineChart } from "lucide-react";
 import { Link } from 'react-router-dom';
 import { FaRupeeSign, FaUniversity, FaUserClock, FaHeartbeat } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -86,19 +86,19 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
       icon: <FaRupeeSign className="text-secondary w-5 h-5 mr-2" />,
     },
     {
-      label: 'FD Calculator',
-      to: '/fd-calculator',
-      icon: <FaUniversity className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'Retirement Calculator',
-      to: '/retirement-calculator',
+      label: 'SWP Calculator',
+      to: '/swp-calculator',
       icon: <FaUserClock className="text-secondary w-5 h-5 mr-2" />,
     },
     {
-      label: 'Emergency Fund Calculator',
-      to: '/emergency-fund-calculator',
-      icon: <FaHeartbeat className="text-secondary w-5 h-5 mr-2" />,
+      label: 'Lumpsum Calculator',
+      to: '/lumpsum-calculator',
+      icon: <Coins className="text-secondary w-5 h-5 mr-2" />,
+    },
+    {
+      label: 'CAGR Calculator',
+      to: '/cagr-calculator',
+      icon: <LineChart className="text-secondary w-5 h-5 mr-2" />,
     },
   ];
 

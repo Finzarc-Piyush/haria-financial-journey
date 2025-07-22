@@ -60,14 +60,14 @@ const ResultsSection = () => {
       icon: TrendingUp,
       title: 'Multi-Generational Wealth Building',
       clientProfile: 'Senior Executive, Age 45, Mumbai-based IT Professional',
-      challenge: 'Needed comprehensive financial plan for early retirement and children\'s education',
+      challenge: 'Needed a reliable income plan using SWP for post-retirement and children\'s education',
       strategy: [
         'Diversified portfolio allocation: 60% equity, 30% fixed income, 10% alternatives',
         'Tax-efficient investment vehicles including ELSS and NPS',
         'Education funding through systematic investment plans',
         'Estate planning and insurance optimization'
       ],
-      results: '25% portfolio growth over 3 years, on track for retirement at 55',
+      results: '25% portfolio growth over 3 years, steady SWP income stream established',
       testimonial: 'Haria Investments transformed our financial future. Their systematic approach and personal attention made all the difference.',
       client: 'R.K., IT Executive',
       metrics: [
@@ -98,11 +98,11 @@ const ResultsSection = () => {
       ]
     },
     {
-      id: 'retirement',
+      id: 'swp',
       icon: Users,
-      title: 'Retirement Income Planning Success',
+      title: 'SWP Income Planning Success',
       clientProfile: 'Retired Couple, Ages 62 & 58, Government Employees',
-      challenge: 'Creating sustainable retirement income stream from accumulated savings',
+      challenge: 'Creating sustainable SWP income stream from accumulated savings',
       strategy: [
         'Systematic withdrawal plan with tax optimization',
         'Healthcare cost planning and insurance coordination',
@@ -110,7 +110,7 @@ const ResultsSection = () => {
         'Inflation-protected income strategies'
       ],
       results: 'Sustainable 8% annual income with inflation protection',
-      testimonial: 'Thanks to Haria Investments, our retirement is financially secure and stress-free. We can focus on enjoying life.',
+      testimonial: 'Thanks to Haria Investments, our SWP income is reliable and stress-free. We can focus on enjoying life.',
       client: 'M.G., Retired Couple',
       metrics: [
         { label: 'Annual Income', value: '8%', period: 'Sustainable' },

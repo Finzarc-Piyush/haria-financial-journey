@@ -1,28 +1,31 @@
 import { motion } from 'framer-motion';
 
-interface RetirementBarChartProps {
+interface SWPBarChartProps {
     corpus: number;
-    invested: number;
+    withdrawn: number;
     returns: number;
+    corpusLeft: number;
 }
 
 const COLORS = {
     corpus: '#B4A078',
-    invested: '#E6C674',
+    withdrawn: '#E6C674',
     returns: '#8B7355',
+    corpusLeft: '#6B8E23',
 };
 
 function formatINR(num: number) {
     return num.toLocaleString('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
 }
 
-const RetirementBarChart: React.FC<RetirementBarChartProps> = ({ corpus, invested, returns }) => {
+const SWPBarChart: React.FC<SWPBarChartProps> = ({ corpus, withdrawn, returns, corpusLeft }) => {
     // Find the max value for scaling
-    const max = Math.max(corpus, invested, returns, 1);
+    const max = Math.max(corpus, withdrawn, returns, corpusLeft, 1);
     const data = [
-        { label: 'Corpus Needed', value: corpus, color: COLORS.corpus },
-        { label: 'Total Invested', value: invested, color: COLORS.invested },
+        { label: 'Corpus Used', value: corpus, color: COLORS.corpus },
+        { label: 'Total Withdrawn', value: withdrawn, color: COLORS.withdrawn },
         { label: 'Returns Earned', value: returns, color: COLORS.returns },
+        { label: 'Corpus Left', value: corpusLeft, color: COLORS.corpusLeft },
     ];
 
     return (
@@ -48,4 +51,4 @@ const RetirementBarChart: React.FC<RetirementBarChartProps> = ({ corpus, investe
     );
 };
 
-export default RetirementBarChart; 
+export default SWPBarChart; 
