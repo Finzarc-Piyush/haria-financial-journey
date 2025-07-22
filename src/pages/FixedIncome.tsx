@@ -28,6 +28,7 @@ import {
     Clock,
     BarChart3
 } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const FixedIncome = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -189,6 +190,12 @@ const FixedIncome = () => {
         return () => observer.disconnect();
     }, []);
 
+    // Animation variants for scroll-based reveal
+    const fadeSlideUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+    };
+
     return (
         <div className="min-h-screen bg-background">
             <Navigation isTransparent={heroInView} />
@@ -203,15 +210,15 @@ const FixedIncome = () => {
                 <div className="absolute inset-0 bg-black/40" />
 
                 <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
+                    <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Steady Returns,</span>
                         <br />
                         <span className="inline-block text-accent animate-pulse">Guaranteed Security</span>
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Build wealth with stable, predictable returns through fixed income investments
-                    </p>
+                    </motion.p>
 
                     {/* Trust Seal Animation */}
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto">
@@ -248,18 +255,18 @@ const FixedIncome = () => {
             {/* Product Showcase Section */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Fixed Income Products
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Choose from a range of secure investment options
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {products.map((product, index) => (
-                            <Card
+                            <motion.div
                                 key={product.id}
                                 className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedProduct === product.id ? 'border-accent/50 bg-accent/5' : ''
                                     }`}
@@ -312,23 +319,23 @@ const FixedIncome = () => {
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 </CardContent>
-                            </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* FD Calculator Section */}
             <section className="py-20 px-4 bg-background">
                 <div className="max-w-6xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Fixed Deposit Calculator
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Calculate your returns and plan your investments
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Calculator Inputs */}
@@ -460,22 +467,22 @@ const FixedIncome = () => {
             {/* Laddering Strategy Section */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Laddering Strategy
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Optimize your returns with systematic investment laddering
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="relative">
                         {/* Connecting Timeline */}
                         <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-accent/30 transform -translate-y-1/2 hidden lg:block" />
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
+                        <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                             {ladderingStrategies.map((strategy, index) => (
-                                <div
+                                <motion.div
                                     key={index}
                                     className={`ladder-step text-center relative ${index <= currentStep ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                                         } transition-all duration-700`}
@@ -507,12 +514,12 @@ const FixedIncome = () => {
                                     <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
                                         {strategy.year}
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
-                        </div>
+                        </motion.div>
                     </div>
 
-                    <div className="text-center mt-12">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mt-12">
                         <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
                             <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
                                 Benefits of Laddering
@@ -541,23 +548,23 @@ const FixedIncome = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Top Banks Section */}
             <section className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Top Bank FDs
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Compare rates from leading banks
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {topBanks.map((bank, index) => (
                             <Card
                                 key={index}
@@ -603,19 +610,19 @@ const FixedIncome = () => {
                                 </CardContent>
                             </Card>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* CTA Section */}
             <section className="py-20 px-4 bg-gradient-accent">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
+                    <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Fixed Income Journey
-                    </h2>
-                    <p className="text-xl font-crimson text-white/80 mb-8">
+                    </motion.h2>
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-white/80 mb-8">
                         Secure your future with guaranteed returns and capital protection
-                    </p>
+                    </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open FD Account</a>
