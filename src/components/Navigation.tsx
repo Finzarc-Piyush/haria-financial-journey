@@ -227,7 +227,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-medium flex items-center gap-1"
               >
                 <Zap className="w-4 h-4" />
-                Trading
+                CDT
               </Link>
 
               {/* Calculators Dropdown */}
@@ -411,7 +411,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   <Zap className="w-5 h-5 mr-3" />
-                  Trading
+                  Commodity Derivatives Trading
                 </Link>
                 <hr className="border-gray-400 my-3" />
 
