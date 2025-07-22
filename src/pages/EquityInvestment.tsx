@@ -174,31 +174,23 @@ const EquityInvestment = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Candlestick Chart Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-tertiary">
-                    <div className="absolute inset-0 opacity-20">
-                        {/* Animated Candlestick Chart */}
-                        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            {/* Candlesticks */}
-                            <rect x="10" y="60" width="2" height="20" fill="green" className="animate-pulse" />
-                            <rect x="15" y="50" width="2" height="30" fill="red" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
-                            <rect x="20" y="40" width="2" height="40" fill="green" className="animate-pulse" style={{ animationDelay: '1s' }} />
-                            <rect x="25" y="70" width="2" height="10" fill="red" className="animate-pulse" style={{ animationDelay: '1.5s' }} />
-                            <rect x="30" y="30" width="2" height="50" fill="green" className="animate-pulse" style={{ animationDelay: '2s' }} />
-                        </svg>
-                    </div>
-                </div>
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/equity-investments.png')" }}
+                />
+                <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6">
+                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Build Wealth Through</span>
                         <span className="inline-block text-accent animate-pulse">Strategic</span>
                         <br />
                         <span className="inline-block text-accent">Equity Investment</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl font-crimson mb-8 text-white/90">
+                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Expert guidance for direct stock investment and portfolio management
                     </p>
 

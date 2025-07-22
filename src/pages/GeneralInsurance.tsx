@@ -205,19 +205,16 @@ const GeneralInsurance = () => {
 
             {/* Hero Section */}
             <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Dynamic Background with Geometric Patterns */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-tertiary">
-                    <div className="absolute inset-0 opacity-10">
-                        <div className="absolute top-10 left-10 w-32 h-32 border-2 border-white/20 rounded-full animate-pulse" />
-                        <div className="absolute top-40 right-20 w-24 h-24 border-2 border-white/20 rounded-lg animate-pulse" style={{ animationDelay: '1s' }} />
-                        <div className="absolute bottom-20 left-1/4 w-40 h-40 border-2 border-white/20 rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-                        <div className="absolute bottom-40 right-1/3 w-16 h-16 border-2 border-white/20 rounded-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
-                    </div>
-                </div>
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/general-insurance.png')" }}
+                />
+                <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
+                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
                     <motion.h1
-                        className="text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden"
+                        className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden"
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
@@ -229,7 +226,7 @@ const GeneralInsurance = () => {
                         </span>
                     </motion.h1>
                     <motion.p
-                        className="text-xl md:text-2xl font-crimson mb-12 text-white/90"
+                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}

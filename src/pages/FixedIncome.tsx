@@ -194,39 +194,22 @@ const FixedIncome = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Stable Growth Line Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-tertiary">
-                    <div className="absolute inset-0 opacity-20">
-                        {/* Stable Growth Line */}
-                        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <path
-                                d="M0,80 Q20,75 40,70 T80,60 T100,55"
-                                stroke="white"
-                                strokeWidth="1"
-                                fill="none"
-                                className="animate-pulse"
-                            />
-                            <path
-                                d="M0,85 Q25,80 50,75 T100,65"
-                                stroke="white"
-                                strokeWidth="0.5"
-                                fill="none"
-                                className="animate-pulse"
-                                style={{ animationDelay: '1s' }}
-                            />
-                        </svg>
-                    </div>
-                </div>
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/fixed-income.png')" }}
+                />
+                <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6">
+                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Steady Returns,</span>
                         <br />
                         <span className="inline-block text-accent animate-pulse">Guaranteed Security</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl font-crimson mb-8 text-white/90">
+                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Build wealth with stable, predictable returns through fixed income investments
                     </p>
 

@@ -170,35 +170,31 @@ const LifeInsurance = () => {
             {/* Hero Section */}
             <section
                 id="hero"
-                className="relative min-h-screen flex items-center justify-center overflow-hidden"
+                className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8"
                 style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
             >
-                {/* Background Image with Parallax */}
+                {/* Background Image */}
                 <div
-                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                    style={{
-                        backgroundImage: "url('/src/assets/family-portrait.jpg')",
-                        transform: "translateZ(0)",
-                        willChange: "transform"
-                    }}
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/life-insurance.png')" }}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-secondary/80" />
+                <div className="absolute inset-0 bg-black/40" />
 
                 <motion.div
                     initial={{ opacity: 0, y: 40 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.2 }}
                     transition={{ duration: 0.8 }}
-                    className="relative z-10 text-center text-white px-4 max-w-4xl mx-auto"
+                    className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24"
                 >
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden">
                         <span className="inline-block animate-typewriter">
                             {typewriterText}
                             <span className="animate-pulse">|</span>
                         </span>
                     </h1>
 
-                    <p className={`text-xl md:text-2xl font-crimson mb-8 transition-all duration-1000 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    <p className={`text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90 transition-all duration-1000 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                         }`}>
                         Comprehensive protection plans tailored to your life stage
                     </p>

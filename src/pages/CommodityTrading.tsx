@@ -193,26 +193,22 @@ const CommodityTrading = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Trading Floor Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-tertiary">
-                    <div className="absolute inset-0 opacity-20">
-                        {/* Trading Floor Atmosphere */}
-                        <div className="absolute top-10 left-10 w-32 h-32 border-2 border-white/20 rounded-full animate-pulse" />
-                        <div className="absolute top-40 right-20 w-24 h-24 border-2 border-white/20 rounded-lg animate-pulse" style={{ animationDelay: '1s' }} />
-                        <div className="absolute bottom-20 left-1/4 w-40 h-40 border-2 border-white/20 rounded-full animate-pulse" style={{ animationDelay: '2s' }} />
-                        <div className="absolute bottom-40 right-1/3 w-16 h-16 border-2 border-white/20 rounded-lg animate-pulse" style={{ animationDelay: '0.5s' }} />
-                    </div>
-                </div>
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/commudity-trading.png')" }}
+                />
+                <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
-                    <h1 className="text-5xl md:text-7xl font-playfair font-bold mb-6">
+                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
+                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Trade Smart,</span>
                         <br />
                         <span className="inline-block text-accent animate-pulse">Trade Secure</span>
                     </h1>
 
-                    <p className="text-xl md:text-2xl font-crimson mb-8 text-white/90">
+                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Professional commodity and derivative trading platform
                     </p>
 

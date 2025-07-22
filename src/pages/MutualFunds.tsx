@@ -252,38 +252,21 @@ const MutualFunds = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-                {/* Animated Growth Chart Background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-secondary to-tertiary">
-                    <div className="absolute inset-0 opacity-20">
-                        {/* Animated Chart Lines */}
-                        <svg className="w-full h-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                            <path
-                                d="M0,80 Q20,60 40,50 T80,30 T100,20"
-                                stroke="white"
-                                strokeWidth="0.5"
-                                fill="none"
-                                className="animate-pulse"
-                            />
-                            <path
-                                d="M0,85 Q25,65 50,45 T100,25"
-                                stroke="white"
-                                strokeWidth="0.3"
-                                fill="none"
-                                className="animate-pulse"
-                                style={{ animationDelay: '1s' }}
-                            />
-                        </svg>
-                    </div>
-                </div>
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+                {/* Background Image */}
+                <div
+                    className="absolute inset-0 bg-cover bg-center"
+                    style={{ backgroundImage: "url('/src/assets/mutual-funds.png')" }}
+                />
+                <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 text-center text-white px-4 max-w-6xl mx-auto">
+                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
                     <motion.h1
                         ref={heroHeadingRef}
                         variants={slideUp}
                         initial="hidden"
                         animate={heroHeadingInView ? "show" : "hidden"}
-                        className="text-5xl md:text-7xl font-playfair font-bold mb-6"
+                        className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6"
                     >
                         <span className="inline-block mr-4">Grow</span>
                         <span className="inline-block mr-4 text-accent">→</span>
@@ -299,7 +282,7 @@ const MutualFunds = () => {
                         variants={fadeIn}
                         initial="hidden"
                         animate={heroPInView ? "show" : "hidden"}
-                        className="text-xl md:text-2xl font-crimson mb-8 text-white/90"
+                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
                     >
                         Build wealth through systematic investment in mutual funds
                     </motion.p>
