@@ -31,6 +31,7 @@ import {
     CheckCircle,
     XCircle
 } from "lucide-react";
+import { motion } from "framer-motion";
 
 const CommodityTrading = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -188,6 +189,12 @@ const CommodityTrading = () => {
         return "text-red-500";
     };
 
+    // Animation variants for scroll-based reveal
+    const fadeSlideUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+    };
+
     return (
         <div className="min-h-screen bg-background">
             <Navigation isTransparent={heroInView} />
@@ -202,18 +209,18 @@ const CommodityTrading = () => {
                 <div className="absolute inset-0 bg-black/40" />
 
                 <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
+                    <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Trade Smart,</span>
                         <br />
                         <span className="inline-block text-accent animate-pulse">Trade Secure</span>
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Professional commodity and derivative trading platform
-                    </p>
+                    </motion.p>
 
                     {/* Live Commodity Ticker */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-3xl mx-auto">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-3xl mx-auto">
                         <div className="flex items-center justify-between text-sm mb-4">
                             <span className="text-white/80">Live Commodity Prices</span>
                             <div className="flex items-center space-x-4">
@@ -228,7 +235,7 @@ const CommodityTrading = () => {
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             {commodities.slice(commodityTicker, commodityTicker + 3).map((commodity, index) => (
-                                <div key={index} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
+                                <motion.div key={index} variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                                     <div>
                                         <div className="font-semibold">{commodity.name}</div>
                                         <div className="text-sm text-white/70">{commodity.unit}</div>
@@ -239,12 +246,12 @@ const CommodityTrading = () => {
                                             {commodity.change >= 0 ? '+' : ''}{commodity.change}%
                                         </div>
                                     </div>
-                                </div>
+                                </motion.div>
                             ))}
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
                             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
@@ -259,21 +266,21 @@ const CommodityTrading = () => {
                         >
                             Demo Account
                         </Button>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Trading Products Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Trading Products
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Choose from our comprehensive range of trading instruments
                         </p>
-                    </div>
+                    </motion.div>
 
                     <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
                         <TabsList className="grid w-full grid-cols-3 bg-muted/50">
@@ -291,7 +298,7 @@ const CommodityTrading = () => {
 
                         {tradingProducts.map((product) => (
                             <TabsContent key={product.id} value={product.id} className="mt-8">
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                                <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                                     <div>
                                         <h3 className="text-3xl font-playfair font-bold text-foreground mb-6">
                                             {product.title}
@@ -302,10 +309,10 @@ const CommodityTrading = () => {
 
                                         <div className="space-y-4 mb-8">
                                             {product.features.map((feature, index) => (
-                                                <div key={index} className="flex items-center">
+                                                <motion.div key={index} variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex items-center">
                                                     <CheckCircle className="h-5 w-5 text-accent mr-3 flex-shrink-0" />
                                                     <span className="text-foreground">{feature}</span>
-                                                </div>
+                                                </motion.div>
                                             ))}
                                         </div>
 
@@ -357,93 +364,95 @@ const CommodityTrading = () => {
                                             </Button>
                                         </CardContent>
                                     </Card>
-                                </div>
+                                </motion.div>
                             </TabsContent>
                         ))}
                     </Tabs>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Trading Strategies Section */}
-            <section className="py-20 px-4 bg-background">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Trading Strategies
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Proven strategies for successful commodity trading
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         {tradingStrategies.map((strategy, index) => (
-                            <Card
+                            <motion.div
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="group"
                                 style={{
                                     animationDelay: `${index * 0.1}s`
                                 }}
                             >
-                                <CardHeader>
-                                    <div className="flex items-center justify-between mb-4">
-                                        <strategy.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
-                                        <Badge className={`${strategy.risk === 'Very Low' ? 'bg-green-500/20 text-green-600' :
-                                            strategy.risk === 'Low' ? 'bg-blue-500/20 text-blue-600' :
-                                                strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
-                                                    strategy.risk === 'High' ? 'bg-orange-500/20 text-orange-600' :
-                                                        'bg-red-500/20 text-red-600'
-                                            }`}>
-                                            {strategy.risk}
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
-                                        {strategy.name}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent>
-                                    <p className="text-muted-foreground mb-4 font-crimson text-sm">
-                                        {strategy.description}
-                                    </p>
-
-                                    <div className="space-y-3 mb-6">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Success Rate</span>
-                                            <span className="font-semibold text-accent">{strategy.successRate}%</span>
+                                <Card className="premium-card hover:scale-105 transition-all duration-500 cursor-pointer">
+                                    <CardHeader>
+                                        <div className="flex items-center justify-between mb-4">
+                                            <strategy.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                            <Badge className={`${strategy.risk === 'Very Low' ? 'bg-green-500/20 text-green-600' :
+                                                strategy.risk === 'Low' ? 'bg-blue-500/20 text-blue-600' :
+                                                    strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
+                                                        strategy.risk === 'High' ? 'bg-orange-500/20 text-orange-600' :
+                                                            'bg-red-500/20 text-red-600'
+                                                }`}>
+                                                {strategy.risk}
+                                            </Badge>
                                         </div>
-                                        <Progress value={strategy.successRate} className="h-2" />
+                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                            {strategy.name}
+                                        </CardTitle>
+                                    </CardHeader>
 
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Expected Returns</span>
-                                            <span className="font-semibold text-green-600">{strategy.returns}</span>
+                                    <CardContent>
+                                        <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                            {strategy.description}
+                                        </p>
+
+                                        <div className="space-y-3 mb-6">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-muted-foreground">Success Rate</span>
+                                                <span className="font-semibold text-accent">{strategy.successRate}%</span>
+                                            </div>
+                                            <Progress value={strategy.successRate} className="h-2" />
+
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-muted-foreground">Expected Returns</span>
+                                                <span className="font-semibold text-green-600">{strategy.returns}</span>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
-                                        Learn Strategy
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                            Learn Strategy
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Advanced Trading Features */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Advanced Trading Features
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Professional tools for serious traders
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Real-time P&L Calculator */}
                         <Card className="premium-card">
                             <CardHeader>
@@ -496,7 +505,7 @@ const CommodityTrading = () => {
                             <CardContent>
                                 <div className="space-y-4">
                                     {riskManagement.map((item, index) => (
-                                        <div key={index} className="flex items-start space-x-3 p-3 bg-muted/30 rounded-lg">
+                                        <motion.div key={index} variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex items-start space-x-3 p-3 bg-muted/30 rounded-lg">
                                             <div className={`w-8 h-8 rounded-full flex items-center justify-center ${item.status === 'active' ? 'bg-green-500/20' :
                                                 item.status === 'warning' ? 'bg-yellow-500/20' : 'bg-red-500/20'
                                                 }`}>
@@ -512,28 +521,28 @@ const CommodityTrading = () => {
                                                 <div className="font-semibold text-foreground">{item.title}</div>
                                                 <div className="text-sm text-muted-foreground">{item.description}</div>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                             </CardContent>
                         </Card>
-                    </div>
+                    </motion.div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* Market Insights */}
-            <section className="py-20 px-4 bg-background">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Market Insights
                         </h2>
                         <p className="text-xl font-crimson text-muted-foreground">
                             Stay ahead with expert analysis and market updates
                         </p>
-                    </div>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
@@ -587,12 +596,12 @@ const CommodityTrading = () => {
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div>
+                    </motion.div>
                 </div>
-            </section>
+            </motion.section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-gradient-accent">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Trading Journey
@@ -600,16 +609,16 @@ const CommodityTrading = () => {
                     <p className="text-xl font-crimson text-white/80 mb-8">
                         Join thousands of successful traders in the commodity markets
                     </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Trading Account</a>
                         </Button>
                         <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
                             <a href="https://invest.motilaloswal.com/" target="_blank" rel="noopener noreferrer">Motilal Oswal Client Login</a>
                         </Button>
-                    </div>
+                    </motion.div>
                 </div>
-            </section>
+            </motion.section>
         </div>
     );
 };
