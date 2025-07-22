@@ -256,7 +256,7 @@ const MutualFunds = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/src/assets/mutual-funds.png')" }}
+                    style={{ backgroundImage: "url('/hero-mutual-funds.png')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 

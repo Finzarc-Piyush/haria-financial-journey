@@ -28,6 +28,7 @@ import {
     Heart,
     Plane
 } from "lucide-react";
+import { motion } from 'framer-motion';
 
 const EquityInvestment = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -169,6 +170,12 @@ const EquityInvestment = () => {
         }
     };
 
+    // Animation variants for scroll-based reveal
+    const fadeSlideUp = {
+        hidden: { opacity: 0, y: 40 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+    };
+
     return (
         <div className="min-h-screen bg-background">
             <Navigation isTransparent={heroInView} />
@@ -178,24 +185,24 @@ const EquityInvestment = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/src/assets/equity-investments.png')" }}
+                    style={{ backgroundImage: "url('/hero-equity-investments.png')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 
                 <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <h1 className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
+                    <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Build Wealth Through</span>
                         <span className="inline-block text-accent animate-pulse">Strategic</span>
                         <br />
                         <span className="inline-block text-accent">Equity Investment</span>
-                    </h1>
+                    </motion.h1>
 
-                    <p className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
                         Expert guidance for direct stock investment and portfolio management
-                    </p>
+                    </motion.p>
 
                     {/* Live Stock Ticker */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 max-w-2xl mx-auto">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 max-w-2xl mx-auto">
                         <div className="flex items-center justify-between text-sm">
                             <span className="text-white/80">Live Market</span>
                             <span className={`flex items-center ${getMoodColor(marketMood)}`}>
@@ -209,7 +216,7 @@ const EquityInvestment = () => {
                                 {stocks[stockTicker].change >= 0 ? '+' : ''}{stocks[stockTicker].change}%
                             </span>
                         </div>
-                    </div>
+                    </motion.div>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
@@ -233,14 +240,14 @@ const EquityInvestment = () => {
             {/* Direct Stock Investment Section */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
+                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Direct Stock Investment
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
                             Build your portfolio with carefully selected stocks
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Stock Search */}
@@ -331,17 +338,17 @@ const EquityInvestment = () => {
             {/* Portfolio Advisory Section */}
             <section className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
+                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Expert Portfolio Advisory
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
                             Get personalized investment strategies from our expert advisors
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
                     {/* Investment Strategies */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
                         {investmentStrategies.map((strategy, index) => (
                             <Card
                                 key={strategy.id}
@@ -404,19 +411,19 @@ const EquityInvestment = () => {
                                 </CardContent>
                             </Card>
                         ))}
-                    </div>
+                    </motion.div>
 
                     {/* Expert Advisors */}
-                    <div className="text-center mb-12">
-                        <h3 className="text-3xl font-playfair font-bold text-foreground mb-4">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-12">
+                        <motion.h3 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl font-playfair font-bold text-foreground mb-4">
                             Meet Our Expert Advisors
-                        </h3>
-                        <p className="text-lg font-crimson text-muted-foreground">
+                        </motion.h3>
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-lg font-crimson text-muted-foreground">
                             Get personalized guidance from industry experts
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
                         {advisors.map((advisor, index) => (
                             <Card
                                 key={index}
@@ -459,23 +466,23 @@ const EquityInvestment = () => {
                                 </CardContent>
                             </Card>
                         ))}
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Advanced Features Section */}
             <section className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
+                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Advanced Trading Features
-                        </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        </motion.h2>
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
                             Professional tools for serious investors
-                        </p>
-                    </div>
+                        </motion.p>
+                    </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
@@ -529,19 +536,19 @@ const EquityInvestment = () => {
                                 </Button>
                             </CardContent>
                         </Card>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* CTA Section */}
             <section className="py-20 px-4 bg-gradient-accent">
                 <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
+                    <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Equity Investment Journey
-                    </h2>
-                    <p className="text-xl font-crimson text-white/80 mb-8">
+                    </motion.h2>
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-white/80 mb-8">
                         Join thousands of successful investors building wealth through stocks
-                    </p>
+                    </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Demat Account</a>

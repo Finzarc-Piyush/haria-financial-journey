@@ -176,7 +176,7 @@ const LifeInsurance = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/src/assets/life-insurance.png')" }}
+                    style={{ backgroundImage: "url('/hero-life-insurance.png')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 
