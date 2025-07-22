@@ -634,8 +634,8 @@ const FixedIncome = () => {
                         Secure your future with guaranteed returns and capital protection
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
-                            Open FD Account
+                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                            <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open FD Account</a>
                         </Button>
                         <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
                             Get Expert Advice

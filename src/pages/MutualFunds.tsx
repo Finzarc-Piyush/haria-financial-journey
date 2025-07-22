@@ -662,6 +662,12 @@ const MutualFunds = () => {
                             Get Expert Advice
                         </Button>
                     </div>
+                    <div className="flex flex-wrap gap-3 justify-center mt-6">
+                        <a href="https://users.madosx.co.in/pages/auth/login" target="_blank" rel="noopener noreferrer" className="text-white underline hover:text-secondary text-base font-crimson">Mutual Fund Client Login</a>
+                        <a href="https://www.cvlkra.com/" target="_blank" rel="noopener noreferrer" className="text-white underline hover:text-secondary text-base font-crimson">Check Mutual Fund KYC</a>
+                        <a href="https://www.nseindia.com/" target="_blank" rel="noopener noreferrer" className="text-white underline hover:text-secondary text-base font-crimson">NSE India</a>
+                        <a href="https://www.bseindia.com/" target="_blank" rel="noopener noreferrer" className="text-white underline hover:text-secondary text-base font-crimson">BSE India</a>
+                    </div>
                 </div>
             </section>
         </div>

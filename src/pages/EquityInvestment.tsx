@@ -551,11 +551,14 @@ const EquityInvestment = () => {
                         Join thousands of successful investors building wealth through stocks
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
-                            Open Demat Account
+                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                            <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Demat Account</a>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
-                            Get Expert Advice
+                        <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                            <a href="https://invest.motilaloswal.com/" target="_blank" rel="noopener noreferrer">Motilal Oswal Client Login</a>
+                        </Button>
+                        <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                            <a href="https://users.madosx.co.in/pages/auth/login" target="_blank" rel="noopener noreferrer">Mutual Fund Client Login</a>
                         </Button>
                     </div>
                 </div>

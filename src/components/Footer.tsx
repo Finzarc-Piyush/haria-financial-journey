@@ -4,6 +4,7 @@ import { MapPin, Phone, Mail, Award, Users } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import gsap from 'gsap';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
     useEffect(() => {
@@ -26,27 +27,35 @@ const Footer = () => {
                         <div className="font-crimson text-cream/90 text-base mb-1">
                             Your One Stop Financial Solution!<br />Trusted investment advice since 1957.
                         </div>
+                        <div className="flex gap-4 mt-2">
+                            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-secondary transition-colors duration-300">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24" className="w-6 h-6" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M7.5 3.75h9a3.75 3.75 0 0 1 3.75 3.75v9a3.75 3.75 0 0 1-3.75 3.75h-9A3.75 3.75 0 0 1 3.75 16.5v-9A3.75 3.75 0 0 1 7.5 3.75Zm0 0V3a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 .75.75v.75m-9 0h9m-9 0A3.75 3.75 0 0 0 3.75 7.5v9A3.75 3.75 0 0 0 7.5 20.25h9A3.75 3.75 0 0 0 20.25 16.5v-9A3.75 3.75 0 0 0 16.5 3.75h-9Zm4.5 3.75a4.5 4.5 0 1 1 0 9 4.5 4.5 0 0 1 0-9Zm6.375-.375a.375.375 0 1 1 0 .75.375.375 0 0 1 0-.75Z" /></svg>
+                            </a>
+                            <a href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="hover:text-secondary transition-colors duration-300">
+                                <svg width="24" height="24" viewBox="0 0 32 32" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M16 3C9.373 3 4 8.373 4 15c0 2.385.832 4.68 2.344 6.625L4 29l7.625-2.312A12.93 12.93 0 0 0 16 27c6.627 0 12-5.373 12-12S22.627 3 16 3zm0 22.917c-2.042 0-4.042-.604-5.75-1.75l-.406-.26-4.542 1.375 1.396-4.438-.266-.417C5.646 18.042 5 16.542 5 15c0-6.065 4.935-11 11-11s11 4.935 11 11-4.935 11-11 11zm6.104-7.25c-.333-.167-1.979-.979-2.292-1.094-.312-.115-.542-.167-.771.167-.229.333-.885 1.094-1.085 1.323-.198.229-.365.26-.698.093-.333-.167-1.406-.518-2.68-1.65-.99-.883-1.66-1.97-1.857-2.303-.198-.333-.021-.513.146-.68.151-.15.333-.386.5-.583.167-.198.229-.344.344-.573.115-.229.057-.427.021-.573-.036-.146-.333-1.094-.458-1.5-.12-.386-.25-.333-.344-.339l-.292-.006c-.094 0-.25.036-.385.177-.135.141-.521.521-.521 1.271 0 .75.547 1.477.623 1.583.073.104 1.073 1.646 2.604 2.241.364.126.646.201.865.257.364.093.697.08.96.049.293-.035.904-.369 1.032-.727.128-.358.128-.666.09-.727-.04-.062-.128-.099-.267-.167z" fill="currentColor" />
+                                </svg>
+                            </a>
+                        </div>
                         <div className="flex items-center gap-2 mt-2">
                             <Award className="w-5 h-5 text-secondary footer-animate-icon" />
                             <span className="font-crimson text-secondary font-semibold">SEBI Registered</span>
                         </div>
                     </div>
                     {/* Quick Links */}
-                    <div data-aos="fade-up" data-aos-delay="100">
+                    <div data-aos="fade-up" data-aos-delay="150">
                         <h4 className="font-playfair text-lg font-bold mb-4">Quick Links</h4>
                         <ul className="font-crimson text-cream/80 space-y-2">
                             {[
-                                { label: 'Home', href: '#hero' },
-                                { label: 'About Us', href: '#about' },
-                                { label: 'Services', href: '#services' },
-                                { label: 'Results', href: '#results' },
-                                { label: 'Insights', href: '#insights' },
-                                { label: 'Process', href: '#process' },
-                                { label: 'Credentials', href: '#credentials' },
-                                { label: 'Contact Us', href: '#contact' },
+                                { label: 'Motilal Oswal Demat Account Open', href: 'https://mosl.co/OWxY3P3cRN' },
+                                { label: 'Motilal Oswal Client Login', href: 'https://invest.motilaloswal.com/' },
+                                { label: 'Mutual Fund Client Login', href: 'https://users.madosx.co.in/pages/auth/login' },
+                                { label: 'Check Mutual Fund KYC', href: 'https://www.cvlkra.com/' },
+                                { label: 'NSE India', href: 'https://www.nseindia.com/' },
+                                { label: 'BSE India', href: 'https://www.bseindia.com/' },
                             ].map((item, i) => (
-                                <li key={item.label} data-aos="fade-up" data-aos-delay={150 + i * 60}>
-                                    <a href={item.href} className="transition-colors duration-300 hover:text-secondary">
+                                <li key={item.label} data-aos="fade-up" data-aos-delay={160 + i * 60}>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer" className="hover:text-secondary transition-colors duration-300">
                                         {item.label}
                                     </a>
                                 </li>
@@ -58,14 +67,18 @@ const Footer = () => {
                         <h4 className="font-playfair text-lg font-bold mb-4">Our Services</h4>
                         <ul className="font-crimson text-cream/80 space-y-2">
                             {[
-                                'Life Insurance',
-                                'Health Insurance',
-                                'Mutual Funds',
-                                'Equity Trading',
-                                'Fixed Income',
-                                'Commodity Trading',
+                                { label: 'Life Insurance', to: '/life-insurance' },
+                                { label: 'General Insurance', to: '/general-insurance' },
+                                { label: 'Mutual Funds', to: '/mutual-funds' },
+                                { label: 'Equity Trading', to: '/equity-investment' },
+                                { label: 'Fixed Income', to: '/fixed-income' },
+                                { label: 'Commodity Trading', to: '/commodity-trading' },
                             ].map((item, i) => (
-                                <li key={item} data-aos="fade-up" data-aos-delay={250 + i * 60}>{item}</li>
+                                <li key={item.label} data-aos="fade-up" data-aos-delay={250 + i * 60}>
+                                    <Link to={item.to} className="hover:text-secondary transition-colors duration-300">
+                                        {item.label}
+                                    </Link>
+                                </li>
                             ))}
                         </ul>
                     </div>
