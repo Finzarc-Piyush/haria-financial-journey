@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ChevronDown, Award, Users, TrendingUp, Building } from "lucide-react";
+import { ChevronDown, Award, Users, TrendingUp, Building, HeartHandshake, PiggyBank, Scale, LineChart } from "lucide-react"; // Import new icons
 import heroBackground from "@/assets/hero-office-background.jpg";
 import advisorHeadshot from "@/assets/advisor-headshot.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import gsap from 'gsap';
+import { motion } from 'framer-motion';
 
 const HeroSection = () => {
   const currentYear = new Date().getFullYear();
@@ -19,6 +20,14 @@ const HeroSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const headlineRef = useRef(null);
   const bgRef = useRef(null);
+
+  // Define your services with appropriate icons
+  const services = [
+    { name: "Life & General Insurance", icon: HeartHandshake },
+    { name: "Mutual Funds", icon: PiggyBank },
+    { name: "Equity & Fixed Income", icon: Scale }, // Changed from LineChart for a slightly different feel
+    { name: "Commodity Derivative Trading", icon: LineChart }, // Changed from LineChart to distinguish
+  ];
 
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
@@ -126,8 +135,31 @@ const HeroSection = () => {
 
           {/* Main Headline with Typewriter Effect */}
           <div className={`mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-            data-aos="fade-up">
-            <h1 ref={headlineRef} className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight"
+            data-aos="fade-up"
+            style={{ position: 'relative' }}>
+            {/* Ghost headline to reserve space and prevent layout shift */}
+            <h1
+              aria-hidden="true"
+              className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight invisible select-none pointer-events-none"
+              style={{
+                color: '#f8fafc',
+                textShadow: '0 2px 8px rgba(0,0,0,0.32), 2px 2px 6px rgba(0,0,0,0.7)',
+                letterSpacing: '-0.5px',
+                minHeight: '2.5em',
+                display: 'inline-block',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                zIndex: 0,
+              }}
+            >
+              Comprehensive Financial Planning
+              <br />
+              <span className="text-secondary" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.22)' }}>for Successful Professionals</span>
+            </h1>
+            {/* Actual animated headline */}
+            <h1 ref={headlineRef} className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight relative z-10"
               style={{
                 color: '#f8fafc',
                 textShadow: '0 2px 8px rgba(0,0,0,0.32), 2px 2px 6px rgba(0,0,0,0.7)',
@@ -144,8 +176,12 @@ const HeroSection = () => {
           </div>
 
           {/* Strategic Subtitle */}
-          <div className={`mb-8 transition-all duration-1000 delay-500 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}
-            data-aos="slide-up">
+          <motion.div
+            className="mb-8"
+            initial={{ opacity: 0, y: 48 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
+          >
             <p className="font-crimson text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed"
               style={{
                 color: '#f3f4f6',
@@ -153,23 +189,28 @@ const HeroSection = () => {
                 fontWeight: 500,
               }}
             >
-              Fiduciary-focused wealth management with tax-efficient strategies
+              Insurance, Investments, and Wealth Solutions—All in One Place
             </p>
-          </div>
+          </motion.div>
 
-          {/* Engaging Description */}
-          <div className={`mb-12 transition-all duration-1000 delay-700 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}
-            data-aos="fade-up">
-            <p className="font-crimson text-lg max-w-3xl mx-auto leading-relaxed"
-              style={{
-                color: '#e8e8e8',
-                textShadow: '0 1px 4px rgba(0,0,0,0.18)',
-              }}
-            >
-              Embrace a future of financial excellence with HARIA INVESTMENTS. Our commitment goes beyond
-              traditional financial services; we're your partners in every step of your financial journey.
-            </p>
-          </div>
+          {/* New: Services Grid */}
+          <motion.div
+            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12 min-h-[120px]"
+            initial={{ opacity: 0, y: 48 }}
+            animate={isVisible ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
+          >
+            {services.map((service) => (
+              <div
+                key={service.name}
+                className="flex flex-col items-center justify-center p-4 bg-white/10 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <service.icon className="w-10 h-10 text-secondary mb-2" />
+                <span className="text-white text-center text-sm sm:text-base font-crimson font-semibold">{service.name}</span>
+              </div>
+            ))}
+          </motion.div>
+
 
           {/* Trust Indicators (Badges) */}
           <div className="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="400">
