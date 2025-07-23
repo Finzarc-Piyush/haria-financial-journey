@@ -115,10 +115,8 @@ const ContactSection = () => {
         templateParams
       );
 
-      console.log('Confirmation email sent successfully:', response);
       return { success: true, response };
     } catch (error) {
-      console.error('Failed to send confirmation email:', error);
       return { success: false, error };
     }
   };
@@ -194,12 +192,7 @@ const ContactSection = () => {
     });
 
     // Send confirmation email to user
-    const emailResult = await sendConfirmationEmail(data);
-
-    if (!emailResult.success) {
-      // Log the error but don't prevent form submission success
-      console.warn('Confirmation email failed to send, but form was submitted successfully');
-    }
+    await sendConfirmationEmail(data);
 
     setSubmittedFirstName(formValues.firstName);
     setFormValues({ firstName: '', lastName: '', email: '', message: '', services: [] });
@@ -207,8 +200,6 @@ const ContactSection = () => {
     setIsSubmitting(false);
     setFormSubmitted(true);
     openConfirmation();
-    // Remove auto-dismiss effect for confirmation dialog
-    // (No useEffect for showConfirmation)
   };
 
   useEffect(() => {
