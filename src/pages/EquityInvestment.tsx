@@ -185,7 +185,7 @@ const EquityInvestment = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-equity-investments.png')" }}
+                    style={{ backgroundImage: "url('/hero-equity-investments.webp')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 

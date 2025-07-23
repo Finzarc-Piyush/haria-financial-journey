@@ -204,7 +204,7 @@ const CommodityTrading = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-commodity-trading.png')" }}
+                    style={{ backgroundImage: "url('/hero-commodity-trading.webp')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 

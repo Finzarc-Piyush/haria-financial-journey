@@ -205,7 +205,7 @@ const FixedIncome = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-fixed-income.png')" }}
+                    style={{ backgroundImage: "url('/hero-fixed-income.webp')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 

@@ -208,7 +208,7 @@ const GeneralInsurance = () => {
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-general-insurance.png')" }}
+                    style={{ backgroundImage: "url('/hero-general-insurance.webp')" }}
                 />
                 <div className="absolute inset-0 bg-black/40" />
 
