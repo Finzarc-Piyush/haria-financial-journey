@@ -4,17 +4,22 @@ import { Phone, Mail, MapPin, Clock, Calendar } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState, useRef } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { CheckCircle } from 'lucide-react';
+import { motion } from 'framer-motion';
 import rightTick from '@/assets/right-tick.png';
+import emailjs from '@emailjs/browser';
 
 function isMobile() {
   if (typeof window === 'undefined') return false;
   return window.innerWidth < 768;
 }
 
-// Replace the hardcoded GOOGLE_SCRIPT_URL with the environment variable
+// GOOGLE_SCRIPT_URL 
 const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
+
+// EmailJS configuration 
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 function validate(field: string, value: string | string[]) {
   switch (field) {
@@ -71,6 +76,13 @@ const ContactSection = () => {
   const [showFinalTick, setShowFinalTick] = useState(false);
   const [drawDone, setDrawDone] = useState(false);
 
+  // Initialize EmailJS
+  useEffect(() => {
+    if (EMAILJS_PUBLIC_KEY) {
+      emailjs.init(EMAILJS_PUBLIC_KEY);
+    }
+  }, []);
+
   // FIXED: Reset animation state function
   const resetAnimationState = () => {
     setStartTick(false);
@@ -86,6 +98,29 @@ const ContactSection = () => {
     setTimeout(() => {
       setStartTick(true);
     }, 100);
+  };
+
+  // Function to send confirmation email
+  const sendConfirmationEmail = async (formData: any) => {
+    try {
+      // Template parameters that will be sent to EmailJS
+      const templateParams = {
+        name: formData.firstName,
+        email: formData.email,
+      };
+
+      const response = await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        templateParams
+      );
+
+      console.log('Confirmation email sent successfully:', response);
+      return { success: true, response };
+    } catch (error) {
+      console.error('Failed to send confirmation email:', error);
+      return { success: false, error };
+    }
   };
 
   // Validate all fields and update errors
@@ -157,6 +192,15 @@ const ContactSection = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(data),
     });
+
+    // Send confirmation email to user
+    const emailResult = await sendConfirmationEmail(data);
+
+    if (!emailResult.success) {
+      // Log the error but don't prevent form submission success
+      console.warn('Confirmation email failed to send, but form was submitted successfully');
+    }
+
     setSubmittedFirstName(formValues.firstName);
     setFormValues({ firstName: '', lastName: '', email: '', message: '', services: [] });
     setTouched({ firstName: false, lastName: false, email: false, message: false, services: false });
