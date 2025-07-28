@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -201,8 +200,6 @@ const GeneralInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
-
             {/* Hero Section */}
             <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
                 {/* Background Image */}
@@ -401,7 +398,7 @@ const GeneralInsurance = () => {
                                             </div>
                                         )}
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
                                             Get Quote
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>

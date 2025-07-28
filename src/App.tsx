@@ -18,6 +18,7 @@ import FixedIncome from "./pages/FixedIncome";
 import CommodityTrading from "./pages/CommodityTrading";
 import LumpsumCalculator from "./pages/LumpsumCalculator";
 import CAGRCalculator from "./pages/CAGRCalculator";
+import Navigation from "@/components/Navigation";
 
 // ErrorBoundary component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { hasError: boolean; }> {
@@ -51,6 +52,7 @@ const App = () => (
         <Sonner />
         <BrowserRouter>
           <ScrollToTop />
+          <Navigation />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/sip-calculator" element={<SIPCalculator />} />

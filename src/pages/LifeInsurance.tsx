@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -165,8 +164,6 @@ const LifeInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
-
             {/* Hero Section */}
             <section
                 id="hero"
@@ -201,7 +198,7 @@ const LifeInsurance = () => {
 
                     <Button
                         size="lg"
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105"
+                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
                     >
                         Get Free Consultation
                         <ArrowRight className="ml-2 h-5 w-5" />
@@ -298,7 +295,7 @@ const LifeInsurance = () => {
                                         ))}
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
                                         Learn More
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
