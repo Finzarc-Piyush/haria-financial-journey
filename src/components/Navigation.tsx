@@ -117,21 +117,32 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
           top: isVisible ? 0 : 8, // top-2 (8px) to top-0
           borderRadius: '50px',
         }}
+        initial={{
+          opacity: 0,
+          y: 0,
+          width: '100%',
+          left: '0%',
+          backdropFilter: 'blur(12px) saturate(180%)',
+          backgroundColor: 'rgba(255, 255, 255, 0.10)',
+          border: '1px solid rgba(255, 255, 255, 0.15)',
+          boxShadow: 'none',
+        }}
         animate={{
+          opacity: 1,
           y: isVisible ? 20 : 0, // Move down 20px when visible
           width: isVisible ? (window.innerWidth >= 1024 ? '75%' : '90%') : '100%',
           left: isVisible ? (window.innerWidth >= 1024 ? '12.5%' : '5%') : '0%',
-          backdropFilter: isVisible ? 'blur(20px) saturate(180%)' : 'blur(4px)',
-          backgroundColor: isVisible ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.02)',
-          border: isVisible ? '1px solid rgba(255, 255, 255, 0.2)' : '1px solid rgba(255, 255, 255, 0.05)',
+          backdropFilter: isVisible ? 'blur(20px) saturate(180%)' : 'blur(12px) saturate(180%)',
+          backgroundColor: isVisible ? 'rgba(255, 255, 255, 0.18)' : 'rgba(255, 255, 255, 0.10)',
+          border: isVisible ? '1px solid rgba(255, 255, 255, 0.22)' : '1px solid rgba(255, 255, 255, 0.15)',
           boxShadow: isVisible
-            ? '0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.2)'
+            ? '0 25px 50px -12px rgba(0, 0, 0, 0.18), 0 0 0 1px rgba(255, 255, 255, 0.10), inset 0 1px 0 rgba(255, 255, 255, 0.18)'
             : '0 2px 8px rgba(0, 0, 0, 0.05)',
         }}
         transition={{
-          type: "spring",
-          stiffness: 200,
-          damping: 50,
+          type: "tween",
+          duration: 1.2,
+          ease: [0.25, 1, 0.5, 1],
         }}
       >
         <nav className="w-full transition-all duration-500 rounded-full">
@@ -141,7 +152,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               <Link to="/" className="flex-shrink-0 flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity duration-300">
                 <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 object-contain" />
                 <div>
-                  <div className="font-playfair font-bold text-2xl text-tertiary">
+                  <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-2xl text-tertiary">
                     Haria Investments
                   </div>
                   <div className="text-xs text-muted-foreground font-crimson">
@@ -151,7 +162,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="flex-1 hidden lg:flex items-center justify-center space-x-4 px-8">
+              <div className="flex-1 hidden lg:flex items-center justify-center space-x-8 px-8">
                 {/* Insurance Dropdown */}
                 <div
                   className="relative"
@@ -159,10 +170,10 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   onMouseLeave={() => setIsInsuranceDropdownOpen(false)}
                 >
                   <button
-                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    style={{ textShadow: 'none' }}
+                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
-                    <Shield className="w-4 h-4" />
                     Insurance
                     <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isInsuranceDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
@@ -197,10 +208,10 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   onMouseLeave={() => setIsInvestmentDropdownOpen(false)}
                 >
                   <button
-                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    style={{ textShadow: 'none' }}
+                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
-                    <BarChart3 className="w-4 h-4" />
                     Investment
                     <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isInvestmentDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
@@ -231,18 +242,16 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 {/* Fixed Income */}
                 <Link
                   to="/fixed-income"
-                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                  className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                 >
-                  <PiggyBank className="w-4 h-4" />
                   Fixed Income
                 </Link>
 
                 {/* Commodity Trading */}
                 <Link
                   to="/commodity-trading"
-                  className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                  className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                 >
-                  <Zap className="w-4 h-4" />
                   CDT
                 </Link>
 
@@ -253,10 +262,10 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   onMouseLeave={() => setIsCalcDropdownOpen(false)}
                 >
                   <button
-                    className="text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    style={{ textShadow: 'none' }}
+                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
-                    <Calculator className="w-4 h-4" />
                     Calculator
                     <ChevronDown className={`ml-1 w-4 h-4 transition-transform duration-200 ${isCalcDropdownOpen ? 'rotate-180' : ''}`} />
                   </button>
