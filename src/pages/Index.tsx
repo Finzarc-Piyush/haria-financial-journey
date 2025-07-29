@@ -8,6 +8,7 @@ import ProcessSection from "@/components/ProcessSection";
 import CredentialsSection from "@/components/CredentialsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import PortfolioManagement from './PortfolioManagement';
 
 const Index = () => {
   const [heroInView, setHeroInView] = useState(true);

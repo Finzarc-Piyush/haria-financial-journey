@@ -19,6 +19,7 @@ import CommodityTrading from "./pages/CommodityTrading";
 import LumpsumCalculator from "./pages/LumpsumCalculator";
 import CAGRCalculator from "./pages/CAGRCalculator";
 import Navigation from "@/components/Navigation";
+import PortfolioManagement from "./pages/PortfolioManagement";
 
 // ErrorBoundary component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { hasError: boolean; }> {
@@ -65,6 +66,7 @@ const App = () => (
             <Route path="/commodity-trading" element={<CommodityTrading />} />
             <Route path="/lumpsum-calculator" element={<LumpsumCalculator />} />
             <Route path="/cagr-calculator" element={<CAGRCalculator />} />
+            <Route path="/portfolio-management" element={<PortfolioManagement />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />

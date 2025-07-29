@@ -70,6 +70,22 @@ const LifeInsurance = () => {
             coverage: "₹10 Lakhs - ₹1 Crore",
             premium: "Starting ₹1,000/month",
             features: ["Market returns", "Life cover", "Fund switching", "Tax benefits"]
+        },
+        {
+            title: "Money-Back Plans",
+            description: "Periodic payouts during the policy term + life cover",
+            icon: Clock,
+            coverage: "₹10 Lakhs - ₹1 Crore",
+            premium: "Starting ₹1,200/month",
+            features: ["Survival benefits", "Maturity returns", "Life cover", "Bonus payout"]
+        },
+        {
+            title: "Pension Plans",
+            description: "Secure your retirement with regular annuity payouts",
+            icon: PiggyBank,
+            coverage: "₹5 Lakhs - ₹2 Crore",
+            premium: "Starting ₹2,000/month",
+            features: ["Retirement income", "Deferred/Immediate annuity", "Tax benefits", "Optional life cover"]
         }
     ];
 
@@ -244,7 +260,7 @@ const LifeInsurance = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.8, delay: 0.1 }}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
                     >
                         {products.map((product, index) => (
                             <motion.div
