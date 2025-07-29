@@ -81,6 +81,11 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
       to: '/equity-investment',
       icon: <PieChart className="text-secondary w-5 h-5 mr-2" />,
     },
+    {
+      label: 'PMS',
+      to: '/portfolio-management',
+      icon: <BarChart3 className="text-secondary w-5 h-5 mr-2" />,
+    },
   ];
 
   const calculatorLinks = [

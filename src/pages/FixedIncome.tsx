@@ -88,7 +88,20 @@ const FixedIncome = () => {
             minAmount: "₹10,000",
             features: ["Higher yields", "Credit rating", "Regular interest", "Listing benefits"],
             animation: "logo-verification"
+        },
+        {
+            id: "cgb",
+            title: "Capital Gain Bonds",
+            description: "Save tax on long-term capital gains under Section 54EC",
+            icon: Award, // Or any suitable icon like BarChart3
+            color: "from-yellow-500 to-amber-500",
+            rate: "5.25% (approx)",
+            tenure: "5 years (locked-in)",
+            minAmount: "₹10,000",
+            features: ["Tax exemption", "RBI approved", "Safe returns", "No premature exit"],
+            animation: "tax-saving"
         }
+
     ];
 
     const ladderingStrategies = [
@@ -264,7 +277,7 @@ const FixedIncome = () => {
                         </p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                         {products.map((product, index) => (
                             <motion.div
                                 key={product.id}

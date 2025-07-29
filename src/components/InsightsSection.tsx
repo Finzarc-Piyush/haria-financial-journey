@@ -268,65 +268,6 @@ const InsightsSection = () => {
           </div>
         </div>
 
-        {/* Newsletter Signup */}
-        <div data-aos="fade-in" className="transition-all duration-1000 delay-800">
-          <Card className="premium-card bg-champagne border-secondary">
-            <CardHeader className="text-center">
-              <div className="flex items-center justify-center mb-4">
-                <Mail className="w-8 h-8 text-secondary" />
-              </div>
-              <CardTitle className="font-playfair text-2xl text-tertiary">
-                Stay Informed with Our Newsletter
-              </CardTitle>
-              <CardDescription className="font-crimson text-tertiary/70">
-                Receive monthly financial insights, market commentary, and exclusive client content
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                <div className="text-center">
-                  <div className="font-playfair text-lg font-semibold text-tertiary mb-2">
-                    Monthly Insights
-                  </div>
-                  <div className="font-crimson text-sm text-tertiary/70">
-                    Market analysis and investment ideas
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="font-playfair text-lg font-semibold text-tertiary mb-2">
-                    Exclusive Content
-                  </div>
-                  <div className="font-crimson text-sm text-tertiary/70">
-                    Client-only research and recommendations
-                  </div>
-                </div>
-                <div className="text-center">
-                  <div className="font-playfair text-lg font-semibold text-tertiary mb-2">
-                    Event Invitations
-                  </div>
-                  <div className="font-crimson text-sm text-tertiary/70">
-                    Webinars and educational seminars
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-                <input
-                  type="email"
-                  placeholder="Enter your email address"
-                  className="flex-1 px-4 py-2 border border-secondary rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary font-crimson"
-                />
-                <Button className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson">
-                  Subscribe
-                </Button>
-              </div>
-
-              <p className="text-center text-xs text-tertiary/60 mt-4 font-crimson">
-                We respect your privacy. Unsubscribe at any time.
-              </p>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </section>
   );
