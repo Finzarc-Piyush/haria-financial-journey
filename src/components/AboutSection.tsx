@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Award, GraduationCap, Heart, Users, Building2, Star } from "lucide-react";
 import teamPhoto from "@/assets/team-photo.jpg";
 import advisorHeadshot from "@/assets/advisor-headshot.jpg";
+import advisor from "@/assets/advisor.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -27,8 +28,8 @@ const AboutSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <img
-                src={advisorHeadshot}
-                alt="Rajesh Haria, Financial Advisor"
+                src={advisor}
+                alt="Meet Savla, Financial Advisor"
                 className="w-full max-w-md mx-auto rounded-lg shadow-floating"
                 data-aos="fade-right"
                 data-aos-delay="100"
