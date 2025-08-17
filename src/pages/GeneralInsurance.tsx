@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -92,29 +91,29 @@ const GeneralInsurance = () => {
             ]
         },
         {
-            id: "health",
-            title: "Health Insurance",
-            icon: Heart,
-            description: "Comprehensive health coverage for you and family",
-            color: "from-red-500 to-pink-500",
+            id: "fire",
+            title: "Fire Insurance",
+            icon: Flame,
+            description: "Fire damage protection for assets and property",
+            color: "from-orange-500 to-red-500",
             subCategories: [
                 {
-                    name: "Individual Plans",
-                    description: "Personal health coverage",
-                    badge: "Single person",
-                    icon: Users
+                    name: "Fire & Allied Perils",
+                    description: "Covers loss due to fire, lightning, explosion etc.",
+                    badge: "Essential",
+                    icon: Flame
                 },
                 {
-                    name: "Family Floater",
-                    description: "Family health protection",
-                    badge: "Family tree",
-                    icon: Users
+                    name: "Electrical Fire",
+                    description: "Protects from fire due to electrical faults",
+                    badge: "Sensitive zones",
+                    icon: Shield
                 },
                 {
-                    name: "Senior Citizen",
-                    description: "Specialized senior care",
-                    badge: "Caring hands",
-                    icon: Heart
+                    name: "Natural Calamity Fire",
+                    description: "Covers fire caused by natural calamities",
+                    badge: "Disaster coverage",
+                    icon: Globe
                 }
             ]
         },
@@ -201,8 +200,6 @@ const GeneralInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
-
             {/* Hero Section */}
             <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
                 {/* Background Image */}
@@ -401,7 +398,7 @@ const GeneralInsurance = () => {
                                             </div>
                                         )}
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
                                             Get Quote
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>

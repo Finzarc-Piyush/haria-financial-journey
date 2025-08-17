@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Navigation from "@/components/Navigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
@@ -9,6 +8,7 @@ import ProcessSection from "@/components/ProcessSection";
 import CredentialsSection from "@/components/CredentialsSection";
 import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
+import PortfolioManagement from './PortfolioManagement';
 
 const Index = () => {
   const [heroInView, setHeroInView] = useState(true);
@@ -26,7 +26,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Navigation isTransparent={heroInView} />
       <HeroSection />
       <AboutSection />
       <ServicesSection />

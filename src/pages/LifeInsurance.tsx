@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -71,6 +70,22 @@ const LifeInsurance = () => {
             coverage: "₹10 Lakhs - ₹1 Crore",
             premium: "Starting ₹1,000/month",
             features: ["Market returns", "Life cover", "Fund switching", "Tax benefits"]
+        },
+        {
+            title: "Money-Back Plans",
+            description: "Periodic payouts during the policy term + life cover",
+            icon: Clock,
+            coverage: "₹10 Lakhs - ₹1 Crore",
+            premium: "Starting ₹1,200/month",
+            features: ["Survival benefits", "Maturity returns", "Life cover", "Bonus payout"]
+        },
+        {
+            title: "Pension Plans",
+            description: "Secure your retirement with regular annuity payouts",
+            icon: PiggyBank,
+            coverage: "₹5 Lakhs - ₹2 Crore",
+            premium: "Starting ₹2,000/month",
+            features: ["Retirement income", "Deferred/Immediate annuity", "Tax benefits", "Optional life cover"]
         }
     ];
 
@@ -165,8 +180,6 @@ const LifeInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
-
             {/* Hero Section */}
             <section
                 id="hero"
@@ -201,7 +214,7 @@ const LifeInsurance = () => {
 
                     <Button
                         size="lg"
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105"
+                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
                     >
                         Get Free Consultation
                         <ArrowRight className="ml-2 h-5 w-5" />
@@ -247,7 +260,7 @@ const LifeInsurance = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.8, delay: 0.1 }}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
                     >
                         {products.map((product, index) => (
                             <motion.div
@@ -298,7 +311,7 @@ const LifeInsurance = () => {
                                         ))}
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
                                         Learn More
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>

@@ -266,13 +266,7 @@ const HeroSection = () => {
             <Button
               onClick={() => scrollToSection('contact')}
               size="lg"
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-3 text-lg shadow-elegant hover:shadow-floating transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
-              style={{ boxShadow: '0 0 0 0 rgba(212,165,116,0.5)', transition: 'box-shadow 0.3s' }}
-              onMouseDown={e => {
-                const btn = e.currentTarget;
-                btn.style.boxShadow = '0 0 0 8px rgba(212,165,116,0.25)';
-                setTimeout(() => { btn.style.boxShadow = '0 0 0 0 rgba(212,165,116,0.5)'; }, 400);
-              }}
+              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-3 text-lg"
             >
               Schedule Consultation
             </Button>
@@ -280,13 +274,7 @@ const HeroSection = () => {
               onClick={() => scrollToSection('about')}
               variant="outline"
               size="lg"
-              className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson font-semibold px-8 py-3 text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
-              style={{ boxShadow: '0 0 0 0 rgba(212,165,116,0.5)', transition: 'box-shadow 0.3s' }}
-              onMouseDown={e => {
-                const btn = e.currentTarget;
-                btn.style.boxShadow = '0 0 0 8px rgba(212,165,116,0.25)';
-                setTimeout(() => { btn.style.boxShadow = '0 0 0 0 rgba(212,165,116,0.5)'; }, 400);
-              }}
+              className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson font-semibold px-8 py-3 text-lg"
             >
               Learn More
             </Button>
