@@ -23,8 +23,8 @@ const defaultInputs: SIPCalculatorInputs = {
 const validationRules = {
     monthlyInvestment: (v: number) => validateRange(v, 500, 500000, 'Monthly Amount') || null,
     durationYears: (v: number) => validateRange(v, 1, 30, 'Duration') || null,
-    expectedReturns: (v: number) => validateRange(v, 8, 15, 'Expected Returns') || null,
-    stepUpPercent: (v: number) => validateRange(v, 0, 10, 'Step-Up') || null,
+    expectedReturns: (v: number) => validateRange(v, 8, 25, 'Expected Returns') || null,
+    stepUpPercent: (v: number) => validateRange(v, 0, 20, 'Step-Up') || null,
 };
 
 const faqList = [
@@ -175,7 +175,7 @@ const SIPCalculator = () => {
                             value={inputs.expectedReturns}
                             onChange={handleInputChange('expectedReturns')}
                             min={8}
-                            max={15}
+                            max={25}
                             step={0.1}
                             error={errors.expectedReturns}
                         />
@@ -184,17 +184,17 @@ const SIPCalculator = () => {
                             value={inputs.stepUpPercent}
                             onChange={handleInputChange('stepUpPercent')}
                             min={0}
-                            max={10}
+                            max={20}
                             step={0.1}
                             error={errors.stepUpPercent}
                         />
-                        {warnings.length > 0 && (
+                        {/* {warnings.length > 0 && (
                             <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
                                 {warnings.map((w, index) => (
                                     <div key={index}>{w}</div>
                                 ))}
                             </div>
-                        )}
+                        )} */}
                     </CalculatorFormCard>
                 </div>
                 <div className="col-span-1 flex items-center">

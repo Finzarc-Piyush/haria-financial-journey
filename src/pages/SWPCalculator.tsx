@@ -10,6 +10,8 @@ import ChartWrapper from '@/components/calculators/shared/ChartWrapper';
 import FAQSection from '@/components/calculators/shared/FAQSection';
 import CalculatorInput from '@/components/calculators/shared/CalculatorInput';
 import SWPBarChart from '@/components/calculators/shared/SWPBarChart';
+import { calculateSWP } from '@/utils';
+import { SWPResult } from '@/types/calculator';
 
 const defaultInputs = {
     corpus: 2000000,
@@ -22,7 +24,7 @@ const validationRules = {
     corpus: (v: number) => validateRange(v, 100000, 100000000, 'Corpus Amount') || null,
     withdrawalAmount: (v: number) => validateRange(v, 1000, 1000000, 'Withdrawal Amount') || null,
     durationYears: (v: number) => validateRange(v, 1, 30, 'Duration') || null,
-    expectedReturns: (v: number) => validateRange(v, 4, 15, 'Expected Returns') || null,
+    expectedReturns: (v: number) => validateRange(v, 4, 25, 'Expected Returns') || null,
 };
 
 const faqList = [
@@ -49,14 +51,26 @@ function formatINR(num: number) {
 }
 
 const SWPCalculator = () => {
-    // Placeholder for SWP calculation logic. Replace with actual calculation as needed.
-    const { inputs, setInputs, errors, results, warnings } = useCalculator(
+    const { inputs, setInputs, errors, results, warnings } = useCalculator<typeof defaultInputs, SWPResult>(
         defaultInputs,
-        (inputs) => ({
-            maturityCorpus: Math.max(0, inputs.corpus - (inputs.withdrawalAmount * 12 * inputs.durationYears)),
-            totalWithdrawn: inputs.withdrawalAmount * 12 * inputs.durationYears,
-            returns: Math.max(0, (inputs.corpus * (inputs.expectedReturns / 100) * inputs.durationYears)),
-        }),
+        (inputs) => {
+            const result = calculateSWP(
+                inputs.corpus,
+                inputs.withdrawalAmount,
+                inputs.durationYears,
+                inputs.expectedReturns
+            );
+
+            // Check if investment depletes before the desired period
+            if (result.maturityCorpus <= 0) {
+                return {
+                    ...result,
+                    warning: "Investment won't last for the desired period. Please adjust your inputs."
+                };
+            }
+
+            return result;
+        },
         validationRules
     );
 
@@ -145,13 +159,15 @@ const SWPCalculator = () => {
                             value={inputs.expectedReturns}
                             onChange={handleInputChange('expectedReturns')}
                             min={4}
-                            max={15}
+                            max={25}
                             step={0.1}
                             error={errors.expectedReturns}
                         />
-                        {warnings.length > 0 && (
-                            <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
-                                {warnings.map((w, i) => <div key={i}>{w}</div>)}
+                        {results.warning && (
+                            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+                                <p className="text-amber-600 text-sm font-crimson">
+                                    ⚠️ {results.warning}
+                                </p>
                             </div>
                         )}
                     </CalculatorFormCard>
@@ -160,11 +176,24 @@ const SWPCalculator = () => {
                 <div className="col-span-1 flex items-center">
                     <CalculatorResultCard
                         title="SWP Summary"
-                        subtitle="Your SWP projection"
+                        subtitle={results.warning ? "Warning: Unsustainable Withdrawal Plan" : "Your SWP projection"}
                         metrics={metrics}
                         chart={
                             <ChartWrapper>
-                                <SWPBarChart corpus={inputs.corpus} withdrawn={results.totalWithdrawn || 0} returns={results.returns || 0} corpusLeft={results.maturityCorpus || 0} />
+                                {!results.warning ? (
+                                    <SWPBarChart
+                                        corpus={inputs.corpus}
+                                        withdrawn={results.totalWithdrawn || 0}
+                                        returns={results.returns || 0}
+                                        corpusLeft={results.maturityCorpus || 0}
+                                    />
+                                ) : (
+                                    <div className="flex items-center justify-center h-64 text-amber-600">
+                                        <p className="text-center font-crimson">
+                                            ⚠️ Investment won't last for the desired period. Please adjust your inputs.
+                                        </p>
+                                    </div>
+                                )}
                             </ChartWrapper>
                         }
                         explanations={explanations}
@@ -176,4 +205,4 @@ const SWPCalculator = () => {
     );
 };
 
-export default SWPCalculator; 
+export default SWPCalculator;

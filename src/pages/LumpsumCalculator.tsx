@@ -21,7 +21,7 @@ const defaultInputs = {
 const validationRules = {
     principal: (v: number) => validateRange(v, 1000, 100000000, 'Principal Amount') || null,
     durationYears: (v: number) => validateRange(v, 1, 50, 'Duration') || null,
-    expectedReturns: (v: number) => validateRange(v, 1, 20, 'Expected Returns') || null,
+    expectedReturns: (v: number) => validateRange(v, 1, 25, 'Expected Returns') || null,
 };
 
 const faqList = [
@@ -120,15 +120,15 @@ const LumpsumCalculator = () => {
                             value={inputs.expectedReturns}
                             onChange={handleInputChange('expectedReturns')}
                             min={1}
-                            max={20}
+                            max={25}
                             step={0.1}
                             error={errors.expectedReturns}
                         />
-                        {warnings.length > 0 && (
+                        {/* {warnings.length > 0 && (
                             <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
                                 {warnings.map((w, i) => <div key={i}>{w}</div>)}
                             </div>
-                        )}
+                        )} */}
                     </CalculatorFormCard>
                 </div>
                 <div className="col-span-1 flex items-center">

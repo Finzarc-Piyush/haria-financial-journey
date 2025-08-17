@@ -25,22 +25,41 @@ export function calculateFD(inputs: FDCalculatorInputs) {
     return { maturity, interest, annualized };
 }
 
-// Retirement: inflation-adjusted corpus (simple version)
-export function calculateRetirementCorpus(inputs: RetirementCalculatorInputs) {
-    const yearsToRetire = inputs.retirementAge - inputs.currentAge;
-    const inflationFactor = Math.pow(1 + inputs.inflationRate / 100, yearsToRetire);
-    const futureExpenses = inputs.monthlyExpenses * inflationFactor;
-    const corpus = futureExpenses * 12 * 25; // 25x rule
-    const monthlySIP = (corpus - inputs.currentCorpus) / (yearsToRetire * 12);
-    return { corpus, monthlySIP, futureExpenses };
-}
+// SWP calculation - FIXED
+export function calculateSWP(
+    principal: number,
+    monthlyWithdrawal: number,
+    years: number,
+    annualReturn: number
+) {
+    const monthlyRate = annualReturn / (12 * 100);
+    let balance = principal;
+    let totalWithdrawn = 0;
+    let totalReturns = 0;
 
-// Emergency: risk-based multipliers
-export function calculateEmergencyFund(inputs: EmergencyFundInputs, riskScore = 1) {
-    // riskScore: 1 (low risk, default), 1.5 (moderate), 2 (high risk)
-    const baseMonths = inputs.monthsCovered * riskScore;
-    const recommendedFund = inputs.monthlyExpenses * baseMonths;
-    const shortfall = Math.max(0, recommendedFund - (inputs.lumpSumAvailable || 0));
-    const monthlySaving = shortfall > 0 ? shortfall / baseMonths : 0;
-    return { recommendedFund, shortfall, monthlySaving, baseMonths };
-} 
+    for (let month = 1; month <= years * 12; month++) {
+        // Calculate monthly interest on current balance
+        const monthlyInterest = balance * monthlyRate;
+        totalReturns += monthlyInterest;
+
+        // Add interest to balance first
+        balance += monthlyInterest;
+
+        // Then subtract withdrawal
+        if (balance >= monthlyWithdrawal) {
+            balance -= monthlyWithdrawal;
+            totalWithdrawn += monthlyWithdrawal;
+        } else {
+            // If insufficient balance, withdraw whatever is left
+            totalWithdrawn += balance;
+            balance = 0;
+            break;
+        }
+    }
+
+    return {
+        maturityCorpus: Math.round(balance),
+        totalWithdrawn: Math.round(totalWithdrawn),
+        returns: Math.round(totalReturns)
+    };
+}
