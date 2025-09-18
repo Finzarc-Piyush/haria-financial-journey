@@ -391,7 +391,7 @@ All colors MUST be HSL. Professional financial advisory theme.
 
 /* Button glow and Terracotta accent border */
 .btn-glow {
-  transition: box-shadow 0.3s, border-color 0.3s;
+  transition: box-shadow 0.3s, border-color 0.3s, transform 0.3s;
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
@@ -401,6 +401,17 @@ All colors MUST be HSL. Professional financial advisory theme.
 .btn-glow:focus {
   box-shadow: 0 0 0 4px hsl(var(--secondary) / 0.18), 0 8px 32px -4px hsl(var(--secondary) / 0.18);
   border-color: hsl(var(--secondary));
+  transform: translateY(-2px);
+}
+
+/* Orbit animation for partner showcase */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.partner-orbit {
+  animation: float 3s ease-in-out infinite;
 }
 
 /* Ripple effect on click (JS sets box-shadow, see component) */

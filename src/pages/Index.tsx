@@ -7,6 +7,7 @@ import InsightsSection from "@/components/InsightsSection";
 import ProcessSection from "@/components/ProcessSection";
 import CredentialsSection from "@/components/CredentialsSection";
 import ContactSection from "@/components/ContactSection";
+import PartnerShowcase from "@/components/PartnerShowcase";
 import Footer from "@/components/Footer";
 import PortfolioManagement from './PortfolioManagement';
 
@@ -30,6 +31,8 @@ const Index = () => {
       <AboutSection />
       <ServicesSection />
       <ResultsSection />
+      <PartnerShowcase category="life" className="bg-background" />
+      <PartnerShowcase category="health" className="bg-muted/30" />
       <InsightsSection />
       <ProcessSection />
       <CredentialsSection />
