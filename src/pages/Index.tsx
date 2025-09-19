@@ -31,8 +31,7 @@ const Index = () => {
       <AboutSection />
       <ServicesSection />
       <ResultsSection />
-      <PartnerShowcase category="life" className="bg-background" />
-      <PartnerShowcase category="health" className="bg-muted/30" />
+      {/* <PartnerShowcase category="life" className="bg-background" /> */}
       <InsightsSection />
       <ProcessSection />
       <CredentialsSection />
