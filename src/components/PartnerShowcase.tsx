@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -7,8 +7,8 @@ interface Partner {
   name: string;
   logo?: string;
   position: {
-    angle: number;
-    radius: number;
+    orbit: number; // Which orbit circle (1, 2, 3, etc.)
+    angle: number; // Position on the orbit
   };
 }
 
@@ -18,37 +18,68 @@ interface PartnerShowcaseProps {
 }
 
 const lifeInsurancePartners: Partner[] = [
-  { name: 'LIC', position: { angle: 0, radius: 160 } },
-  { name: 'BAJAJ', position: { angle: 72, radius: 160 } },
-  { name: 'HDFC', position: { angle: 144, radius: 160 } },
-  { name: 'ICICI', position: { angle: 216, radius: 160 } },
-  { name: 'Aditya Birla', position: { angle: 288, radius: 160 } },
+  { name: 'LIC', position: { orbit: 1, angle: 0 } },
+  { name: 'BAJAJ', position: { orbit: 2, angle: 90 } },
+  { name: 'HDFC', position: { orbit: 3, angle: 180 } },
+  { name: 'ICICI', position: { orbit: 2, angle: 270 } },
+  { name: 'Aditya Birla', position: { orbit: 1, angle: 180 } },
 ];
 
 const healthInsurancePartners: Partner[] = [
-  { name: 'Oriental', position: { angle: 0, radius: 180 } },
-  { name: 'Star Health', position: { angle: 45, radius: 180 } },
-  { name: 'HDFC Ergo', position: { angle: 90, radius: 180 } },
-  { name: 'Bajaj Allianz', position: { angle: 135, radius: 180 } },
-  { name: 'Future Generali', position: { angle: 180, radius: 180 } },
-  { name: 'Niva Bupa', position: { angle: 225, radius: 180 } },
-  { name: 'TATA AIG', position: { angle: 270, radius: 180 } },
-  { name: 'Go Digit', position: { angle: 315, radius: 180 } },
+  { name: 'Oriental', position: { orbit: 1, angle: 0 } },
+  { name: 'Star Health', position: { orbit: 2, angle: 45 } },
+  { name: 'HDFC Ergo', position: { orbit: 3, angle: 90 } },
+  { name: 'Bajaj Allianz', position: { orbit: 1, angle: 120 } },
+  { name: 'Future Generali', position: { orbit: 2, angle: 180 } },
+  { name: 'Niva Bupa', position: { orbit: 3, angle: 225 } },
+  { name: 'TATA AIG', position: { orbit: 1, angle: 240 } },
+  { name: 'Go Digit', position: { orbit: 2, angle: 315 } },
 ];
 
-const getPartnerPosition = (angle: number, radius: number, containerSize: number) => {
+// Define orbit radii
+const orbitRadii = {
+  1: 120,
+  2: 160,
+  3: 200,
+};
+
+const getPartnerPosition = (angle: number, orbitRadius: number, containerSize: number) => {
   const radian = (angle * Math.PI) / 180;
-  const x = Math.cos(radian) * radius + containerSize / 2;
-  const y = Math.sin(radian) * radius + containerSize / 2;
+  const x = Math.cos(radian) * orbitRadius + containerSize / 2;
+  const y = Math.sin(radian) * orbitRadius + containerSize / 2;
   return { x, y };
 };
 
+// Simple logo component with partner name and colored background
 const PartnerLogo: React.FC<{ partner: Partner; containerSize: number; index: number }> = ({
   partner,
   containerSize,
   index,
 }) => {
-  const { x, y } = getPartnerPosition(partner.position.angle, partner.position.radius, containerSize);
+  const orbitRadius = orbitRadii[partner.position.orbit as keyof typeof orbitRadii];
+  const { x, y } = getPartnerPosition(partner.position.angle, orbitRadius, containerSize);
+
+  // Color mapping for different companies
+  const getCompanyColors = (name: string) => {
+    const colorMap: Record<string, { bg: string; text: string }> = {
+      'LIC': { bg: 'bg-red-600', text: 'text-white' },
+      'BAJAJ': { bg: 'bg-blue-600', text: 'text-white' },
+      'HDFC': { bg: 'bg-red-500', text: 'text-white' },
+      'ICICI': { bg: 'bg-orange-500', text: 'text-white' },
+      'Aditya Birla': { bg: 'bg-blue-800', text: 'text-white' },
+      'Oriental': { bg: 'bg-green-600', text: 'text-white' },
+      'Star Health': { bg: 'bg-red-700', text: 'text-white' },
+      'HDFC Ergo': { bg: 'bg-red-500', text: 'text-white' },
+      'Bajaj Allianz': { bg: 'bg-blue-600', text: 'text-white' },
+      'Future Generali': { bg: 'bg-green-700', text: 'text-white' },
+      'Niva Bupa': { bg: 'bg-blue-500', text: 'text-white' },
+      'TATA AIG': { bg: 'bg-blue-800', text: 'text-white' },
+      'Go Digit': { bg: 'bg-orange-600', text: 'text-white' },
+    };
+    return colorMap[name] || { bg: 'bg-gray-600', text: 'text-white' };
+  };
+
+  const colors = getCompanyColors(partner.name);
 
   return (
     <motion.div
@@ -58,83 +89,77 @@ const PartnerLogo: React.FC<{ partner: Partner; containerSize: number; index: nu
       animate={{ opacity: 1, scale: 1 }}
       transition={{
         duration: 0.5,
-        delay: index * 0.1,
+        delay: index * 0.15,
         ease: 'easeOut',
       }}
-      whileHover={{ scale: 1.1, y: y - 4 }}
+      whileHover={{ scale: 1.2, y: y - 8 }}
     >
-      <div className="premium-card hover-lift w-full h-full flex items-center justify-center bg-white shadow-card rounded-lg border border-muted/20">
-        <span className="font-playfair text-xs md:text-sm font-semibold text-foreground text-center px-1">
-          {partner.name}
+      <div className={cn(
+        "w-full h-full flex items-center justify-center rounded-full shadow-lg border-2 border-white",
+        "hover:shadow-xl transition-all duration-300",
+        colors.bg, colors.text
+      )}>
+        <span className="font-bold text-xs md:text-sm text-center px-1 leading-tight">
+          {partner.name === 'Aditya Birla' ? 'AB' : 
+           partner.name === 'Future Generali' ? 'FG' :
+           partner.name === 'Bajaj Allianz' ? 'BA' :
+           partner.name === 'Star Health' ? 'SH' :
+           partner.name === 'Niva Bupa' ? 'NB' :
+           partner.name === 'HDFC Ergo' ? 'HE' :
+           partner.name === 'TATA AIG' ? 'TA' :
+           partner.name === 'Go Digit' ? 'GD' :
+           partner.name}
         </span>
       </div>
     </motion.div>
   );
 };
 
+// Component to render solid orbit circles
 const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health' }> = ({
   containerSize,
   category,
 }) => {
-  const radius = category === 'life' ? 180 : 200;
+  const orbits = category === 'life' ? [1, 2, 3] : [1, 2, 3];
   
   return (
     <div className="absolute inset-0">
-      {/* Outer orbit circle - thicker and more visible */}
-      <motion.div
-        className="absolute border-2 border-muted/60 rounded-full"
-        style={{
-          width: radius * 2,
-          height: radius * 2,
-          left: containerSize / 2 - radius,
-          top: containerSize / 2 - radius,
-        }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: 'easeOut' }}
-      />
+      {orbits.map((orbitNumber, index) => {
+        const radius = orbitRadii[orbitNumber as keyof typeof orbitRadii];
+        return (
+          <motion.div
+            key={orbitNumber}
+            className="absolute border-2 border-secondary/60 rounded-full"
+            style={{
+              width: radius * 2,
+              height: radius * 2,
+              left: containerSize / 2 - radius,
+              top: containerSize / 2 - radius,
+            }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ 
+              duration: 0.8, 
+              delay: index * 0.2,
+              ease: 'easeOut' 
+            }}
+          />
+        );
+      })}
       
-      {/* Middle orbit circle */}
+      {/* Center element */}
       <motion.div
-        className="absolute border-2 border-muted/40 rounded-full"
-        style={{
-          width: (radius - 40) * 2,
-          height: (radius - 40) * 2,
-          left: containerSize / 2 - (radius - 40),
-          top: containerSize / 2 - (radius - 40),
-        }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
-      />
-      
-      {/* Inner orbit circle */}
-      <motion.div
-        className="absolute border-2 border-muted/50 rounded-full"
-        style={{
-          width: (radius - 80) * 2,
-          height: (radius - 80) * 2,
-          left: containerSize / 2 - (radius - 80),
-          top: containerSize / 2 - (radius - 80),
-        }}
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-      />
-      
-      {/* Center logo placeholder */}
-      <motion.div
-        className="absolute w-16 h-16 md:w-20 md:h-20 bg-secondary/20 border-2 border-secondary/60 rounded-full flex items-center justify-center shadow-lg"
+        className="absolute w-16 h-16 md:w-20 md:h-20 bg-secondary/30 border-3 border-secondary rounded-full flex items-center justify-center shadow-lg"
         style={{
           left: containerSize / 2 - 32,
           top: containerSize / 2 - 32,
         }}
         initial={{ opacity: 0, scale: 0 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
+        transition={{ duration: 0.6, delay: 0.8, ease: 'easeOut' }}
       >
-        <div className="text-secondary font-semibold text-xs text-center leading-tight">
-          Insurance<br/>Partners
+        <div className="text-secondary font-bold text-xs text-center leading-tight">
+          Insurance<br/>Network
         </div>
       </motion.div>
     </div>
@@ -143,7 +168,7 @@ const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health
 
 const PartnerShowcase: React.FC<PartnerShowcaseProps> = ({ category, className }) => {
   const partners = category === 'life' ? lifeInsurancePartners : healthInsurancePartners;
-  const containerSize = 400; // Fixed container size for consistent layout
+  const containerSize = 450; // Increased size to accommodate more orbits
   
   const content = {
     life: {
