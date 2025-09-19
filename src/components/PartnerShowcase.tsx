@@ -18,22 +18,22 @@ interface PartnerShowcaseProps {
 }
 
 const lifeInsurancePartners: Partner[] = [
-  { name: 'LIC', position: { angle: 0, radius: 180 } },
-  { name: 'BAJAJ', position: { angle: 72, radius: 180 } },
-  { name: 'HDFC', position: { angle: 144, radius: 180 } },
-  { name: 'ICICI', position: { angle: 216, radius: 180 } },
-  { name: 'Aditya Birla', position: { angle: 288, radius: 180 } },
+  { name: 'LIC', position: { angle: 0, radius: 160 } },
+  { name: 'BAJAJ', position: { angle: 72, radius: 160 } },
+  { name: 'HDFC', position: { angle: 144, radius: 160 } },
+  { name: 'ICICI', position: { angle: 216, radius: 160 } },
+  { name: 'Aditya Birla', position: { angle: 288, radius: 160 } },
 ];
 
 const healthInsurancePartners: Partner[] = [
-  { name: 'Oriental', position: { angle: 0, radius: 200 } },
-  { name: 'Star Health', position: { angle: 45, radius: 200 } },
-  { name: 'HDFC Ergo', position: { angle: 90, radius: 200 } },
-  { name: 'Bajaj Allianz', position: { angle: 135, radius: 200 } },
-  { name: 'Future Generali', position: { angle: 180, radius: 200 } },
-  { name: 'Niva Bupa', position: { angle: 225, radius: 200 } },
-  { name: 'TATA AIG', position: { angle: 270, radius: 200 } },
-  { name: 'Go Digit', position: { angle: 315, radius: 200 } },
+  { name: 'Oriental', position: { angle: 0, radius: 180 } },
+  { name: 'Star Health', position: { angle: 45, radius: 180 } },
+  { name: 'HDFC Ergo', position: { angle: 90, radius: 180 } },
+  { name: 'Bajaj Allianz', position: { angle: 135, radius: 180 } },
+  { name: 'Future Generali', position: { angle: 180, radius: 180 } },
+  { name: 'Niva Bupa', position: { angle: 225, radius: 180 } },
+  { name: 'TATA AIG', position: { angle: 270, radius: 180 } },
+  { name: 'Go Digit', position: { angle: 315, radius: 180 } },
 ];
 
 const getPartnerPosition = (angle: number, radius: number, containerSize: number) => {
@@ -80,9 +80,9 @@ const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health
   
   return (
     <div className="absolute inset-0">
-      {/* Outer orbit circle */}
+      {/* Outer orbit circle - thicker and more visible */}
       <motion.div
-        className="absolute border border-muted/30 rounded-full"
+        className="absolute border-2 border-muted/60 rounded-full"
         style={{
           width: radius * 2,
           height: radius * 2,
@@ -94,14 +94,28 @@ const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health
         transition={{ duration: 0.8, ease: 'easeOut' }}
       />
       
+      {/* Middle orbit circle */}
+      <motion.div
+        className="absolute border-2 border-muted/40 rounded-full"
+        style={{
+          width: (radius - 40) * 2,
+          height: (radius - 40) * 2,
+          left: containerSize / 2 - (radius - 40),
+          top: containerSize / 2 - (radius - 40),
+        }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, delay: 0.1, ease: 'easeOut' }}
+      />
+      
       {/* Inner orbit circle */}
       <motion.div
-        className="absolute border border-muted/20 rounded-full"
+        className="absolute border-2 border-muted/50 rounded-full"
         style={{
-          width: (radius - 60) * 2,
-          height: (radius - 60) * 2,
-          left: containerSize / 2 - (radius - 60),
-          top: containerSize / 2 - (radius - 60),
+          width: (radius - 80) * 2,
+          height: (radius - 80) * 2,
+          left: containerSize / 2 - (radius - 80),
+          top: containerSize / 2 - (radius - 80),
         }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -110,7 +124,7 @@ const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health
       
       {/* Center logo placeholder */}
       <motion.div
-        className="absolute w-16 h-16 md:w-20 md:h-20 bg-secondary/10 border-2 border-secondary/30 rounded-full flex items-center justify-center"
+        className="absolute w-16 h-16 md:w-20 md:h-20 bg-secondary/20 border-2 border-secondary/60 rounded-full flex items-center justify-center shadow-lg"
         style={{
           left: containerSize / 2 - 32,
           top: containerSize / 2 - 32,
@@ -119,7 +133,9 @@ const OrbitCircles: React.FC<{ containerSize: number; category: 'life' | 'health
         animate={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.6, delay: 0.4, ease: 'easeOut' }}
       >
-        <div className="w-8 h-8 md:w-10 md:h-10 bg-secondary rounded-full"></div>
+        <div className="text-secondary font-semibold text-xs text-center leading-tight">
+          Insurance<br/>Partners
+        </div>
       </motion.div>
     </div>
   );
