@@ -10,6 +10,7 @@ import ContactSection from "@/components/ContactSection";
 import PartnerShowcase from "@/components/PartnerShowcase";
 import Footer from "@/components/Footer";
 import PortfolioManagement from './PortfolioManagement';
+import CoreValues from "@/components/CoreValues";
 
 const Index = () => {
   const [heroInView, setHeroInView] = useState(true);
@@ -29,6 +30,7 @@ const Index = () => {
     <div className="min-h-screen">
       <HeroSection />
       <AboutSection />
+      <CoreValues />
       <ServicesSection />
       <ResultsSection />
       {/* <PartnerShowcase category="life" className="bg-background" /> */}
