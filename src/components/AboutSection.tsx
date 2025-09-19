@@ -27,7 +27,7 @@ const AboutSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <img
-                src={aboutSectionPhoto}
+                src=""
                 alt="Haria Investments Legacy"
                 className="w-full h-56 sm:h-64 md:h-80 object-cover mx-auto rounded-lg shadow-floating"
                 data-aos="fade-right"
@@ -134,7 +134,7 @@ const AboutSection = () => {
             </div>
             <div>
               <img
-                src={teamPhoto}
+                src=""
                 alt="Haria Investments Team"
                 className="w-full rounded-lg shadow-floating"
                 data-aos="fade-left"

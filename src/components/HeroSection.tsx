@@ -123,7 +123,7 @@ const HeroSection = () => {
             data-aos="fade-in">
             <div className="relative inline-block">
               <img
-                src={advisorHeadshot}
+                src=""
                 alt="Professional Financial Advisor"
                 className="w-32 h-32 rounded-full mx-auto border-4 border-secondary shadow-elegant"
               />
