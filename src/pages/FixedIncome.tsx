@@ -172,6 +172,21 @@ const FixedIncome = () => {
         return () => observer.disconnect();
     }, []);
 
+    // Handle hash-based scrolling
+    useEffect(() => {
+        const scrollToHash = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (!hash) return;
+            const el = document.getElementById(hash);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+        const t = setTimeout(scrollToHash, 50);
+        window.addEventListener('hashchange', scrollToHash);
+        return () => { clearTimeout(t); window.removeEventListener('hashchange', scrollToHash); };
+    }, []);
+
     // Fixed deposit calculator
     useEffect(() => {
         const principal = investmentAmount;
@@ -266,7 +281,7 @@ const FixedIncome = () => {
             </section>
 
             {/* Product Showcase Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <section id="products" className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
@@ -478,7 +493,7 @@ const FixedIncome = () => {
             </section>
 
             {/* Laddering Strategy Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <section id="laddering-strategy" className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
@@ -566,7 +581,7 @@ const FixedIncome = () => {
             </section>
 
             {/* Top Banks Section */}
-            <section className="py-20 px-4 bg-background">
+            <section id="top-bank-fds" className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">

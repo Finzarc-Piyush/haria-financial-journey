@@ -18,6 +18,9 @@ export default {
 			}
 		},
 		extend: {
+			maxWidth: {
+				container: '1280px',
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
@@ -91,7 +94,8 @@ export default {
 				'typewriter': 'typewriter 3s steps(40) forwards',
 				'counter': 'counter 0.6s ease-out forwards',
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				marquee: 'marquee var(--duration) linear infinite'
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
@@ -158,6 +162,10 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				marquee: {
+					from: { transform: 'translateX(0)' },
+					to: { transform: 'translateX(calc(-100% - var(--gap)))' }
 				}
 			}
 		}

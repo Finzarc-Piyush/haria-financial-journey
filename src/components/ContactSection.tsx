@@ -240,7 +240,7 @@ const ContactSection = () => {
                     tabIndex={0}
                     title="Tap to call directly"
                   >
-                    +91 98765 43210
+                    +91 77386 86126
                   </a>
                 </div>
               </div>
@@ -263,7 +263,7 @@ const ContactSection = () => {
                 <div>
                   <div className="font-crimson font-semibold text-tertiary text-lg">Office Address</div>
                   <div className="font-crimson text-tertiary/70 text-lg">
-                    1st Floor, Room No.12, Shree Krishna Niwas,<br />
+                    1st Floor, Shree Krishna Niwas,<br />
                     Above Panshikhar Sweets, Opposite Ajay Shopping Centre,<br />
                     T.H.Kataria Marg, Matunga West, Mumbai – 400016
                   </div>

@@ -157,6 +157,23 @@ const GeneralInsurance = () => {
         return () => observer.disconnect();
     }, []);
 
+    // Select tab from URL hash and scroll to section
+    useEffect(() => {
+        const applyHash = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash && ['car', 'property', 'fire', 'travel'].includes(hash)) {
+                setSelectedService(hash);
+                const target = document.getElementById('all-services');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        };
+        applyHash();
+        window.addEventListener('hashchange', applyHash);
+        return () => window.removeEventListener('hashchange', applyHash);
+    }, []);
+
     // Animated text effect
     useEffect(() => {
         let index = 0;
@@ -465,7 +482,7 @@ const GeneralInsurance = () => {
             </section>
 
             {/* All Services Overview */}
-            <section className="py-20 px-4 bg-background">
+            <section id="all-services" className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
                         <motion.h2

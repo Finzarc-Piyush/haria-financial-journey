@@ -17,7 +17,7 @@ const AboutSection = () => {
         {/* Section Header */}
         <div data-aos="fade-up" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold mb-6">
-            Our Legacy, Our People, Our Promise
+            About Us
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto"></div>
         </div>

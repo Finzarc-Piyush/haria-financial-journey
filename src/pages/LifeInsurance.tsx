@@ -178,6 +178,19 @@ const LifeInsurance = () => {
         return () => observer.disconnect();
     }, []);
 
+    useEffect(() => {
+        const applyHash = () => {
+            const hash = window.location.hash.replace('#', '');
+            const el = hash ? document.getElementById(hash) : null;
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        };
+        applyHash();
+        window.addEventListener('hashchange', applyHash);
+        return () => window.removeEventListener('hashchange', applyHash);
+    }, []);
+
     return (
         <div className="min-h-screen bg-background">
             {/* Hero Section */}
@@ -224,6 +237,7 @@ const LifeInsurance = () => {
 
             {/* Product Cards Section */}
             <section
+                id="products"
                 className="py-20 px-4 bg-gradient-premium"
                 style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
             >
@@ -274,7 +288,9 @@ const LifeInsurance = () => {
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                <CardHeader className="relative z-10">
+                                <CardHeader id={product.title.toLowerCase().replace(/\s+/g, '-')}
+                                    className="relative z-10"
+                                >
                                     <div className="flex items-center justify-between mb-4">
                                         <product.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
                                         <Badge className="bg-accent/20 text-accent border-accent/30">

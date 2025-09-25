@@ -15,7 +15,6 @@ const CredentialsSection = () => {
     { name: 'CFA Charter', year: '2018', org: 'CFA Institute' },
     { name: 'CFP Certification', year: '2020', org: 'CFP Board' },
     { name: 'FRM Certification', year: '2019', org: 'GARP' },
-    { name: 'SEBI Registration', year: 'Current', org: 'SEBI' }
   ];
 
   const education = [
@@ -85,10 +84,9 @@ const CredentialsSection = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col items-center gap-3 text-center mt-2">
-                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="0" title="SEBI Registered: Securities and Exchange Board of India regulatory compliance">SEBI Registered</Badge>
-                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="60" title="IRDA Licensed: Insurance Regulatory and Development Authority">IRDA Licensed</Badge>
-                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="120" title="Fiduciary Duty: Legally bound to act in your best interest">Fiduciary Duty</Badge>
-                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="180" title="₹5Cr Insurance: Professional indemnity coverage">₹5Cr Insurance</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="0" title="IRDA Licensed: Insurance Regulatory and Development Authority">IRDA Licensed</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="60" title="Fiduciary Duty: Legally bound to act in your best interest">Fiduciary Duty</Badge>
+                <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay="120" title="₹5Cr Insurance: Professional indemnity coverage">₹5Cr Insurance</Badge>
               </div>
             </CardContent>
           </Card>

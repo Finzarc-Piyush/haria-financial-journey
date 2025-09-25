@@ -77,7 +77,7 @@ const InsightsSection = () => {
       status: 'Current'
     },
     {
-      title: 'Economic Indicators Dashboard',
+      title: 'Economic Report Generator',
       description: 'Real-time tracking of key economic metrics affecting Indian markets',
       status: 'Live Data'
     },
