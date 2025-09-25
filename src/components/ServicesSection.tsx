@@ -214,7 +214,7 @@ const ServicesSection = () => {
   };
 
   return (
-    <section id="services" className="py-20 bg-primary">
+    <section id="services" className="py-20 bg-cream">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Title */}
@@ -289,7 +289,7 @@ const ServicesSection = () => {
                   <div className="font-crimson text-sm text-tertiary/70">Cost disclosure upfront</div>
                 </div>
               </div>
-              <div className="mt-6 p-4 bg-primary/50 rounded-lg">
+              <div className="mt-6 p-4 bg-muted rounded-lg">
                 <p className="font-crimson text-center text-tertiary/80">
                   <strong>Value Proposition:</strong> Our fee structure is competitive with industry standards
                   while providing superior service and fiduciary commitment.

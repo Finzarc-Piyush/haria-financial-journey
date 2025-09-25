@@ -160,7 +160,7 @@ const ProcessSection = () => {
   ];
 
   return (
-    <section id="process" className="py-20 min-h-screen bg-primary flex flex-col justify-center">
+    <section id="process" className="py-20 min-h-screen bg-champagne flex flex-col justify-center">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div data-aos="fade-up" className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
@@ -307,7 +307,7 @@ const ProcessSection = () => {
                 {onboardingChecklist.map((item, index) => (
                   <div
                     key={index}
-                    className="flex items-start p-4 bg-primary/20 rounded-lg"
+                    className="flex items-start p-4 bg-muted rounded-lg"
                     data-aos="fade-right"
                     data-aos-delay={index * 80}
                   >
