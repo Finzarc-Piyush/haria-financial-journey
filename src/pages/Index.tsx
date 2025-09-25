@@ -12,6 +12,7 @@ import Footer from "@/components/Footer";
 import PortfolioManagement from './PortfolioManagement';
 import CoreValues from "@/components/CoreValues";
 import { TestimonialsSection } from "@/components/ui/testimonials-with-marquee";
+import AMCShowcase from "@/components/AMCShowcase";
 
 const testimonials = [
   {
@@ -64,6 +65,7 @@ const Index = () => {
         description="Thoughtful financial planning and consistent execution for long-term wealth creation."
         testimonials={testimonials}
       />
+      <AMCShowcase />
       <AboutSection />
       <CoreValues />
       <ServicesSection />
