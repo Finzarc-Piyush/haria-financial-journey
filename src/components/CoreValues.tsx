@@ -84,7 +84,7 @@ const CoreValues = () => {
     ];
 
     return (
-        <section id="core-values" className="bg-primary py-20">
+        <section id="core-values" className=" py-20">
             {/* Section header */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
                 <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
