@@ -16,6 +16,8 @@ import MutualFunds from "./pages/MutualFunds";
 import EquityInvestment from "./pages/EquityInvestment";
 import FixedIncome from "./pages/FixedIncome";
 import CommodityTrading from "./pages/CommodityTrading";
+import GoldSilver from "./pages/GoldSilver";
+import OtherDerivatives from "./pages/OtherDerivatives";
 import LumpsumCalculator from "./pages/LumpsumCalculator";
 import CAGRCalculator from "./pages/CAGRCalculator";
 import Navigation from "@/components/Navigation";
@@ -64,6 +66,8 @@ const App = () => (
             <Route path="/equity-investment" element={<EquityInvestment />} />
             <Route path="/fixed-income" element={<FixedIncome />} />
             <Route path="/commodity-trading" element={<CommodityTrading />} />
+            <Route path="/gold-silver" element={<GoldSilver />} />
+            <Route path="/other-derivatives" element={<OtherDerivatives />} />
             <Route path="/lumpsum-calculator" element={<LumpsumCalculator />} />
             <Route path="/cagr-calculator" element={<CAGRCalculator />} />
             <Route path="/portfolio-management" element={<PortfolioManagement />} />

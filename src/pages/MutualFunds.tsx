@@ -183,6 +183,23 @@ const MutualFunds = () => {
         return () => observer.disconnect();
     }, []);
 
+    // Handle hash-based scrolling to sections
+    useEffect(() => {
+        const scrollToHash = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (!hash) return;
+            const el = document.getElementById(hash);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+        // initial after mount
+        const t = setTimeout(scrollToHash, 50);
+        // on hash changes
+        window.addEventListener('hashchange', scrollToHash);
+        return () => { clearTimeout(t); window.removeEventListener('hashchange', scrollToHash); };
+    }, []);
+
     // Morphing text effect
     useEffect(() => {
         const timer = setInterval(() => {
@@ -450,7 +467,7 @@ const MutualFunds = () => {
             </section>
 
             {/* Fund Types Section */}
-            <section className="py-20 px-4 bg-background">
+            <section id="investment-categories" className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         ref={fundTypesHeadingRef}
@@ -535,7 +552,7 @@ const MutualFunds = () => {
             </section>
 
             {/* Top Performing Funds */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <section id="top-funds" className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
                     <motion.div
                         ref={topFundsHeadingRef}

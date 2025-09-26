@@ -138,6 +138,21 @@ const EquityInvestment = () => {
         return () => observer.disconnect();
     }, []);
 
+    // Handle hash-based scrolling
+    useEffect(() => {
+        const scrollToHash = () => {
+            const hash = window.location.hash.replace('#', '');
+            if (!hash) return;
+            const el = document.getElementById(hash);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        };
+        const t = setTimeout(scrollToHash, 50);
+        window.addEventListener('hashchange', scrollToHash);
+        return () => { clearTimeout(t); window.removeEventListener('hashchange', scrollToHash); };
+    }, []);
+
     // Stock ticker animation
     useEffect(() => {
         const timer = setInterval(() => {
@@ -238,7 +253,7 @@ const EquityInvestment = () => {
             </section>
 
             {/* Direct Stock Investment Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
+            <section id="direct-stock-investment" className="py-20 px-4 bg-gradient-premium">
                 <div className="max-w-7xl mx-auto">
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
@@ -336,7 +351,7 @@ const EquityInvestment = () => {
             </section>
 
             {/* Portfolio Advisory Section */}
-            <section className="py-20 px-4 bg-background">
+            <section id="expert-portfolio-advisory" className="py-20 px-4 bg-background">
                 <div className="max-w-7xl mx-auto">
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
                         <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">

@@ -24,8 +24,8 @@ const HeroSection = () => {
   // Define your services with appropriate icons
   const services = [
     { name: "Life & General Insurance", icon: HeartHandshake },
-    { name: "Mutual Funds", icon: PiggyBank },
-    { name: "Equity & Fixed Income", icon: Scale }, // Changed from LineChart for a slightly different feel
+    { name: "Mutual Funds & Equity", icon: PiggyBank },
+    { name: "Fixed Income", icon: Scale }, // Changed from LineChart for a slightly different feel
     { name: "Commodity Derivative Trading", icon: LineChart }, // Changed from LineChart to distinguish
   ];
 
@@ -88,7 +88,7 @@ const HeroSection = () => {
           animateYearCounter('year', currentYear, 1957, 2000);
           animateCounter('aum', 100, 2500);
           animateCounter('clients', 1000, 2000);
-          animateCounter('generations', 5, 1500);
+          animateCounter('generations', 4, 1500);
         }
       },
       { threshold: 0.3 }
@@ -214,7 +214,7 @@ const HeroSection = () => {
 
           {/* Trust Indicators (Badges) */}
           <div className="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="400">
-            {["CFA Charter Holder", "CFP Certified", "SEBI Registered", "Fiduciary Advisor"].map((badge, i) => (
+            {["CFA Charter Holder", "CFP Certified", "Fiduciary Advisor"].map((badge, i) => (
               <Badge key={badge} variant="secondary" className="font-crimson" data-aos="zoom-in" data-aos-delay={i * 120}>
                 {badge}
               </Badge>

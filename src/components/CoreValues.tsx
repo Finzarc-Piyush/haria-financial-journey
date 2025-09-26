@@ -48,37 +48,37 @@ const CoreValues = () => {
         {
             title: "Objectivity",
             description:
-                "We act solely in the best interest of each client, based on sound analysis and without bias.",
+                "We act solely in the best interest of each client, based on sound analysis and without bias, ensuring their satisfaction.",
             icon: <IconShieldCheck size={32} />,
         },
         {
             title: "Integrity",
             description:
-                "We hold ourselves to the highest ethical standards in all dealings with clients and community.",
+                "We hold ourselves to the highest ethical standards in our dealings with clients, prospects and community members.",
             icon: <IconAward size={32} />,
         },
         {
             title: "Fairness",
             description:
-                "We treat all clients with dignity, empathy, and respect—believing in equal service for all.",
+                "We treat all clients fairly and with respect. We believe in equal service and treating clients with dignity and empathy.",
             icon: <IconScale size={32} />,
         },
         {
             title: "Competence",
             description:
-                "We continuously improve our professional knowledge and skills to serve clients better.",
+                "We continuously improve our professional knowledge and skills.",
             icon: <IconBook size={32} />,
         },
         {
             title: "Confidentiality",
             description:
-                "We safeguard client information and never disclose it without explicit consent.",
+                "We do not disclose any confidential client information without consent.",
             icon: <IconLock size={32} />,
         },
         {
             title: "Professionalism",
             description:
-                "We adhere to the highest professional standards in all aspects of our work.",
+                "We adhere to the highest professional standards in all our work.",
             icon: <IconUsers size={32} />,
         },
     ];
