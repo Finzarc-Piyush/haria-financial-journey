@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import partnersImage from '@/assets/partners.png';
 
 const AMCShowcase: React.FC = () => {
     return (
@@ -15,7 +16,7 @@ const AMCShowcase: React.FC = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <img
-                        src="/src/assets/partners.png"
+                        src={partnersImage}
                         alt="Partner AMCs"
                         className="w-full max-w-xl h-auto drop-shadow-sm"
                     />
