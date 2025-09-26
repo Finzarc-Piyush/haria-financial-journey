@@ -29,11 +29,16 @@ import {
     Plane
 } from "lucide-react";
 import { motion } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const EquityInvestment = () => {
     const [heroInView, setHeroInView] = useState(true);
     const [stockTicker, setStockTicker] = useState(0);
     const [searchQuery, setSearchQuery] = useState("");
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [selectedStrategy, setSelectedStrategy] = useState<string | null>(null);
     const [marketMood, setMarketMood] = useState("bullish");
     const [portfolioValue, setPortfolioValue] = useState(1000000);
@@ -169,6 +174,11 @@ const EquityInvestment = () => {
         return () => clearInterval(timer);
     }, []);
 
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 600, once: true });
+    }, []);
+
     const getMoodIcon = (mood: string) => {
         switch (mood) {
             case "bullish": return "📈";
@@ -212,13 +222,13 @@ const EquityInvestment = () => {
                         <span className="inline-block text-accent">Equity Investment</span>
                     </motion.h1>
 
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
                         Expert guidance for direct stock investment and portfolio management
                     </motion.p>
 
                     {/* Live Stock Ticker */}
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 max-w-2xl mx-auto">
-                        <div className="flex items-center justify-between text-sm">
+                        <div className="flex items-center justify-between text-lg">
                             <span className="text-white/80">Live Market</span>
                             <span className={`flex items-center ${getMoodColor(marketMood)}`}>
                                 {getMoodIcon(marketMood)} {marketMood.toUpperCase()}
@@ -236,7 +246,8 @@ const EquityInvestment = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl"
+                            onClick={openPopup}
                         >
                             Start Investing
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -244,7 +255,8 @@ const EquityInvestment = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
+                            onClick={openPopup}
                         >
                             Get Portfolio Review
                         </Button>
@@ -259,7 +271,7 @@ const EquityInvestment = () => {
                         <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Direct Stock Investment
                         </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
                             Build your portfolio with carefully selected stocks
                         </motion.p>
                     </motion.div>
@@ -275,7 +287,7 @@ const EquityInvestment = () => {
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Search Stocks</Label>
+                                    <Label className="text-lg font-semibold text-foreground">Search Stocks</Label>
                                     <div className="relative mt-2">
                                         <Input
                                             placeholder="Enter stock name or symbol..."
@@ -290,11 +302,11 @@ const EquityInvestment = () => {
                                 <div className="grid grid-cols-2 gap-4">
                                     <div className="text-center p-4 bg-muted/50 rounded-lg">
                                         <div className="text-2xl font-playfair font-bold text-foreground">5000+</div>
-                                        <div className="text-sm text-muted-foreground">Stocks Available</div>
+                                        <div className="text-lg text-muted-foreground">Stocks Available</div>
                                     </div>
                                     <div className="text-center p-4 bg-muted/50 rounded-lg">
                                         <div className="text-2xl font-playfair font-bold text-accent">₹0</div>
-                                        <div className="text-sm text-muted-foreground">Brokerage Fee</div>
+                                        <div className="text-lg text-muted-foreground">Brokerage Fee</div>
                                     </div>
                                 </div>
 
@@ -319,7 +331,7 @@ const EquityInvestment = () => {
                                         <div key={sector.name} className="flex items-center justify-between">
                                             <div className="flex items-center">
                                                 <div className={`w-4 h-4 rounded-full ${sector.color} mr-3`} />
-                                                <span className="text-sm font-medium text-foreground">{sector.name}</span>
+                                                <span className="text-lg font-medium text-foreground">{sector.name}</span>
                                             </div>
                                             <div className="flex items-center space-x-2">
                                                 <div className="w-24 bg-muted rounded-full h-2">
@@ -577,6 +589,14 @@ const EquityInvestment = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Equity Investment Journey"
+                description="Get expert guidance on stock selection and portfolio management strategies."
+            />
         </div>
     );
 };

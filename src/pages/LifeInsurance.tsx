@@ -5,6 +5,10 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Shield, TrendingUp, PiggyBank, Users, Star, Award, Clock, ArrowRight } from "lucide-react";
 import { motion } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const LifeInsurance = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -13,6 +17,7 @@ const LifeInsurance = () => {
     const [counterValue, setCounterValue] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const { isOpen, openPopup, closePopup } = useContactPopup();
 
     const fullText = "Secure Your Family's Future with Life Insurance";
     const targetCounter = 100;
@@ -191,6 +196,11 @@ const LifeInsurance = () => {
         return () => window.removeEventListener('hashchange', applyHash);
     }, []);
 
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 600, once: true });
+    }, []);
+
     return (
         <div className="min-h-screen bg-background">
             {/* Hero Section */}
@@ -220,14 +230,15 @@ const LifeInsurance = () => {
                         </span>
                     </h1>
 
-                    <p className={`text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90 transition-all duration-1000 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    <p className={`text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90 transition-all duration-1000 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                         }`}>
                         Comprehensive protection plans tailored to your life stage
                     </p>
 
                     <Button
                         size="lg"
-                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 py-4 text-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 py-4 text-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        onClick={openPopup}
                     >
                         Get Free Consultation
                         <ArrowRight className="ml-2 h-5 w-5" />
@@ -263,7 +274,7 @@ const LifeInsurance = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.1 }}
                             viewport={{ once: true, amount: 0.3 }}
-                            className="text-xl font-crimson text-muted-foreground"
+                            className="text-2xl font-crimson text-muted-foreground"
                         >
                             Tailored solutions for every life stage and financial goal
                         </motion.p>
@@ -303,33 +314,33 @@ const LifeInsurance = () => {
                                 </CardHeader>
 
                                 <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-6 font-crimson">
+                                    <p className="text-muted-foreground mb-6 font-crimson text-lg">
                                         {product.description}
                                     </p>
 
                                     <div className="space-y-4">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Coverage</span>
-                                            <span className="font-semibold text-foreground">{product.coverage}</span>
+                                            <span className="text-lg text-muted-foreground">Coverage</span>
+                                            <span className="font-semibold text-foreground text-lg">{product.coverage}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Premium</span>
-                                            <span className="font-semibold text-accent">{product.premium}</span>
+                                            <span className="text-lg text-muted-foreground">Premium</span>
+                                            <span className="font-semibold text-accent text-lg">{product.premium}</span>
                                         </div>
                                     </div>
 
                                     <div className="mt-6 space-y-2">
                                         {product.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-sm">
-                                                <CheckCircle className="h-4 w-4 text-accent mr-2 flex-shrink-0" />
+                                            <div key={idx} className="flex items-center text-lg">
+                                                <CheckCircle className="h-5 w-5 text-accent mr-2 flex-shrink-0" />
                                                 <span className="text-muted-foreground">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                         Learn More
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                     </Button>
                                 </CardContent>
                             </motion.div>
@@ -344,46 +355,6 @@ const LifeInsurance = () => {
                 style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
             >
                 <div className="max-w-7xl mx-auto">
-                    <motion.div
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.2 }}
-                        transition={{ duration: 0.8 }}
-                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
-                    >
-                        {/* Animated Counter */}
-                        <div className="text-center">
-                            <div className="text-4xl md:text-6xl font-playfair font-bold text-accent mb-2">
-                                ₹{counterValue}+ Crores
-                            </div>
-                            <p className="text-lg font-crimson text-muted-foreground">
-                                Claims Settled
-                            </p>
-                        </div>
-
-                        {/* IRDAI Badge */}
-                        <div className="text-center">
-                            <div className="inline-flex items-center justify-center w-20 h-20 bg-accent/20 rounded-full mb-4 mx-auto">
-                                <Award className="h-10 w-10 text-accent" />
-                            </div>
-                            <div className="text-xl font-playfair font-bold text-foreground mb-2">
-                                IRDAI Registered
-                            </div>
-                            <p className="text-sm font-crimson text-muted-foreground">
-                                License No: 123456
-                            </p>
-                        </div>
-
-                        {/* Client Satisfaction */}
-                        <div className="text-center">
-                            <div className="text-4xl md:text-6xl font-playfair font-bold text-accent mb-2">
-                                99.8%
-                            </div>
-                            <p className="text-lg font-crimson text-muted-foreground">
-                                Client Satisfaction
-                            </p>
-                        </div>
-                    </motion.div>
 
                     {/* Testimonials Carousel */}
                     <motion.div
@@ -404,14 +375,14 @@ const LifeInsurance = () => {
                                                 <Star key={i} className="h-6 w-6 text-accent fill-current" />
                                             ))}
                                         </div>
-                                        <p className="text-lg md:text-xl font-crimson text-foreground mb-6 italic">
+                                        <p className="text-xl md:text-2xl font-crimson text-foreground mb-6 italic">
                                             "{testimonial.text}"
                                         </p>
                                         <div>
-                                            <div className="font-playfair font-semibold text-foreground">
+                                            <div className="font-playfair font-semibold text-foreground text-lg">
                                                 {testimonial.name}
                                             </div>
-                                            <div className="text-sm text-muted-foreground">
+                                            <div className="text-lg text-muted-foreground">
                                                 {testimonial.role}
                                             </div>
                                         </div>
@@ -451,7 +422,7 @@ const LifeInsurance = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-4">
                             Simple 4-Step Process
                         </h2>
-                        <p className="text-xl font-crimson text-white/80">
+                        <p className="text-2xl font-crimson text-white/80">
                             Get your life insurance policy in just 4 easy steps
                         </p>
                     </motion.div>
@@ -480,7 +451,7 @@ const LifeInsurance = () => {
                                     <h3 className="text-xl font-playfair font-bold text-white mb-3">
                                         {step.title}
                                     </h3>
-                                    <p className="text-white/80 font-crimson">
+                                    <p className="text-white/80 font-crimson text-lg">
                                         {step.description}
                                     </p>
                                 </div>
@@ -510,20 +481,28 @@ const LifeInsurance = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-6">
                             Ready to Secure Your Family's Future?
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground mb-8">
+                        <p className="text-2xl font-crimson text-muted-foreground mb-8">
                             Get a free consultation and personalized quote today
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg">
+                            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Get Free Quote
                             </Button>
-                            <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-4 text-lg">
+                            <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Schedule Consultation
                             </Button>
                         </div>
                     </motion.div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Get Free Life Insurance Consultation"
+                description="Secure your family's future with expert guidance on life insurance plans."
+            />
         </div>
     );
 };

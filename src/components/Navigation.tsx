@@ -188,13 +188,13 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4">
               {/* Logo */}
-              <Link to="/" className="flex-shrink-0 flex items-center gap-1 cursor-pointer hover:opacity-80 transition-opacity duration-300">
-                <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 object-contain" />
+              <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300">
+                <img src={logo} alt="Haria Investments Logo" className="w-14 h-14 object-contain" />
                 <div>
-                  <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-2xl text-tertiary">
+                  <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-3xl text-tertiary">
                     Haria Investments
                   </div>
-                  <div className="text-xs text-muted-foreground font-crimson">
+                  <div className="text-lg text-muted-foreground font-crimson text-center">
                     since 1957
                   </div>
                 </div>
@@ -234,7 +234,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           >
                             <Link
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                             >
                               {link.icon}
                               {link.label}
@@ -246,7 +246,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                               <div className="absolute left-full top-0 ml-2">
                                 <div className="mt-0 w-56 bg-white shadow-lg rounded-xl p-3">
                                   {link.children.map(child => (
-                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-sm">
+                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">
                                       {child.label}
                                     </Link>
                                   ))}
@@ -292,7 +292,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           >
                             <Link
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                             >
                               {link.icon}
                               {link.label}
@@ -304,7 +304,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                               <div className="absolute left-full top-0 ml-2">
                                 <div className="mt-0 w-64 bg-white shadow-lg rounded-xl p-3">
                                   {link.children.map(child => (
-                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-sm">
+                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">
                                       {child.label}
                                     </Link>
                                   ))}
@@ -484,7 +484,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                             <div key={link.to}>
                               <Link
                                 to={link.to}
-                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
                                 {link.icon}
@@ -496,7 +496,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                                     <Link
                                       key={child.to}
                                       to={child.to}
-                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-sm"
+                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg"
                                       onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                       {child.label}
@@ -541,7 +541,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                             <Link
                               key={link.to}
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {link.icon}
@@ -594,7 +594,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                             <Link
                               key={link.to}
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {link.icon}
@@ -636,7 +636,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                             <Link
                               key={link.to}
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                               onClick={() => setIsMobileMenuOpen(false)}
                             >
                               {link.icon}

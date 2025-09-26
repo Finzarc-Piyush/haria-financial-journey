@@ -3,8 +3,14 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Shield, TrendingUp, Layers, ArrowRight, Gem, LineChart, CheckCircle } from 'lucide-react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const GoldSilver = () => {
+    const { isOpen, openPopup, closePopup } = useContactPopup();
+
     return (
         <div className="min-h-screen bg-background text-foreground">
             {/* Hero Section (matches other pages) */}
@@ -141,15 +147,23 @@ const GoldSilver = () => {
                         Balanced exposure to Gold and Silver with risk-first design
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Get Started
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Schedule Consultation
                         </Button>
                     </div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Gold & Silver Trading"
+                description="Trade precious metals with expert guidance and advanced risk management."
+            />
         </div>
     );
 };

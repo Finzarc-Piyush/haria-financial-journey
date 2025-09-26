@@ -22,11 +22,16 @@ import {
     TrendingUp
 } from "lucide-react";
 import { motion } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const GeneralInsurance = () => {
     const [heroInView, setHeroInView] = useState(true);
     const [selectedService, setSelectedService] = useState("car");
     const [animatedText, setAnimatedText] = useState("");
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
     const [hoveredCard, setHoveredCard] = useState<string | null>(null);
     const [activeTabRect, setActiveTabRect] = useState({ left: 0, width: 0 });
@@ -415,7 +420,7 @@ const GeneralInsurance = () => {
                                             </div>
                                         )}
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                             Get Quote
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -568,7 +573,7 @@ const GeneralInsurance = () => {
                                                     <p className="text-sm text-muted-foreground font-crimson mb-4">
                                                         {subCategory.description}
                                                     </p>
-                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                                         Learn More
                                                         <ArrowRight className="ml-2 h-3 w-3" />
                                                     </Button>
@@ -642,6 +647,14 @@ const GeneralInsurance = () => {
                     </motion.div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Get Your General Insurance Quote"
+                description="Protect what matters most with comprehensive general insurance coverage."
+            />
         </div>
     );
 };

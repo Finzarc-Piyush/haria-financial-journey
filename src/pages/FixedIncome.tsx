@@ -29,6 +29,10 @@ import {
     BarChart3
 } from "lucide-react";
 import { motion } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const FixedIncome = () => {
     const [heroInView, setHeroInView] = useState(true);
@@ -37,6 +41,7 @@ const FixedIncome = () => {
     const [interestRate, setInterestRate] = useState(7.5);
     const [maturityValue, setMaturityValue] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
     const [currentStep, setCurrentStep] = useState(0);
 
@@ -200,6 +205,11 @@ const FixedIncome = () => {
         setTotalInterest(totalInterestEarned);
     }, [investmentAmount, tenure, interestRate]);
 
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 600, once: true });
+    }, []);
+
     // Laddering animation
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -265,6 +275,7 @@ const FixedIncome = () => {
                         <Button
                             size="lg"
                             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Invest Now
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -342,7 +353,7 @@ const FixedIncome = () => {
                                         ))}
                                     </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                         Invest Now
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
@@ -631,7 +642,7 @@ const FixedIncome = () => {
                                         </div>
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                         Invest Now
                                         <ArrowRight className="ml-2 h-4 w-4" />
                                     </Button>
@@ -661,6 +672,14 @@ const FixedIncome = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Fixed Income Investment"
+                description="Secure your future with stable returns through fixed income investments."
+            />
         </div>
     );
 };

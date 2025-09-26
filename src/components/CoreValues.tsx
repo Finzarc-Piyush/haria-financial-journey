@@ -28,7 +28,7 @@ const ValueCard = ({
             </div>
 
             {/* Title */}
-            <div className="text-xl font-semibold mb-4 relative z-10 px-10">
+            <div className="text-2xl font-semibold mb-4 relative z-10 px-10">
                 <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-cream group-hover/feature:bg-secondary transition-all duration-300" />
                 <span className="group-hover/feature:translate-x-2 transition duration-300 inline-block text-tertiary">
                     {title}
@@ -36,7 +36,7 @@ const ValueCard = ({
             </div>
 
             {/* Description */}
-            <p className="text-base text-tertiary/80 leading-relaxed font-crimson relative z-10 px-10">
+            <p className="text-xl text-tertiary/80 leading-relaxed font-crimson relative z-10 px-10">
                 {description}
             </p>
         </div>
@@ -90,7 +90,7 @@ const CoreValues = () => {
                 <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
                     Our Core Values
                 </h2>
-                <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
+                <p className="font-crimson text-xl text-tertiary/80 max-w-3xl mx-auto">
                     At Haria Investments, our values guide every interaction with clients,
                     prospects, and the community. They are the foundation of the trust
                     we’ve built over generations.

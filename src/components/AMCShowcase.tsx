@@ -31,15 +31,12 @@ const AMCShowcase: React.FC = () => {
                     transition={{ duration: 0.6 }}
                 >
                     <h2 className="text-4xl md:text-5xl font-bold text-foreground font-playfair leading-tight">
-                        Invest with 40+ Trusted AMCs
+                        Invest with 45+ Trusted AMCs
                     </h2>
                     <p className="text-lg md:text-xl text-muted-foreground font-crimson max-w-prose">
                         Haria Financial Journey helps you access a curated universe of mutual funds and
                         portfolios from India’s leading Asset Management Companies — all in one place.
                     </p>
-                    <Button className="btn-glow bg-secondary text-secondary-foreground hover:bg-secondary/90 px-8 py-6 text-lg w-fit">
-                        View All AMCs
-                    </Button>
                 </motion.div>
             </div>
         </section>

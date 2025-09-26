@@ -118,23 +118,8 @@ const HeroSection = () => {
       <div ref={bgRef} className="absolute inset-0 w-full h-full z-0" aria-hidden="true" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
         <div className="text-center">
-          {/* Professional Headshot */}
-          <div className={`mb-8 transition-all duration-1000 ${isVisible ? 'animate-scale-in' : 'opacity-0'}`}
-            data-aos="fade-in">
-            <div className="relative inline-block">
-              <img
-                src=""
-                alt="Professional Financial Advisor"
-                className="w-32 h-32 rounded-full mx-auto border-4 border-secondary shadow-elegant"
-              />
-              <div className="absolute -bottom-2 -right-2 bg-secondary text-secondary-foreground rounded-full p-2">
-                <Award className="w-4 h-4" />
-              </div>
-            </div>
-          </div>
-
           {/* Main Headline with Typewriter Effect */}
-          <div className={`mb-6 transition-all duration-1000 delay-300 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
+          <div className={`mb-6 mt-36 transition-all duration-1000 delay-300 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
             data-aos="fade-up"
             style={{ position: 'relative' }}>
             {/* Ghost headline to reserve space and prevent layout shift */}
@@ -182,7 +167,7 @@ const HeroSection = () => {
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
           >
-            <p className="font-crimson text-xl md:text-2xl max-w-4xl mx-auto leading-relaxed"
+            <p className="font-crimson text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed"
               style={{
                 color: '#f3f4f6',
                 textShadow: '0 1px 6px rgba(0,0,0,0.22), 1px 1px 3px rgba(0,0,0,0.5)',
@@ -206,20 +191,10 @@ const HeroSection = () => {
                 className="flex flex-col items-center justify-center p-4 bg-white/10 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
               >
                 <service.icon className="w-10 h-10 text-secondary mb-2" />
-                <span className="text-white text-center text-sm sm:text-base font-crimson font-semibold">{service.name}</span>
+                <span className="text-white text-center text-lg sm:text-xl font-crimson font-semibold">{service.name}</span>
               </div>
             ))}
           </motion.div>
-
-
-          {/* Trust Indicators (Badges) */}
-          <div className="flex flex-wrap justify-center gap-3" data-aos="fade-up" data-aos-delay="400">
-            {["CFA Charter Holder", "CFP Certified", "Fiduciary Advisor"].map((badge, i) => (
-              <Badge key={badge} variant="secondary" className="font-crimson" data-aos="zoom-in" data-aos-delay={i * 120}>
-                {badge}
-              </Badge>
-            ))}
-          </div>
 
           {/* Counters */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
@@ -228,7 +203,7 @@ const HeroSection = () => {
               <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
                 Since {counters.year}
               </div>
-              <div className="font-crimson text-sm text-muted-foreground">
+              <div className="font-crimson text-lg text-muted-foreground">
                 Years of Heritage
               </div>
             </div>
@@ -237,7 +212,7 @@ const HeroSection = () => {
               <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
                 ₹{counters.aum}+ Cr
               </div>
-              <div className="font-crimson text-sm text-muted-foreground">
+              <div className="font-crimson text-lg text-muted-foreground">
                 AUM Managed
               </div>
             </div>
@@ -246,7 +221,7 @@ const HeroSection = () => {
               <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
                 {counters.clients}+
               </div>
-              <div className="font-crimson text-sm text-muted-foreground">
+              <div className="font-crimson text-lg text-muted-foreground">
                 Satisfied Clients
               </div>
             </div>
@@ -255,7 +230,7 @@ const HeroSection = () => {
               <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
                 {counters.generations}
               </div>
-              <div className="font-crimson text-sm text-muted-foreground">
+              <div className="font-crimson text-lg text-muted-foreground">
                 Generations Served
               </div>
             </div>
@@ -271,7 +246,7 @@ const HeroSection = () => {
               Schedule Consultation
             </Button>
             <Button
-              onClick={() => scrollToSection('about')}
+              onClick={() => scrollToSection('contact')}
               variant="outline"
               size="lg"
               className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson font-semibold px-8 py-3 text-lg"
@@ -284,7 +259,7 @@ const HeroSection = () => {
         {/* Scroll Indicator */}
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
           <button
-            onClick={() => scrollToSection('about')}
+            onClick={() => scrollToSection('contact')}
             className="text-tertiary/60 hover:text-secondary transition-colors duration-300"
           >
             <ChevronDown className="w-8 h-8" />

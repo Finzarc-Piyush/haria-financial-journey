@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Badge } from "@/components/ui/badge";
 import { Award, GraduationCap, Heart, Users, Building2, Star, Target, Eye } from "lucide-react";
-import teamPhoto from "@/assets/team-photo.jpg";
-import aboutSectionPhoto from "@/assets/about-section-image.webp";
+import amritlalDevjiHaria from "@/assets/Amritlal-Haria.jpg";
+import anilAmritlalHaria from "@/assets/Anil-Haria.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -22,14 +22,14 @@ const AboutSection = () => {
           <div className="w-24 h-1 bg-secondary mx-auto"></div>
         </div>
 
-        {/* Block 1: Heritage */}
+        {/* Block 1: Grandfather - Amritlal Devji Haria */}
         <div data-aos="fade-up" data-aos-delay="100" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <img
-                src=""
-                alt="Haria Investments Legacy"
-                className="w-full h-56 sm:h-64 md:h-80 object-cover mx-auto rounded-lg shadow-floating"
+                src={amritlalDevjiHaria}
+                alt="Amritlal Devji Haria"
+                className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
                 data-aos="fade-right"
                 data-aos-delay="100"
               />
@@ -37,68 +37,64 @@ const AboutSection = () => {
             <div className="order-1 lg:order-2">
               <div className="flex items-center mb-6">
                 <Building2 className="w-6 h-6 text-secondary mr-3" />
-                <h3 className="font-playfair text-2xl font-semibold">Our Heritage</h3>
+                <h3 className="font-playfair text-2xl font-semibold">Amritlal Devji Haria</h3>
               </div>
-              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
-                Our journey began with Late Shri <strong>Amritlal Devji Haria</strong>,
-                who joined LIC at its inception. Over decades of dedicated service, he touched
-                thousands of families, retiring as Development Officer and later continuing
-                as an agent—laying the foundation of trust we carry forward today.
-              </p>
-              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
-                His son, <strong>Anil Amritlal Haria</strong>, embraced entrepreneurship and
-                expanded the business beyond life insurance into health insurance and financial
-                solutions, ensuring our services evolved with client needs.
-              </p>
-              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
-                Today, the third generation—<strong>Raj, Meet, and Rohan</strong>—continue
-                this proud legacy, combining modern expertise with traditional values to
-                serve families with integrity, innovation, and care.
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                Our journey began with Late Shri <strong>Amritlal Devji Haria</strong>. Being a graduate, he joined LIC right from its inception. Over the decades, he dedicated his entire career to serving people through insurance, retiring as a Development Officer and later continuing as an agent. His unwavering commitment touched the lives of thousands of families, laying a strong foundation for the generations to come.
               </p>
             </div>
           </div>
         </div>
 
-        {/* Block 2: Our Leaders */}
+        {/* Block 2: Father - Anil Amritlal Haria */}
         <div data-aos="fade-up" data-aos-delay="200" className="mb-20">
-          <div className="flex items-center mb-6">
-            <Award className="w-6 h-6 text-secondary mr-3" />
-            <h3 className="font-playfair text-2xl font-semibold">Our Leaders</h3>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-1 lg:order-1">
+              <div className="flex items-center mb-6">
+                <Building2 className="w-6 h-6 text-secondary mr-3" />
+                <h3 className="font-playfair text-2xl font-semibold">Anil Amritlal Haria</h3>
+              </div>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                Carrying this legacy forward, Mr. <strong>Anil Amritlal Haria</strong> embraced entrepreneurship early on. After beginning his career in the textile business, he chose to dedicate himself fully to the insurance profession to honor his father's vision. He expanded the family business beyond life insurance into health insurance and broader financial solutions, ensuring that our services evolved with the needs of our clients.
+              </p>
+            </div>
+            <div className="order-2 lg:order-2">
+              <img
+                src={anilAmritlalHaria}
+                alt="Anil Amritlal Haria"
+                className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
+                data-aos="fade-left"
+                data-aos-delay="200"
+              />
+            </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            {/* Raj */}
-            <div className="premium-card p-6 bg-cream/10 rounded-xl shadow-floating" data-aos="fade-up" data-aos-delay="0">
-              <h4 className="font-playfair text-xl font-semibold mb-3">Raj Haria</h4>
-              <p className="font-crimson text-sm text-cream/80 mb-4">
-                An MBA graduate from NMIMS, Raj has been expanding the mutual fund business since 2015,
-                while building strong expertise in life and general insurance. With a focus on trust
-                and long-term growth, he helps clients achieve their financial goals.
-              </p>
-              <Badge className="bg-secondary text-secondary-foreground">
-                MBA – NMIMS
-              </Badge>
-            </div>
+        </div>
 
-            {/* Meet */}
-            <div className="premium-card p-6 bg-cream/10 rounded-xl shadow-floating" data-aos="fade-up" data-aos-delay="100">
-              <h4 className="font-playfair text-xl font-semibold mb-3">Meet Savla</h4>
-              <p className="font-crimson text-sm text-cream/80 mb-4">
-                Since 2017, Meet has specialized in financial markets with a strong focus on
-                technical analysis. Over time, he developed expertise in trading precious metals
-                such as gold and silver, blending data-driven insights with hands-on experience.
-              </p>
-              <Badge className="bg-secondary text-secondary-foreground">
-                Market Specialist
-              </Badge>
+        {/* Block 3: Rohan Haria */}
+        <div data-aos="fade-up" data-aos-delay="300" className="mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <img
+                src=""
+                alt="Rohan Haria"
+                className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
+                data-aos="fade-right"
+                data-aos-delay="300"
+              />
             </div>
-
-            {/* Rohan */}
-            <div className="premium-card p-6 bg-cream/10 rounded-xl shadow-floating" data-aos="fade-up" data-aos-delay="200">
-              <h4 className="font-playfair text-xl font-semibold mb-3">Rohan Haria</h4>
-              <p className="font-crimson text-sm text-cream/80 mb-4">
-                A Chartered Accountant with 6 years of experience in auditing leading financial
-                institutions, particularly mutual funds. His rare behind-the-scenes understanding
-                of the investment ecosystem drives his client-first, integrity-led approach.
+            <div className="order-1 lg:order-2">
+              <div className="flex items-center mb-6">
+                <Award className="w-6 h-6 text-secondary mr-3" />
+                <h3 className="font-playfair text-2xl font-semibold">Rohan Haria</h3>
+              </div>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                A Chartered Accountant with 6 years of specialised experience in the financial services sector, having worked with two of India's most respected firms. During this time, he has developed deep expertise in auditing leading financial institutions, with a particular focus on mutual fund audits.
+              </p>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                This experience gave more than just technical knowledge—it provided a rare, behind-the-scenes understanding of how the investment ecosystem truly operates. From regulatory compliance to operational excellence, he has seen firsthand what it takes to protect and grow investor wealth.
+              </p>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                Today, he combines this professional insight with a client-first approach, offering advice that is transparent, precise, and driven by integrity.
               </p>
               <Badge className="bg-secondary text-secondary-foreground">
                 Chartered Accountant
@@ -107,15 +103,69 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Block 3: Professional Excellence */}
-        <div data-aos="fade-up" data-aos-delay="300" className="mb-20">
+        {/* Block 4: Raj Haria */}
+        <div data-aos="fade-up" data-aos-delay="400" className="mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-1 lg:order-1">
+              <div className="flex items-center mb-6">
+                <Award className="w-6 h-6 text-secondary mr-3" />
+                <h3 className="font-playfair text-2xl font-semibold">Raj Haria</h3>
+              </div>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                Raj Haria, an MBA graduate from NMIMS, has been carrying forward his grandfather's legacy. Since 2015, he has expanded into mutual fund business while building strong expertise in life and general insurance. With a focus on trust and long term growth, he help clients achieve their financial goals one after the other.
+              </p>
+              <Badge className="bg-secondary text-secondary-foreground">
+                MBA – NMIMS
+              </Badge>
+            </div>
+            <div className="order-2 lg:order-2">
+              <img
+                src=""
+                alt="Raj Haria"
+                className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
+                data-aos="fade-left"
+                data-aos-delay="400"
+              />
+            </div>
+          </div>
+        </div>
+
+        {/* Block 5: Meet Savla */}
+        <div data-aos="fade-up" data-aos-delay="500" className="mb-20">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <img
+                src=""
+                alt="Meet Savla"
+                className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
+                data-aos="fade-right"
+                data-aos-delay="500"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <div className="flex items-center mb-6">
+                <Award className="w-6 h-6 text-secondary mr-3" />
+                <h3 className="font-playfair text-2xl font-semibold">Meet Savla</h3>
+              </div>
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
+                Since 2017, He has been actively engaged in the financial markets, with a strong focus on technical analysis, and over time, he specialized in trading precious metals such as gold and silver. His approach blends data-driven insights with hands-on market experience, enabling him to identify opportunities, manage risk effectively, and navigate dynamic market conditions with discipline.
+              </p>
+              <Badge className="bg-secondary text-secondary-foreground">
+                Technical Specialist
+              </Badge>
+            </div>
+          </div>
+        </div>
+
+        {/* Block 6: Professional Excellence */}
+        <div data-aos="fade-up" data-aos-delay="600" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div>
               <div className="flex items-center mb-6">
                 <Star className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Professional Excellence</h3>
               </div>
-              <p className="font-crimson text-lg leading-relaxed mb-6 text-cream/90">
+              <p className="font-crimson text-xl leading-relaxed mb-6 text-cream/90">
                 With over six decades of combined expertise, we have guided families through
                 market cycles, economic changes, and evolving financial needs. From mutual funds
                 and insurance to market trading and audits, our diverse strengths help clients
@@ -124,11 +174,11 @@ const AboutSection = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div className="premium-card p-4 text-center bg-cream/10" data-aos="zoom-in" data-aos-delay="0">
                   <div className="font-playfair text-2xl font-bold text-secondary mb-1">1957</div>
-                  <div className="font-crimson text-sm text-cream/80">Legacy Since</div>
+                  <div className="font-crimson text-lg text-cream/80">Legacy Since</div>
                 </div>
                 <div className="premium-card p-4 text-center bg-cream/10" data-aos="zoom-in" data-aos-delay="100">
                   <div className="font-playfair text-2xl font-bold text-secondary mb-1">1000+</div>
-                  <div className="font-crimson text-sm text-cream/80">Families Served</div>
+                  <div className="font-crimson text-lg text-cream/80">Families Served</div>
                 </div>
               </div>
             </div>
@@ -144,13 +194,13 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Block 4: Vision & Mission */}
-        <div data-aos="fade-up" data-aos-delay="400" className="mb-20">
+        {/* Block 7: Vision & Mission */}
+        <div data-aos="fade-up" data-aos-delay="700" className="mb-20">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="premium-card p-6 bg-cream/10 rounded-xl shadow-floating text-center" data-aos="fade-right">
               <Eye className="w-8 h-8 text-secondary mx-auto mb-4" />
               <h4 className="font-playfair text-xl font-semibold mb-3">Vision</h4>
-              <p className="font-crimson text-sm text-cream/80">
+              <p className="font-crimson text-lg text-cream/80">
                 To be recognized as a leading wealth and protection partner that combines
                 innovation, integrity, and personalized care—enabling every client to build
                 sustainable wealth, safeguard their future, and achieve financial freedom
@@ -160,7 +210,7 @@ const AboutSection = () => {
             <div className="premium-card p-6 bg-cream/10 rounded-xl shadow-floating text-center" data-aos="fade-left">
               <Target className="w-8 h-8 text-secondary mx-auto mb-4" />
               <h4 className="font-playfair text-xl font-semibold mb-3">Mission</h4>
-              <p className="font-crimson text-sm text-cream/80">
+              <p className="font-crimson text-lg text-cream/80">
                 To provide holistic financial solutions that help individuals and families
                 protect, grow, and diversify their wealth. Through trusted advice,
                 research-driven strategies, and a wide spectrum of offerings, we empower
@@ -170,8 +220,8 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Block 5: Values & Personal Connection */}
-        <div data-aos="fade-up" data-aos-delay="500">
+        {/* Block 8: Values & Personal Connection */}
+        <div data-aos="fade-up" data-aos-delay="800">
           <div className="text-center max-w-4xl mx-auto">
             <div className="flex items-center justify-center mb-6">
               <Heart className="w-6 h-6 text-secondary mr-3" />

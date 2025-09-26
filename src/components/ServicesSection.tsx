@@ -175,10 +175,10 @@ const ServicesSection = () => {
             <service.icon className="w-8 h-8 text-secondary group-hover:animate-pulse transition-all duration-300" />
             <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`} />
           </div>
-          <CardTitle className="font-playfair text-xl text-tertiary">
+          <CardTitle className="font-playfair text-2xl text-tertiary">
             {service.title}
           </CardTitle>
-          <CardDescription className="font-crimson text-tertiary/70">
+          <CardDescription className="font-crimson text-lg text-tertiary/70">
             {service.description}
           </CardDescription>
         </CardHeader>
@@ -223,7 +223,7 @@ const ServicesSection = () => {
             Our Comprehensive Financial Services
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6 underline-animate"></div>
-          <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
+          <p className="font-crimson text-2xl text-tertiary/80 max-w-3xl mx-auto">
             Transparent, comprehensive financial planning with clear fee structure and proven results
           </p>
         </div>
@@ -234,7 +234,7 @@ const ServicesSection = () => {
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">Wealth Management Services</h3>
             <div className="flex items-center justify-center">
               <Building className="w-6 h-6 text-secondary mr-2" />
-              <span className="font-crimson text-tertiary/70">Comprehensive Portfolio Solutions</span>
+              <span className="font-crimson text-xl text-tertiary/70">Comprehensive Portfolio Solutions</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -248,7 +248,7 @@ const ServicesSection = () => {
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">Insurance & Protection Services</h3>
             <div className="flex items-center justify-center">
               <Shield className="w-6 h-6 text-secondary mr-2" />
-              <span className="font-crimson text-tertiary/70">Comprehensive Risk Management</span>
+              <span className="font-crimson text-xl text-tertiary/70">Comprehensive Risk Management</span>
             </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -256,48 +256,6 @@ const ServicesSection = () => {
           </div>
         </div>
 
-        {/* Fee Transparency */}
-        <div data-aos="fade-up" data-aos-delay="600">
-          <Card className="premium-card bg-champagne border-secondary">
-            <CardHeader className="text-center">
-              <div className="flex items-center justify-center mb-4">
-                <DollarSign className="w-8 h-8 text-secondary" />
-              </div>
-              <CardTitle className="font-playfair text-2xl text-tertiary">
-                Complete Fee Transparency
-              </CardTitle>
-              <CardDescription className="font-crimson text-tertiary/70">
-                No hidden fees, no commissions that create conflicts of interest
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
-                <div>
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">1.25%</div>
-                  <div className="font-crimson text-sm text-tertiary/70">Annual fee on AUM</div>
-                </div>
-                <div>
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">1%</div>
-                  <div className="font-crimson text-sm text-tertiary/70">For accounts over ₹2 Cr</div>
-                </div>
-                <div>
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">2–3%</div>
-                  <div className="font-crimson text-sm text-tertiary/70">Typical annual return improvement</div>
-                </div>
-                <div>
-                  <div className="font-playfair text-2xl font-bold text-secondary mb-2">100%</div>
-                  <div className="font-crimson text-sm text-tertiary/70">Cost disclosure upfront</div>
-                </div>
-              </div>
-              <div className="mt-6 p-4 bg-muted rounded-lg">
-                <p className="font-crimson text-center text-tertiary/80">
-                  <strong>Value Proposition:</strong> Our fee structure is competitive with industry standards
-                  while providing superior service and fiduciary commitment.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </section>
   );

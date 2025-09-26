@@ -150,14 +150,6 @@ const ProcessSection = () => {
     }
   ];
 
-  const onboardingChecklist = [
-    'Financial documents required for comprehensive analysis',
-    'Account opening procedures and expected timeline',
-    'Introduction to our team and support staff',
-    'Client portal setup and technology training',
-    'Emergency contact procedures and protocols',
-    'Regular communication schedule establishment'
-  ];
 
   return (
     <section id="process" className="py-20 min-h-screen bg-champagne flex flex-col justify-center">
@@ -168,7 +160,7 @@ const ProcessSection = () => {
             Our Client-Focused Process
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-          <p className="font-crimson text-lg text-tertiary/80 max-w-3xl mx-auto">
+          <p className="font-crimson text-xl text-tertiary/80 max-w-3xl mx-auto">
             A systematic, transparent approach designed to reduce anxiety and build confidence
             throughout your financial planning journey.
           </p>
@@ -186,7 +178,7 @@ const ProcessSection = () => {
                         <step.icon className="w-8 h-8 text-secondary-foreground" />
                       </div>
                       <div className="text-center mt-2">
-                        <Badge className="bg-tertiary text-cream font-playfair font-bold">
+                        <Badge className="bg-tertiary text-lg text-cream font-playfair font-bold">
                           {step.number}
                         </Badge>
                       </div>
@@ -196,11 +188,11 @@ const ProcessSection = () => {
                         <CardTitle className="font-playfair text-2xl text-tertiary">
                           {step.title}
                         </CardTitle>
-                        <Badge variant="outline" className="border-secondary text-secondary w-fit">
+                        <Badge variant="outline" className="border-secondary text-md text-secondary w-fit">
                           {step.duration}
                         </Badge>
                       </div>
-                      <CardDescription className="font-crimson text-lg text-tertiary/70 mb-6">
+                      <CardDescription className="font-crimson text-xl text-tertiary/70 mb-6">
                         {step.description}
                       </CardDescription>
                     </div>
@@ -209,13 +201,13 @@ const ProcessSection = () => {
                 <CardContent>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div>
-                      <h4 className="font-playfair font-semibold text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
                         <CheckCircle className="w-5 h-5 text-secondary mr-2" />
                         What to Expect:
                       </h4>
                       <ul className="space-y-2">
                         {step.expectations.map((expectation, i) => (
-                          <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-start">
+                          <li key={i} className="font-crimson text-lg text-tertiary/70 flex items-start">
                             <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
                             {expectation}
                           </li>
@@ -223,13 +215,13 @@ const ProcessSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-playfair font-semibold text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
                         <Users className="w-5 h-5 text-secondary mr-2" />
                         Your Preparation:
                       </h4>
                       <ul className="space-y-2">
                         {step.preparation.map((prep, i) => (
-                          <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-start">
+                          <li key={i} className="font-crimson text-lg text-tertiary/70 flex items-start">
                             <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
                             {prep}
                           </li>
@@ -237,12 +229,12 @@ const ProcessSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-playfair font-semibold text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
                         <Shield className="w-5 h-5 text-secondary mr-2" />
                         Outcome:
                       </h4>
                       <div className="p-4 bg-champagne/20 rounded-lg">
-                        <p className="font-crimson text-sm text-tertiary/80">
+                        <p className="font-crimson text-lg text-tertiary/80">
                           {step.outcome}
                         </p>
                       </div>
@@ -260,7 +252,7 @@ const ProcessSection = () => {
             <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
               Our Communication Standards
             </h3>
-            <p className="font-crimson text-tertiary/70">
+            <p className="font-crimson text-xl text-tertiary/70">
               Clear expectations for responsive, professional service
             </p>
           </div>
@@ -274,15 +266,15 @@ const ProcessSection = () => {
               >
                 <CardHeader>
                   <standard.icon className="w-8 h-8 text-secondary mx-auto mb-4" />
-                  <CardTitle className="font-playfair text-lg text-tertiary">
+                  <CardTitle className="font-playfair text-2xl text-tertiary">
                     {standard.title}
                   </CardTitle>
-                  <CardDescription className="font-crimson text-tertiary/70">
+                  <CardDescription className="font-crimson text-lg text-tertiary/70">
                     {standard.description}
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Badge className="bg-secondary text-secondary-foreground">
+                  <Badge className="bg-secondary text-md text-secondary-foreground">
                     {standard.commitment}
                   </Badge>
                 </CardContent>
@@ -291,42 +283,6 @@ const ProcessSection = () => {
           </div>
         </div>
 
-        {/* Client Onboarding Checklist */}
-        <div data-aos="fade-up" data-aos-delay="600">
-          <Card className="premium-card bg-champagne border-secondary">
-            <CardHeader className="text-center">
-              <CardTitle className="font-playfair text-2xl text-tertiary mb-4">
-                Client Onboarding Checklist
-              </CardTitle>
-              <CardDescription className="font-crimson text-tertiary/70">
-                Everything you need to know for a smooth start to our partnership
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {onboardingChecklist.map((item, index) => (
-                  <div
-                    key={index}
-                    className="flex items-start p-4 bg-muted rounded-lg"
-                    data-aos="fade-right"
-                    data-aos-delay={index * 80}
-                  >
-                    <CheckCircle className="w-5 h-5 text-secondary mr-3 mt-0.5 flex-shrink-0" />
-                    <span className="font-crimson text-sm text-tertiary/80">
-                      {item}
-                    </span>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-6 p-4 bg-secondary/10 rounded-lg text-center">
-                <p className="font-crimson text-tertiary/80">
-                  <strong>Our Commitment:</strong> We will guide you through every step of this process,
-                  ensuring you feel confident and informed throughout your onboarding experience.
-                </p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
       </div>
     </section>
   );

@@ -160,7 +160,7 @@ const InsightsSection = () => {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="flex items-center justify-between text-sm text-tertiary/60">
+                    <div className="flex items-center justify-between text-base text-tertiary/60">
                       <div className="flex items-center">
                         <Calendar className="w-4 h-4 mr-1" />
                         {article.date}
@@ -172,17 +172,17 @@ const InsightsSection = () => {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center text-sm text-tertiary/60">
+                    <div className="flex items-center text-base text-tertiary/60">
                       <User className="w-4 h-4 mr-1" />
                       {article.author}
                     </div>
                     <div>
-                      <h4 className="font-crimson font-semibold text-tertiary text-sm mb-2">
+                      <h4 className="font-crimson font-semibold text-tertiary text-base mb-2">
                         Key Takeaways:
                       </h4>
                       <ul className="space-y-1">
                         {article.keyTakeaways.map((takeaway, i) => (
-                          <li key={i} className="font-crimson text-xs text-tertiary/70 flex items-start">
+                          <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-start">
                             <div className="w-1 h-1 bg-secondary rounded-full mr-2 mt-2"></div>
                             {takeaway}
                           </li>
@@ -222,7 +222,7 @@ const InsightsSection = () => {
                     <CardTitle className="font-playfair text-lg text-tertiary">
                       {item.title}
                     </CardTitle>
-                    <Badge className="bg-secondary text-secondary-foreground text-xs">
+                    <Badge className="bg-secondary text-secondary-foreground text-sm">
                       {item.status}
                     </Badge>
                   </div>

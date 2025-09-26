@@ -24,7 +24,7 @@ const Footer = () => {
                             <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 object-contain" />
                             <span className="font-playfair font-bold text-2xl text-cream">Haria Investments</span>
                         </div>
-                        <div className="font-crimson text-cream/90 text-base mb-1">
+                        <div className="font-crimson text-cream/90 text-lg mb-1">
                             Your One Stop Financial Solution!<br />since 1957.
                         </div>
                         <div className="flex gap-4 mt-2">
@@ -39,17 +39,21 @@ const Footer = () => {
                         </div>
                         <div className="flex items-center gap-2 mt-2">
                             <Award className="w-5 h-5 text-secondary footer-animate-icon" />
-                            <span className="font-crimson text-secondary font-semibold">AMFI Registered & Mutual Fund Distributor</span>
+                            <span className="font-crimson text-secondary font-semibold text-lg">IRDAI Registered</span>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                            <Award className="w-5 h-5 text-secondary footer-animate-icon" />
+                            <span className="font-crimson text-secondary font-semibold text-lg">AMFI Registered & Mutual Fund Distributor</span>
                         </div>
                         <div className="flex items-center gap-2 mt-2">
                             <Shield className="w-5 h-5 text-secondary footer-animate-icon" />
-                            <span className="font-crimson text-secondary font-semibold">Authorized Person of Motilal Oswal</span>
+                            <span className="font-crimson text-secondary font-semibold text-lg">Authorized Person of Motilal Oswal</span>
                         </div>
                     </div>
                     {/* Quick Links */}
                     <div data-aos="fade-up" data-aos-delay="150">
-                        <h4 className="font-playfair text-lg font-bold mb-4">Quick Links</h4>
-                        <ul className="font-crimson text-cream/80 space-y-2">
+                        <h4 className="font-playfair text-xl font-bold mb-4">Quick Links</h4>
+                        <ul className="font-crimson text-cream/80 space-y-2 text-lg">
                             {[
                                 { label: 'Motilal Oswal Demat Account Open', href: 'https://mosl.co/OWxY3P3cRN' },
                                 { label: 'Motilal Oswal Client Login', href: 'https://invest.motilaloswal.com/' },
@@ -68,8 +72,8 @@ const Footer = () => {
                     </div>
                     {/* Our Services */}
                     <div data-aos="fade-up" data-aos-delay="200">
-                        <h4 className="font-playfair text-lg font-bold mb-4">Our Services</h4>
-                        <ul className="font-crimson text-cream/80 space-y-2">
+                        <h4 className="font-playfair text-xl font-bold mb-4">Our Services</h4>
+                        <ul className="font-crimson text-cream/80 space-y-2 text-lg">
                             {[
                                 { label: 'Life Insurance', to: '/life-insurance' },
                                 { label: 'General Insurance', to: '/general-insurance' },
@@ -88,13 +92,13 @@ const Footer = () => {
                     </div>
                     {/* Contact Us */}
                     <div data-aos="fade-up" data-aos-delay="300">
-                        <h4 className="font-playfair text-lg font-bold mb-4">Contact Us</h4>
-                        <ul className="font-crimson text-cream/80 space-y-3">
-                            <li className="flex items-start gap-2" data-aos="fade-up" data-aos-delay="350">
+                        <h4 className="font-playfair text-xl font-bold mb-4">Contact Us</h4>
+                        <ul className="font-crimson text-cream/80 space-y-3 text-lg">
+                            <li className="flex items-start gap-4 " data-aos="fade-up" data-aos-delay="350">
                                 <MapPin className="w-5 h-5 text-secondary mt-1 footer-animate-icon" />
                                 <div>
-                                    <div className="font-crimson font-semibold text-cream text-base">Office Address</div>
-                                    <div className="font-crimson text-cream/80 text-sm">
+                                    <div className="font-crimson font-semibold text-cream text-lg">Office Address</div>
+                                    <div className="font-crimson text-cream/80 text-lg">
                                         1st Floor, Shree Krishna Niwas,<br />
                                         Above Panshikhar Sweets, Opposite Ajay Shopping Centre,<br />
                                         T.H.Kataria Marg, Matunga West, Mumbai – 400016
@@ -102,7 +106,7 @@ const Footer = () => {
                                 </div>
                             </li>
                             <li className="flex items-center gap-2" data-aos="fade-up" data-aos-delay="400">
-                                <Phone className="w-5 h-5 text-secondary footer-animate-icon" /> <a href="tel:+917738686126" className="hover:text-secondary transition-colors duration-200">+91 77386 86126</a>
+                                <Phone className="w-5 h-5 text-secondary footer-animate-icon" /> <a href="tel:+917738686126" className="hover:text-secondary transition-colors duration-200 ">+91 77386 86126</a>
                             </li>
                             <li className="flex items-center gap-2" data-aos="fade-up" data-aos-delay="450">
                                 <Mail className="w-5 h-5 text-secondary footer-animate-icon" /> <a href="mailto:hariainvestments9@gmail.com" className="hover:text-secondary transition-colors duration-200">hariainvestments9@gmail.com</a>
@@ -110,8 +114,39 @@ const Footer = () => {
                         </ul>
                     </div>
                 </div>
+
+                {/* Google Map Section */}
+                <div data-aos="zoom-in" className="mb-8 flex justify-center">
+                    <div className="w-full max-w-2xl rounded-xl shadow-lg border border-champagne/60 overflow-hidden">
+                        <div className="bg-tertiary/90 p-4 text-center">
+                            <h3 className="font-playfair text-xl text-cream mb-1">Visit Us</h3>
+                            <p className="font-crimson text-cream/80 text-lg">Find us at our office location</p>
+                        </div>
+                        <div className="p-0">
+                            <a
+                                href="https://www.google.com/maps/place/haria+investments.com/@19.0307911,72.8429173,17z/data=!4m6!3m5!1s0x3be7ced3f8fae787:0xf7ebbe01b20b946b!8m2!3d19.0307911!4d72.8454922!16s%2Fg%2F11vrb1byvm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block cursor-pointer"
+                                title="Click to open Haria Investments location in Google Maps"
+                            >
+                                <iframe
+                                    title="Haria Investments Office Location"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.123456789!2d72.8429173!3d19.0307911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ced3f8fae787%3A0xf7ebbe01b20b946b!2sHaria%20Investments!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                                    width="100%"
+                                    height="250"
+                                    style={{ border: 0, borderRadius: '0 0 0.75rem 0.75rem', minWidth: '280px', pointerEvents: 'none' }}
+                                    allowFullScreen
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                ></iframe>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
                 <div
-                    className="text-center text-xs text-cream/60 font-crimson py-6"
+                    className="text-center text-lg text-cream/60 font-crimson py-6"
                     data-aos="fade-in"
                     data-aos-delay="300"
                 >

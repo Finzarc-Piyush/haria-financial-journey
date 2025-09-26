@@ -32,11 +32,16 @@ import {
     XCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const CommodityTrading = () => {
     const [heroInView, setHeroInView] = useState(true);
     const [commodityTicker, setCommodityTicker] = useState(0);
     const [selectedTab, setSelectedTab] = useState("futures");
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [pnlValue, setPnlValue] = useState(12500);
     const [riskLevel, setRiskLevel] = useState(65);
     const [volatilityIndex, setVolatilityIndex] = useState(28);
@@ -255,6 +260,7 @@ const CommodityTrading = () => {
                         <Button
                             size="lg"
                             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Start Trading
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -358,7 +364,7 @@ const CommodityTrading = () => {
                                                 </div>
                                             </div>
 
-                                            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                                 Start Trading {product.title}
                                                 <ArrowRight className="ml-2 h-4 w-4" />
                                             </Button>
@@ -619,6 +625,14 @@ const CommodityTrading = () => {
                     </motion.div>
                 </div>
             </motion.section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Commodity Trading Journey"
+                description="Trade commodities with expert guidance and advanced tools for better returns."
+            />
         </div>
     );
 };

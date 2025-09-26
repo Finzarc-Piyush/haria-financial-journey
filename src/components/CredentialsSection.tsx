@@ -51,7 +51,7 @@ const CredentialsSection = () => {
                   <Badge className="bg-secondary text-secondary-foreground badge-expand" data-aos="fade-up" data-aos-delay={i * 120} title={`${cert.name} - ${cert.org} (${cert.year})`}>
                     {cert.name}
                   </Badge>
-                  <div className="font-crimson text-xs text-cream/70">{cert.org} - {cert.year}</div>
+                  <div className="font-crimson text-sm text-cream/70">{cert.org} - {cert.year}</div>
                 </div>
               ))}
             </CardContent>
@@ -65,9 +65,9 @@ const CredentialsSection = () => {
             <CardContent>
               {education.map((edu, i) => (
                 <div key={i} className="mb-3">
-                  <div className="font-crimson font-semibold text-cream text-sm">{edu.degree}</div>
-                  <div className="font-crimson text-xs text-cream/70">{edu.institution} - {edu.year}</div>
-                  <Badge variant="outline" className="text-xs border-secondary text-secondary badge-expand" data-aos="fade-up" data-aos-delay={i * 120 + 60} title={edu.honor}>{edu.honor}</Badge>
+                  <div className="font-crimson font-semibold text-cream text-base">{edu.degree}</div>
+                  <div className="font-crimson text-sm text-cream/70">{edu.institution} - {edu.year}</div>
+                  <Badge variant="outline" className="text-sm border-secondary text-secondary badge-expand" data-aos="fade-up" data-aos-delay={i * 120 + 60} title={edu.honor}>{edu.honor}</Badge>
                   {/* Animated progress bar */}
                   <div className="w-full h-2 bg-cream/20 rounded mt-2 overflow-hidden">
                     <div className="bg-secondary h-2 rounded transition-all duration-700" style={{ width: `${80 + i * 10}%` }} data-aos="progress-bar" data-aos-delay={i * 120 + 100}></div>
@@ -99,8 +99,8 @@ const CredentialsSection = () => {
             <CardContent>
               {recognition.map((award, i) => (
                 <div key={i} className="mb-2">
-                  <div className="font-crimson text-xs text-secondary font-semibold badge-expand" data-aos="fade-up" data-aos-delay={i * 120} title={award.title + ' - ' + award.org}>{award.title}</div>
-                  <div className="font-crimson text-xs text-cream/70">{award.org}</div>
+                  <div className="font-crimson text-sm text-secondary font-semibold badge-expand" data-aos="fade-up" data-aos-delay={i * 120} title={award.title + ' - ' + award.org}>{award.title}</div>
+                  <div className="font-crimson text-sm text-cream/70">{award.org}</div>
                 </div>
               ))}
             </CardContent>

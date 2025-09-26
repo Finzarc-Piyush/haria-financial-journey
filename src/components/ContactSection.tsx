@@ -5,8 +5,8 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import rightTick from '@/assets/right-tick.png';
 import emailjs from '@emailjs/browser';
+import ConfirmationModal from './ui/ConfirmationModal';
 
 function isMobile() {
   if (typeof window === 'undefined') return false;
@@ -33,7 +33,7 @@ function validate(field: string, value: string | string[]) {
       if (typeof value === 'string' && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(value)) return 'Invalid email.';
       return '';
     case 'message':
-      if (!value || (typeof value === 'string' && value.trim().length === 0)) return 'Required.';
+      // Message field is now optional - no validation required
       return '';
     case 'services':
       if (!Array.isArray(value) || value.length === 0) return 'Select at least one.';
@@ -71,10 +71,6 @@ const ContactSection = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [submittedFirstName, setSubmittedFirstName] = useState<string | null>(null);
-  const [startTick, setStartTick] = useState(false);
-  const [spinTick, setSpinTick] = useState(false);
-  const [showFinalTick, setShowFinalTick] = useState(false);
-  const [drawDone, setDrawDone] = useState(false);
 
   // Initialize EmailJS
   useEffect(() => {
@@ -83,22 +79,6 @@ const ContactSection = () => {
     }
   }, []);
 
-  // FIXED: Reset animation state function
-  const resetAnimationState = () => {
-    setStartTick(false);
-    setSpinTick(false);
-    setShowFinalTick(false);
-    setDrawDone(false);
-  };
-  // FIXED: Updated openConfirmation function
-  const openConfirmation = () => {
-    resetAnimationState();
-    setShowConfirmation(true);
-    // Start the animation sequence after a small delay to ensure state is reset
-    setTimeout(() => {
-      setStartTick(true);
-    }, 100);
-  };
 
   // Function to send confirmation email
   const sendConfirmationEmail = async (formData: any) => {
@@ -199,7 +179,7 @@ const ContactSection = () => {
     setTouched({ firstName: false, lastName: false, email: false, message: false, services: false });
     setIsSubmitting(false);
     setFormSubmitted(true);
-    openConfirmation();
+    setShowConfirmation(true);
   };
 
   useEffect(() => {
@@ -233,10 +213,10 @@ const ContactSection = () => {
               <div className="flex items-start group">
                 <Phone className="w-6 h-6 text-secondary mr-4 mt-1" />
                 <div>
-                  <div className="font-crimson font-semibold text-tertiary text-lg">Phone</div>
+                  <div className="font-crimson font-semibold text-tertiary text-xl">Phone</div>
                   <a
-                    href="tel:+919876543210"
-                    className="font-crimson text-tertiary/80 text-lg underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
+                    href="tel:+917738686126"
+                    className="font-crimson text-tertiary/80 text-xl underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
                     tabIndex={0}
                     title="Tap to call directly"
                   >
@@ -248,10 +228,10 @@ const ContactSection = () => {
               <div className="flex items-start group">
                 <Mail className="w-6 h-6 text-secondary mr-4 mt-1" />
                 <div>
-                  <div className="font-crimson font-semibold text-tertiary text-lg">Email</div>
+                  <div className="font-crimson font-semibold text-tertiary text-xl">Email</div>
                   <a
                     href="mailto:hariainvestments9@gmail.com"
-                    className="font-crimson text-tertiary/80 text-lg underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
+                    className="font-crimson text-tertiary/80 text-xl underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
                   >
                     hariainvestments9@gmail.com
                   </a>
@@ -261,8 +241,8 @@ const ContactSection = () => {
               <div className="flex items-start">
                 <MapPin className="w-6 h-6 text-secondary mr-4 mt-1" />
                 <div>
-                  <div className="font-crimson font-semibold text-tertiary text-lg">Office Address</div>
-                  <div className="font-crimson text-tertiary/70 text-lg">
+                  <div className="font-crimson font-semibold text-tertiary text-xl">Office Address</div>
+                  <div className="font-crimson text-tertiary/70 text-xl">
                     1st Floor, Shree Krishna Niwas,<br />
                     Above Panshikhar Sweets, Opposite Ajay Shopping Centre,<br />
                     T.H.Kataria Marg, Matunga West, Mumbai – 400016
@@ -273,10 +253,10 @@ const ContactSection = () => {
               <div className="flex items-start">
                 <Clock className="w-6 h-6 text-secondary mr-4 mt-1" />
                 <div>
-                  <div className="font-crimson font-semibold text-tertiary text-lg">Office Hours</div>
-                  <div className="font-crimson text-tertiary/70 text-lg">
-                    Monday-Friday: 9:00 AM - 6:00 PM<br />
-                    Saturday: 9:00 AM - 2:00 PM
+                  <div className="font-crimson font-semibold text-tertiary text-xl">Office Hours</div>
+                  <div className="font-crimson text-tertiary/70 text-xl">
+                    Monday-Friday: 9:00 AM - 7:00 PM<br />
+                    Saturday: 11:00 AM - 6:00 PM
                   </div>
                 </div>
               </div>
@@ -301,49 +281,52 @@ const ContactSection = () => {
                 {/* Name fields */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
-                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1">First Name <span className="text-red-500">*</span></label>
-                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-md border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
-                    {touched.firstName && formErrors.firstName && <div className="text-red-500 text-xs mt-1 transition-all duration-200">{formErrors.firstName}</div>}
+                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1 text-xl">First Name <span className="text-red-500">*</span></label>
+                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-md border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
+                    {touched.firstName && formErrors.firstName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.firstName}</div>}
                   </div>
                   <div className="flex-1">
-                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1">Last Name <span className="text-red-500">*</span></label>
-                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-md border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
-                    {touched.lastName && formErrors.lastName && <div className="text-red-500 text-xs mt-1 transition-all duration-200">{formErrors.lastName}</div>}
+                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1 text-xl">Last Name <span className="text-red-500">*</span></label>
+                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-md border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
+                    {touched.lastName && formErrors.lastName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.lastName}</div>}
                   </div>
                 </div>
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block font-crimson text-tertiary mb-1">Email <span className="text-red-500">*</span></label>
-                  <input id="email" name="email" type="email" required className={`w-full rounded-md border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
-                  {touched.email && formErrors.email && <div className="text-red-500 text-xs mt-1 transition-all duration-200">{formErrors.email}</div>}
+                  <label htmlFor="email" className="block font-crimson text-tertiary mb-1 text-xl">Email <span className="text-red-500">*</span></label>
+                  <input id="email" name="email" type="email" required className={`w-full rounded-md border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
+                  {touched.email && formErrors.email && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.email}</div>}
                 </div>
                 {/* Services checkboxes */}
                 <div>
-                  <label className="block font-crimson text-tertiary mb-2">Which services are you looking for? <span className="text-red-500">*</span></label>
+                  <label className="block font-crimson text-tertiary mb-2 text-xl">Which services are you looking for? <span className="text-red-500">*</span></label>
                   <div className="flex flex-wrap gap-6">
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
-                      <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
+                      <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
                     </label>
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
-                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
+                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
                     </label>
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary">
-                      <input type="checkbox" name="services" value="Equity Broking" className="accent-secondary w-5 h-5 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Equity Broking')} onChange={handleInputChange} onBlur={handleBlur} /> Equity Broking
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
+                      <input type="checkbox" name="services" value="Equity" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
+                    </label>
+                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
+                      <input type="checkbox" name="services" value="Fixed Income" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
                     </label>
                   </div>
-                  {touched.services && formErrors.services && <div className="text-red-500 text-xs mt-1 transition-all duration-200">{formErrors.services}</div>}
+                  {touched.services && formErrors.services && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.services}</div>}
                 </div>
                 {/* Comment/Message */}
                 <div>
-                  <label htmlFor="message" className="block font-crimson text-tertiary mb-1">Comment or Message <span className="text-red-500">*</span></label>
-                  <textarea id="message" name="message" required rows={4} className={`w-full rounded-md border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-2 font-crimson text-tertiary focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
-                  {touched.message && formErrors.message && <div className="text-red-500 text-xs mt-1 transition-all duration-200">{formErrors.message}</div>}
+                  <label htmlFor="message" className="block font-crimson text-tertiary mb-1 text-xl">Comment or Message</label>
+                  <textarea id="message" name="message" rows={4} className={`w-full rounded-md border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
+                  {touched.message && formErrors.message && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.message}</div>}
                 </div>
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button
                     asChild
-                    className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6 py-3 text-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
+                    className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6 py-3 text-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
                     disabled={isSubmitting || !isFormValid}
                   >
                     <motion.button
@@ -366,136 +349,19 @@ const ContactSection = () => {
             </CardContent>
           </Card>
         </div>
-        {/* Google Map Card */}
-        <div data-aos="zoom-in" className="mt-16 flex justify-center">
-          <Card className="w-full max-w-2xl rounded-2xl shadow-lg border border-champagne/60 overflow-hidden">
-            <CardHeader>
-              <CardTitle className="font-playfair text-xl text-tertiary mb-2">Visit Us</CardTitle>
-            </CardHeader>
-            <CardContent className="p-0">
-              <iframe
-                title="Haria Investments Office Location"
-                src="https://www.google.com/maps?q=1st+Floor,+Room+No.12,+Shree+Krishna+Niwas,+T.H.Kataria+Marg,+Matunga+West,+Mumbai+400016&output=embed"
-                width="100%"
-                height="350"
-                style={{ border: 0, borderRadius: '0 0 1rem 1rem', minWidth: '280px' }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              ></iframe>
-            </CardContent>
-          </Card>
-        </div>
       </div>
 
-      {/* Confirmation Dialog Overlay - moved outside the grid for true viewport centering */}
-
-      {showConfirmation && (
-        <motion.div
-          key="confirmation-modal"
-          initial={{ opacity: 0, scale: 0.95, y: 40 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 40 }}
-          transition={{ duration: 0.5, ease: [0.42, 0, 0.58, 1] }}
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ pointerEvents: 'auto' }}
-        // REMOVED: onAnimationComplete that was causing issues
-        >
-          {/* Backdrop */}
-          <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40" aria-hidden="true" />
-          {/* Modal Content */}
-          <div className="relative z-50 mx-4 w-full max-w-lg">
-            <div className="bg-cream/90 rounded-2xl shadow-xl p-8 flex flex-col items-center text-center border border-gold/30">
-              {/* FIXED: Cinematic checkmark animation */}
-              <div className="relative mb-4 flex items-center justify-center" style={{ width: 56, height: 56 }}>
-                <>
-                  {/* SVG checkmark: draw, then horizontal flip, then fade out */}
-                  <motion.div
-                    className="absolute left-0 top-0 w-14 h-14 flex items-center justify-center"
-                    style={{ pointerEvents: 'none', zIndex: 3, perspective: 400 }}
-                    animate={spinTick && !showFinalTick ? { rotateY: 360 } : { rotateY: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeInOut' }}
-                    onAnimationComplete={() => {
-                      if (spinTick) {
-                        setSpinTick(false);
-                        setTimeout(() => setShowFinalTick(true), 100);
-                      }
-                    }}
-                  >
-                    <motion.svg
-                      width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg"
-                      style={{ position: 'relative', zIndex: 2 }}
-                      initial="hidden"
-                      animate={startTick && !showFinalTick ? "visible" : "hidden"}
-                      variants={{
-                        hidden: { opacity: 0 },
-                        visible: { opacity: 1 }
-                      }}
-                    >
-                      <motion.path
-                        d="M16 29L25 38L40 20"
-                        stroke="#43A047"
-                        strokeWidth="7"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        fill="none"
-                        variants={{
-                          hidden: { pathLength: 0 },
-                          visible: { pathLength: 1, transition: { duration: 0.7, ease: 'easeInOut' } }
-                        }}
-                        onAnimationComplete={() => {
-                          setDrawDone(true);
-                          setTimeout(() => {
-                            setSpinTick(true);
-                          }, 100);
-                        }}
-                      />
-                    </motion.svg>
-                  </motion.div>
-                  {/* Fade in the static image after spin */}
-                  <motion.img
-                    src={rightTick}
-                    alt="Success"
-                    className="w-14 h-14 absolute left-0 top-0"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={showFinalTick ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
-                    style={{ zIndex: 4 }}
-                  />
-                </>
-              </div>
-
-              <h2 className="font-playfair text-2xl md:text-3xl font-bold text-charcoal mb-2">
-                🎉 Thank You, {submittedFirstName || 'Friend'}!
-              </h2>
-              <p className="font-crimson text-lg text-charcoal/90 mb-2">
-                Your request has been received. We'll be in touch soon.
-              </p>
-              <p className="font-crimson text-base text-charcoal/70 mb-4">
-                We're excited to help you on your financial journey. Keep an eye on your inbox!
-              </p>
-              <Button
-                asChild
-                className="mt-2 px-6 py-2 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold shadow-gold/20 transition-all w-full text-lg focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
-              >
-                <button
-                  onClick={() => {
-                    setShowConfirmation(false);
-                    setTimeout(() => {
-                      setFormSubmitted(false);
-                      resetAnimationState(); // Reset for next time
-                    }, 400);
-                  }}
-                  style={{ width: '100%' }}
-                  type="button"
-                >
-                  Back to Home
-                </button>
-              </Button>
-            </div>
-          </div>
-        </motion.div>
-      )}
+      {/* Confirmation Modal */}
+      <ConfirmationModal
+        isOpen={showConfirmation}
+        onClose={() => {
+          setShowConfirmation(false);
+          setTimeout(() => {
+            setFormSubmitted(false);
+          }, 400);
+        }}
+        firstName={submittedFirstName}
+      />
     </section>
   );
 };

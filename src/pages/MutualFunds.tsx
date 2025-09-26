@@ -25,6 +25,10 @@ import {
     Users
 } from "lucide-react";
 import { motion, useInView } from 'framer-motion';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 // Animation variants
 const staggerContainer = {
@@ -63,6 +67,7 @@ const MutualFunds = () => {
     const [totalValue, setTotalValue] = useState(0);
     const [totalGain, setTotalGain] = useState(0);
     const [riskLevel, setRiskLevel] = useState(3);
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [selectedFund, setSelectedFund] = useState<string | null>(null);
 
     const morphingTexts = ["Grow", "Prosper", "Achieve"];
@@ -223,6 +228,11 @@ const MutualFunds = () => {
         setTotalGain(totalGainAmount);
     }, [sipAmount, sipDuration, expectedReturn]);
 
+    // Initialize AOS
+    useEffect(() => {
+        AOS.init({ duration: 600, once: true });
+    }, []);
+
     // Risk meter color
     const getRiskColor = (level: number) => {
         if (level <= 2) return "text-green-500";
@@ -299,7 +309,7 @@ const MutualFunds = () => {
                         variants={fadeIn}
                         initial="hidden"
                         animate={heroPInView ? "show" : "hidden"}
-                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
+                        className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90"
                     >
                         Build wealth through systematic investment in mutual funds
                     </motion.p>
@@ -307,7 +317,8 @@ const MutualFunds = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl"
+                            onClick={openPopup}
                         >
                             Start SIP
                             <ArrowRight className="ml-2 h-5 w-5" />
@@ -315,7 +326,8 @@ const MutualFunds = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
+                            onClick={openPopup}
                         >
                             Explore Funds
                         </Button>
@@ -336,7 +348,7 @@ const MutualFunds = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             SIP Calculator
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Plan your investments and see the power of compounding
                         </p>
                     </motion.div>
@@ -352,7 +364,7 @@ const MutualFunds = () => {
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Monthly Investment (₹)</Label>
+                                    <Label className="text-lg font-semibold text-foreground">Monthly Investment (₹)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[sipAmount]}
@@ -371,7 +383,7 @@ const MutualFunds = () => {
                                 </div>
 
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Investment Duration (Years)</Label>
+                                    <Label className="text-lg font-semibold text-foreground">Investment Duration (Years)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[sipDuration]}
@@ -390,7 +402,7 @@ const MutualFunds = () => {
                                 </div>
 
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Expected Return (%)</Label>
+                                    <Label className="text-lg font-semibold text-foreground">Expected Return (%)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[expectedReturn]}
@@ -429,7 +441,7 @@ const MutualFunds = () => {
                                         <div className="text-xl font-playfair font-bold text-foreground mb-1">
                                             ₹{totalInvestment.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-sm text-muted-foreground">Total Investment</p>
+                                        <p className="text-lg text-muted-foreground">Total Investment</p>
                                     </CardContent>
                                 </Card>
 
@@ -438,7 +450,7 @@ const MutualFunds = () => {
                                         <div className="text-xl font-playfair font-bold text-green-600 mb-1">
                                             ₹{totalGain.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-sm text-muted-foreground">Total Gain</p>
+                                        <p className="text-lg text-muted-foreground">Total Gain</p>
                                     </CardContent>
                                 </Card>
                             </div>
@@ -447,8 +459,8 @@ const MutualFunds = () => {
                             <Card className="premium-card">
                                 <CardContent className="p-6">
                                     <div className="flex items-center justify-between mb-4">
-                                        <Label className="text-sm font-semibold text-foreground">Risk Profile</Label>
-                                        <span className={`text-sm font-semibold ${getRiskColor(riskLevel)}`}>
+                                        <Label className="text-lg font-semibold text-foreground">Risk Profile</Label>
+                                        <span className={`text-lg font-semibold ${getRiskColor(riskLevel)}`}>
                                             {riskLevel <= 2 ? 'Conservative' : riskLevel <= 3 ? 'Moderate' : 'Aggressive'}
                                         </span>
                                     </div>
@@ -479,7 +491,7 @@ const MutualFunds = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Investment Categories
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Choose the right fund type based on your goals and risk appetite
                         </p>
                     </motion.div>
@@ -539,7 +551,7 @@ const MutualFunds = () => {
                                             ))}
                                         </div>
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                             Explore Funds
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -655,10 +667,10 @@ const MutualFunds = () => {
                         Begin with as little as ₹500 and watch your wealth grow
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Start SIP
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Get Expert Advice
                         </Button>
                     </div>
@@ -670,6 +682,14 @@ const MutualFunds = () => {
                     </div>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Mutual Fund Journey"
+                description="Get expert guidance on SIP investments and fund selection tailored to your goals."
+            />
         </div>
     );
 };

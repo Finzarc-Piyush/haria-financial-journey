@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
 import { BarChart3, Award, Users, PieChart, Shield } from "lucide-react";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import ContactPopup from '@/components/ui/ContactPopup';
+import { useContactPopup } from '@/hooks/useContactPopup';
 
 const slideUp = {
     hidden: { opacity: 0, y: 40 },
@@ -51,6 +55,7 @@ const features = [
 ];
 
 const PortfolioManagement = () => {
+    const { isOpen, openPopup, closePopup } = useContactPopup();
     const [heroInView, setHeroInView] = useState(true);
     const heroHeadingRef = useRef(null);
     const heroHeadingInView = useInView(heroHeadingRef, { once: true, amount: 0.3 });
@@ -109,6 +114,7 @@ const PortfolioManagement = () => {
                         <Button
                             size="lg"
                             className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Get Started
                         </Button>
@@ -221,6 +227,14 @@ const PortfolioManagement = () => {
                     </Button>
                 </div>
             </section>
+
+            {/* Contact Popup */}
+            <ContactPopup
+                isOpen={isOpen}
+                onClose={closePopup}
+                title="Start Your Portfolio Management Journey"
+                description="Get personalized portfolio management services tailored to your financial goals."
+            />
         </div>
     );
 };
