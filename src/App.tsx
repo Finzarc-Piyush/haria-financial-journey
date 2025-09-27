@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import Footer from "@/components/Footer";
@@ -22,6 +22,9 @@ import LumpsumCalculator from "./pages/LumpsumCalculator";
 import CAGRCalculator from "./pages/CAGRCalculator";
 import Navigation from "@/components/Navigation";
 import PortfolioManagement from "./pages/PortfolioManagement";
+import Dashboard from "./pages/Dashboard";
+import Login from "./pages/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // ErrorBoundary component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { hasError: boolean; }> {
@@ -47,6 +50,42 @@ if (typeof window !== 'undefined') {
 
 const queryClient = new QueryClient();
 
+const AppContent = () => {
+  const location = useLocation();
+  const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+
+  return (
+    <>
+      <ScrollToTop />
+      {!isAdminPage && <Navigation />}
+      <Routes>
+        <Route path="/" element={<Index />} />
+        <Route path="/sip-calculator" element={<SIPCalculator />} />
+        <Route path="/swp-calculator" element={<SWPCalculator />} />
+        <Route path="/life-insurance" element={<LifeInsurance />} />
+        <Route path="/general-insurance" element={<GeneralInsurance />} />
+        <Route path="/mutual-funds" element={<MutualFunds />} />
+        <Route path="/equity-investment" element={<EquityInvestment />} />
+        <Route path="/fixed-income" element={<FixedIncome />} />
+        <Route path="/commodity-trading" element={<CommodityTrading />} />
+        <Route path="/gold-silver" element={<GoldSilver />} />
+        <Route path="/other-derivatives" element={<OtherDerivatives />} />
+        <Route path="/lumpsum-calculator" element={<LumpsumCalculator />} />
+        <Route path="/cagr-calculator" element={<CAGRCalculator />} />
+        <Route path="/portfolio-management" element={<PortfolioManagement />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <Dashboard />
+          </ProtectedRoute>
+        } />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      {!isAdminPage && <Footer />}
+    </>
+  );
+};
+
 const App = () => (
   <ErrorBoundary>
     <QueryClientProvider client={queryClient}>
@@ -54,26 +93,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <ScrollToTop />
-          <Navigation />
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/sip-calculator" element={<SIPCalculator />} />
-            <Route path="/swp-calculator" element={<SWPCalculator />} />
-            <Route path="/life-insurance" element={<LifeInsurance />} />
-            <Route path="/general-insurance" element={<GeneralInsurance />} />
-            <Route path="/mutual-funds" element={<MutualFunds />} />
-            <Route path="/equity-investment" element={<EquityInvestment />} />
-            <Route path="/fixed-income" element={<FixedIncome />} />
-            <Route path="/commodity-trading" element={<CommodityTrading />} />
-            <Route path="/gold-silver" element={<GoldSilver />} />
-            <Route path="/other-derivatives" element={<OtherDerivatives />} />
-            <Route path="/lumpsum-calculator" element={<LumpsumCalculator />} />
-            <Route path="/cagr-calculator" element={<CAGRCalculator />} />
-            <Route path="/portfolio-management" element={<PortfolioManagement />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-          <Footer />
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

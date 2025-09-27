@@ -1,0 +1,722 @@
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+    Users,
+    Mail,
+    TrendingUp,
+    Clock,
+    CheckCircle,
+    AlertCircle,
+    Filter,
+    Search,
+    Download,
+    RefreshCw,
+    Eye,
+    Edit,
+    Trash2,
+    Phone,
+    Calendar,
+    BarChart3,
+    PieChart,
+    Activity
+} from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
+import { Button } from '../components/ui/button';
+import { Input } from '../components/ui/input';
+import { Badge } from '../components/ui/badge';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
+import LogoutButton from '../components/LogoutButton';
+import { contactService, Contact, ContactStats } from '../services/contactService';
+
+
+const Dashboard: React.FC = () => {
+    const [contacts, setContacts] = useState<Contact[]>([]);
+    const [stats, setStats] = useState<ContactStats | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [statusFilter, setStatusFilter] = useState<string>('all');
+    const [serviceFilter, setServiceFilter] = useState<string>('all');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(10);
+    const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
+    const [showContactModal, setShowContactModal] = useState(false);
+
+    // Fetch contacts
+    const fetchContacts = async () => {
+        try {
+            const response = await contactService.getContacts({
+                page: currentPage,
+                limit: itemsPerPage,
+                status: statusFilter !== 'all' ? statusFilter : undefined,
+                service: serviceFilter !== 'all' ? serviceFilter : undefined,
+                search: searchTerm || undefined
+            });
+
+            setContacts(response.data.contacts || []);
+        } catch (error) {
+            console.error('Error fetching contacts:', error);
+        }
+    };
+
+    // Fetch statistics
+    const fetchStats = async () => {
+        try {
+            const response = await contactService.getContactStats();
+            setStats(response.data);
+        } catch (error) {
+            console.error('Error fetching stats:', error);
+        }
+    };
+
+    // Update contact status
+    const updateContactStatus = async (contactId: string, newStatus: string) => {
+        try {
+            await contactService.updateContact(contactId, { status: newStatus });
+            await fetchContacts();
+            await fetchStats();
+        } catch (error) {
+            console.error('Error updating contact:', error);
+        }
+    };
+
+    // Refresh data
+    const refreshData = async () => {
+        setLoading(true);
+        try {
+            await Promise.all([fetchContacts(), fetchStats()]);
+        } catch (error) {
+            console.error('Error refreshing data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Export contacts to CSV
+    const exportContacts = () => {
+        const csvContent = [
+            ['Name', 'Email', 'Services', 'Status', 'Date', 'Message'],
+            ...contacts.map(contact => [
+                `${contact.firstName} ${contact.lastName}`,
+                contact.email,
+                contact.services.join(', '),
+                contact.status,
+                new Date(contact.createdAt).toLocaleDateString(),
+                contact.message || ''
+            ])
+        ].map(row => row.map(field => `"${field}"`).join(',')).join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `contacts-${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
+    useEffect(() => {
+        const loadData = async () => {
+            setLoading(true);
+            await Promise.all([fetchContacts(), fetchStats()]);
+            setLoading(false);
+        };
+
+        loadData();
+    }, []);
+
+    // Refetch contacts when pagination or filters change
+    useEffect(() => {
+        fetchContacts();
+    }, [currentPage, itemsPerPage, statusFilter, serviceFilter, searchTerm]);
+
+    // Filter contacts
+    const filteredContacts = contacts.filter(contact => {
+        const matchesSearch =
+            contact.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contact.lastName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            contact.email.toLowerCase().includes(searchTerm.toLowerCase());
+
+        const matchesStatus = statusFilter === 'all' || contact.status === statusFilter;
+        const matchesService = serviceFilter === 'all' || contact.services.includes(serviceFilter);
+
+        return matchesSearch && matchesStatus && matchesService;
+    });
+
+    // Pagination
+    const totalPages = Math.ceil(filteredContacts.length / itemsPerPage);
+    const paginatedContacts = filteredContacts.slice(
+        (currentPage - 1) * itemsPerPage,
+        currentPage * itemsPerPage
+    );
+
+    const getStatusColor = (status: string) => {
+        switch (status) {
+            case 'new': return 'bg-blue-100 text-blue-800 border-blue-200';
+            case 'contacted': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+            case 'in_progress': return 'bg-orange-100 text-orange-800 border-orange-200';
+            case 'completed': return 'bg-green-100 text-green-800 border-green-200';
+            case 'closed': return 'bg-gray-100 text-gray-800 border-gray-200';
+            default: return 'bg-gray-100 text-gray-800 border-gray-200';
+        }
+    };
+
+    const getStatusIcon = (status: string) => {
+        switch (status) {
+            case 'new': return <AlertCircle className="w-4 h-4" />;
+            case 'contacted': return <Phone className="w-4 h-4" />;
+            case 'in_progress': return <Clock className="w-4 h-4" />;
+            case 'completed': return <CheckCircle className="w-4 h-4" />;
+            case 'closed': return <CheckCircle className="w-4 h-4" />;
+            default: return <AlertCircle className="w-4 h-4" />;
+        }
+    };
+
+    if (loading) {
+        return (
+            <div className="min-h-screen bg-gradient-to-br from-champagne/20 via-white to-tertiary/10 flex items-center justify-center">
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center"
+                >
+                    <RefreshCw className="w-12 h-12 text-secondary animate-spin mx-auto mb-4" />
+                    <p className="text-lg font-crimson text-muted-foreground">Loading Dashboard...</p>
+                </motion.div>
+            </div>
+        );
+    }
+
+    return (
+        <div className="min-h-screen bg-gradient-to-br from-champagne/20 via-white to-tertiary/10">
+            {/* Header */}
+            <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="bg-white/80 backdrop-blur-sm border-b border-tertiary/20 shadow-sm"
+            >
+                <div className="max-w-7xl mx-auto px-6 py-6">
+                    <div className="flex items-center justify-between">
+                        <div>
+                            <h1 className="text-5xl font-playfair font-bold text-tertiary mb-2">
+                                Contact Dashboard
+                            </h1>
+                            <p className="text-xl text-muted-foreground font-crimson">
+                                Manage and track your client inquiries
+                            </p>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <Button
+                                onClick={refreshData}
+                                variant="outline"
+                                className="border-tertiary/30 text-tertiary text-lg px-6 py-3"
+                                disabled={loading}
+                            >
+                                <RefreshCw className={`w-5 h-5 mr-2 ${loading ? 'animate-spin' : ''}`} />
+                                {loading ? 'Refreshing...' : 'Refresh'}
+                            </Button>
+                            <Button
+                                onClick={exportContacts}
+                                className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground text-lg px-6 py-3"
+                            >
+                                <Download className="w-5 h-5 mr-2" />
+                                Export CSV
+                            </Button>
+                            <LogoutButton />
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+
+            <div className="max-w-7xl mx-auto px-6 py-8">
+                {/* Statistics Cards */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.1 }}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8"
+                >
+                    <Card className="premium-card hover-lift">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-lg font-crimson text-muted-foreground">Total Contacts</p>
+                                    <p className="text-4xl font-playfair font-bold text-tertiary">
+                                        {stats?.overview.totalContacts || 0}
+                                    </p>
+                                </div>
+                                <Users className="w-8 h-8 text-secondary" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="premium-card hover-lift">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-lg font-crimson text-muted-foreground">New Inquiries</p>
+                                    <p className="text-4xl font-playfair font-bold text-blue-600">
+                                        {stats?.overview.newContacts || 0}
+                                    </p>
+                                </div>
+                                <AlertCircle className="w-8 h-8 text-blue-500" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="premium-card hover-lift">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-lg font-crimson text-muted-foreground">In Progress</p>
+                                    <p className="text-4xl font-playfair font-bold text-orange-600">
+                                        {stats?.overview.inProgressContacts || 0}
+                                    </p>
+                                </div>
+                                <Clock className="w-8 h-8 text-orange-500" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="premium-card hover-lift">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-lg font-crimson text-muted-foreground">Completed</p>
+                                    <p className="text-4xl font-playfair font-bold text-green-600">
+                                        {stats?.overview.completedContacts || 0}
+                                    </p>
+                                </div>
+                                <CheckCircle className="w-8 h-8 text-green-500" />
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="premium-card hover-lift">
+                        <CardContent className="p-6">
+                            <div className="flex items-center justify-between">
+                                <div>
+                                    <p className="text-lg font-crimson text-muted-foreground">Contact Rate</p>
+                                    <p className="text-4xl font-playfair font-bold text-secondary">
+                                        {stats?.overview.totalContacts ?
+                                            Math.round((stats.overview.contactedContacts / stats.overview.totalContacts) * 100) : 0}%
+                                    </p>
+                                </div>
+                                <TrendingUp className="w-8 h-8 text-secondary" />
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+
+                {/* Service Statistics */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.2 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+                >
+                    <Card className="premium-card">
+                        <CardHeader>
+                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                <PieChart className="w-6 h-6 mr-2" />
+                                Service Distribution
+                            </CardTitle>
+                            <p className="font-crimson text-base text-muted-foreground mt-2">
+                                Shows how many clients are interested in each financial service
+                            </p>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-6">
+                                {stats?.services && Object.entries(stats.services).map(([service, count]) => {
+                                    const countValue = count as number;
+                                    const percentage = stats.overview.totalContacts ? Math.round((countValue / stats.overview.totalContacts) * 100) : 0;
+
+                                    return (
+                                        <div key={service} className="space-y-2">
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-crimson text-lg font-semibold text-tertiary">{service}</span>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="font-crimson font-bold text-xl text-tertiary">
+                                                        {countValue}
+                                                    </span>
+                                                    <span className="font-crimson text-sm text-muted-foreground">
+                                                        ({percentage}%)
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="w-full bg-gray-200 rounded-full h-3">
+                                                <div
+                                                    className="bg-gradient-to-r from-secondary to-tertiary h-3 rounded-full transition-all duration-500"
+                                                    style={{
+                                                        width: `${percentage}%`
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </CardContent>
+                    </Card>
+
+                    <Card className="premium-card">
+                        <CardHeader>
+                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                <Activity className="w-6 h-6 mr-2" />
+                                Recent Activity
+                            </CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="space-y-3">
+                                {contacts.slice(0, 5).map((contact) => (
+                                    <div key={contact._id} className="flex items-center justify-between p-3 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg">
+                                        <div>
+                                            <p className="font-crimson font-semibold text-lg text-tertiary">
+                                                {contact.firstName} {contact.lastName}
+                                            </p>
+                                            <p className="text-base text-muted-foreground">{contact.email}</p>
+                                        </div>
+                                        <Badge className={`${getStatusColor(contact.status)} border text-base px-3 py-1`}>
+                                            {contact.status.replace('_', ' ')}
+                                        </Badge>
+                                    </div>
+                                ))}
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+
+                {/* Contacts Table */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                >
+                    <Card className="premium-card">
+                        <CardHeader>
+                            <div className="flex items-center justify-between">
+                                <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                    <Users className="w-6 h-6 mr-2" />
+                                    Contact Management
+                                </CardTitle>
+                                <div className="flex items-center gap-4">
+                                    <div className="relative">
+                                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                        <Input
+                                            placeholder="Search contacts..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="pl-10 w-64 border-tertiary/30 focus:ring-tertiary/30 text-lg"
+                                        />
+                                    </div>
+                                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
+                                            <SelectValue placeholder="Status" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="all">All Status</SelectItem>
+                                            <SelectItem value="new">New</SelectItem>
+                                            <SelectItem value="contacted">Contacted</SelectItem>
+                                            <SelectItem value="in_progress">In Progress</SelectItem>
+                                            <SelectItem value="completed">Completed</SelectItem>
+                                            <SelectItem value="closed">Closed</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <Select value={serviceFilter} onValueChange={setServiceFilter}>
+                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
+                                            <SelectValue placeholder="Service" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="all">All Services</SelectItem>
+                                            <SelectItem value="Insurance">Insurance</SelectItem>
+                                            <SelectItem value="Mutual Funds">Mutual Funds</SelectItem>
+                                            <SelectItem value="Equity">Equity</SelectItem>
+                                            <SelectItem value="Fixed Income">Fixed Income</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                    <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+                                        setItemsPerPage(parseInt(value));
+                                        setCurrentPage(1); // Reset to first page when changing limit
+                                    }}>
+                                        <SelectTrigger className="w-32 border-tertiary/30 text-lg">
+                                            <SelectValue placeholder="Limit" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="5">5 per page</SelectItem>
+                                            <SelectItem value="10">10 per page</SelectItem>
+                                            <SelectItem value="20">20 per page</SelectItem>
+                                            <SelectItem value="50">50 per page</SelectItem>
+                                            <SelectItem value="100">100 per page</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </div>
+                        </CardHeader>
+                        <CardContent>
+                            <div className="overflow-x-auto">
+                                <table className="w-full">
+                                    <thead>
+                                        <tr className="border-b border-tertiary/20">
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Name</th>
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Email</th>
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Services</th>
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Status</th>
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Date</th>
+                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {paginatedContacts.map((contact) => (
+                                            <motion.tr
+                                                key={contact._id}
+                                                initial={{ opacity: 0 }}
+                                                animate={{ opacity: 1 }}
+                                                className="border-b border-tertiary/10 hover:bg-gradient-to-r hover:from-tertiary/5 hover:to-champagne/10 transition-all duration-200"
+                                            >
+                                                <td className="py-4 px-4">
+                                                    <div>
+                                                        <p className="font-crimson font-semibold text-lg text-tertiary">
+                                                            {contact.firstName} {contact.lastName}
+                                                        </p>
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-4">
+                                                    <p className="font-crimson text-lg text-muted-foreground">{contact.email}</p>
+                                                </td>
+                                                <td className="py-4 px-4">
+                                                    <div className="flex flex-wrap gap-1">
+                                                        {contact.services.map((service) => (
+                                                            <Badge key={service} variant="outline" className="text-base border-tertiary/30 text-tertiary px-2 py-1">
+                                                                {service}
+                                                            </Badge>
+                                                        ))}
+                                                    </div>
+                                                </td>
+                                                <td className="py-4 px-4">
+                                                    <Badge className={`${getStatusColor(contact.status)} border flex items-center gap-2 w-fit text-base px-3 py-1`}>
+                                                        {getStatusIcon(contact.status)}
+                                                        {contact.status.replace('_', ' ')}
+                                                    </Badge>
+                                                </td>
+                                                <td className="py-4 px-4">
+                                                    <p className="font-crimson text-lg text-muted-foreground">
+                                                        {new Date(contact.createdAt).toLocaleDateString()}
+                                                    </p>
+                                                </td>
+                                                <td className="py-4 px-4">
+                                                    <div className="flex items-center gap-3">
+                                                        <Button
+                                                            size="sm"
+                                                            variant="outline"
+                                                            onClick={() => {
+                                                                setSelectedContact(contact);
+                                                                setShowContactModal(true);
+                                                            }}
+                                                            className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                                        >
+                                                            <Eye className="w-4 h-4 mr-1" />
+                                                            View
+                                                        </Button>
+                                                        <Select
+                                                            value={contact.status}
+                                                            onValueChange={(value) => updateContactStatus(contact._id, value)}
+                                                        >
+                                                            <SelectTrigger className="w-36 h-10 text-base border-tertiary/30">
+                                                                <SelectValue />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="new">New</SelectItem>
+                                                                <SelectItem value="contacted">Contacted</SelectItem>
+                                                                <SelectItem value="in_progress">In Progress</SelectItem>
+                                                                <SelectItem value="completed">Completed</SelectItem>
+                                                                <SelectItem value="closed">Closed</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    </div>
+                                                </td>
+                                            </motion.tr>
+                                        ))}
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            {/* Pagination */}
+                            <div className="flex items-center justify-between mt-8 p-4 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg border border-tertiary/20">
+                                <div className="flex items-center gap-4">
+                                    <p className="font-crimson text-lg text-muted-foreground">
+                                        Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredContacts.length)} of {filteredContacts.length} contacts
+                                    </p>
+                                    <div className="flex items-center gap-2">
+                                        <span className="font-crimson text-base text-tertiary">Page:</span>
+                                        <Select value={currentPage.toString()} onValueChange={(value) => setCurrentPage(parseInt(value))}>
+                                            <SelectTrigger className="w-20 h-8 text-base border-tertiary/30">
+                                                <SelectValue />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {Array.from({ length: totalPages }, (_, i) => (
+                                                    <SelectItem key={i + 1} value={(i + 1).toString()}>
+                                                        {i + 1}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                        <span className="font-crimson text-base text-muted-foreground">of {totalPages}</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-3">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                        disabled={currentPage === 1}
+                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                    >
+                                        Previous
+                                    </Button>
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                        disabled={currentPage === totalPages}
+                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                    >
+                                        Next
+                                    </Button>
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </motion.div>
+            </div>
+
+            {/* Contact Detail Modal */}
+            <AnimatePresence>
+                {showContactModal && selectedContact && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+                        onClick={() => setShowContactModal(false)}
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="bg-white rounded-xl shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <div className="p-6">
+                                <div className="flex items-center justify-between mb-6">
+                                    <h2 className="text-4xl font-playfair font-bold text-tertiary">
+                                        Contact Details
+                                    </h2>
+                                    <Button
+                                        variant="outline"
+                                        size="sm"
+                                        onClick={() => setShowContactModal(false)}
+                                        className="border-tertiary/30 text-tertiary"
+                                    >
+                                        ×
+                                    </Button>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                                Full Name
+                                            </label>
+                                            <p className="font-crimson text-lg text-muted-foreground">
+                                                {selectedContact.firstName} {selectedContact.lastName}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                                Email
+                                            </label>
+                                            <p className="font-crimson text-lg text-muted-foreground">
+                                                {selectedContact.email}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                            Services Interested In
+                                        </label>
+                                        <div className="flex flex-wrap gap-2">
+                                            {selectedContact.services.map((service) => (
+                                                <Badge key={service} variant="outline" className="border-tertiary/30 text-tertiary">
+                                                    {service}
+                                                </Badge>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                            Status
+                                        </label>
+                                        <Badge className={`${getStatusColor(selectedContact.status)} border flex items-center gap-1 w-fit`}>
+                                            {getStatusIcon(selectedContact.status)}
+                                            {selectedContact.status}
+                                        </Badge>
+                                    </div>
+
+                                    {selectedContact.message && (
+                                        <div>
+                                            <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                                Message
+                                            </label>
+                                            <div className="bg-gradient-to-r from-tertiary/5 to-champagne/10 p-4 rounded-lg">
+                                                <p className="font-crimson text-lg text-muted-foreground">
+                                                    {selectedContact.message}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                                Created At
+                                            </label>
+                                            <p className="font-crimson text-lg text-muted-foreground">
+                                                {new Date(selectedContact.createdAt).toLocaleString()}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <label className="block text-base font-crimson font-semibold text-tertiary mb-2">
+                                                Last Updated
+                                            </label>
+                                            <p className="font-crimson text-lg text-muted-foreground">
+                                                {new Date(selectedContact.updatedAt).toLocaleString()}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="flex items-center justify-end gap-4 mt-8">
+                                    <Button
+                                        variant="outline"
+                                        onClick={() => setShowContactModal(false)}
+                                        className="border-tertiary/30 text-tertiary"
+                                    >
+                                        Close
+                                    </Button>
+                                    <Button className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground">
+                                        <Mail className="w-4 h-4 mr-2" />
+                                        Send Email
+                                    </Button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </div>
+    );
+};
+
+export default Dashboard;

@@ -124,7 +124,7 @@ const Footer = () => {
                         </div>
                         <div className="p-0">
                             <a
-                                href="https://www.google.com/maps/place/haria+investments.com/@19.0307911,72.8429173,17z/data=!4m6!3m5!1s0x3be7ced3f8fae787:0xf7ebbe01b20b946b!8m2!3d19.0307911!4d72.8454922!16s%2Fg%2F11vrb1byvm?authuser=0&entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D"
+                                href="https://www.google.com/maps/place/Panshikar+Sweets/@19.0311747,72.8436168,20.2z/data=!4m14!1m7!3m6!1s0x3be7ced3f8fae787:0xf7ebbe01b20b946b!2sharia+investments.com!8m2!3d19.0307911!4d72.8454922!16s%2Fg%2F11vrb1byvm!3m5!1s0x3be7ced3c1603025:0x4c0033b859f77a83!8m2!3d19.03122!4d72.8438951!16s%2Fg%2F11fzfbq0jy?authuser=0&entry=ttu&g_ep=EgoyMDI1MDkyNC4wIKXMDSoASAFQAw%3D%3D"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="block cursor-pointer"
@@ -132,7 +132,7 @@ const Footer = () => {
                             >
                                 <iframe
                                     title="Haria Investments Office Location"
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.123456789!2d72.8429173!3d19.0307911!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ced3f8fae787%3A0xf7ebbe01b20b946b!2sHaria%20Investments!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.123456789!2d72.8436168!3d19.0311747!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7ced3c1603025%3A0x4c0033b859f77a83!2sPanshikar%20Sweets!5e0!3m2!1sen!2sin!4v1700000000000!5m2!1sen!2sin"
                                     width="100%"
                                     height="250"
                                     style={{ border: 0, borderRadius: '0 0 0.75rem 0.75rem', minWidth: '280px', pointerEvents: 'none' }}

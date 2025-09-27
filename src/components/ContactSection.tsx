@@ -5,21 +5,15 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
 import ConfirmationModal from './ui/ConfirmationModal';
+import { contactService, CreateContactData } from '../services/contactService';
+import { useToast } from '../hooks/use-toast';
 
 function isMobile() {
   if (typeof window === 'undefined') return false;
   return window.innerWidth < 768;
 }
 
-// GOOGLE_SCRIPT_URL 
-const GOOGLE_SCRIPT_URL = import.meta.env.VITE_GOOGLE_SCRIPT_URL;
-
-// EmailJS configuration 
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID;
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 function validate(field: string, value: string | string[]) {
   switch (field) {
@@ -44,6 +38,7 @@ function validate(field: string, value: string | string[]) {
 }
 
 const ContactSection = () => {
+  const { toast } = useToast();
   const [formValues, setFormValues] = useState({
     firstName: '',
     lastName: '',
@@ -73,33 +68,8 @@ const ContactSection = () => {
   const [submittedFirstName, setSubmittedFirstName] = useState<string | null>(null);
 
   // Initialize EmailJS
-  useEffect(() => {
-    if (EMAILJS_PUBLIC_KEY) {
-      emailjs.init(EMAILJS_PUBLIC_KEY);
-    }
-  }, []);
 
 
-  // Function to send confirmation email
-  const sendConfirmationEmail = async (formData: any) => {
-    try {
-      // Template parameters that will be sent to EmailJS
-      const templateParams = {
-        name: formData.firstName,
-        email: formData.email,
-      };
-
-      const response = await emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams
-      );
-
-      return { success: true, response };
-    } catch (error) {
-      return { success: false, error };
-    }
-  };
 
   // Validate all fields and update errors
   useEffect(() => {
@@ -108,10 +78,12 @@ const ContactSection = () => {
       errors[field] = validate(field, (formValues as any)[field]);
     });
     setFormErrors(errors);
-    // Form is valid if all fields are touched and all errors are empty
+    // Form is valid if all required fields are touched and all errors are empty
+    // Message field is optional, so exclude it from touched requirement
+    const requiredFields = ['firstName', 'lastName', 'email', 'services'];
     setIsFormValid(
       Object.values(errors).every((err) => !err) &&
-      Object.values(touched).every((t) => t)
+      requiredFields.every((field) => touched[field])
     );
   }, [formValues, touched]);
 
@@ -157,29 +129,35 @@ const ContactSection = () => {
       return;
     }
     setIsSubmitting(true);
-    const data = {
-      firstName: formValues.firstName,
-      lastName: formValues.lastName,
-      email: formValues.email,
-      services: (formValues.services as string[]).join(", "),
-      message: formValues.message,
-      date: new Date().toISOString().slice(0, 10).replace(/-/g, "/"),
-    };
-    await fetch(GOOGLE_SCRIPT_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data),
-    });
 
-    // Send confirmation email to user
-    await sendConfirmationEmail(data);
+    try {
+      // Create contact using the service
+      const contactData: CreateContactData = {
+        firstName: formValues.firstName,
+        lastName: formValues.lastName,
+        email: formValues.email,
+        services: formValues.services as string[],
+        message: formValues.message || '',
+      };
 
-    setSubmittedFirstName(formValues.firstName);
-    setFormValues({ firstName: '', lastName: '', email: '', message: '', services: [] });
-    setTouched({ firstName: false, lastName: false, email: false, message: false, services: false });
-    setIsSubmitting(false);
-    setFormSubmitted(true);
-    setShowConfirmation(true);
+      await contactService.createContact(contactData);
+
+      setSubmittedFirstName(formValues.firstName);
+      setFormValues({ firstName: '', lastName: '', email: '', message: '', services: [] });
+      setTouched({ firstName: false, lastName: false, email: false, message: false, services: false });
+      setIsSubmitting(false);
+      setFormSubmitted(true);
+      setShowConfirmation(true);
+    } catch (error: any) {
+      console.error('Error submitting contact form:', error);
+      setIsSubmitting(false);
+
+      toast({
+        title: "Submission Failed",
+        description: error.message || "There was an error submitting your form. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   useEffect(() => {
@@ -202,7 +180,7 @@ const ContactSection = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Info Card */}
-          <Card data-aos="fade-up" data-aos-delay="100" className="premium-card shadow-floating border border-champagne/60">
+          <Card data-aos="fade-up" data-aos-delay="100" className="premium-card shadow-floating border border-secondary/20 bg-gradient-to-br from-white via-champagne/5 to-secondary/5 backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="font-playfair text-2xl text-tertiary flex items-center gap-2">
                 <Calendar className="w-6 h-6 text-secondary" /> Contact Information
@@ -263,7 +241,7 @@ const ContactSection = () => {
             </CardContent>
           </Card>
           {/* Booking Card */}
-          <Card data-aos="fade-up" data-aos-delay="200" className="premium-card shadow-floating border border-champagne/60 bg-champagne/20 flex flex-col justify-between">
+          <Card data-aos="fade-up" data-aos-delay="200" className="premium-card shadow-floating border border-tertiary/20 bg-gradient-to-br from-tertiary/5 via-champagne/20 to-secondary/10 flex flex-col justify-between backdrop-blur-sm">
             <CardHeader>
               <CardTitle className="font-playfair text-2xl text-tertiary">
                 Book a Free Consultation
@@ -273,7 +251,7 @@ const ContactSection = () => {
               {/* Always show the form, even when confirmation is showing */}
               <form
                 ref={formRef}
-                className="flex flex-col gap-6"
+                className="flex flex-col gap-6 relative"
                 autoComplete="off"
                 noValidate
                 onSubmit={handleSubmit}
@@ -281,52 +259,52 @@ const ContactSection = () => {
                 {/* Name fields */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
-                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1 text-xl">First Name <span className="text-red-500">*</span></label>
-                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-md border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
+                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">First Name <span className="text-red-500">*</span></label>
+                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-lg border-2 ${touched.firstName && formErrors.firstName ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
                     {touched.firstName && formErrors.firstName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.firstName}</div>}
                   </div>
                   <div className="flex-1">
-                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1 text-xl">Last Name <span className="text-red-500">*</span></label>
-                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-md border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
+                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Last Name <span className="text-red-500">*</span></label>
+                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-lg border-2 ${touched.lastName && formErrors.lastName ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
                     {touched.lastName && formErrors.lastName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.lastName}</div>}
                   </div>
                 </div>
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block font-crimson text-tertiary mb-1 text-xl">Email <span className="text-red-500">*</span></label>
-                  <input id="email" name="email" type="email" required className={`w-full rounded-md border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
+                  <label htmlFor="email" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Email <span className="text-red-500">*</span></label>
+                  <input id="email" name="email" type="email" required className={`w-full rounded-lg border-2 ${touched.email && formErrors.email ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
                   {touched.email && formErrors.email && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.email}</div>}
                 </div>
                 {/* Services checkboxes */}
                 <div>
-                  <label className="block font-crimson text-tertiary mb-2 text-xl">Which services are you looking for? <span className="text-red-500">*</span></label>
+                  <label className="block font-crimson text-tertiary mb-3 text-xl font-semibold">Which services are you looking for? <span className="text-red-500">*</span></label>
                   <div className="flex flex-wrap gap-6">
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                      <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
+                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Insurance" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
                     </label>
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
+                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
                     </label>
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                      <input type="checkbox" name="services" value="Equity" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
+                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Equity" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
                     </label>
-                    <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                      <input type="checkbox" name="services" value="Fixed Income" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
+                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Fixed Income" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
                     </label>
                   </div>
                   {touched.services && formErrors.services && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.services}</div>}
                 </div>
                 {/* Comment/Message */}
                 <div>
-                  <label htmlFor="message" className="block font-crimson text-tertiary mb-1 text-xl">Comment or Message</label>
-                  <textarea id="message" name="message" rows={4} className={`w-full rounded-md border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
+                  <label htmlFor="message" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Comment or Message</label>
+                  <textarea id="message" name="message" rows={4} className={`w-full rounded-lg border-2 ${touched.message && formErrors.message ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
                   {touched.message && formErrors.message && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.message}</div>}
                 </div>
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button
                     asChild
-                    className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6 py-3 text-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2"
+                    className="w-full bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground hover:from-secondary/90 hover:to-secondary font-crimson font-semibold px-6 py-4 text-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 rounded-xl"
                     disabled={isSubmitting || !isFormValid}
                   >
                     <motion.button

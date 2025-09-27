@@ -180,7 +180,7 @@ const HeroSection = () => {
 
           {/* New: Services Grid */}
           <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-5xl mx-auto mb-12 min-h-[120px]"
+            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12"
             initial={{ opacity: 0, y: 48 }}
             animate={isVisible ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
@@ -188,10 +188,12 @@ const HeroSection = () => {
             {services.map((service) => (
               <div
                 key={service.name}
-                className="flex flex-col items-center justify-center p-4 bg-white/10 backdrop-blur-sm rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                className="bg-white p-6 text-center hover-lift rounded-lg shadow-lg"
               >
-                <service.icon className="w-10 h-10 text-secondary mb-2" />
-                <span className="text-white text-center text-lg sm:text-xl font-crimson font-semibold">{service.name}</span>
+                <service.icon className="w-8 h-8 text-secondary mx-auto mb-3" />
+                <div className="font-crimson text-lg text-muted-foreground">
+                  {service.name}
+                </div>
               </div>
             ))}
           </motion.div>

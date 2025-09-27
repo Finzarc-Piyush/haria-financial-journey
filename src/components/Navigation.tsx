@@ -449,10 +449,11 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               </div>
 
               {/* Mobile Menu Button */}
-              <div className="lg:hidden flex items-center">
+              <div className="lg:hidden flex items-center pr-2">
                 <button
                   onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                  className="text-tertiary hover:text-secondary transition-colors duration-300 p-2"
+                  className="text-tertiary hover:text-secondary transition-colors duration-300 p-3 rounded-full hover:bg-white/10"
+                  aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 >
                   {isMobileMenuOpen ? (
                     <X className="h-6 w-6" />
@@ -464,281 +465,289 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
             </div>
 
             {/* Mobile Menu */}
-            {isMobileMenuOpen && (
-              <div className="lg:hidden fixed top-0 left-0 w-full h-screen bg-background rounded-none shadow-elegant z-[100] animate-slide-down flex flex-col">
-                <div className="flex flex-col flex-1 overflow-y-auto px-4 pt-16 pb-4">
-                  {/* Insurance Dropdown (Mobile) */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'insurance' ? null : 'insurance')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
-                    >
-                      <span className="flex items-center">
-                        <Shield className="w-5 h-5 mr-3" />
-                        Insurance
-                      </span>
-                      {openDropdown === 'insurance' ? (
-                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      ) : (
-                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === 'insurance' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
-                        >
-                          {insuranceLinks.map(link => (
-                            <div key={link.to}>
-                              <Link
-                                to={link.to}
-                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                {link.icon}
-                                {link.label}
-                              </Link>
-                              {link.children && (
-                                <div className="pl-6 mt-1 space-y-1">
-                                  {link.children.map(child => (
-                                    <Link
-                                      key={child.to}
-                                      to={child.to}
-                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
-                                      onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                      {child.label}
-                                    </Link>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <hr className="border-gray-400 my-3" />
-
-                  {/* Investment Dropdown (Mobile) */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'investment' ? null : 'investment')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
-                    >
-                      <span className="flex items-center">
-                        <BarChart3 className="w-5 h-5 mr-3" />
-                        Investment
-                      </span>
-                      {openDropdown === 'investment' ? (
-                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      ) : (
-                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === 'investment' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
-                        >
-                          {investmentLinks.map(link => (
-                            <div key={link.to}>
-                              <Link
-                                to={link.to}
-                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                              >
-                                {link.icon}
-                                {link.label}
-                              </Link>
-                              {link.children && (
-                                <div className="pl-6 mt-1 space-y-1">
-                                  {link.children.map(child => (
-                                    <Link
-                                      key={child.to}
-                                      to={child.to}
-                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
-                                      onClick={() => setIsMobileMenuOpen(false)}
-                                    >
-                                      {child.label}
-                                    </Link>
-                                  ))}
-                                </div>
-                              )}
-                            </div>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <hr className="border-gray-400 my-3" />
-
-                  {/* Fixed Income (Mobile) */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'fixed-income' ? null : 'fixed-income')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
-                    >
-                      <span className="flex items-center">
-                        <PiggyBank className="w-5 h-5 mr-3" />
-                        Fixed Income
-                      </span>
-                      {openDropdown === 'fixed-income' ? (
-                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      ) : (
-                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === 'fixed-income' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
-                        >
-                          <div className="space-y-1">
-                            <Link
-                              to="/fixed-income#products"
-                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Products
-                            </Link>
-                            <Link
-                              to="/fixed-income#laddering-strategy"
-                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Laddering Strategy
-                            </Link>
-                            <Link
-                              to="/fixed-income#top-bank-fds"
-                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              Top Bank FDs
-                            </Link>
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <hr className="border-gray-400 my-3" />
-
-                  {/* Commodities (Mobile) */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'commodities' ? null : 'commodities')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
-                    >
-                      <span className="flex items-center">
-                        <Zap className="w-5 h-5 mr-3" />
-                        Commodities
-                      </span>
-                      {openDropdown === 'commodities' ? (
-                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      ) : (
-                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === 'commodities' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
-                        >
-                          {commodityLinks.map(link => (
-                            <Link
-                              key={link.to}
-                              to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {link.icon}
-                              {link.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <hr className="border-gray-400 my-3" />
-
-                  {/* Calculators Dropdown (Mobile) */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'calculator' ? null : 'calculator')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
-                    >
-                      <span className="flex items-center">
-                        <Calculator className="w-5 h-5 mr-3" />
-                        Calculator
-                      </span>
-                      {openDropdown === 'calculator' ? (
-                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      ) : (
-                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
-                      )}
-                    </button>
-                    <AnimatePresence>
-                      {openDropdown === 'calculator' && (
-                        <motion.div
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: 'auto' }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.18 }}
-                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
-                        >
-                          {calculatorLinks.map(link => (
-                            <Link
-                              key={link.to}
-                              to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {link.icon}
-                              {link.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                  <hr className="border-gray-400 my-3" />
-
-                  <div className="pt-6 pb-4">
-                    <Button
-                      onClick={() => scrollToSection('contact')}
-                      className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-xl py-4"
-                      style={{ minHeight: '48px' }}
-                    >
-                      Schedule Consultation
-                    </Button>
-                  </div>
-                </div>
-                {/* Keep hamburger/X always visible */}
-                <button
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="absolute top-6 right-6 text-tertiary hover:text-secondary transition-colors duration-300 z-[101] bg-background/80 rounded-full p-2 shadow"
-                  aria-label="Close menu"
+            <AnimatePresence>
+              {isMobileMenuOpen && (
+                <motion.div
+                  className="lg:hidden fixed top-0 left-0 w-full h-screen bg-white/95 backdrop-blur-md rounded-none shadow-elegant z-[100] flex flex-col"
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
                 >
-                  <X className="h-8 w-8" />
-                </button>
-              </div>
-            )}
+                  <div className="flex flex-col flex-1 overflow-y-auto px-6 pt-20 pb-6">
+                    {/* Insurance Dropdown (Mobile) */}
+                    <div>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === 'insurance' ? null : 'insurance')}
+                        className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 px-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="flex items-center">
+                          <Shield className="w-5 h-5 mr-3" />
+                          Insurance
+                        </span>
+                        {openDropdown === 'insurance' ? (
+                          <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        ) : (
+                          <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === 'insurance' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                          >
+                            {insuranceLinks.map(link => (
+                              <div key={link.to}>
+                                <Link
+                                  to={link.to}
+                                  className="flex items-center px-4 py-3 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[48px]"
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  {link.icon}
+                                  {link.label}
+                                </Link>
+                                {link.children && (
+                                  <div className="pl-6 mt-1 space-y-1">
+                                    {link.children.map(child => (
+                                      <Link
+                                        key={child.to}
+                                        to={child.to}
+                                        className="flex items-center px-4 py-2.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[44px]"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                      >
+                                        {child.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <hr className="border-gray-400 my-3" />
+
+                    {/* Investment Dropdown (Mobile) */}
+                    <div>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === 'investment' ? null : 'investment')}
+                        className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 px-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="flex items-center">
+                          <BarChart3 className="w-5 h-5 mr-3" />
+                          Investment
+                        </span>
+                        {openDropdown === 'investment' ? (
+                          <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        ) : (
+                          <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === 'investment' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                          >
+                            {investmentLinks.map(link => (
+                              <div key={link.to}>
+                                <Link
+                                  to={link.to}
+                                  className="flex items-center px-4 py-3 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[48px]"
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                  {link.icon}
+                                  {link.label}
+                                </Link>
+                                {link.children && (
+                                  <div className="pl-6 mt-1 space-y-1">
+                                    {link.children.map(child => (
+                                      <Link
+                                        key={child.to}
+                                        to={child.to}
+                                        className="flex items-center px-4 py-2.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[44px]"
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                      >
+                                        {child.label}
+                                      </Link>
+                                    ))}
+                                  </div>
+                                )}
+                              </div>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <hr className="border-gray-400 my-3" />
+
+                    {/* Fixed Income (Mobile) */}
+                    <div>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === 'fixed-income' ? null : 'fixed-income')}
+                        className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 px-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="flex items-center">
+                          <PiggyBank className="w-5 h-5 mr-3" />
+                          Fixed Income
+                        </span>
+                        {openDropdown === 'fixed-income' ? (
+                          <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        ) : (
+                          <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === 'fixed-income' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                          >
+                            <div className="space-y-1">
+                              <Link
+                                to="/fixed-income#products"
+                                className="flex items-center px-4 py-2.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[44px]"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Products
+                              </Link>
+                              <Link
+                                to="/fixed-income#laddering-strategy"
+                                className="flex items-center px-4 py-2.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[44px]"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Laddering Strategy
+                              </Link>
+                              <Link
+                                to="/fixed-income#top-bank-fds"
+                                className="flex items-center px-4 py-2.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[44px]"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                Top Bank FDs
+                              </Link>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <hr className="border-gray-400 my-3" />
+
+                    {/* Commodities (Mobile) */}
+                    <div>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === 'commodities' ? null : 'commodities')}
+                        className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 px-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="flex items-center">
+                          <Zap className="w-5 h-5 mr-3" />
+                          Commodities
+                        </span>
+                        {openDropdown === 'commodities' ? (
+                          <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        ) : (
+                          <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === 'commodities' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                          >
+                            {commodityLinks.map(link => (
+                              <Link
+                                key={link.to}
+                                to={link.to}
+                                className="flex items-center px-4 py-3 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[48px]"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {link.icon}
+                                {link.label}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <hr className="border-gray-400 my-3" />
+
+                    {/* Calculators Dropdown (Mobile) */}
+                    <div>
+                      <button
+                        onClick={() => setOpenDropdown(openDropdown === 'calculator' ? null : 'calculator')}
+                        className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 px-2 rounded-lg hover:bg-gray-50"
+                      >
+                        <span className="flex items-center">
+                          <Calculator className="w-5 h-5 mr-3" />
+                          Calculator
+                        </span>
+                        {openDropdown === 'calculator' ? (
+                          <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        ) : (
+                          <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                        )}
+                      </button>
+                      <AnimatePresence>
+                        {openDropdown === 'calculator' && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: 'auto' }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.18 }}
+                            className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                          >
+                            {calculatorLinks.map(link => (
+                              <Link
+                                key={link.to}
+                                to={link.to}
+                                className="flex items-center px-4 py-3 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg min-h-[48px]"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {link.icon}
+                                {link.label}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                    <hr className="border-gray-400 my-3" />
+
+                    <div className="pt-6 pb-4 px-2">
+                      <Button
+                        onClick={() => scrollToSection('contact')}
+                        className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-lg py-4 rounded-xl shadow-lg"
+                        style={{ minHeight: '56px' }}
+                      >
+                        Schedule Consultation
+                      </Button>
+                    </div>
+                  </div>
+                  {/* Keep hamburger/X always visible */}
+                  <button
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="absolute top-6 right-6 text-tertiary hover:text-secondary transition-colors duration-300 z-[101] bg-white/80 backdrop-blur-sm rounded-full p-2 shadow-lg"
+                    aria-label="Close menu"
+                  >
+                    <X className="h-8 w-8" />
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
         </nav>
       </motion.div>
