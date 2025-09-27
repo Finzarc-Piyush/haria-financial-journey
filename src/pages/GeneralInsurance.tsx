@@ -245,7 +245,7 @@ const GeneralInsurance = () => {
                         </span>
                     </motion.h1>
                     <motion.p
-                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
+                        className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90"
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
@@ -300,7 +300,8 @@ const GeneralInsurance = () => {
                     </motion.div>
                     <Button
                         asChild
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg hover:scale-105"
+                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl hover:scale-105"
+                        onClick={openPopup}
                     >
                         <motion.button
                             initial={{ opacity: 0, y: 40 }}
@@ -331,7 +332,7 @@ const GeneralInsurance = () => {
                             {currentService?.title}
                         </motion.h2>
                         <motion.p
-                            className="text-xl font-crimson text-muted-foreground"
+                            className="text-2xl font-crimson text-muted-foreground"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
@@ -400,7 +401,7 @@ const GeneralInsurance = () => {
                                     </CardHeader>
 
                                     <CardContent className="relative z-10">
-                                        <p className="text-muted-foreground mb-6 font-crimson">
+                                        <p className="text-muted-foreground mb-6 font-crimson text-lg">
                                             {subCategory.description}
                                         </p>
 
@@ -420,9 +421,9 @@ const GeneralInsurance = () => {
                                             </div>
                                         )}
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                             Get Quote
-                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -439,7 +440,7 @@ const GeneralInsurance = () => {
                         transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                     >
                         <motion.h3
-                            className="text-2xl font-playfair font-bold text-foreground mb-6 text-center"
+                            className="text-3xl font-playfair font-bold text-foreground mb-6 text-center"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
@@ -474,8 +475,8 @@ const GeneralInsurance = () => {
                                         <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
                                             <Shield className="h-8 w-8 text-accent" />
                                         </div>
-                                        <h4 className="font-playfair font-semibold text-foreground mb-2">Comprehensive Coverage</h4>
-                                        <p className="text-sm text-muted-foreground font-crimson">
+                                        <h4 className="font-playfair font-semibold text-foreground mb-2 text-lg">Comprehensive Coverage</h4>
+                                        <p className="text-lg text-muted-foreground font-crimson">
                                             Complete protection with extensive coverage options
                                         </p>
                                     </div>
@@ -500,7 +501,7 @@ const GeneralInsurance = () => {
                             All Insurance Services
                         </motion.h2>
                         <motion.p
-                            className="text-xl font-crimson text-muted-foreground"
+                            className="text-2xl font-crimson text-muted-foreground"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
@@ -524,7 +525,7 @@ const GeneralInsurance = () => {
                                     key={service.id}
                                     value={service.id}
                                     ref={el => (tabRefs.current[service.id] = el)}
-                                    className="data-[state=active]:bg-transparent data-[state=active]:text-accent-foreground data-[state=active]:z-10 relative transition-colors"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:text-accent-foreground data-[state=active]:z-10 relative transition-colors text-lg"
                                 >
                                     <service.icon className="h-4 w-4 mr-2" />
                                     <span className="md:hidden">{service.title.split(' ')[0]}</span>
@@ -567,15 +568,15 @@ const GeneralInsurance = () => {
                                                         <subCategory.icon className="h-8 w-8 text-accent" />
                                                         <Badge variant="secondary">{subCategory.badge}</Badge>
                                                     </div>
-                                                    <CardTitle className="text-lg font-playfair">{subCategory.name}</CardTitle>
+                                                    <CardTitle className="text-xl font-playfair">{subCategory.name}</CardTitle>
                                                 </CardHeader>
                                                 <CardContent>
-                                                    <p className="text-sm text-muted-foreground font-crimson mb-4">
+                                                    <p className="text-lg text-muted-foreground font-crimson mb-4">
                                                         {subCategory.description}
                                                     </p>
-                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                                         Learn More
-                                                        <ArrowRight className="ml-2 h-3 w-3" />
+                                                        <ArrowRight className="ml-2 h-4 w-4" />
                                                     </Button>
                                                 </CardContent>
                                             </Card>
@@ -601,7 +602,7 @@ const GeneralInsurance = () => {
                         Get Protected Today
                     </motion.h2>
                     <motion.p
-                        className="text-xl font-crimson text-white/80 mb-8"
+                        className="text-2xl font-crimson text-white/80 mb-8"
                         initial={{ opacity: 0, y: 40 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.3 }}
@@ -630,7 +631,7 @@ const GeneralInsurance = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                         >
-                            <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                            <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Get Instant Quote
                             </Button>
                         </motion.div>
@@ -640,7 +641,7 @@ const GeneralInsurance = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                         >
-                            <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                            <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Talk to Expert
                             </Button>
                         </motion.div>

@@ -33,8 +33,8 @@ const SWPBarChart: React.FC<SWPBarChartProps> = ({ corpus, withdrawn, returns, c
             {data.map((d, i) => (
                 <div key={d.label} className="w-full flex flex-col">
                     <div className="flex justify-between mb-1">
-                        <span className="font-crimson text-sm text-tertiary">{d.label}</span>
-                        <span className="font-crimson text-sm text-tertiary font-bold">{formatINR(Math.round(d.value))}</span>
+                        <span className="font-crimson text-base text-tertiary">{d.label}</span>
+                        <span className="font-crimson text-base text-tertiary font-bold">{formatINR(Math.round(d.value))}</span>
                     </div>
                     <div className="w-full h-5 bg-[#f5e7d6] rounded-full overflow-hidden">
                         <motion.div

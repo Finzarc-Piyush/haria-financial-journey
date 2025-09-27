@@ -19,13 +19,13 @@ const CalculatorHeader: React.FC<CalculatorHeaderProps> = ({ icon, title, subtit
             className={`w-full flex flex-col items-center justify-center mb-6 transition-opacity duration-700 ${visible ? 'opacity-100' : 'opacity-0'}`}
         >
             {icon && <div className="mb-3 text-4xl md:text-5xl">{icon}</div>}
-            <h1 className="font-playfair text-2xl md:text-3xl font-bold text-tertiary text-center mb-1">
+            <h1 className="font-playfair text-2xl md:text-3xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent text-center mb-1">
                 {title}
             </h1>
             <div className="font-crimson text-base md:text-lg text-muted-foreground text-center mb-3">
                 {subtitle}
             </div>
-            <span className="inline-block bg-secondary text-secondary-foreground rounded-full px-4 py-1 text-xs md:text-sm font-semibold shadow font-crimson mb-2">
+            <span className="inline-block bg-secondary text-secondary-foreground rounded-full px-4 py-1 text-sm md:text-base font-semibold shadow font-crimson mb-2">
                 Since 1957
             </span>
         </div>

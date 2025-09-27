@@ -20,9 +20,9 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs, delay = 0 }) => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay }}
-                className="bg-white/80 rounded-xl shadow p-6"
+                className="bg-card/80 rounded-xl shadow-card p-6"
             >
-                <h2 className="font-playfair text-2xl text-secondary mb-6 text-center">Frequently Asked Questions</h2>
+                <h2 className="font-playfair text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent mb-6 text-center">Frequently Asked Questions</h2>
                 <div className="space-y-4">
                     {faqs.map((faq, i) => (
                         <motion.div
@@ -30,10 +30,10 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs, delay = 0 }) => {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: delay + i * 0.08 }}
-                            className="border-b border-gray-200 pb-2"
+                            className="border-b border-border pb-2"
                         >
                             <button
-                                className="w-full text-left flex justify-between items-center font-crimson text-lg text-tertiary focus:outline-none"
+                                className="w-full text-left flex justify-between items-center font-crimson text-xl text-foreground focus:outline-none"
                                 onClick={() => setOpenIdx(openIdx === i ? null : i)}
                             >
                                 <span>{faq.question}</span>
@@ -49,7 +49,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs, delay = 0 }) => {
                                         transition={{ duration: 0.3 }}
                                         className="overflow-hidden"
                                     >
-                                        <div className="pt-2 pb-2 text-tertiary/80 text-base font-crimson">
+                                        <div className="pt-2 pb-2 text-muted-foreground text-lg font-crimson">
                                             {faq.answer}
                                         </div>
                                     </motion.div>

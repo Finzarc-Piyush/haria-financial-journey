@@ -15,7 +15,7 @@ interface CalculatorInputProps {
     disabled?: boolean;
 }
 
-const GOLD = '#E6C674';
+const ACCENT_COLOR = 'hsl(var(--accent))';
 
 const formatCurrency = (val: number | string) => {
     const num = typeof val === 'string' ? Number(val) : val;
@@ -63,8 +63,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     name={name}
                     value={value}
                     onChange={(e) => onChange(Number(e.target.value))}
-                    className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
-            border-gray-300 focus:outline-none focus:border-[${GOLD}] ${error ? 'border-red-500' : ''}`}
+                    className={`w-full px-3 py-3 bg-background font-crimson text-lg rounded border-2 transition-colors duration-300
+            border-border focus:outline-none focus:border-accent ${error ? 'border-destructive' : ''}`}
                     disabled={disabled}
                 >
                     <option value="" disabled hidden>
@@ -88,8 +88,8 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                             max={max}
                             step={step}
                             onChange={handleInputChange}
-                            className={`w-full px-3 py-3 bg-white font-crimson text-lg rounded border-2 transition-colors duration-300
-              border-gray-300 focus:outline-none focus:border-[${GOLD}] ${error ? 'border-red-500' : ''}`}
+                            className={`w-full px-3 py-3 bg-background font-crimson text-lg rounded border-2 transition-colors duration-300
+              border-border focus:outline-none focus:border-accent ${error ? 'border-destructive' : ''}`}
                             disabled={disabled}
                             aria-invalid={!!error}
                             aria-describedby={error ? `${name}-error` : undefined}
@@ -109,9 +109,9 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                                 step={step || 1}
                                 value={value}
                                 onChange={handleSliderChange}
-                                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#E6C674]/50"
+                                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50"
                                 style={{
-                                    background: `linear-gradient(to right, ${GOLD} 0%, ${GOLD} ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb ${((Number(value) - min) / (max - min)) * 100}%, #e5e7eb 100%)`,
+                                    background: `linear-gradient(to right, hsl(var(--accent)) 0%, hsl(var(--accent)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) 100%)`,
                                 }}
                                 disabled={disabled}
                             />
@@ -120,7 +120,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                 </div>
             )}
             {error && (
-                <div id={`${name}-error`} className="text-red-500 text-xs mt-1 font-crimson">
+                <div id={`${name}-error`} className="text-destructive text-sm mt-1 font-crimson">
                     {error}
                 </div>
             )}

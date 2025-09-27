@@ -206,7 +206,7 @@ const EquityInvestment = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
@@ -255,7 +255,7 @@ const EquityInvestment = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
+                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Get Portfolio Review
@@ -310,7 +310,7 @@ const EquityInvestment = () => {
                                     </div>
                                 </div>
 
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Explore Stocks
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
@@ -369,7 +369,7 @@ const EquityInvestment = () => {
                         <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Expert Portfolio Advisory
                         </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
                             Get personalized investment strategies from our expert advisors
                         </motion.p>
                     </motion.div>
@@ -397,41 +397,41 @@ const EquityInvestment = () => {
                                             {strategy.risk}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
                                         {strategy.title}
                                     </CardTitle>
                                 </CardHeader>
 
                                 <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                    <p className="text-muted-foreground mb-4 font-crimson text-lg">
                                         {strategy.description}
                                     </p>
 
                                     <div className="mb-4">
                                         <div className="flex justify-between items-center mb-2">
-                                            <span className="text-sm text-muted-foreground">Success Rate</span>
-                                            <span className="font-semibold text-accent">{strategy.successRate}%</span>
+                                            <span className="text-base text-muted-foreground">Success Rate</span>
+                                            <span className="font-semibold text-accent text-lg">{strategy.successRate}%</span>
                                         </div>
                                         <Progress value={strategy.successRate} className="h-2" />
                                     </div>
 
                                     <div className="mb-4">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Expected Returns</span>
-                                            <span className="font-semibold text-green-600">{strategy.returns}</span>
+                                            <span className="text-base text-muted-foreground">Expected Returns</span>
+                                            <span className="font-semibold text-green-600 text-lg">{strategy.returns}</span>
                                         </div>
                                     </div>
 
                                     <div className="space-y-2 mb-6">
                                         {strategy.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-sm">
-                                                <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2 flex-shrink-0" />
+                                            <div key={idx} className="flex items-center text-base">
+                                                <div className="w-2 h-2 bg-accent rounded-full mr-3 flex-shrink-0" />
                                                 <span className="text-muted-foreground">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                         Learn More
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
@@ -463,32 +463,32 @@ const EquityInvestment = () => {
                                     <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center">
                                         <Users className="h-10 w-10 text-accent" />
                                     </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground">
+                                    <CardTitle className="text-2xl font-playfair text-foreground">
                                         {advisor.name}
                                     </CardTitle>
-                                    <p className="text-muted-foreground">{advisor.role}</p>
-                                    <p className="text-sm text-accent font-semibold">{advisor.experience}</p>
+                                    <p className="text-muted-foreground text-lg">{advisor.role}</p>
+                                    <p className="text-base text-accent font-semibold">{advisor.experience}</p>
                                 </CardHeader>
 
                                 <CardContent className="text-center">
                                     <div className="space-y-4">
                                         <div>
                                             <div className="flex justify-between items-center mb-2">
-                                                <span className="text-sm text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-accent">{advisor.successRate}%</span>
+                                                <span className="text-base text-muted-foreground">Success Rate</span>
+                                                <span className="font-semibold text-accent text-lg">{advisor.successRate}%</span>
                                             </div>
                                             <Progress value={advisor.successRate} className="h-2" />
                                         </div>
 
                                         <div>
-                                            <span className="text-sm text-muted-foreground">Specialization</span>
-                                            <p className="font-semibold text-foreground">{advisor.specialization}</p>
+                                            <span className="text-base text-muted-foreground">Specialization</span>
+                                            <p className="font-semibold text-foreground text-lg">{advisor.specialization}</p>
                                         </div>
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                         Book Consultation
-                                        <ArrowRight className="ml-2 h-4 w-4" />
+                                        <ArrowRight className="ml-2 h-5 w-5" />
                                     </Button>
                                 </CardContent>
                             </Card>
@@ -504,7 +504,7 @@ const EquityInvestment = () => {
                         <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Advanced Trading Features
                         </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-muted-foreground">
+                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
                             Professional tools for serious investors
                         </motion.p>
                     </motion.div>
@@ -519,10 +519,10 @@ const EquityInvestment = () => {
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-lg">
                                     Advanced charting tools with 50+ technical indicators
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Explore Tools
                                 </Button>
                             </CardContent>
@@ -537,10 +537,10 @@ const EquityInvestment = () => {
                                 <CardTitle className="text-xl font-playfair">Risk Assessment</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-lg">
                                     AI-powered risk analysis and portfolio stress testing
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Assess Risk
                                 </Button>
                             </CardContent>
@@ -555,10 +555,10 @@ const EquityInvestment = () => {
                                 <CardTitle className="text-xl font-playfair">Market Insights</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-lg">
                                     Real-time market analysis and expert recommendations
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Get Insights
                                 </Button>
                             </CardContent>
@@ -573,17 +573,17 @@ const EquityInvestment = () => {
                     <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Equity Investment Journey
                     </motion.h2>
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-white/80 mb-8">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-white/80 mb-8">
                         Join thousands of successful investors building wealth through stocks
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Demat Account</a>
                         </Button>
-                        <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">
                             <a href="https://invest.motilaloswal.com/" target="_blank" rel="noopener noreferrer">Motilal Oswal Client Login</a>
                         </Button>
-                        <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">
                             <a href="https://users.madosx.co.in/pages/auth/login" target="_blank" rel="noopener noreferrer">Mutual Fund Client Login</a>
                         </Button>
                     </div>

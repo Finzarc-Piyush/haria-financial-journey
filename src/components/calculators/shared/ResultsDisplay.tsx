@@ -37,7 +37,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ value, label, progress,
 
     return (
         <div className={`w-full flex flex-col items-center justify-center mb-6 transform transition-all duration-700 ${visible ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'}`}>
-            {label && <div className="font-playfair text-lg text-tertiary mb-2">{label}</div>}
+            {label && <div className="font-playfair text-xl text-foreground mb-2">{label}</div>}
             <div className="font-playfair text-xl md:text-2xl text-secondary font-bold mb-2 animate-countup">
                 {currency ? formatINR(displayValue, true) : displayValue.toLocaleString('en-IN')}
             </div>
@@ -50,7 +50,7 @@ const ResultsDisplay: React.FC<ResultsDisplayProps> = ({ value, label, progress,
                 <div className="w-20 h-20 mb-4">
                     {/* Pie chart placeholder */}
                     <svg viewBox="0 0 36 36" className="w-full h-full">
-                        <circle cx="18" cy="18" r="16" fill="#F5F1E8" />
+                        <circle cx="18" cy="18" r="16" fill="#FAFAFA" />
                         <circle
                             cx="18" cy="18" r="16"
                             fill="none"

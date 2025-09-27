@@ -22,12 +22,12 @@ const CalculatorHero: React.FC<CalculatorHeroProps> = ({
     icon,
     badges,
 }) => (
-    <div className="w-full min-h-[270px] bg-gradient-to-br from-[#F5F1E8] via-[#E6C674]/30 to-[#E7BBA3]/60 flex flex-col items-center justify-center pt-0 pb-10 relative overflow-hidden">
+    <div className="w-full min-h-[270px] bg-gradient-to-br from-background via-champagne/30 to-accent/10 flex flex-col items-center justify-center pt-0 pb-10 relative overflow-hidden">
         {/* Subtle SVG Dot Background */}
         <div
             className="absolute inset-0 opacity-20"
             style={{
-                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23E6C674' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23228BEA' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
             }}
         ></div>
 
@@ -38,9 +38,9 @@ const CalculatorHero: React.FC<CalculatorHeroProps> = ({
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className="mb-4"
+                className="mb-4 mt-6"
             >
-                <ol className="flex items-center space-x-2 text-sm text-tertiary font-crimson">
+                <ol className="flex items-center space-x-2 text-base text-tertiary font-crimson">
                     {breadcrumbs.map((bc, i) => (
                         <li key={i} className="flex items-center">
                             {bc.to ? (
@@ -75,7 +75,7 @@ const CalculatorHero: React.FC<CalculatorHeroProps> = ({
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="font-playfair text-3xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-[#B4A078] to-[#8B7355] bg-clip-text text-transparent"
+                    className="font-playfair text-3xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent"
                 >
                     {title}
                 </motion.h1>

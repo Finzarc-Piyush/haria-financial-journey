@@ -152,15 +152,15 @@ const ProcessSection = () => {
 
 
   return (
-    <section id="process" className="py-20 min-h-screen bg-champagne flex flex-col justify-center">
+    <section id="process" className="py-20 bg-tertiary text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div data-aos="fade-up" className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
+          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white mb-6">
             Our Client-Focused Process
           </h2>
           <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-          <p className="font-crimson text-xl text-tertiary/80 max-w-3xl mx-auto">
+          <p className="font-crimson text-xl text-white/80 max-w-3xl mx-auto">
             A systematic, transparent approach designed to reduce anxiety and build confidence
             throughout your financial planning journey.
           </p>
@@ -170,7 +170,7 @@ const ProcessSection = () => {
         <div className="space-y-12">
           {processSteps.map((step, index) => (
             <div key={step.id} data-aos="fade-up" data-aos-delay={index * 120}>
-              <Card className="premium-card hover-lift">
+              <Card className="premium-card hover-lift bg-white/10">
                 <CardHeader>
                   <div className="flex flex-col md:flex-row items-start gap-6">
                     <div className="flex-shrink-0 flex flex-col items-center">
@@ -178,21 +178,21 @@ const ProcessSection = () => {
                         <step.icon className="w-8 h-8 text-secondary-foreground" />
                       </div>
                       <div className="text-center mt-2">
-                        <Badge className="bg-tertiary text-lg text-cream font-playfair font-bold">
+                        <Badge className="bg-tertiary text-lg text-white font-playfair font-bold">
                           {step.number}
                         </Badge>
                       </div>
                     </div>
                     <div className="flex-1">
                       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <CardTitle className="font-playfair text-2xl text-tertiary">
+                        <CardTitle className="font-playfair text-2xl text-white">
                           {step.title}
                         </CardTitle>
                         <Badge variant="outline" className="border-secondary text-md text-secondary w-fit">
                           {step.duration}
                         </Badge>
                       </div>
-                      <CardDescription className="font-crimson text-xl text-tertiary/70 mb-6">
+                      <CardDescription className="font-crimson text-xl text-white/70 mb-6">
                         {step.description}
                       </CardDescription>
                     </div>
@@ -201,13 +201,13 @@ const ProcessSection = () => {
                 <CardContent>
                   <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                     <div>
-                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
                         <CheckCircle className="w-5 h-5 text-secondary mr-2" />
                         What to Expect:
                       </h4>
                       <ul className="space-y-2">
                         {step.expectations.map((expectation, i) => (
-                          <li key={i} className="font-crimson text-lg text-tertiary/70 flex items-start">
+                          <li key={i} className="font-crimson text-lg text-white/70 flex items-start">
                             <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
                             {expectation}
                           </li>
@@ -215,13 +215,13 @@ const ProcessSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
                         <Users className="w-5 h-5 text-secondary mr-2" />
                         Your Preparation:
                       </h4>
                       <ul className="space-y-2">
                         {step.preparation.map((prep, i) => (
-                          <li key={i} className="font-crimson text-lg text-tertiary/70 flex items-start">
+                          <li key={i} className="font-crimson text-lg text-white/70 flex items-start">
                             <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
                             {prep}
                           </li>
@@ -229,12 +229,12 @@ const ProcessSection = () => {
                       </ul>
                     </div>
                     <div>
-                      <h4 className="font-playfair font-semibold text-xl text-tertiary mb-3 flex items-center">
+                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
                         <Shield className="w-5 h-5 text-secondary mr-2" />
                         Outcome:
                       </h4>
                       <div className="p-4 bg-champagne/20 rounded-lg">
-                        <p className="font-crimson text-lg text-tertiary/80">
+                        <p className="font-crimson text-lg text-white/80">
                           {step.outcome}
                         </p>
                       </div>
@@ -249,10 +249,10 @@ const ProcessSection = () => {
         {/* Communication Standards */}
         <div data-aos="fade-up" data-aos-delay="400" className={`mb-16 mt-16 transition-all duration-1000 delay-600 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
           <div className="text-center mb-8">
-            <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">
+            <h3 className="font-playfair text-3xl font-bold text-white mb-4">
               Our Communication Standards
             </h3>
-            <p className="font-crimson text-xl text-tertiary/70">
+            <p className="font-crimson text-xl text-white/70">
               Clear expectations for responsive, professional service
             </p>
           </div>
@@ -260,16 +260,16 @@ const ProcessSection = () => {
             {communicationStandards.map((standard, index) => (
               <Card
                 key={index}
-                className={`premium-card hover-lift text-center transition-all duration-300`}
+                className={`premium-card hover-lift text-center transition-all duration-300 bg-white/10`}
                 data-aos="fade-up"
                 data-aos-delay={index * 100}
               >
                 <CardHeader>
                   <standard.icon className="w-8 h-8 text-secondary mx-auto mb-4" />
-                  <CardTitle className="font-playfair text-2xl text-tertiary">
+                  <CardTitle className="font-playfair text-2xl text-white">
                     {standard.title}
                   </CardTitle>
-                  <CardDescription className="font-crimson text-lg text-tertiary/70">
+                  <CardDescription className="font-crimson text-lg text-white/70">
                     {standard.description}
                   </CardDescription>
                 </CardHeader>

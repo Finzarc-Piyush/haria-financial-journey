@@ -14,7 +14,7 @@ const GoldSilver = () => {
     return (
         <div className="min-h-screen bg-background text-foreground">
             {/* Hero Section (matches other pages) */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
                 <div
                     className="absolute inset-0 bg-cover bg-center"
                     style={{ backgroundImage: "url('/hero-commodity-trading.webp')" }}
@@ -36,17 +36,17 @@ const GoldSilver = () => {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true, amount: 0.2 }}
                         transition={{ duration: 0.6, delay: 0.1 }}
-                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
+                        className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90"
                     >
                         Precision-driven bullion exposure with disciplined risk management
                     </motion.p>
 
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Talk to Advisor
                             <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" variant="outline" className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg" onClick={openPopup}>
                             Explore Commodities
                         </Button>
                     </div>
@@ -64,7 +64,7 @@ const GoldSilver = () => {
                         className="text-center mb-16"
                     >
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">Bullion Offerings</h2>
-                        <p className="text-xl font-crimson text-muted-foreground">Institutional frameworks adapted for individual investors</p>
+                        <p className="text-2xl font-crimson text-muted-foreground">Institutional frameworks adapted for individual investors</p>
                     </motion.div>
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -93,7 +93,7 @@ const GoldSilver = () => {
                                         </CardTitle>
                                     </CardHeader>
                                     <CardContent>
-                                        <p className="text-muted-foreground font-crimson">{item.desc}</p>
+                                        <p className="text-muted-foreground font-crimson text-base">{item.desc}</p>
                                     </CardContent>
                                 </Card>
                             </motion.div>
@@ -113,8 +113,8 @@ const GoldSilver = () => {
                         className="rounded-2xl bg-white/50 backdrop-blur-sm p-8"
                     >
                         <h2 className="text-3xl md:text-4xl font-playfair font-bold text-foreground mb-6 text-center">Why Bullion with Haria</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground">
-                            {["SEBI-registered partner network and compliant execution", "Clear frameworks for position sizing and stop-losses", "Transparent costs and reporting", "Dedicated advisor for ongoing guidance"].map((point, idx) => (
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground text-base">
+                            {["IRDAI-registered partner network and compliant execution", "Clear frameworks for position sizing and stop-losses", "Transparent costs and reporting", "Dedicated advisor for ongoing guidance"].map((point, idx) => (
                                 <div key={idx} className="flex items-start">
                                     <CheckCircle className="h-5 w-5 text-accent mr-2 mt-0.5" />
                                     <span>{point}</span>
@@ -147,10 +147,10 @@ const GoldSilver = () => {
                         Balanced exposure to Gold and Silver with risk-first design
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg" onClick={openPopup}>
+                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Get Started
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg" onClick={openPopup}>
+                        <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Schedule Consultation
                         </Button>
                     </div>

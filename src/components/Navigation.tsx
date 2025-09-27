@@ -64,6 +64,14 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
       label: 'Life Insurance',
       to: '/life-insurance',
       icon: <Heart className="text-secondary w-5 h-5 mr-2" />,
+      children: [
+        { label: 'Term Insurance', to: '/life-insurance#term-insurance' },
+        { label: 'Whole Life Insurance', to: '/life-insurance#whole-life-insurance' },
+        { label: 'Endowment Plans', to: '/life-insurance#endowment-plans' },
+        { label: 'ULIP Plans', to: '/life-insurance#ulip-plans' },
+        { label: 'Money-Back Plans', to: '/life-insurance#money-back-plans' },
+        { label: 'Pension Plans', to: '/life-insurance#pension-plans' },
+      ]
     },
     {
       label: 'General Insurance',
@@ -185,10 +193,10 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
         }}
       >
         <nav className="w-full transition-all duration-500 rounded-full">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex items-center justify-between py-4">
+          <div className="max-w-8xl mx-auto px-0 sm:px-2 lg:px-4">
+            <div className="flex items-center justify-between py-2">
               {/* Logo */}
-              <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300">
+              <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300 pl-2">
                 <img src={logo} alt="Haria Investments Logo" className="w-14 h-14 object-contain" />
                 <div>
                   <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-3xl text-tertiary">
@@ -201,7 +209,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               </Link>
 
               {/* Desktop Navigation */}
-              <div className="hidden lg:flex items-center justify-center space-x-6 px-4 flex-1 min-w-0">
+              <div className="hidden lg:flex items-center justify-center space-x-4 flex-1 min-w-0">
                 {/* Insurance Dropdown */}
                 <div
                   className="relative"
@@ -210,7 +218,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 >
                   <button
                     style={{ textShadow: 'none' }}
-                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    className="text-tertiary text-xl hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
                     Insurance
@@ -234,19 +242,21 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           >
                             <Link
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
+                              className="flex items-center justify-between px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
                             >
-                              {link.icon}
-                              {link.label}
+                              <div className="flex items-center">
+                                {link.icon}
+                                {link.label}
+                              </div>
                               {link.children ? (
-                                <ChevronDown className="ml-2 w-4 h-4 opacity-60 transition" />
+                                <ChevronDown className="w-4 h-4 opacity-60 transition" />
                               ) : null}
                             </Link>
                             {link.children && hoveredInsuranceParent === link.label && (
                               <div className="absolute left-full top-0 ml-2">
                                 <div className="mt-0 w-56 bg-white shadow-lg rounded-xl p-3">
                                   {link.children.map(child => (
-                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">
+                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl">
                                       {child.label}
                                     </Link>
                                   ))}
@@ -268,7 +278,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 >
                   <button
                     style={{ textShadow: 'none' }}
-                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    className="text-tertiary text-xl hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
                     Investment
@@ -292,19 +302,21 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           >
                             <Link
                               to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
+                              className="flex items-center justify-between px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
                             >
-                              {link.icon}
-                              {link.label}
+                              <div className="flex items-center">
+                                {link.icon}
+                                {link.label}
+                              </div>
                               {link.children ? (
-                                <ChevronDown className="ml-2 w-4 h-4 opacity-60 transition" />
+                                <ChevronDown className="w-4 h-4 opacity-60 transition" />
                               ) : null}
                             </Link>
                             {link.children && hoveredInvestmentParent === link.label && (
                               <div className="absolute left-full top-0 ml-2">
                                 <div className="mt-0 w-64 bg-white shadow-lg rounded-xl p-3">
                                   {link.children.map(child => (
-                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">
+                                    <Link key={child.to} to={child.to} className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl">
                                       {child.label}
                                     </Link>
                                   ))}
@@ -326,7 +338,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 >
                   <button
                     style={{ textShadow: 'none' }}
-                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    className="text-tertiary text-xl hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
                     Fixed Income
@@ -341,9 +353,9 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                         transition={{ duration: 0.18 }}
                         className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-lg rounded-xl p-4 z-[9999]"
                       >
-                        <Link to="/fixed-income#products" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base">Products</Link>
-                        <Link to="/fixed-income#laddering-strategy" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base">Laddering Strategy</Link>
-                        <Link to="/fixed-income#top-bank-fds" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base">Top Bank FDs</Link>
+                        <Link to="/fixed-income#products" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">Products</Link>
+                        <Link to="/fixed-income#laddering-strategy" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">Laddering Strategy</Link>
+                        <Link to="/fixed-income#top-bank-fds" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg">Top Bank FDs</Link>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -357,7 +369,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 >
                   <button
                     style={{ textShadow: 'none' }}
-                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    className="text-tertiary text-xl hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
                     Commodities
@@ -376,7 +388,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           <Link
                             key={link.to}
                             to={link.to}
-                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                           >
                             {link.icon}
                             {link.label}
@@ -395,7 +407,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 >
                   <button
                     style={{ textShadow: 'none' }}
-                    className="text-tertiary text-lg hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
+                    className="text-tertiary text-xl hover:text-secondary transition-colors duration-300 font-crimson font-bold flex items-center gap-1"
                     type="button"
                   >
                     Calculator
@@ -414,7 +426,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           <Link
                             key={link.to}
                             to={link.to}
-                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-base"
+                            className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
                           >
                             {link.icon}
                             {link.label}
@@ -427,10 +439,10 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               </div>
 
               {/* Desktop CTA */}
-              <div className="hidden lg:flex items-center ml-auto shrink-0 pl-4">
+              <div className="hidden lg:flex items-center ml-auto shrink-0 pr-2">
                 <Button
                   onClick={() => scrollToSection('contact')}
-                  className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6"
+                  className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-xl px-6"
                 >
                   Schedule Consultation
                 </Button>
@@ -459,7 +471,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div>
                     <button
                       onClick={() => setOpenDropdown(openDropdown === 'insurance' ? null : 'insurance')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4"
+                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
                     >
                       <span className="flex items-center">
                         <Shield className="w-5 h-5 mr-3" />
@@ -484,7 +496,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                             <div key={link.to}>
                               <Link
                                 to={link.to}
-                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
+                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
                                 onClick={() => setIsMobileMenuOpen(false)}
                               >
                                 {link.icon}
@@ -496,7 +508,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                                     <Link
                                       key={child.to}
                                       to={child.to}
-                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-lg"
+                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
                                       onClick={() => setIsMobileMenuOpen(false)}
                                     >
                                       {child.label}
@@ -516,7 +528,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div>
                     <button
                       onClick={() => setOpenDropdown(openDropdown === 'investment' ? null : 'investment')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4"
+                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
                     >
                       <span className="flex items-center">
                         <BarChart3 className="w-5 h-5 mr-3" />
@@ -538,15 +550,30 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           className="pl-8 pr-2 pt-2 pb-2 space-y-2"
                         >
                           {investmentLinks.map(link => (
-                            <Link
-                              key={link.to}
-                              to={link.to}
-                              className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-lg"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {link.icon}
-                              {link.label}
-                            </Link>
+                            <div key={link.to}>
+                              <Link
+                                to={link.to}
+                                className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-100 transition-colors font-crimson text-xl"
+                                onClick={() => setIsMobileMenuOpen(false)}
+                              >
+                                {link.icon}
+                                {link.label}
+                              </Link>
+                              {link.children && (
+                                <div className="pl-6 mt-1 space-y-1">
+                                  {link.children.map(child => (
+                                    <Link
+                                      key={child.to}
+                                      to={child.to}
+                                      className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
+                                      onClick={() => setIsMobileMenuOpen(false)}
+                                    >
+                                      {child.label}
+                                    </Link>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
                           ))}
                         </motion.div>
                       )}
@@ -554,22 +581,65 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   </div>
                   <hr className="border-gray-400 my-3" />
 
-                  {/* Fixed Income */}
-                  <Link
-                    to="/fixed-income"
-                    className="flex items-center text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4 w-full text-left"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    <PiggyBank className="w-5 h-5 mr-3" />
-                    Fixed Income
-                  </Link>
+                  {/* Fixed Income (Mobile) */}
+                  <div>
+                    <button
+                      onClick={() => setOpenDropdown(openDropdown === 'fixed-income' ? null : 'fixed-income')}
+                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
+                    >
+                      <span className="flex items-center">
+                        <PiggyBank className="w-5 h-5 mr-3" />
+                        Fixed Income
+                      </span>
+                      {openDropdown === 'fixed-income' ? (
+                        <Minus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                      ) : (
+                        <Plus className="ml-2 w-5 h-5 transition-transform duration-200" />
+                      )}
+                    </button>
+                    <AnimatePresence>
+                      {openDropdown === 'fixed-income' && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.18 }}
+                          className="pl-8 pr-2 pt-2 pb-2 space-y-2"
+                        >
+                          <div className="space-y-1">
+                            <Link
+                              to="/fixed-income#products"
+                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Products
+                            </Link>
+                            <Link
+                              to="/fixed-income#laddering-strategy"
+                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Laddering Strategy
+                            </Link>
+                            <Link
+                              to="/fixed-income#top-bank-fds"
+                              className="block px-3 py-1.5 rounded-lg text-tertiary/90 hover:bg-gray-100 transition-colors font-crimson text-xl"
+                              onClick={() => setIsMobileMenuOpen(false)}
+                            >
+                              Top Bank FDs
+                            </Link>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <hr className="border-gray-400 my-3" />
 
                   {/* Commodities (Mobile) */}
                   <div>
                     <button
                       onClick={() => setOpenDropdown(openDropdown === 'commodities' ? null : 'commodities')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4"
+                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
                     >
                       <span className="flex items-center">
                         <Zap className="w-5 h-5 mr-3" />
@@ -611,7 +681,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div>
                     <button
                       onClick={() => setOpenDropdown(openDropdown === 'calculator' ? null : 'calculator')}
-                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-xl py-4"
+                      className="flex items-center justify-between w-full text-tertiary hover:text-secondary transition-colors duration-300 font-crimson font-bold text-2xl py-4"
                     >
                       <span className="flex items-center">
                         <Calculator className="w-5 h-5 mr-3" />
@@ -652,7 +722,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div className="pt-6 pb-4">
                     <Button
                       onClick={() => scrollToSection('contact')}
-                      className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-lg py-4"
+                      className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-xl py-4"
                       style={{ minHeight: '48px' }}
                     >
                       Schedule Consultation

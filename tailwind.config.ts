@@ -39,7 +39,8 @@ export default {
 					DEFAULT: 'hsl(var(--tertiary))',
 					foreground: 'hsl(var(--tertiary-foreground))'
 				},
-				cream: 'hsl(var(--cream))',
+				'on-tertiary': 'hsl(var(--on-tertiary))',
+				'light-gray': 'hsl(var(--light-gray))',
 				champagne: 'hsl(var(--champagne))',
 				'deep-charcoal': 'hsl(var(--deep-charcoal))',
 				destructive: {

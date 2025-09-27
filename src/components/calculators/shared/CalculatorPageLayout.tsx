@@ -11,7 +11,7 @@ const CalculatorPageLayout: React.FC<CalculatorPageLayoutProps> = ({ children })
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.5 }}
-        className="min-h-screen bg-gradient-to-br from-[#F5F1E8] to-white"
+        className="min-h-screen bg-gradient-premium"
     >
         <main className="pt-20 pb-10">{children}</main>
     </motion.div>

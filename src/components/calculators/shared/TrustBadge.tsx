@@ -20,13 +20,13 @@ const TrustBadge: React.FC<TrustBadgeProps> = ({
         setTimeout(() => setVisible(true), 100);
     }, []);
     return (
-        <div className={`flex flex-wrap items-center justify-center gap-3 py-2 px-4 rounded-xl bg-[#F5F1E8] shadow transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} ${className}`}>
-            <span className="font-playfair text-xs md:text-sm text-tertiary bg-secondary/80 rounded-full px-3 py-1 shadow">{heritage}</span>
+        <div className={`flex flex-wrap items-center justify-center gap-3 py-2 px-4 rounded-xl bg-card shadow-card transition-all duration-700 ${visible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} ${className}`}>
+            <span className="font-playfair text-sm md:text-base text-secondary-foreground bg-secondary/80 rounded-full px-3 py-1 shadow">{heritage}</span>
             {certifications.map(cert => (
-                <span key={cert} className="font-crimson text-xs md:text-sm bg-[#E6C674]/80 text-[#3A3A3A] rounded-full px-3 py-1 shadow animate-fade-in">{cert}</span>
+                <span key={cert} className="font-crimson text-sm md:text-base bg-champagne/80 text-foreground rounded-full px-3 py-1 shadow animate-fade-in">{cert}</span>
             ))}
-            <span className="font-crimson text-xs md:text-sm bg-green-100 text-green-800 rounded-full px-3 py-1 shadow animate-fade-in">{sebi}</span>
-            <span className="font-crimson text-xs md:text-sm bg-secondary/60 text-tertiary rounded-full px-3 py-1 shadow animate-fade-in">{testimonials}</span>
+            <span className="font-crimson text-sm md:text-base bg-accent/20 text-accent rounded-full px-3 py-1 shadow animate-fade-in">{sebi}</span>
+            <span className="font-crimson text-sm md:text-base bg-secondary/60 text-secondary-foreground rounded-full px-3 py-1 shadow animate-fade-in">{testimonials}</span>
         </div>
     );
 };

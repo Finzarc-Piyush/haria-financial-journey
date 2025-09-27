@@ -205,7 +205,7 @@ const CommodityTrading = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
@@ -226,7 +226,7 @@ const CommodityTrading = () => {
 
                     {/* Live Commodity Ticker */}
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-3xl mx-auto">
-                        <div className="flex items-center justify-between text-sm mb-4">
+                        <div className="flex items-center justify-between text-base mb-4">
                             <span className="text-white/80">Live Commodity Prices</span>
                             <div className="flex items-center space-x-4">
                                 <span className="flex items-center text-green-400">
@@ -243,11 +243,11 @@ const CommodityTrading = () => {
                                 <motion.div key={index} variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex items-center justify-between p-3 bg-white/5 rounded-lg">
                                     <div>
                                         <div className="font-semibold">{commodity.name}</div>
-                                        <div className="text-sm text-white/70">{commodity.unit}</div>
+                                        <div className="text-base text-white/70">{commodity.unit}</div>
                                     </div>
                                     <div className="text-right">
                                         <div className="font-semibold">₹{commodity.price.toLocaleString()}</div>
-                                        <div className={`text-sm ${commodity.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                        <div className={`text-base ${commodity.change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                             {commodity.change >= 0 ? '+' : ''}{commodity.change}%
                                         </div>
                                     </div>
@@ -268,7 +268,8 @@ const CommodityTrading = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Demo Account
                         </Button>
@@ -283,7 +284,7 @@ const CommodityTrading = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Trading Products
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Choose from our comprehensive range of trading instruments
                         </p>
                     </motion.div>
@@ -345,21 +346,21 @@ const CommodityTrading = () => {
                                             <div className="grid grid-cols-2 gap-4">
                                                 <div className="text-center p-4 bg-muted/50 rounded-lg">
                                                     <div className="text-2xl font-playfair font-bold text-foreground">₹0</div>
-                                                    <div className="text-sm text-muted-foreground">Brokerage</div>
+                                                    <div className="text-base text-muted-foreground">Brokerage</div>
                                                 </div>
                                                 <div className="text-center p-4 bg-muted/50 rounded-lg">
                                                     <div className="text-2xl font-playfair font-bold text-accent">24/7</div>
-                                                    <div className="text-sm text-muted-foreground">Trading</div>
+                                                    <div className="text-base text-muted-foreground">Trading</div>
                                                 </div>
                                             </div>
 
                                             <div className="space-y-4">
                                                 <div>
-                                                    <Label className="text-sm font-semibold text-foreground">Margin Required</Label>
+                                                    <Label className="text-base font-semibold text-foreground">Margin Required</Label>
                                                     <div className="text-lg font-semibold text-accent mt-1">5-20%</div>
                                                 </div>
                                                 <div>
-                                                    <Label className="text-sm font-semibold text-foreground">Settlement</Label>
+                                                    <Label className="text-base font-semibold text-foreground">Settlement</Label>
                                                     <div className="text-lg font-semibold text-foreground mt-1">T+1</div>
                                                 </div>
                                             </div>
@@ -384,7 +385,7 @@ const CommodityTrading = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Trading Strategies
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Proven strategies for successful commodity trading
                         </p>
                     </motion.div>
@@ -417,24 +418,24 @@ const CommodityTrading = () => {
                                     </CardHeader>
 
                                     <CardContent>
-                                        <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                        <p className="text-muted-foreground mb-4 font-crimson text-base">
                                             {strategy.description}
                                         </p>
 
                                         <div className="space-y-3 mb-6">
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-muted-foreground">Success Rate</span>
+                                                <span className="text-base text-muted-foreground">Success Rate</span>
                                                 <span className="font-semibold text-accent">{strategy.successRate}%</span>
                                             </div>
                                             <Progress value={strategy.successRate} className="h-2" />
 
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-muted-foreground">Expected Returns</span>
+                                                <span className="text-base text-muted-foreground">Expected Returns</span>
                                                 <span className="font-semibold text-green-600">{strategy.returns}</span>
                                             </div>
                                         </div>
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300">
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300" onClick={openPopup}>
                                             Learn Strategy
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -453,7 +454,7 @@ const CommodityTrading = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Advanced Trading Features
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Professional tools for serious traders
                         </p>
                     </motion.div>
@@ -479,17 +480,17 @@ const CommodityTrading = () => {
                                     <div className="grid grid-cols-2 gap-4">
                                         <div className="text-center p-4 bg-muted/50 rounded-lg">
                                             <div className="text-lg font-semibold text-foreground">₹50,000</div>
-                                            <div className="text-sm text-muted-foreground">Initial Capital</div>
+                                            <div className="text-base text-muted-foreground">Initial Capital</div>
                                         </div>
                                         <div className="text-center p-4 bg-muted/50 rounded-lg">
                                             <div className="text-lg font-semibold text-green-600">+25%</div>
-                                            <div className="text-sm text-muted-foreground">ROI</div>
+                                            <div className="text-base text-muted-foreground">ROI</div>
                                         </div>
                                     </div>
 
                                     <div className="space-y-3">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Risk Level</span>
+                                            <span className="text-base text-muted-foreground">Risk Level</span>
                                             <span className={`font-semibold ${getRiskColor(riskLevel)}`}>
                                                 {riskLevel <= 30 ? 'Low' : riskLevel <= 60 ? 'Moderate' : 'High'}
                                             </span>
@@ -525,7 +526,7 @@ const CommodityTrading = () => {
                                             </div>
                                             <div className="flex-1">
                                                 <div className="font-semibold text-foreground">{item.title}</div>
-                                                <div className="text-sm text-muted-foreground">{item.description}</div>
+                                                <div className="text-base text-muted-foreground">{item.description}</div>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -543,7 +544,7 @@ const CommodityTrading = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Market Insights
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Stay ahead with expert analysis and market updates
                         </p>
                     </motion.div>
@@ -558,10 +559,10 @@ const CommodityTrading = () => {
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-base">
                                     Advanced charting with 50+ technical indicators
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     View Charts
                                 </Button>
                             </CardContent>
@@ -576,10 +577,10 @@ const CommodityTrading = () => {
                                 <CardTitle className="text-xl font-playfair">Market Reports</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-base">
                                     Daily market analysis and expert recommendations
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Read Reports
                                 </Button>
                             </CardContent>
@@ -594,10 +595,10 @@ const CommodityTrading = () => {
                                 <CardTitle className="text-xl font-playfair">Trading Signals</CardTitle>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-muted-foreground mb-4">
+                                <p className="text-muted-foreground mb-4 text-base">
                                     AI-powered trading signals and alerts
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">
+                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
                                     Get Signals
                                 </Button>
                             </CardContent>
@@ -616,10 +617,10 @@ const CommodityTrading = () => {
                         Join thousands of successful traders in the commodity markets
                     </p>
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Trading Account</a>
                         </Button>
-                        <Button size="lg" asChild variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">
                             <a href="https://invest.motilaloswal.com/" target="_blank" rel="noopener noreferrer">Motilal Oswal Client Login</a>
                         </Button>
                     </motion.div>

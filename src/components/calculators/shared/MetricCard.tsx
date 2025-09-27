@@ -31,18 +31,18 @@ const MetricCard: React.FC<MetricCardProps> = ({ label, value, currency, icon, d
 
     return (
         <motion.div
-            className="flex flex-col items-center justify-center bg-white/60 rounded-xl p-4 shadow"
+            className="flex flex-col items-center justify-center bg-card/60 rounded-xl p-4 shadow-card"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay }}
             layout
         >
-            {icon && <div className="mb-1 text-xl text-secondary">{icon}</div>}
-            <span className="font-playfair text-xl md:text-2xl text-secondary font-bold">
+            {icon && <div className="mb-1 text-xl text-accent">{icon}</div>}
+            <span className="font-playfair text-xl md:text-2xl text-foreground font-bold">
                 {currency ? '₹' : ''}
                 <motion.span style={{ display: 'inline-block' }}>{formattedValue}</motion.span>
             </span>
-            <span className="text-xs md:text-sm text-tertiary mt-1 font-crimson text-center">{label}</span>
+            <span className="text-sm md:text-base text-muted-foreground mt-1 font-crimson text-center">{label}</span>
         </motion.div>
     );
 };

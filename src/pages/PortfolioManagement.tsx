@@ -105,7 +105,7 @@ const PortfolioManagement = () => {
                         variants={fadeIn}
                         initial="hidden"
                         animate={heroPInView ? "show" : "hidden"}
-                        className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90"
+                        className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90"
                     >
                         Achieve your financial goals with personalized, expert-driven portfolio management tailored to your needs.
                     </motion.p>
@@ -121,7 +121,8 @@ const PortfolioManagement = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Schedule Consultation
                         </Button>
@@ -142,7 +143,7 @@ const PortfolioManagement = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Why Choose Our PMS?
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Experience the benefits of professional management, transparency, and tailored strategies.
                         </p>
                     </motion.div>
@@ -151,13 +152,13 @@ const PortfolioManagement = () => {
                         {features.map((feature, idx) => (
                             <Card className="premium-card" key={feature.title}>
                                 <CardHeader>
-                                    <CardTitle className="text-2xl font-playfair flex items-center">
-                                        <feature.icon className="h-6 w-6 mr-2 text-accent" />
+                                    <CardTitle className="text-3xl font-playfair flex items-center">
+                                        <feature.icon className="h-8 w-8 mr-3 text-accent" />
                                         {feature.title}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-base font-crimson text-muted-foreground">{feature.description}</p>
+                                    <p className="text-lg font-crimson text-muted-foreground">{feature.description}</p>
                                 </CardContent>
                             </Card>
                         ))}
@@ -178,7 +179,7 @@ const PortfolioManagement = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Types of Portfolio Management Services
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Choose the PMS model that best fits your investment style and preferences.
                         </p>
                     </motion.div>
@@ -187,13 +188,13 @@ const PortfolioManagement = () => {
                         {pmsTypes.map((type) => (
                             <Card className="premium-card" key={type.title}>
                                 <CardHeader>
-                                    <CardTitle className="text-2xl font-playfair flex items-center">
-                                        <type.icon className="h-6 w-6 mr-2 text-accent" />
+                                    <CardTitle className="text-3xl font-playfair flex items-center">
+                                        <type.icon className="h-8 w-8 mr-3 text-accent" />
                                         {type.title}
                                     </CardTitle>
                                 </CardHeader>
                                 <CardContent>
-                                    <p className="text-base font-crimson text-muted-foreground">{type.description}</p>
+                                    <p className="text-lg font-crimson text-muted-foreground">{type.description}</p>
                                 </CardContent>
                             </Card>
                         ))}
@@ -218,11 +219,11 @@ const PortfolioManagement = () => {
                         initial="hidden"
                         whileInView="show"
                         viewport={{ once: true, amount: 0.3 }}
-                        className="text-lg font-crimson text-white/90 mb-8"
+                        className="text-2xl font-crimson text-white/90 mb-8"
                     >
                         Contact our experts for a personalized consultation and take the first step towards financial growth.
                     </motion.p>
-                    <Button size="lg" className="bg-white text-accent font-semibold px-8 py-4 text-lg hover:bg-gray-100">
+                    <Button size="lg" className="bg-white text-accent font-semibold px-8 py-4 text-lg hover:bg-gray-100" onClick={openPopup}>
                         Schedule Consultation
                     </Button>
                 </div>

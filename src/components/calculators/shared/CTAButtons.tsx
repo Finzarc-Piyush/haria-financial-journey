@@ -8,7 +8,7 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const baseClass =
-    'font-playfair px-6 py-3 rounded-full text-lg shadow-lg transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-secondary hover:scale-105 active:animate-pulse';
+    'font-playfair px-6 py-3 rounded-full text-lg shadow-card transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-accent hover:scale-105 active:animate-pulse';
 
 export const PrimaryCTA: React.FC<CTAButtonProps> = ({ children = 'Schedule Consultation', ...props }) => (
     <button
@@ -21,7 +21,7 @@ export const PrimaryCTA: React.FC<CTAButtonProps> = ({ children = 'Schedule Cons
 
 export const SecondaryCTA: React.FC<CTAButtonProps> = ({ children = 'Get Personalized Plan', ...props }) => (
     <button
-        className={`bg-[#E6C674] text-[#3A3A3A] ${baseClass}`}
+        className={`bg-champagne text-foreground ${baseClass}`}
         {...props}
     >
         {children}
@@ -39,7 +39,7 @@ export const DownloadCTA: React.FC<CTAButtonProps> = ({ children = 'Download', i
 
 export const SaveCTA: React.FC<CTAButtonProps> = ({ children = 'Save', icon = <FaSave />, ...props }) => (
     <button
-        className={`bg-[#B4A078] text-white ${baseClass}`}
+        className={`bg-accent text-accent-foreground ${baseClass}`}
         {...props}
     >
         {icon} <span className="ml-2">{children}</span>
@@ -48,7 +48,7 @@ export const SaveCTA: React.FC<CTAButtonProps> = ({ children = 'Save', icon = <F
 
 export const ShareCTA: React.FC<CTAButtonProps> = ({ children = 'Share', icon = <FaShareAlt />, ...props }) => (
     <button
-        className={`bg-blue-500 text-white ${baseClass}`}
+        className={`bg-primary text-primary-foreground ${baseClass}`}
         {...props}
     >
         {icon} <span className="ml-2">{children}</span>

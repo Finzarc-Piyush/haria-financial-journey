@@ -45,6 +45,7 @@ const LifeInsurance = () => {
 
     const products = [
         {
+            id: "term-insurance",
             title: "Term Insurance",
             description: "Pure protection, high coverage, low premium",
             icon: Shield,
@@ -53,6 +54,7 @@ const LifeInsurance = () => {
             features: ["High coverage", "Low premium", "Flexible terms", "Easy claims"]
         },
         {
+            id: "whole-life-insurance",
             title: "Whole Life Insurance",
             description: "Lifelong coverage with cash value building",
             icon: TrendingUp,
@@ -61,6 +63,7 @@ const LifeInsurance = () => {
             features: ["Lifelong coverage", "Cash value", "Dividend options", "Premium flexibility"]
         },
         {
+            id: "endowment-plans",
             title: "Endowment Plans",
             description: "Savings + insurance combination",
             icon: PiggyBank,
@@ -69,6 +72,7 @@ const LifeInsurance = () => {
             features: ["Guaranteed returns", "Maturity benefit", "Death benefit", "Tax savings"]
         },
         {
+            id: "ulip-plans",
             title: "ULIP Plans",
             description: "Market-linked returns with life cover",
             icon: TrendingUp,
@@ -77,6 +81,7 @@ const LifeInsurance = () => {
             features: ["Market returns", "Life cover", "Fund switching", "Tax benefits"]
         },
         {
+            id: "money-back-plans",
             title: "Money-Back Plans",
             description: "Periodic payouts during the policy term + life cover",
             icon: Clock,
@@ -85,6 +90,7 @@ const LifeInsurance = () => {
             features: ["Survival benefits", "Maturity returns", "Life cover", "Bonus payout"]
         },
         {
+            id: "pension-plans",
             title: "Pension Plans",
             description: "Secure your retirement with regular annuity payouts",
             icon: PiggyBank,
@@ -299,7 +305,7 @@ const LifeInsurance = () => {
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                                <CardHeader id={product.title.toLowerCase().replace(/\s+/g, '-')}
+                                <CardHeader id={product.id}
                                     className="relative z-10"
                                 >
                                     <div className="flex items-center justify-between mb-4">

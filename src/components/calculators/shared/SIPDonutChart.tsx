@@ -112,7 +112,7 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.4 }}
-                            className="font-playfair text-2xl font-bold text-[#D7B56D]"
+                            className="font-playfair text-2xl font-bold text-accent"
                         >
                             {isNaN(animatedCenter) || !isFinite(animatedCenter) ? 0 : Math.round(animatedCenter)}%
                         </motion.div>
@@ -122,7 +122,7 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                 {/* Tooltip */}
                 {hovered !== null && (
                     <div
-                        className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full bg-white/95 border border-[#D7B56D] rounded-lg px-4 py-2 shadow-lg text-sm font-crimson"
+                        className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-full bg-card/95 border border-champagne rounded-lg px-4 py-2 shadow-card text-base font-crimson"
                         style={{ zIndex: 10 }}
                     >
                         <span className="font-bold">{data[hovered].title}:</span>{' '}
@@ -138,7 +138,7 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                             className="inline-block w-3 h-3 rounded-full"
                             style={{ background: d.color }}
                         />
-                        <span className="font-crimson text-sm text-tertiary">
+                        <span className="font-crimson text-base text-tertiary">
                             {d.title} ({Math.round(d.value * 10) / 10}%)
                         </span>
                     </div>

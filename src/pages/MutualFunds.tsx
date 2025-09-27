@@ -279,7 +279,7 @@ const MutualFunds = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
@@ -326,7 +326,7 @@ const MutualFunds = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
+                            className="border-white hover:bg-white text-accent hover:text-accent font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Explore Funds
@@ -525,35 +525,35 @@ const MutualFunds = () => {
                                                 {fund.risk} Risk
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
                                             {fund.title}
                                         </CardTitle>
                                     </CardHeader>
 
                                     <CardContent className="relative z-10">
-                                        <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                        <p className="text-muted-foreground mb-6 font-crimson text-xl">
                                             {fund.description}
                                         </p>
 
                                         <div className="mb-4">
                                             <div className="flex justify-between items-center mb-2">
-                                                <span className="text-sm text-muted-foreground">Expected Returns</span>
-                                                <span className="font-semibold text-accent">{fund.returns}</span>
+                                                <span className="text-base text-muted-foreground">Expected Returns</span>
+                                                <span className="font-semibold text-accent text-lg">{fund.returns}</span>
                                             </div>
                                         </div>
 
                                         <div className="space-y-2 mb-6">
                                             {fund.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center text-sm">
-                                                    <div className="w-1.5 h-1.5 bg-accent rounded-full mr-2 flex-shrink-0" />
+                                                <div key={idx} className="flex items-center text-base">
+                                                    <div className="w-2 h-2 bg-accent rounded-full mr-3 flex-shrink-0" />
                                                     <span className="text-muted-foreground">{feature}</span>
                                                 </div>
                                             ))}
                                         </div>
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                             Explore Funds
-                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -603,10 +603,10 @@ const MutualFunds = () => {
                                             </Badge>
                                             <div className="flex items-center">
                                                 <Star className="h-4 w-4 text-yellow-500 fill-current mr-1" />
-                                                <span className="text-sm font-semibold">{fund.rating}</span>
+                                                <span className="text-base font-semibold">{fund.rating}</span>
                                             </div>
                                         </div>
-                                        <CardTitle className="text-lg font-playfair text-foreground">
+                                        <CardTitle className="text-xl font-playfair text-foreground">
                                             {fund.name}
                                         </CardTitle>
                                     </CardHeader>
@@ -614,15 +614,15 @@ const MutualFunds = () => {
                                     <CardContent>
                                         <div className="space-y-4">
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-muted-foreground">NAV</span>
-                                                <span className="font-semibold text-foreground">{fund.nav}</span>
+                                                <span className="text-base text-muted-foreground">NAV</span>
+                                                <span className="font-semibold text-foreground text-lg">{fund.nav}</span>
                                             </div>
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-muted-foreground">1 Year Returns</span>
-                                                <span className="font-semibold text-green-600">{fund.returns}</span>
+                                                <span className="text-base text-muted-foreground">1 Year Returns</span>
+                                                <span className="font-semibold text-green-600 text-lg">{fund.returns}</span>
                                             </div>
                                             <div className="flex justify-between items-center">
-                                                <span className="text-sm text-muted-foreground">Risk Level</span>
+                                                <span className="text-base text-muted-foreground">Risk Level</span>
                                                 <Badge variant="secondary" className={
                                                     fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
                                                         fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
@@ -633,9 +633,9 @@ const MutualFunds = () => {
                                             </div>
                                         </div>
 
-                                        <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground">
+                                        <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
                                             Invest Now
-                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                            <ArrowRight className="ml-2 h-5 w-5" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -662,15 +662,15 @@ const MutualFunds = () => {
                         variants={fadeIn}
                         initial="hidden"
                         animate={ctaPInView ? "show" : "hidden"}
-                        className="text-xl font-crimson text-white/80 mb-8"
+                        className="text-2xl font-crimson text-white/80 mb-8"
                     >
                         Begin with as little as ₹500 and watch your wealth grow
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg" onClick={openPopup}>
+                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Start SIP
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg" onClick={openPopup}>
+                        <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Get Expert Advice
                         </Button>
                     </div>

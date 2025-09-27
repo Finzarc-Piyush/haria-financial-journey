@@ -189,7 +189,7 @@ const ContactSection = () => {
 
 
   return (
-    <section id="contact" className="py-20 bg-cream">
+    <section id="contact" className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div data-aos="fade-up" className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-4">
@@ -202,7 +202,7 @@ const ContactSection = () => {
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Contact Info Card */}
-          <Card data-aos="fade-up" data-aos-delay="100" className="premium-card shadow-lg border border-champagne/60">
+          <Card data-aos="fade-up" data-aos-delay="100" className="premium-card shadow-floating border border-champagne/60">
             <CardHeader>
               <CardTitle className="font-playfair text-2xl text-tertiary flex items-center gap-2">
                 <Calendar className="w-6 h-6 text-secondary" /> Contact Information
@@ -263,7 +263,7 @@ const ContactSection = () => {
             </CardContent>
           </Card>
           {/* Booking Card */}
-          <Card data-aos="fade-up" data-aos-delay="200" className="premium-card shadow-lg border border-champagne/60 bg-champagne flex flex-col justify-between">
+          <Card data-aos="fade-up" data-aos-delay="200" className="premium-card shadow-floating border border-champagne/60 bg-champagne/20 flex flex-col justify-between">
             <CardHeader>
               <CardTitle className="font-playfair text-2xl text-tertiary">
                 Book a Free Consultation
@@ -282,19 +282,19 @@ const ContactSection = () => {
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
                     <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1 text-xl">First Name <span className="text-red-500">*</span></label>
-                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-md border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
+                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-md border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
                     {touched.firstName && formErrors.firstName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.firstName}</div>}
                   </div>
                   <div className="flex-1">
                     <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1 text-xl">Last Name <span className="text-red-500">*</span></label>
-                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-md border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
+                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-md border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
                     {touched.lastName && formErrors.lastName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.lastName}</div>}
                   </div>
                 </div>
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block font-crimson text-tertiary mb-1 text-xl">Email <span className="text-red-500">*</span></label>
-                  <input id="email" name="email" type="email" required className={`w-full rounded-md border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
+                  <input id="email" name="email" type="email" required className={`w-full rounded-md border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
                   {touched.email && formErrors.email && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.email}</div>}
                 </div>
                 {/* Services checkboxes */}
@@ -319,7 +319,7 @@ const ContactSection = () => {
                 {/* Comment/Message */}
                 <div>
                   <label htmlFor="message" className="block font-crimson text-tertiary mb-1 text-xl">Comment or Message</label>
-                  <textarea id="message" name="message" rows={4} className={`w-full rounded-md border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
+                  <textarea id="message" name="message" rows={4} className={`w-full rounded-md border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-white/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
                   {touched.message && formErrors.message && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.message}</div>}
                 </div>
                 {/* Submit Button */}

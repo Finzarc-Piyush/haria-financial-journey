@@ -215,103 +215,93 @@ const ContactPopup: React.FC<ContactPopupProps> = ({
                         initial={{ opacity: 0, scale: 0.95, y: 20 }}
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                        transition={{ duration: 0.3, ease: [0.42, 0, 0.58, 1] }}
-                        className="relative w-full max-w-4xl max-h-[90vh] overflow-y-auto"
+                        transition={{ duration: 0.3 }}
+                        className="relative w-full max-w-2xl max-h-[90vh] overflow-y-auto"
                     >
-                        <Card className="premium-card shadow-2xl border border-champagne/60 rounded-2xl">
+                        <Card className="bg-white shadow-xl border border-gray-200 rounded-xl">
                             {/* Header */}
-                            <CardHeader className="relative">
+                            <CardHeader className="relative p-6 border-b border-gray-200">
                                 <Button
                                     variant="ghost"
                                     size="sm"
-                                    className="absolute right-4 top-4 h-8 w-8 p-0 hover:bg-muted rounded-lg"
+                                    className="absolute right-4 top-4 h-8 w-8 p-0 hover:bg-gray-100 rounded-lg"
                                     onClick={onClose}
                                 >
                                     <X className="h-4 w-4" />
                                 </Button>
-                                <CardTitle className="font-playfair text-3xl md:text-4xl font-bold text-tertiary mb-2 pr-8">
+                                <CardTitle className="font-playfair text-3xl font-bold text-tertiary mb-2 pr-8">
                                     {title}
                                 </CardTitle>
-                                <p className="font-crimson text-xl md:text-2xl text-tertiary/80">
+                                <p className="font-crimson text-xl text-tertiary/80">
                                     {description}
                                 </p>
                             </CardHeader>
 
                             <CardContent className="p-6">
                                 {/* Contact Form */}
-                                <div className="max-w-md mx-auto">
-                                    <form
-                                        ref={formRef}
-                                        className="flex flex-col gap-6"
-                                        autoComplete="off"
-                                        noValidate
-                                        onSubmit={handleSubmit}
+                                <form
+                                    ref={formRef}
+                                    className="flex flex-col gap-4"
+                                    autoComplete="off"
+                                    noValidate
+                                    onSubmit={handleSubmit}
+                                >
+                                    {/* Name fields */}
+                                    <div className="flex flex-col md:flex-row gap-4">
+                                        <div className="flex-1">
+                                            <label htmlFor="firstName" className="block text-base font-medium text-gray-700 mb-1">First Name <span className="text-red-500">*</span></label>
+                                            <input id="firstName" name="firstName" type="text" required className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary" autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
+                                            {touched.firstName && formErrors.firstName && <div className="text-red-500 text-sm mt-1">{formErrors.firstName}</div>}
+                                        </div>
+                                        <div className="flex-1">
+                                            <label htmlFor="lastName" className="block text-base font-medium text-gray-700 mb-1">Last Name <span className="text-red-500">*</span></label>
+                                            <input id="lastName" name="lastName" type="text" required className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary" autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
+                                            {touched.lastName && formErrors.lastName && <div className="text-red-500 text-sm mt-1">{formErrors.lastName}</div>}
+                                        </div>
+                                    </div>
+
+                                    {/* Email */}
+                                    <div>
+                                        <label htmlFor="email" className="block text-base font-medium text-gray-700 mb-1">Email <span className="text-red-500">*</span></label>
+                                        <input id="email" name="email" type="email" required className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary" autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
+                                        {touched.email && formErrors.email && <div className="text-red-500 text-sm mt-1">{formErrors.email}</div>}
+                                    </div>
+
+                                    {/* Services checkboxes */}
+                                    <div>
+                                        <label className="block text-base font-medium text-gray-700 mb-2">Services <span className="text-red-500">*</span></label>
+                                        <div className="grid grid-cols-2 gap-3">
+                                            <label className="inline-flex items-center gap-2 text-base text-gray-700">
+                                                <input type="checkbox" name="services" value="Insurance" className="rounded border-gray-300 text-secondary focus:ring-secondary w-4 h-4" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
+                                            </label>
+                                            <label className="inline-flex items-center gap-2 text-base text-gray-700">
+                                                <input type="checkbox" name="services" value="Mutual Funds" className="rounded border-gray-300 text-secondary focus:ring-secondary w-4 h-4" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
+                                            </label>
+                                            <label className="inline-flex items-center gap-2 text-base text-gray-700">
+                                                <input type="checkbox" name="services" value="Equity" className="rounded border-gray-300 text-secondary focus:ring-secondary w-4 h-4" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
+                                            </label>
+                                            <label className="inline-flex items-center gap-2 text-base text-gray-700">
+                                                <input type="checkbox" name="services" value="Fixed Income" className="rounded border-gray-300 text-secondary focus:ring-secondary w-4 h-4" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
+                                            </label>
+                                        </div>
+                                        {touched.services && formErrors.services && <div className="text-red-500 text-sm mt-1">{formErrors.services}</div>}
+                                    </div>
+
+                                    {/* Message */}
+                                    <div>
+                                        <label htmlFor="message" className="block text-base font-medium text-gray-700 mb-1">Message (Optional)</label>
+                                        <textarea id="message" name="message" rows={3} className="w-full rounded-md border border-gray-300 px-3 py-2 text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary resize-none" value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
+                                    </div>
+
+                                    {/* Submit Button */}
+                                    <Button
+                                        type="submit"
+                                        className="w-full bg-secondary text-white hover:bg-secondary/90 font-medium py-3 px-4 rounded-md transition-colors text-lg"
+                                        disabled={isSubmitting || !isFormValid}
                                     >
-                                        {/* Name fields */}
-                                        <div className="flex flex-col md:flex-row gap-4">
-                                            <div className="flex-1">
-                                                <label htmlFor="firstName" className="block font-crimson text-tertiary mb-1 text-xl">First Name <span className="text-red-500">*</span></label>
-                                                <input id="firstName" name="firstName" type="text" required className={`w-full rounded-lg border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
-                                                {touched.firstName && formErrors.firstName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.firstName}</div>}
-                                            </div>
-                                            <div className="flex-1">
-                                                <label htmlFor="lastName" className="block font-crimson text-tertiary mb-1 text-xl">Last Name <span className="text-red-500">*</span></label>
-                                                <input id="lastName" name="lastName" type="text" required className={`w-full rounded-lg border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
-                                                {touched.lastName && formErrors.lastName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.lastName}</div>}
-                                            </div>
-                                        </div>
-
-                                        {/* Email */}
-                                        <div>
-                                            <label htmlFor="email" className="block font-crimson text-tertiary mb-1 text-xl">Email <span className="text-red-500">*</span></label>
-                                            <input id="email" name="email" type="email" required className={`w-full rounded-lg border ${touched.email && formErrors.email ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
-                                            {touched.email && formErrors.email && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.email}</div>}
-                                        </div>
-
-                                        {/* Services checkboxes */}
-                                        <div>
-                                            <label className="block font-crimson text-tertiary mb-2 text-xl">Which services are you looking for? <span className="text-red-500">*</span></label>
-                                            <div className="flex flex-wrap gap-6">
-                                                <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                                                    <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
-                                                </label>
-                                                <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                                                    <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
-                                                </label>
-                                                <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                                                    <input type="checkbox" name="services" value="Equity" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
-                                                </label>
-                                                <label className="inline-flex items-center gap-2 font-crimson text-tertiary text-xl">
-                                                    <input type="checkbox" name="services" value="Fixed Income" className="accent-secondary w-6 h-6 rounded border-champagne/60 focus:ring-2 focus:ring-secondary/40" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
-                                                </label>
-                                            </div>
-                                            {touched.services && formErrors.services && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.services}</div>}
-                                        </div>
-
-                                        {/* Comment/Message */}
-                                        <div>
-                                            <label htmlFor="message" className="block font-crimson text-tertiary mb-1 text-xl">Comment or Message</label>
-                                            <textarea id="message" name="message" rows={4} className={`w-full rounded-lg border ${touched.message && formErrors.message ? 'border-red-500' : 'border-champagne/60'} bg-cream/40 px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-secondary/40 resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
-                                            {touched.message && formErrors.message && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.message}</div>}
-                                        </div>
-
-                                        {/* Submit Button */}
-                                        <div className="pt-2">
-                                            <Button
-                                                type="submit"
-                                                className="w-full bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-6 py-3 text-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 rounded-lg"
-                                                disabled={isSubmitting || !isFormValid}
-                                            >
-                                                {isSubmitting ? (
-                                                    <span className="flex items-center justify-center gap-2">
-                                                        <span className="animate-spin rounded-full border-2 border-gray-300 border-t-2 border-t-secondary h-5 w-5 mr-2"></span>
-                                                        Submitting…
-                                                    </span>
-                                                ) : 'Submit'}
-                                            </Button>
-                                        </div>
-                                    </form>
-                                </div>
+                                        {isSubmitting ? 'Submitting...' : 'Submit'}
+                                    </Button>
+                                </form>
                             </CardContent>
                         </Card>
                     </motion.div>

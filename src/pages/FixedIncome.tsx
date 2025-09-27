@@ -239,7 +239,7 @@ const FixedIncome = () => {
             <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
@@ -254,7 +254,7 @@ const FixedIncome = () => {
                         <span className="inline-block text-accent animate-pulse">Guaranteed Security</span>
                     </motion.h1>
 
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
                         Build wealth with stable, predictable returns through fixed income investments
                     </motion.p>
 
@@ -283,7 +283,8 @@ const FixedIncome = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            onClick={openPopup}
                         >
                             Compare Rates
                         </Button>
@@ -298,7 +299,7 @@ const FixedIncome = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Fixed Income Products
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Choose from a range of secure investment options
                         </p>
                     </motion.div>
@@ -329,18 +330,18 @@ const FixedIncome = () => {
                                 </CardHeader>
 
                                 <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-4 font-crimson text-sm">
+                                    <p className="text-muted-foreground mb-4 font-crimson text-lg">
                                         {product.description}
                                     </p>
 
                                     <div className="space-y-3 mb-6">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Tenure</span>
-                                            <span className="font-semibold text-foreground">{product.tenure}</span>
+                                            <span className="text-base text-muted-foreground">Tenure</span>
+                                            <span className="font-semibold text-foreground text-lg">{product.tenure}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Min Amount</span>
-                                            <span className="font-semibold text-accent">{product.minAmount}</span>
+                                            <span className="text-base text-muted-foreground">Min Amount</span>
+                                            <span className="font-semibold text-accent text-lg">{product.minAmount}</span>
                                         </div>
                                     </div>
 
@@ -348,7 +349,7 @@ const FixedIncome = () => {
                                         {product.features.map((feature, idx) => (
                                             <div key={idx} className="flex items-center text-sm">
                                                 <CheckCircle className="h-4 w-4 text-accent mr-2 flex-shrink-0" />
-                                                <span className="text-muted-foreground">{feature}</span>
+                                                <span className="text-muted-foreground text-base">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
@@ -371,7 +372,7 @@ const FixedIncome = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Fixed Deposit Calculator
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Calculate your returns and plan your investments
                         </p>
                     </motion.div>
@@ -453,7 +454,7 @@ const FixedIncome = () => {
                                         <div className="text-3xl font-playfair font-bold text-accent mb-2">
                                             ₹{maturityValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-muted-foreground font-crimson">Maturity Value</p>
+                                        <p className="text-muted-foreground font-crimson text-lg">Maturity Value</p>
                                     </div>
                                 </CardContent>
                             </Card>
@@ -464,7 +465,7 @@ const FixedIncome = () => {
                                         <div className="text-xl font-playfair font-bold text-foreground mb-1">
                                             ₹{investmentAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-sm text-muted-foreground">Principal Amount</p>
+                                        <p className="text-base text-muted-foreground">Principal Amount</p>
                                     </CardContent>
                                 </Card>
 
@@ -473,7 +474,7 @@ const FixedIncome = () => {
                                         <div className="text-xl font-playfair font-bold text-green-600 mb-1">
                                             ₹{totalInterest.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-sm text-muted-foreground">Total Interest</p>
+                                        <p className="text-base text-muted-foreground">Total Interest</p>
                                     </CardContent>
                                 </Card>
                             </div>
@@ -484,12 +485,12 @@ const FixedIncome = () => {
                                     <h4 className="font-semibold text-foreground mb-4">Tax Implications</h4>
                                     <div className="space-y-3">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Interest Income</span>
-                                            <span className="font-semibold text-foreground">₹{totalInterest.toLocaleString()}</span>
+                                            <span className="text-base text-muted-foreground">Interest Income</span>
+                                            <span className="font-semibold text-foreground text-lg">₹{totalInterest.toLocaleString()}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Tax Rate (30%)</span>
-                                            <span className="font-semibold text-red-600">₹{(totalInterest * 0.3).toLocaleString()}</span>
+                                            <span className="text-base text-muted-foreground">Tax Rate (30%)</span>
+                                            <span className="font-semibold text-red-600 text-lg">₹{(totalInterest * 0.3).toLocaleString()}</span>
                                         </div>
                                         <div className="flex justify-between items-center border-t pt-2">
                                             <span className="text-sm font-semibold text-foreground">Net Returns</span>
@@ -510,7 +511,7 @@ const FixedIncome = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Laddering Strategy
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Optimize your returns with systematic investment laddering
                         </p>
                     </motion.div>
@@ -534,16 +535,16 @@ const FixedIncome = () => {
                                             </div>
                                             <div className="space-y-3">
                                                 <div>
-                                                    <div className="text-sm text-muted-foreground">Amount</div>
-                                                    <div className="font-semibold text-foreground">₹{strategy.amount.toLocaleString()}</div>
+                                                    <div className="text-base text-muted-foreground">Amount</div>
+                                                    <div className="font-semibold text-foreground text-lg">₹{strategy.amount.toLocaleString()}</div>
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm text-muted-foreground">Rate</div>
-                                                    <div className="font-semibold text-accent">{strategy.rate}%</div>
+                                                    <div className="text-base text-muted-foreground">Rate</div>
+                                                    <div className="font-semibold text-accent text-lg">{strategy.rate}%</div>
                                                 </div>
                                                 <div>
-                                                    <div className="text-sm text-muted-foreground">Maturity</div>
-                                                    <div className="font-semibold text-foreground">{strategy.maturity}</div>
+                                                    <div className="text-base text-muted-foreground">Maturity</div>
+                                                    <div className="font-semibold text-foreground text-lg">{strategy.maturity}</div>
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -560,7 +561,7 @@ const FixedIncome = () => {
 
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mt-12">
                         <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
-                            <h3 className="text-2xl font-playfair font-bold text-foreground mb-4">
+                            <h3 className="text-3xl font-playfair font-bold text-foreground mb-4">
                                 Benefits of Laddering
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -569,21 +570,21 @@ const FixedIncome = () => {
                                         <TrendingUp className="h-6 w-6 text-accent" />
                                     </div>
                                     <div className="font-semibold text-foreground">Higher Returns</div>
-                                    <div className="text-sm text-muted-foreground">Lock in better rates</div>
+                                    <div className="text-base text-muted-foreground">Lock in better rates</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
                                         <Shield className="h-6 w-6 text-accent" />
                                     </div>
                                     <div className="font-semibold text-foreground">Risk Management</div>
-                                    <div className="text-sm text-muted-foreground">Spread maturity dates</div>
+                                    <div className="text-base text-muted-foreground">Spread maturity dates</div>
                                 </div>
                                 <div className="text-center">
                                     <div className="w-12 h-12 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
                                         <DollarSign className="h-6 w-6 text-accent" />
                                     </div>
                                     <div className="font-semibold text-foreground">Regular Income</div>
-                                    <div className="text-sm text-muted-foreground">Quarterly interest</div>
+                                    <div className="text-base text-muted-foreground">Quarterly interest</div>
                                 </div>
                             </div>
                         </div>
@@ -598,7 +599,7 @@ const FixedIncome = () => {
                         <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
                             Top Bank FDs
                         </h2>
-                        <p className="text-xl font-crimson text-muted-foreground">
+                        <p className="text-2xl font-crimson text-muted-foreground">
                             Compare rates from leading banks
                         </p>
                     </motion.div>
@@ -621,7 +622,7 @@ const FixedIncome = () => {
                                             {bank.rating}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground">
+                                    <CardTitle className="text-2xl font-playfair text-foreground">
                                         {bank.name}
                                     </CardTitle>
                                 </CardHeader>
@@ -629,16 +630,16 @@ const FixedIncome = () => {
                                 <CardContent>
                                     <div className="space-y-4">
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Interest Rate</span>
-                                            <span className="font-semibold text-accent">{bank.rate}</span>
+                                            <span className="text-base text-muted-foreground">Interest Rate</span>
+                                            <span className="font-semibold text-accent text-lg">{bank.rate}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Min Amount</span>
-                                            <span className="font-semibold text-foreground">{bank.minAmount}</span>
+                                            <span className="text-base text-muted-foreground">Min Amount</span>
+                                            <span className="font-semibold text-foreground text-lg">{bank.minAmount}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
-                                            <span className="text-sm text-muted-foreground">Tenure</span>
-                                            <span className="font-semibold text-foreground">{bank.tenure}</span>
+                                            <span className="text-base text-muted-foreground">Tenure</span>
+                                            <span className="font-semibold text-foreground text-lg">{bank.tenure}</span>
                                         </div>
                                     </div>
 
@@ -659,14 +660,14 @@ const FixedIncome = () => {
                     <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Fixed Income Journey
                     </motion.h2>
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl font-crimson text-white/80 mb-8">
+                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-white/80 mb-8">
                         Secure your future with guaranteed returns and capital protection
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open FD Account</a>
                         </Button>
-                        <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg">
+                        <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Get Expert Advice
                         </Button>
                     </div>
