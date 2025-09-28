@@ -3,6 +3,8 @@ import { Badge } from "@/components/ui/badge";
 import { Award, GraduationCap, Heart, Users, Building2, Star, Target, Eye } from "lucide-react";
 import amritlalDevjiHaria from "@/assets/Amritlal-Haria.jpg";
 import anilAmritlalHaria from "@/assets/Anil-Haria.jpg";
+import rohanHaria from "@/assets/Rohan-Haria.jpg";
+import rajHaria from "@/assets/Raj-Haria.jpg";
 import meetSavla from "@/assets/Meet-Savla.jpg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -76,7 +78,7 @@ const AboutSection = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="order-2 lg:order-1">
               <img
-                src=""
+                src={rohanHaria}
                 alt="Rohan Haria"
                 className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
                 data-aos="fade-right"
@@ -121,7 +123,7 @@ const AboutSection = () => {
             </div>
             <div className="order-2 lg:order-2">
               <img
-                src=""
+                src={rajHaria}
                 alt="Raj Haria"
                 className="w-80 h-96 sm:w-96 sm:h-112 md:w-112 md:h-128 object-cover object-top mx-auto rounded-lg shadow-floating"
                 data-aos="fade-left"
