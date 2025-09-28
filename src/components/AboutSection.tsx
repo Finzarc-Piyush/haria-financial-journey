@@ -6,6 +6,7 @@ import anilAmritlalHaria from "@/assets/Anil-Haria.jpg";
 import rohanHaria from "@/assets/Rohan-Haria.jpg";
 import rajHaria from "@/assets/Raj-Haria.jpg";
 import meetSavla from "@/assets/Meet-Savla.jpg";
+import teamPhoto from "@/assets/Team-photo.png";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -187,7 +188,7 @@ const AboutSection = () => {
             </div>
             <div>
               <img
-                src=""
+                src={teamPhoto}
                 alt="Haria Investments Team"
                 className="w-full rounded-lg shadow-floating"
                 data-aos="fade-left"
