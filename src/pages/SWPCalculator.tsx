@@ -14,35 +14,39 @@ import { calculateSWP } from '@/utils';
 import { SWPResult } from '@/types/calculator';
 
 const defaultInputs = {
-    corpus: 2000000,
-    withdrawalAmount: 20000,
-    durationYears: 10,
-    expectedReturns: 8,
+    corpus: 1200000, // ₹12 lakh - more realistic for SWP
+    withdrawalAmount: 10000, // ₹10,000 per month
+    durationYears: 10, // 10 years
+    expectedReturns: 7, // 7% annual return
 };
 
 const validationRules = {
-    corpus: (v: number) => validateRange(v, 100000, 100000000, 'Corpus Amount') || null,
-    withdrawalAmount: (v: number) => validateRange(v, 1000, 1000000, 'Withdrawal Amount') || null,
-    durationYears: (v: number) => validateRange(v, 1, 30, 'Duration') || null,
-    expectedReturns: (v: number) => validateRange(v, 4, 25, 'Expected Returns') || null,
+    corpus: (v: number) => validateRange(v, 50000, 50000000, 'Corpus Amount') || null,
+    withdrawalAmount: (v: number) => validateRange(v, 500, 500000, 'Withdrawal Amount') || null,
+    durationYears: (v: number) => validateRange(v, 1, 50, 'Duration') || null,
+    expectedReturns: (v: number) => validateRange(v, 3, 25, 'Expected Returns') || null,
 };
 
 const faqList = [
     {
         question: 'What is an SWP?',
-        answer: 'A Systematic Withdrawal Plan (SWP) allows you to withdraw a fixed amount regularly from your investment corpus.'
+        answer: 'A Systematic Withdrawal Plan (SWP) allows you to withdraw a fixed amount regularly from your mutual fund investments while showing the remaining value of your investment over time.'
     },
     {
         question: 'How is the SWP calculated?',
-        answer: 'SWP calculation is based on your initial corpus, withdrawal amount, duration, and expected returns.'
+        answer: 'The SWP calculator uses monthly compounding where interest is calculated on the remaining balance each month, and then the withdrawal amount is deducted. This shows how long your investment will last.'
     },
     {
-        question: 'Can I change my withdrawal amount later?',
-        answer: 'Yes, you can adjust your withdrawal amount as per your needs.'
+        question: 'What happens if my investment runs out before the tenure?',
+        answer: 'If your investment corpus depletes before the desired period, the calculator will show a warning and display the actual duration your investment lasted.'
     },
     {
         question: 'Are SWP returns guaranteed?',
-        answer: 'No, SWP returns depend on the performance of your underlying investments.'
+        answer: 'No, SWP returns depend on the performance of your underlying mutual fund investments. The calculator provides estimates based on expected returns.'
+    },
+    {
+        question: 'Is SWP suitable for retirement planning?',
+        answer: 'Yes, SWP is especially useful for retirement planning as it helps estimate steady income and shows how long your investment will last.'
     },
 ];
 
@@ -130,8 +134,8 @@ const SWPCalculator = () => {
                             label="Corpus Amount (₹)"
                             value={inputs.corpus}
                             onChange={handleInputChange('corpus')}
-                            min={100000}
-                            max={100000000}
+                            min={50000}
+                            max={50000000}
                             step={10000}
                             currency
                             error={errors.corpus}
@@ -140,9 +144,9 @@ const SWPCalculator = () => {
                             label="Withdrawal Amount (₹/month)"
                             value={inputs.withdrawalAmount}
                             onChange={handleInputChange('withdrawalAmount')}
-                            min={1000}
-                            max={1000000}
-                            step={1000}
+                            min={500}
+                            max={500000}
+                            step={500}
                             currency
                             error={errors.withdrawalAmount}
                         />
@@ -151,14 +155,14 @@ const SWPCalculator = () => {
                             value={inputs.durationYears}
                             onChange={handleInputChange('durationYears')}
                             min={1}
-                            max={30}
+                            max={50}
                             error={errors.durationYears}
                         />
                         <CalculatorInput
                             label="Expected Returns (%)"
                             value={inputs.expectedReturns}
                             onChange={handleInputChange('expectedReturns')}
-                            min={4}
+                            min={3}
                             max={25}
                             step={0.1}
                             error={errors.expectedReturns}

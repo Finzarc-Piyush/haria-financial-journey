@@ -3,4 +3,11 @@ export interface SWPResult {
     totalWithdrawn: number;
     returns: number;
     warning?: string;
+    monthlyBreakdown?: Array<{
+        month: number;
+        startingBalance: number;
+        monthlyWithdrawal: number;
+        interestEarned: number;
+        endingBalance: number;
+    }>;
 }

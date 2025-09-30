@@ -25,41 +25,74 @@ export function calculateFD(inputs: FDCalculatorInputs) {
     return { maturity, interest, annualized };
 }
 
-// SWP calculation - FIXED
+// SWP calculation using annual compounding
 export function calculateSWP(
     principal: number,
     monthlyWithdrawal: number,
     years: number,
     annualReturn: number
 ) {
-    const monthlyRate = annualReturn / (12 * 100);
     let balance = principal;
     let totalWithdrawn = 0;
     let totalReturns = 0;
+    const monthlyBreakdown: any[] = [];
 
-    for (let month = 1; month <= years * 12; month++) {
-        // Calculate monthly interest on current balance
-        const monthlyInterest = balance * monthlyRate;
-        totalReturns += monthlyInterest;
+    console.log(`Starting SWP calculation:`);
+    console.log(`Principal: ₹${principal.toLocaleString()}`);
+    console.log(`Monthly Withdrawal: ₹${monthlyWithdrawal.toLocaleString()}`);
+    console.log(`Years: ${years}`);
+    console.log(`Annual Return: ${annualReturn}%`);
+    console.log(`Yearly Withdrawal: ₹${(monthlyWithdrawal * 12).toLocaleString()}`);
+    console.log('---');
 
-        // Add interest to balance first
-        balance += monthlyInterest;
+    for (let year = 1; year <= years; year++) {
+        const startingBalance = balance;
+        const yearlyWithdrawal = monthlyWithdrawal * 12;
 
-        // Then subtract withdrawal
-        if (balance >= monthlyWithdrawal) {
-            balance -= monthlyWithdrawal;
-            totalWithdrawn += monthlyWithdrawal;
+        console.log(`Year ${year}:`);
+        console.log(`  Opening Corpus: ₹${balance.toLocaleString()}`);
+
+        if (balance >= yearlyWithdrawal) {
+            balance -= yearlyWithdrawal;
+            totalWithdrawn += yearlyWithdrawal;
+            console.log(`  Withdrawals: ₹${yearlyWithdrawal.toLocaleString()} → Corpus left: ₹${balance.toLocaleString()}`);
         } else {
-            // If insufficient balance, withdraw whatever is left
             totalWithdrawn += balance;
+            console.log(`  Withdrawals: ₹${balance.toLocaleString()} (partial) → Corpus left: ₹0`);
             balance = 0;
-            break;
         }
+
+        const yearlyInterest = balance * (annualReturn / 100);
+        balance += yearlyInterest;
+        totalReturns += yearlyInterest;
+
+        console.log(`  Growth: ${annualReturn}% of ₹${(balance - yearlyInterest).toLocaleString()} = ₹${yearlyInterest.toLocaleString()}`);
+        console.log(`  Closing Corpus: ₹${balance.toLocaleString()}`);
+        console.log('---');
+
+        // Optional: create month-by-month breakdown
+        for (let month = 1; month <= 12; month++) {
+            monthlyBreakdown.push({
+                month: (year - 1) * 12 + month,
+                startingBalance: Math.round(startingBalance),
+                monthlyWithdrawal: Math.round(monthlyWithdrawal),
+                interestEarned: month === 12 ? Math.round(yearlyInterest) : 0,
+                endingBalance: Math.round(balance)
+            });
+        }
+
+        if (balance <= 0) break;
     }
+
+    console.log(`Final Results:`);
+    console.log(`Maturity Corpus: ₹${Math.round(balance).toLocaleString()}`);
+    console.log(`Total Withdrawn: ₹${Math.round(totalWithdrawn).toLocaleString()}`);
+    console.log(`Total Returns: ₹${Math.round(totalReturns).toLocaleString()}`);
 
     return {
         maturityCorpus: Math.round(balance),
         totalWithdrawn: Math.round(totalWithdrawn),
-        returns: Math.round(totalReturns)
+        returns: Math.round(totalReturns),
+        monthlyBreakdown
     };
 }
