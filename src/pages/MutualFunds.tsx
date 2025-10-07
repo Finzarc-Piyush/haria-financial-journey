@@ -516,11 +516,9 @@ const MutualFunds = () => {
                                     onMouseEnter={() => setHoveredCard(`mutual-fund-${fund.id}`)}
                                     onMouseLeave={() => setHoveredCard(null)}
                                 >
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${fund.color} opacity-0 group-hover:opacity-10 transition-all duration-300 ease-out`} />
-
                                     <CardHeader className="relative z-10">
                                         <div className="flex items-center justify-between mb-4">
-                                            <fund.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            <fund.icon className="h-12 w-12 text-secondary" />
                                             <Badge className={`${fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
                                                 fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
                                                     'bg-green-500/20 text-green-600'

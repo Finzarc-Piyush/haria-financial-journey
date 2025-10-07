@@ -124,7 +124,7 @@ const GoldSilver = () => {
                         transition={{ duration: 0.6 }}
                         className="rounded-2xl bg-white/50 backdrop-blur-sm p-8"
                     >
-                        <h2 className="text-3xl md:text-4xl font-playfair font-bold text-foreground mb-6 text-center">Why Bullion with Haria</h2>
+                        <h2 className="text-3xl md:text-4xl font-playfair font-bold text-foreground mb-6 text-center">Why Choose Haria for Gold & Silver</h2>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground text-base max-w-4xl mx-auto">
                             {["IRDAI-registered partner network and compliant execution", "Clear frameworks for position sizing and stop-losses", "Transparent costs and reporting", "Dedicated advisor for ongoing guidance"].map((point, idx) => (
                                 <div key={idx} className="flex items-start justify-center md:justify-start">

@@ -318,11 +318,9 @@ const FixedIncome = () => {
                                 onMouseEnter={() => setHoveredCard(`fixed-income-product-${product.id}`)}
                                 onMouseLeave={() => setHoveredCard(null)}
                             >
-                                <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-0 group-hover:opacity-10 transition-all duration-300 ease-out`} />
-
                                 <CardHeader className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
+                                        <product.icon className="h-12 w-12 text-secondary" />
                                         <Badge className="bg-secondary/20 text-secondary border-secondary/30">
                                             {product.rate}
                                         </Badge>
