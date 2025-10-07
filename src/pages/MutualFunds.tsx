@@ -296,10 +296,10 @@ const MutualFunds = () => {
                         className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6"
                     >
                         <span className="inline-block mr-4">Grow</span>
-                        <span className="inline-block mr-4 text-accent">→</span>
+                        <span className="inline-block mr-4 text-secondary">→</span>
                         <span className="inline-block mr-4">Prosper</span>
-                        <span className="inline-block mr-4 text-accent">→</span>
-                        <span className="inline-block text-accent animate-pulse">
+                        <span className="inline-block mr-4 text-secondary">→</span>
+                        <span className="inline-block text-secondary animate-pulse">
                             {morphingText}
                         </span>
                     </motion.h1>
@@ -317,7 +317,7 @@ const MutualFunds = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl"
+                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Start SIP
@@ -326,7 +326,7 @@ const MutualFunds = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white hover:bg-white text-accent hover:text-accent font-semibold px-8 py-4 text-xl"
+                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Explore Funds
@@ -358,7 +358,7 @@ const MutualFunds = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <Calculator className="h-6 w-6 mr-2 text-accent" />
+                                    <Calculator className="h-6 w-6 mr-2 text-secondary" />
                                     Calculate Your Returns
                                 </CardTitle>
                             </CardHeader>
@@ -424,10 +424,10 @@ const MutualFunds = () => {
 
                         {/* Results Display */}
                         <div className="space-y-6">
-                            <Card className="premium-card bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
+                            <Card className="premium-card bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
                                 <CardContent className="p-6">
                                     <div className="text-center">
-                                        <div className="text-3xl font-playfair font-bold text-accent mb-2">
+                                        <div className="text-3xl font-playfair font-bold text-secondary mb-2">
                                             ₹{totalValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
                                         <p className="text-muted-foreground font-crimson">Total Value</p>
@@ -506,7 +506,7 @@ const MutualFunds = () => {
                         {fundTypes.map((fund, index) => (
                             <motion.div key={fund.id} variants={zoomIn}>
                                 <Card
-                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedFund === fund.id ? 'border-accent/50 bg-accent/5' : ''
+                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedFund === fund.id ? 'border-secondary/50 bg-secondary/5' : ''
                                         }`}
                                     onClick={() => setSelectedFund(fund.id)}
                                     style={{
@@ -517,7 +517,7 @@ const MutualFunds = () => {
 
                                     <CardHeader className="relative z-10">
                                         <div className="flex items-center justify-between mb-4">
-                                            <fund.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                            <fund.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
                                             <Badge className={`${fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
                                                 fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
                                                     'bg-green-500/20 text-green-600'
@@ -525,7 +525,7 @@ const MutualFunds = () => {
                                                 {fund.risk} Risk
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                             {fund.title}
                                         </CardTitle>
                                     </CardHeader>
@@ -538,20 +538,20 @@ const MutualFunds = () => {
                                         <div className="mb-4">
                                             <div className="flex justify-between items-center mb-2">
                                                 <span className="text-base text-muted-foreground">Expected Returns</span>
-                                                <span className="font-semibold text-accent text-lg">{fund.returns}</span>
+                                                <span className="font-semibold text-secondary text-lg">{fund.returns}</span>
                                             </div>
                                         </div>
 
                                         <div className="space-y-2 mb-6">
                                             {fund.features.map((feature, idx) => (
                                                 <div key={idx} className="flex items-center text-base">
-                                                    <div className="w-2 h-2 bg-accent rounded-full mr-3 flex-shrink-0" />
+                                                    <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
                                                     <span className="text-muted-foreground">{feature}</span>
                                                 </div>
                                             ))}
                                         </div>
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Explore Funds
                                             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -598,7 +598,7 @@ const MutualFunds = () => {
                                 >
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-2">
-                                            <Badge className="bg-accent/20 text-accent border-accent/30">
+                                            <Badge className="bg-secondary/20 text-secondary border-secondary/30">
                                                 {fund.category}
                                             </Badge>
                                             <div className="flex items-center">
@@ -633,7 +633,7 @@ const MutualFunds = () => {
                                             </div>
                                         </div>
 
-                                        <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                        <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Invest Now
                                             <ArrowRight className="ml-2 h-5 w-5" />
                                         </Button>
@@ -646,7 +646,7 @@ const MutualFunds = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h2
                         ref={ctaHeadingRef}
@@ -667,7 +667,7 @@ const MutualFunds = () => {
                         Begin with as little as ₹500 and watch your wealth grow
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl" onClick={openPopup}>
+                        <Button size="lg" className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                             Start SIP
                         </Button>
                         <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>

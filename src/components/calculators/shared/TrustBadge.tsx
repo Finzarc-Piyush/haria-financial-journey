@@ -25,7 +25,7 @@ const TrustBadge: React.FC<TrustBadgeProps> = ({
             {certifications.map(cert => (
                 <span key={cert} className="font-crimson text-sm md:text-base bg-champagne/80 text-foreground rounded-full px-3 py-1 shadow animate-fade-in">{cert}</span>
             ))}
-            <span className="font-crimson text-sm md:text-base bg-accent/20 text-accent rounded-full px-3 py-1 shadow animate-fade-in">{sebi}</span>
+            <span className="font-crimson text-sm md:text-base bg-secondary/20 text-secondary rounded-full px-3 py-1 shadow animate-fade-in">{sebi}</span>
             <span className="font-crimson text-sm md:text-base bg-secondary/60 text-secondary-foreground rounded-full px-3 py-1 shadow animate-fade-in">{testimonials}</span>
         </div>
     );

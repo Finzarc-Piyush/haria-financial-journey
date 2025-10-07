@@ -217,7 +217,7 @@ const CommodityTrading = () => {
                     <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Trade Smart,</span>
                         <br />
-                        <span className="inline-block text-accent animate-pulse">Trade Secure</span>
+                        <span className="inline-block text-secondary animate-pulse">Trade Secure</span>
                     </motion.h1>
 
                     <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-base sm:text-lg md:text-2xl font-crimson mb-8 text-white/90">
@@ -259,7 +259,7 @@ const CommodityTrading = () => {
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Start Trading
@@ -268,7 +268,7 @@ const CommodityTrading = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-secondary hover:bg-white hover:text-secondary font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Demo Account
@@ -295,7 +295,7 @@ const CommodityTrading = () => {
                                 <TabsTrigger
                                     key={product.id}
                                     value={product.id}
-                                    className="data-[state=active]:bg-accent data-[state=active]:text-accent-foreground"
+                                    className="data-[state=active]:bg-secondary data-[state=active]:text-secondary-foreground"
                                 >
                                     <product.icon className="h-4 w-4 mr-2" />
                                     {product.title}
@@ -317,7 +317,7 @@ const CommodityTrading = () => {
                                         <div className="space-y-4 mb-8">
                                             {product.features.map((feature, index) => (
                                                 <motion.div key={index} variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="flex items-center">
-                                                    <CheckCircle className="h-5 w-5 text-accent mr-3 flex-shrink-0" />
+                                                    <CheckCircle className="h-5 w-5 text-secondary mr-3 flex-shrink-0" />
                                                     <span className="text-foreground">{feature}</span>
                                                 </motion.div>
                                             ))}
@@ -327,7 +327,7 @@ const CommodityTrading = () => {
                                             <h4 className="font-semibold text-foreground">Popular Examples:</h4>
                                             <div className="flex flex-wrap gap-2">
                                                 {product.examples.map((example, index) => (
-                                                    <Badge key={index} variant="secondary" className="bg-accent/20 text-accent border-accent/30">
+                                                    <Badge key={index} variant="secondary" className="bg-secondary/20 text-secondary border-secondary/30">
                                                         {example}
                                                     </Badge>
                                                 ))}
@@ -338,7 +338,7 @@ const CommodityTrading = () => {
                                     <Card className="premium-card">
                                         <CardHeader>
                                             <CardTitle className="text-2xl font-playfair flex items-center">
-                                                <product.icon className="h-6 w-6 mr-2 text-accent" />
+                                                <product.icon className="h-6 w-6 mr-2 text-secondary" />
                                                 {product.title} Calculator
                                             </CardTitle>
                                         </CardHeader>
@@ -349,7 +349,7 @@ const CommodityTrading = () => {
                                                     <div className="text-base text-muted-foreground">Brokerage</div>
                                                 </div>
                                                 <div className="text-center p-4 bg-muted/50 rounded-lg">
-                                                    <div className="text-2xl font-playfair font-bold text-accent">24/7</div>
+                                                    <div className="text-2xl font-playfair font-bold text-secondary">24/7</div>
                                                     <div className="text-base text-muted-foreground">Trading</div>
                                                 </div>
                                             </div>
@@ -357,7 +357,7 @@ const CommodityTrading = () => {
                                             <div className="space-y-4">
                                                 <div>
                                                     <Label className="text-base font-semibold text-foreground">Margin Required</Label>
-                                                    <div className="text-lg font-semibold text-accent mt-1">5-20%</div>
+                                                    <div className="text-lg font-semibold text-secondary mt-1">5-20%</div>
                                                 </div>
                                                 <div>
                                                     <Label className="text-base font-semibold text-foreground">Settlement</Label>
@@ -365,7 +365,7 @@ const CommodityTrading = () => {
                                                 </div>
                                             </div>
 
-                                            <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                            <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                                 Start Trading {product.title}
                                                 <ArrowRight className="ml-2 h-4 w-4" />
                                             </Button>
@@ -402,7 +402,7 @@ const CommodityTrading = () => {
                                 <Card className="premium-card hover:scale-105 transition-all duration-500 cursor-pointer">
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-4">
-                                            <strategy.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                            <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
                                             <Badge className={`${strategy.risk === 'Very Low' ? 'bg-green-500/20 text-green-600' :
                                                 strategy.risk === 'Low' ? 'bg-blue-500/20 text-blue-600' :
                                                     strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
@@ -412,7 +412,7 @@ const CommodityTrading = () => {
                                                 {strategy.risk}
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                             {strategy.name}
                                         </CardTitle>
                                     </CardHeader>
@@ -425,7 +425,7 @@ const CommodityTrading = () => {
                                         <div className="space-y-3 mb-6">
                                             <div className="flex justify-between items-center">
                                                 <span className="text-base text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-accent">{strategy.successRate}%</span>
+                                                <span className="font-semibold text-secondary">{strategy.successRate}%</span>
                                             </div>
                                             <Progress value={strategy.successRate} className="h-2" />
 
@@ -435,7 +435,7 @@ const CommodityTrading = () => {
                                             </div>
                                         </div>
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group-hover:scale-105 transition-all duration-300" onClick={openPopup}>
+                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground group-hover:scale-105 transition-all duration-300" onClick={openPopup}>
                                             Learn Strategy
                                             <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -464,14 +464,14 @@ const CommodityTrading = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <BarChart3 className="h-6 w-6 mr-2 text-accent" />
+                                    <BarChart3 className="h-6 w-6 mr-2 text-secondary" />
                                     Real-time P&L Calculator
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="space-y-6">
-                                    <div className="text-center p-6 bg-gradient-to-br from-accent/10 to-transparent rounded-lg">
-                                        <div className="text-3xl font-playfair font-bold text-accent mb-2">
+                                    <div className="text-center p-6 bg-gradient-to-br from-secondary/10 to-transparent rounded-lg">
+                                        <div className="text-3xl font-playfair font-bold text-secondary mb-2">
                                             ₹{pnlValue.toLocaleString()}
                                         </div>
                                         <p className="text-muted-foreground">Current P&L</p>
@@ -505,7 +505,7 @@ const CommodityTrading = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <Shield className="h-6 w-6 mr-2 text-accent" />
+                                    <Shield className="h-6 w-6 mr-2 text-secondary" />
                                     Risk Management
                                 </CardTitle>
                             </CardHeader>
@@ -553,8 +553,8 @@ const CommodityTrading = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <TrendingUp className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">Live</Badge>
+                                    <TrendingUp className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">Live</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
@@ -562,7 +562,7 @@ const CommodityTrading = () => {
                                 <p className="text-muted-foreground mb-4 text-base">
                                     Advanced charting with 50+ technical indicators
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     View Charts
                                 </Button>
                             </CardContent>
@@ -571,8 +571,8 @@ const CommodityTrading = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <Globe className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">Daily</Badge>
+                                    <Globe className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">Daily</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Market Reports</CardTitle>
                             </CardHeader>
@@ -580,7 +580,7 @@ const CommodityTrading = () => {
                                 <p className="text-muted-foreground mb-4 text-base">
                                     Daily market analysis and expert recommendations
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     Read Reports
                                 </Button>
                             </CardContent>
@@ -589,8 +589,8 @@ const CommodityTrading = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <Users className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">Expert</Badge>
+                                    <Users className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">Expert</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Trading Signals</CardTitle>
                             </CardHeader>
@@ -598,7 +598,7 @@ const CommodityTrading = () => {
                                 <p className="text-muted-foreground mb-4 text-base">
                                     AI-powered trading signals and alerts
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     Get Signals
                                 </Button>
                             </CardContent>
@@ -608,7 +608,7 @@ const CommodityTrading = () => {
             </motion.section>
 
             {/* CTA Section */}
-            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-gradient-accent">
+            <motion.section variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-4xl mx-auto text-center">
                     <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Trading Journey
@@ -617,7 +617,7 @@ const CommodityTrading = () => {
                         Join thousands of successful traders in the commodity markets
                     </p>
                     <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
+                        <Button size="lg" asChild className="bg-white text-secondary hover:bg-white/90 font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Trading Account</a>
                         </Button>
                         <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">

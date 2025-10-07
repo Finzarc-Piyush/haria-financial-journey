@@ -251,7 +251,7 @@ const FixedIncome = () => {
                     <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Steady Returns,</span>
                         <br />
-                        <span className="inline-block text-accent animate-pulse">Guaranteed Security</span>
+                        <span className="inline-block text-secondary animate-pulse">Guaranteed Security</span>
                     </motion.h1>
 
                     <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
@@ -261,8 +261,8 @@ const FixedIncome = () => {
                     {/* Trust Seal Animation */}
                     <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto">
                         <div className="flex items-center justify-center space-x-4">
-                            <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center animate-pulse">
-                                <Shield className="h-6 w-6 text-accent" />
+                            <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center animate-pulse">
+                                <Shield className="h-6 w-6 text-secondary" />
                             </div>
                             <div className="text-left">
                                 <div className="font-semibold text-white">Capital Protection</div>
@@ -274,7 +274,7 @@ const FixedIncome = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Invest Now
@@ -283,7 +283,7 @@ const FixedIncome = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Compare Rates
@@ -308,7 +308,7 @@ const FixedIncome = () => {
                         {products.map((product, index) => (
                             <motion.div
                                 key={product.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedProduct === product.id ? 'border-accent/50 bg-accent/5' : ''
+                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedProduct(product.id)}
                                 style={{
@@ -319,12 +319,12 @@ const FixedIncome = () => {
 
                                 <CardHeader className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
-                                        <Badge className="bg-accent/20 text-accent border-accent/30">
+                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                        <Badge className="bg-secondary/20 text-secondary border-secondary/30">
                                             {product.rate}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                         {product.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -341,20 +341,20 @@ const FixedIncome = () => {
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-base text-muted-foreground">Min Amount</span>
-                                            <span className="font-semibold text-accent text-lg">{product.minAmount}</span>
+                                            <span className="font-semibold text-secondary text-lg">{product.minAmount}</span>
                                         </div>
                                     </div>
 
                                     <div className="space-y-2 mb-6">
                                         {product.features.map((feature, idx) => (
                                             <div key={idx} className="flex items-center text-sm">
-                                                <CheckCircle className="h-4 w-4 text-accent mr-2 flex-shrink-0" />
+                                                <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
                                                 <span className="text-muted-foreground text-base">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                         Invest Now
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
@@ -382,7 +382,7 @@ const FixedIncome = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <Target className="h-6 w-6 mr-2 text-accent" />
+                                    <Target className="h-6 w-6 mr-2 text-secondary" />
                                     Calculate Your Returns
                                 </CardTitle>
                             </CardHeader>
@@ -448,10 +448,10 @@ const FixedIncome = () => {
 
                         {/* Results Display */}
                         <div className="space-y-6">
-                            <Card className="premium-card bg-gradient-to-br from-accent/10 to-transparent border-accent/20">
+                            <Card className="premium-card bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
                                 <CardContent className="p-6">
                                     <div className="text-center">
-                                        <div className="text-3xl font-playfair font-bold text-accent mb-2">
+                                        <div className="text-3xl font-playfair font-bold text-secondary mb-2">
                                             ₹{maturityValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
                                         <p className="text-muted-foreground font-crimson text-lg">Maturity Value</p>
@@ -518,7 +518,7 @@ const FixedIncome = () => {
 
                     <div className="relative">
                         {/* Connecting Timeline */}
-                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-accent/30 transform -translate-y-1/2 hidden lg:block" />
+                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-secondary/30 transform -translate-y-1/2 hidden lg:block" />
 
                         <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
                             {ladderingStrategies.map((strategy, index) => (
@@ -530,7 +530,7 @@ const FixedIncome = () => {
                                 >
                                     <Card className="premium-card">
                                         <CardContent className="p-6">
-                                            <div className="text-3xl font-playfair font-bold text-accent mb-2">
+                                            <div className="text-3xl font-playfair font-bold text-secondary mb-2">
                                                 Year {strategy.year}
                                             </div>
                                             <div className="space-y-3">
@@ -540,7 +540,7 @@ const FixedIncome = () => {
                                                 </div>
                                                 <div>
                                                     <div className="text-base text-muted-foreground">Rate</div>
-                                                    <div className="font-semibold text-accent text-lg">{strategy.rate}%</div>
+                                                    <div className="font-semibold text-secondary text-lg">{strategy.rate}%</div>
                                                 </div>
                                                 <div>
                                                     <div className="text-base text-muted-foreground">Maturity</div>
@@ -551,7 +551,7 @@ const FixedIncome = () => {
                                     </Card>
 
                                     {/* Year Badge */}
-                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-sm">
                                         {strategy.year}
                                     </div>
                                 </motion.div>
@@ -566,22 +566,22 @@ const FixedIncome = () => {
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
-                                        <TrendingUp className="h-6 w-6 text-accent" />
+                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
+                                        <TrendingUp className="h-6 w-6 text-secondary" />
                                     </div>
                                     <div className="font-semibold text-foreground">Higher Returns</div>
                                     <div className="text-base text-muted-foreground">Lock in better rates</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
-                                        <Shield className="h-6 w-6 text-accent" />
+                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
+                                        <Shield className="h-6 w-6 text-secondary" />
                                     </div>
                                     <div className="font-semibold text-foreground">Risk Management</div>
                                     <div className="text-base text-muted-foreground">Spread maturity dates</div>
                                 </div>
                                 <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-accent/20 rounded-full flex items-center justify-center">
-                                        <DollarSign className="h-6 w-6 text-accent" />
+                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
+                                        <DollarSign className="h-6 w-6 text-secondary" />
                                     </div>
                                     <div className="font-semibold text-foreground">Regular Income</div>
                                     <div className="text-base text-muted-foreground">Quarterly interest</div>
@@ -615,8 +615,8 @@ const FixedIncome = () => {
                             >
                                 <CardHeader>
                                     <div className="flex items-center justify-between mb-4">
-                                        <div className="w-12 h-12 bg-accent/20 rounded-full flex items-center justify-center">
-                                            <Building className="h-6 w-6 text-accent" />
+                                        <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                                            <Building className="h-6 w-6 text-secondary" />
                                         </div>
                                         <Badge className="bg-green-500/20 text-green-600 border-green-500/30">
                                             {bank.rating}
@@ -631,7 +631,7 @@ const FixedIncome = () => {
                                     <div className="space-y-4">
                                         <div className="flex justify-between items-center">
                                             <span className="text-base text-muted-foreground">Interest Rate</span>
-                                            <span className="font-semibold text-accent text-lg">{bank.rate}</span>
+                                            <span className="font-semibold text-secondary text-lg">{bank.rate}</span>
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-base text-muted-foreground">Min Amount</span>
@@ -643,7 +643,7 @@ const FixedIncome = () => {
                                         </div>
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                         Invest Now
                                         <ArrowRight className="ml-2 h-4 w-4" />
                                     </Button>
@@ -655,7 +655,7 @@ const FixedIncome = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Fixed Income Journey
@@ -664,7 +664,7 @@ const FixedIncome = () => {
                         Secure your future with guaranteed returns and capital protection
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
+                        <Button size="lg" asChild className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open FD Account</a>
                         </Button>
                         <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>

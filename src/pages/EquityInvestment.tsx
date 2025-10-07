@@ -217,9 +217,9 @@ const EquityInvestment = () => {
                 <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
                     <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
                         <span className="inline-block mr-4">Build Wealth Through</span>
-                        <span className="inline-block text-accent animate-pulse">Strategic</span>
+                        <span className="inline-block text-secondary animate-pulse">Strategic</span>
                         <br />
-                        <span className="inline-block text-accent">Equity Investment</span>
+                        <span className="inline-block text-secondary">Equity Investment</span>
                     </motion.h1>
 
                     <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
@@ -246,7 +246,7 @@ const EquityInvestment = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl"
+                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Start Investing
@@ -255,7 +255,7 @@ const EquityInvestment = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-xl"
+                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-xl"
                             onClick={openPopup}
                         >
                             Get Portfolio Review
@@ -281,7 +281,7 @@ const EquityInvestment = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <Search className="h-6 w-6 mr-2 text-accent" />
+                                    <Search className="h-6 w-6 mr-2 text-secondary" />
                                     Find Your Perfect Stock
                                 </CardTitle>
                             </CardHeader>
@@ -305,12 +305,12 @@ const EquityInvestment = () => {
                                         <div className="text-lg text-muted-foreground">Stocks Available</div>
                                     </div>
                                     <div className="text-center p-4 bg-muted/50 rounded-lg">
-                                        <div className="text-2xl font-playfair font-bold text-accent">₹0</div>
+                                        <div className="text-2xl font-playfair font-bold text-secondary">₹0</div>
                                         <div className="text-lg text-muted-foreground">Brokerage Fee</div>
                                     </div>
                                 </div>
 
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Explore Stocks
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
@@ -321,7 +321,7 @@ const EquityInvestment = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <PieChart className="h-6 w-6 mr-2 text-accent" />
+                                    <PieChart className="h-6 w-6 mr-2 text-secondary" />
                                     Portfolio Diversification
                                 </CardTitle>
                             </CardHeader>
@@ -346,7 +346,7 @@ const EquityInvestment = () => {
                                     ))}
                                 </div>
 
-                                <div className="mt-6 p-4 bg-accent/10 rounded-lg">
+                                <div className="mt-6 p-4 bg-secondary/10 rounded-lg">
                                     <div className="flex justify-between items-center">
                                         <span className="text-sm text-muted-foreground">Portfolio Value</span>
                                         <span className="font-semibold text-foreground">₹{portfolioValue.toLocaleString()}</span>
@@ -379,7 +379,7 @@ const EquityInvestment = () => {
                         {investmentStrategies.map((strategy, index) => (
                             <Card
                                 key={strategy.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden ${selectedStrategy === strategy.id ? 'border-accent/50 bg-accent/5' : ''
+                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedStrategy(strategy.id)}
                                 style={{
@@ -388,7 +388,7 @@ const EquityInvestment = () => {
                             >
                                 <CardHeader className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <strategy.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                        <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
                                         <Badge className={`${strategy.risk === 'Very High' ? 'bg-red-500/20 text-red-600' :
                                             strategy.risk === 'High' ? 'bg-orange-500/20 text-orange-600' :
                                                 strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
@@ -397,7 +397,7 @@ const EquityInvestment = () => {
                                             {strategy.risk}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                         {strategy.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -410,7 +410,7 @@ const EquityInvestment = () => {
                                     <div className="mb-4">
                                         <div className="flex justify-between items-center mb-2">
                                             <span className="text-base text-muted-foreground">Success Rate</span>
-                                            <span className="font-semibold text-accent text-lg">{strategy.successRate}%</span>
+                                            <span className="font-semibold text-secondary text-lg">{strategy.successRate}%</span>
                                         </div>
                                         <Progress value={strategy.successRate} className="h-2" />
                                     </div>
@@ -425,13 +425,13 @@ const EquityInvestment = () => {
                                     <div className="space-y-2 mb-6">
                                         {strategy.features.map((feature, idx) => (
                                             <div key={idx} className="flex items-center text-base">
-                                                <div className="w-2 h-2 bg-accent rounded-full mr-3 flex-shrink-0" />
+                                                <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
                                                 <span className="text-muted-foreground">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                         Learn More
                                         <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                                     </Button>
@@ -460,14 +460,14 @@ const EquityInvestment = () => {
                                 }}
                             >
                                 <CardHeader className="text-center">
-                                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-accent/20 flex items-center justify-center">
-                                        <Users className="h-10 w-10 text-accent" />
+                                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-secondary/20 flex items-center justify-center">
+                                        <Users className="h-10 w-10 text-secondary" />
                                     </div>
                                     <CardTitle className="text-2xl font-playfair text-foreground">
                                         {advisor.name}
                                     </CardTitle>
                                     <p className="text-muted-foreground text-lg">{advisor.role}</p>
-                                    <p className="text-base text-accent font-semibold">{advisor.experience}</p>
+                                    <p className="text-base text-secondary font-semibold">{advisor.experience}</p>
                                 </CardHeader>
 
                                 <CardContent className="text-center">
@@ -475,7 +475,7 @@ const EquityInvestment = () => {
                                         <div>
                                             <div className="flex justify-between items-center mb-2">
                                                 <span className="text-base text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-accent text-lg">{advisor.successRate}%</span>
+                                                <span className="font-semibold text-secondary text-lg">{advisor.successRate}%</span>
                                             </div>
                                             <Progress value={advisor.successRate} className="h-2" />
                                         </div>
@@ -486,7 +486,7 @@ const EquityInvestment = () => {
                                         </div>
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                         Book Consultation
                                         <ArrowRight className="ml-2 h-5 w-5" />
                                     </Button>
@@ -513,8 +513,8 @@ const EquityInvestment = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <BarChart3 className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">Pro</Badge>
+                                    <BarChart3 className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">Pro</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
@@ -522,7 +522,7 @@ const EquityInvestment = () => {
                                 <p className="text-muted-foreground mb-4 text-lg">
                                     Advanced charting tools with 50+ technical indicators
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Explore Tools
                                 </Button>
                             </CardContent>
@@ -531,8 +531,8 @@ const EquityInvestment = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <Target className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">New</Badge>
+                                    <Target className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">New</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Risk Assessment</CardTitle>
                             </CardHeader>
@@ -540,7 +540,7 @@ const EquityInvestment = () => {
                                 <p className="text-muted-foreground mb-4 text-lg">
                                     AI-powered risk analysis and portfolio stress testing
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Assess Risk
                                 </Button>
                             </CardContent>
@@ -549,8 +549,8 @@ const EquityInvestment = () => {
                         <Card className="premium-card">
                             <CardHeader>
                                 <div className="flex items-center justify-between">
-                                    <Zap className="h-8 w-8 text-accent" />
-                                    <Badge className="bg-accent/20 text-accent">Live</Badge>
+                                    <Zap className="h-8 w-8 text-secondary" />
+                                    <Badge className="bg-secondary/20 text-secondary">Live</Badge>
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Market Insights</CardTitle>
                             </CardHeader>
@@ -558,7 +558,7 @@ const EquityInvestment = () => {
                                 <p className="text-muted-foreground mb-4 text-lg">
                                     Real-time market analysis and expert recommendations
                                 </p>
-                                <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground" onClick={openPopup}>
+                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Get Insights
                                 </Button>
                             </CardContent>
@@ -568,7 +568,7 @@ const EquityInvestment = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
                         Start Your Equity Investment Journey
@@ -577,7 +577,7 @@ const EquityInvestment = () => {
                         Join thousands of successful investors building wealth through stocks
                     </motion.p>
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl">
+                        <Button size="lg" asChild className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl">
                             <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Demat Account</a>
                         </Button>
                         <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">

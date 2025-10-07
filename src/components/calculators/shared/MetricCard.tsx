@@ -37,7 +37,7 @@ const MetricCard: React.FC<MetricCardProps> = ({ label, value, currency, icon, d
             transition={{ duration: 0.5, delay }}
             layout
         >
-            {icon && <div className="mb-1 text-xl text-accent">{icon}</div>}
+            {icon && <div className="mb-1 text-xl text-secondary">{icon}</div>}
             <span className="font-playfair text-xl md:text-2xl text-foreground font-bold">
                 {currency ? '₹' : ''}
                 <motion.span style={{ display: 'inline-block' }}>{formattedValue}</motion.span>

@@ -15,7 +15,7 @@ interface CalculatorInputProps {
     disabled?: boolean;
 }
 
-const ACCENT_COLOR = 'hsl(var(--accent))';
+const SECONDARY_COLOR = 'hsl(var(--secondary))';
 
 const formatCurrency = (val: number | string) => {
     const num = typeof val === 'string' ? Number(val) : val;
@@ -64,7 +64,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                     value={value}
                     onChange={(e) => onChange(Number(e.target.value))}
                     className={`w-full px-3 py-3 bg-background font-crimson text-lg rounded border-2 transition-colors duration-300
-            border-border focus:outline-none focus:border-accent ${error ? 'border-destructive' : ''}`}
+            border-border focus:outline-none focus:border-secondary ${error ? 'border-destructive' : ''}`}
                     disabled={disabled}
                 >
                     <option value="" disabled hidden>
@@ -89,7 +89,7 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                             step={step}
                             onChange={handleInputChange}
                             className={`w-full px-3 py-3 bg-background font-crimson text-lg rounded border-2 transition-colors duration-300
-              border-border focus:outline-none focus:border-accent ${error ? 'border-destructive' : ''}`}
+              border-border focus:outline-none focus:border-secondary ${error ? 'border-destructive' : ''}`}
                             disabled={disabled}
                             aria-invalid={!!error}
                             aria-describedby={error ? `${name}-error` : undefined}
@@ -109,9 +109,9 @@ const CalculatorInput: React.FC<CalculatorInputProps> = ({
                                 step={step || 1}
                                 value={value}
                                 onChange={handleSliderChange}
-                                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50"
+                                className="w-full h-2 bg-muted rounded-lg appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-secondary/50"
                                 style={{
-                                    background: `linear-gradient(to right, hsl(var(--accent)) 0%, hsl(var(--accent)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) 100%)`,
+                                    background: `linear-gradient(to right, hsl(var(--secondary)) 0%, hsl(var(--secondary)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) ${((Number(value) - min) / (max - min)) * 100}%, hsl(var(--muted)) 100%)`,
                                 }}
                                 disabled={disabled}
                             />

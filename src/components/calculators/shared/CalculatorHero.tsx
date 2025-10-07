@@ -22,7 +22,7 @@ const CalculatorHero: React.FC<CalculatorHeroProps> = ({
     icon,
     badges,
 }) => (
-    <div className="w-full min-h-[270px] bg-gradient-to-br from-background via-champagne/30 to-accent/10 flex flex-col items-center justify-center pt-0 pb-10 relative overflow-hidden">
+    <div className="w-full min-h-[270px] bg-gradient-to-br from-background via-champagne/30 to-secondary/10 flex flex-col items-center justify-center pt-0 pb-10 relative overflow-hidden">
         {/* Subtle SVG Dot Background */}
         <div
             className="absolute inset-0 opacity-20"
@@ -75,7 +75,7 @@ const CalculatorHero: React.FC<CalculatorHeroProps> = ({
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
-                    className="font-playfair text-3xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent"
+                    className="font-playfair text-3xl md:text-5xl font-bold mb-2 bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent"
                 >
                     {title}
                 </motion.h1>

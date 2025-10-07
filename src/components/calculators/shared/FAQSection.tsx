@@ -22,7 +22,7 @@ const FAQSection: React.FC<FAQSectionProps> = ({ faqs, delay = 0 }) => {
                 transition={{ duration: 0.6, delay }}
                 className="bg-card/80 rounded-xl shadow-card p-6"
             >
-                <h2 className="font-playfair text-3xl md:text-4xl font-bold bg-gradient-to-r from-accent to-secondary bg-clip-text text-transparent mb-6 text-center">Frequently Asked Questions</h2>
+                <h2 className="font-playfair text-3xl md:text-4xl font-bold bg-gradient-to-r from-secondary to-tertiary bg-clip-text text-transparent mb-6 text-center">Frequently Asked Questions</h2>
                 <div className="space-y-4">
                     {faqs.map((faq, i) => (
                         <motion.div

@@ -95,9 +95,9 @@ const PortfolioManagement = () => {
                         className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6"
                     >
                         <span className="inline-block mr-4">Professional</span>
-                        <span className="inline-block text-accent animate-pulse">Portfolio</span>
+                        <span className="inline-block text-secondary animate-pulse">Portfolio</span>
                         <br />
-                        <span className="inline-block text-accent">Management Services</span>
+                        <span className="inline-block text-secondary">Management Services</span>
                     </motion.h1>
 
                     <motion.p
@@ -113,7 +113,7 @@ const PortfolioManagement = () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-lg"
+                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Get Started
@@ -121,7 +121,7 @@ const PortfolioManagement = () => {
                         <Button
                             size="lg"
                             variant="outline"
-                            className="border-white text-accent hover:bg-white hover:text-accent font-semibold px-8 py-4 text-lg"
+                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-lg"
                             onClick={openPopup}
                         >
                             Schedule Consultation
@@ -153,7 +153,7 @@ const PortfolioManagement = () => {
                             <Card className="premium-card" key={feature.title}>
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-playfair flex items-center">
-                                        <feature.icon className="h-8 w-8 mr-3 text-accent" />
+                                        <feature.icon className="h-8 w-8 mr-3 text-secondary" />
                                         {feature.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -189,7 +189,7 @@ const PortfolioManagement = () => {
                             <Card className="premium-card" key={type.title}>
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-playfair flex items-center">
-                                        <type.icon className="h-8 w-8 mr-3 text-accent" />
+                                        <type.icon className="h-8 w-8 mr-3 text-secondary" />
                                         {type.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -203,7 +203,7 @@ const PortfolioManagement = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-to-r from-accent to-secondary">
+            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-3xl mx-auto text-center">
                     <motion.h2
                         variants={slideUp}
@@ -223,7 +223,7 @@ const PortfolioManagement = () => {
                     >
                         Contact our experts for a personalized consultation and take the first step towards financial growth.
                     </motion.p>
-                    <Button size="lg" className="bg-white text-accent font-semibold px-8 py-4 text-lg hover:bg-gray-100" onClick={openPopup}>
+                    <Button size="lg" className="bg-white text-secondary font-crimson font-semibold px-8 py-4 text-lg hover:bg-gray-100" onClick={openPopup}>
                         Schedule Consultation
                     </Button>
                 </div>

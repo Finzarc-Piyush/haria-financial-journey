@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -209,10 +210,12 @@ const LifeInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
+            <Navigation isTransparent={heroInView} />
+
             {/* Hero Section */}
             <section
                 id="hero"
-                className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8"
+                className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0"
                 style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
             >
                 {/* Background Image */}
@@ -243,7 +246,7 @@ const LifeInsurance = () => {
 
                     <Button
                         size="lg"
-                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-semibold px-8 py-4 text-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
                         onClick={openPopup}
                     >
                         Get Free Consultation
@@ -300,21 +303,21 @@ const LifeInsurance = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, delay: index * 0.12 }}
-                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 hover:scale-105 hover:ring-2 hover:ring-accent/30"
+                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30 hover:scale-105 hover:ring-2 hover:ring-secondary/30"
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-accent/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                                 <CardHeader id={product.id}
                                     className="relative z-10"
                                 >
                                     <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
-                                        <Badge className="bg-accent/20 text-accent border-accent/30">
+                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                        <Badge className="bg-secondary text-secondary-foreground border-secondary/30">
                                             Popular
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                         {product.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -331,20 +334,20 @@ const LifeInsurance = () => {
                                         </div>
                                         <div className="flex justify-between items-center">
                                             <span className="text-lg text-muted-foreground">Premium</span>
-                                            <span className="font-semibold text-accent text-lg">{product.premium}</span>
+                                            <span className="font-semibold text-secondary text-lg">{product.premium}</span>
                                         </div>
                                     </div>
 
                                     <div className="mt-6 space-y-2">
                                         {product.features.map((feature, idx) => (
                                             <div key={idx} className="flex items-center text-lg">
-                                                <CheckCircle className="h-5 w-5 text-accent mr-2 flex-shrink-0" />
+                                                <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0" />
                                                 <span className="text-muted-foreground">{feature}</span>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <Button className="w-full mt-6 bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                         Learn More
                                         <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                     </Button>
@@ -378,7 +381,7 @@ const LifeInsurance = () => {
                                     <div key={index} className="w-full flex-shrink-0 text-center px-4">
                                         <div className="flex justify-center mb-4">
                                             {[...Array(testimonial.rating)].map((_, i) => (
-                                                <Star key={i} className="h-6 w-6 text-accent fill-current" />
+                                                <Star key={i} className="h-6 w-6 text-secondary fill-current" />
                                             ))}
                                         </div>
                                         <p className="text-xl md:text-2xl font-crimson text-foreground mb-6 italic">
@@ -402,7 +405,7 @@ const LifeInsurance = () => {
                             {testimonials.map((_, index) => (
                                 <button
                                     key={index}
-                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === testimonialIndex ? 'bg-accent' : 'bg-muted'
+                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === testimonialIndex ? 'bg-secondary' : 'bg-muted'
                                         }`}
                                     onClick={() => setTestimonialIndex(index)}
                                 />
@@ -414,7 +417,7 @@ const LifeInsurance = () => {
 
             {/* Process Flow Section */}
             <section
-                className="py-20 px-4 bg-gradient-accent"
+                className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary"
                 style={{ transition: 'opacity 0.8s cubic-bezier(0.4,0,0.2,1), transform 0.8s cubic-bezier(0.4,0,0.2,1)' }}
             >
                 <div className="max-w-6xl mx-auto">
@@ -452,7 +455,7 @@ const LifeInsurance = () => {
                             >
                                 <div className="relative z-10">
                                     <div className="inline-flex items-center justify-center w-16 h-16 bg-white rounded-full mb-6 mx-auto shadow-lg">
-                                        <step.icon className="h-8 w-8 text-accent" />
+                                        <step.icon className="h-8 w-8 text-secondary" />
                                     </div>
                                     <h3 className="text-xl font-playfair font-bold text-white mb-3">
                                         {step.title}
@@ -463,7 +466,7 @@ const LifeInsurance = () => {
                                 </div>
 
                                 {/* Step Number */}
-                                <div className="absolute -top-2 -right-2 w-8 h-8 bg-accent rounded-full flex items-center justify-center text-white font-bold text-sm">
+                                <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-sm">
                                     {index + 1}
                                 </div>
                             </motion.div>
@@ -491,10 +494,10 @@ const LifeInsurance = () => {
                             Get a free consultation and personalized quote today
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl" onClick={openPopup}>
+                            <Button size="lg" className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Get Free Quote
                             </Button>
-                            <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground font-semibold px-8 py-4 text-xl" onClick={openPopup}>
+                            <Button size="lg" variant="outline" className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Schedule Consultation
                             </Button>
                         </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState, useRef } from "react";
+import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -222,8 +223,10 @@ const GeneralInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
+            <Navigation isTransparent={heroInView} />
+
             {/* Hero Section */}
-            <section id="hero" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
                 {/* Background Image */}
                 <div
                     className="absolute inset-0 bg-cover bg-center"
@@ -300,7 +303,7 @@ const GeneralInsurance = () => {
                     </motion.div>
                     <Button
                         asChild
-                        className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-4 text-xl hover:scale-105"
+                        className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-8 py-4 text-xl hover:scale-105"
                         onClick={openPopup}
                     >
                         <motion.button
@@ -369,7 +372,7 @@ const GeneralInsurance = () => {
                             >
                                 <Card
                                     key={index}
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-accent/50 overflow-hidden relative h-full"
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden relative h-full"
                                     style={{
                                         animationDelay: `${index * 0.1}s`,
                                         transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
@@ -384,18 +387,18 @@ const GeneralInsurance = () => {
                                     <CardHeader className="relative z-10">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="relative">
-                                                <subCategory.icon className="h-12 w-12 text-accent group-hover:scale-110 transition-transform duration-300" />
+                                                <subCategory.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
                                                 {subCategory.badge === "99% claims settled" && (
                                                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                                                         <CheckCircle className="h-3 w-3 text-white" />
                                                     </div>
                                                 )}
                                             </div>
-                                            <Badge className="bg-accent/20 text-accent border-accent/30 animate-pulse">
+                                            <Badge className="bg-secondary/20 text-secondary border-secondary/30 animate-pulse">
                                                 {subCategory.badge}
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-accent transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
                                             {subCategory.name}
                                         </CardTitle>
                                     </CardHeader>
@@ -410,18 +413,18 @@ const GeneralInsurance = () => {
                                             <div className="mb-6">
                                                 <div className="flex justify-between text-sm mb-2">
                                                     <span className="text-muted-foreground">Claims Settlement Rate</span>
-                                                    <span className="font-semibold text-accent">99%</span>
+                                                    <span className="font-semibold text-secondary">99%</span>
                                                 </div>
                                                 <div className="w-full bg-muted rounded-full h-2">
                                                     <div
-                                                        className="bg-gradient-to-r from-green-500 to-accent h-2 rounded-full transition-all duration-1000 ease-out"
+                                                        className="bg-gradient-to-r from-green-500 to-secondary h-2 rounded-full transition-all duration-1000 ease-out"
                                                         style={{ width: '99%' }}
                                                     />
                                                 </div>
                                             </div>
                                         )}
 
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Get Quote
                                             <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                                         </Button>
@@ -472,8 +475,8 @@ const GeneralInsurance = () => {
                                     transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                                 >
                                     <div className="text-center">
-                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-accent/20 rounded-full mb-4">
-                                            <Shield className="h-8 w-8 text-accent" />
+                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary/20 rounded-full mb-4">
+                                            <Shield className="h-8 w-8 text-secondary" />
                                         </div>
                                         <h4 className="font-playfair font-semibold text-foreground mb-2 text-lg">Comprehensive Coverage</h4>
                                         <p className="text-lg text-muted-foreground font-crimson">
@@ -515,7 +518,7 @@ const GeneralInsurance = () => {
                         <TabsList ref={tabsListRef} className="grid w-full grid-cols-4 bg-muted/50 relative overflow-hidden">
                             {/* Sliding indicator */}
                             <motion.div
-                                className="absolute top-0 left-0 h-full rounded-md bg-accent z-0 transition-colors"
+                                className="absolute top-0 left-0 h-full rounded-md bg-secondary z-0 transition-colors"
                                 animate={{ left: activeTabRect.left, width: activeTabRect.width }}
                                 transition={{ type: 'tween', duration: 0.45, ease: [0.42, 0, 0.58, 1] }}
                                 style={{ pointerEvents: 'none' }}
@@ -525,7 +528,7 @@ const GeneralInsurance = () => {
                                     key={service.id}
                                     value={service.id}
                                     ref={el => (tabRefs.current[service.id] = el)}
-                                    className="data-[state=active]:bg-transparent data-[state=active]:text-accent-foreground data-[state=active]:z-10 relative transition-colors text-lg"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:text-secondary-foreground data-[state=active]:z-10 relative transition-colors text-lg"
                                 >
                                     <service.icon className="h-4 w-4 mr-2" />
                                     <span className="md:hidden">{service.title.split(' ')[0]}</span>
@@ -565,7 +568,7 @@ const GeneralInsurance = () => {
                                             >
                                                 <CardHeader>
                                                     <div className="flex items-center justify-between">
-                                                        <subCategory.icon className="h-8 w-8 text-accent" />
+                                                        <subCategory.icon className="h-8 w-8 text-secondary" />
                                                         <Badge variant="secondary">{subCategory.badge}</Badge>
                                                     </div>
                                                     <CardTitle className="text-xl font-playfair">{subCategory.name}</CardTitle>
@@ -574,7 +577,7 @@ const GeneralInsurance = () => {
                                                     <p className="text-lg text-muted-foreground font-crimson mb-4">
                                                         {subCategory.description}
                                                     </p>
-                                                    <Button size="sm" className="w-full bg-accent hover:bg-accent/90 text-accent-foreground text-lg" onClick={openPopup}>
+                                                    <Button size="sm" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                                         Learn More
                                                         <ArrowRight className="ml-2 h-4 w-4" />
                                                     </Button>
@@ -590,7 +593,7 @@ const GeneralInsurance = () => {
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-accent">
+            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
                 <div className="max-w-4xl mx-auto text-center">
                     <motion.h2
                         className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6"
@@ -631,7 +634,7 @@ const GeneralInsurance = () => {
                             viewport={{ once: true, amount: 0.3 }}
                             transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
                         >
-                            <Button size="lg" className="bg-white text-accent hover:bg-white/90 font-semibold px-8 py-4 text-xl" onClick={openPopup}>
+                            <Button size="lg" className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
                                 Get Instant Quote
                             </Button>
                         </motion.div>

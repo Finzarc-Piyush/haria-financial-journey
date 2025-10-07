@@ -8,7 +8,7 @@ interface CTAButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const baseClass =
-    'font-playfair px-6 py-3 rounded-full text-lg shadow-card transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-accent hover:scale-105 active:animate-pulse';
+    'font-playfair px-6 py-3 rounded-full text-lg shadow-card transition-transform duration-150 focus:outline-none focus:ring-2 focus:ring-secondary hover:scale-105 active:animate-pulse';
 
 export const PrimaryCTA: React.FC<CTAButtonProps> = ({ children = 'Schedule Consultation', ...props }) => (
     <button
@@ -39,7 +39,7 @@ export const DownloadCTA: React.FC<CTAButtonProps> = ({ children = 'Download', i
 
 export const SaveCTA: React.FC<CTAButtonProps> = ({ children = 'Save', icon = <FaSave />, ...props }) => (
     <button
-        className={`bg-accent text-accent-foreground ${baseClass}`}
+        className={`bg-secondary text-secondary-foreground ${baseClass}`}
         {...props}
     >
         {icon} <span className="ml-2">{children}</span>

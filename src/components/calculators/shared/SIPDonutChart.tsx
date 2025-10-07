@@ -112,7 +112,7 @@ export default function SIPDonutChart({ invested, returns }: { invested: number;
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -10 }}
                             transition={{ duration: 0.4 }}
-                            className="font-playfair text-2xl font-bold text-accent"
+                            className="font-playfair text-2xl font-bold text-secondary"
                         >
                             {isNaN(animatedCenter) || !isFinite(animatedCenter) ? 0 : Math.round(animatedCenter)}%
                         </motion.div>
