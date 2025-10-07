@@ -379,7 +379,7 @@ const EquityInvestment = () => {
                         {investmentStrategies.map((strategy, index) => (
                             <Card
                                 key={strategy.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedStrategy(strategy.id)}
                                 style={{
@@ -402,33 +402,35 @@ const EquityInvestment = () => {
                                     </CardTitle>
                                 </CardHeader>
 
-                                <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-4 font-crimson text-lg">
-                                        {strategy.description}
-                                    </p>
+                                <CardContent className="relative z-10 flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <p className="text-muted-foreground mb-4 font-crimson text-lg">
+                                            {strategy.description}
+                                        </p>
 
-                                    <div className="mb-4">
-                                        <div className="flex justify-between items-center mb-2">
-                                            <span className="text-base text-muted-foreground">Success Rate</span>
-                                            <span className="font-semibold text-secondary text-lg">{strategy.successRate}%</span>
-                                        </div>
-                                        <Progress value={strategy.successRate} className="h-2" />
-                                    </div>
-
-                                    <div className="mb-4">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Expected Returns</span>
-                                            <span className="font-semibold text-green-600 text-lg">{strategy.returns}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2 mb-6">
-                                        {strategy.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-base">
-                                                <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
-                                                <span className="text-muted-foreground">{feature}</span>
+                                        <div className="mb-4">
+                                            <div className="flex justify-between items-center mb-2">
+                                                <span className="text-base text-muted-foreground">Success Rate</span>
+                                                <span className="font-semibold text-secondary text-lg">{strategy.successRate}%</span>
                                             </div>
-                                        ))}
+                                            <Progress value={strategy.successRate} className="h-2" />
+                                        </div>
+
+                                        <div className="mb-4">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Expected Returns</span>
+                                                <span className="font-semibold text-green-600 text-lg">{strategy.returns}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2 mb-6">
+                                            {strategy.features.map((feature, idx) => (
+                                                <div key={idx} className="flex items-center text-base">
+                                                    <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
+                                                    <span className="text-muted-foreground">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
@@ -454,7 +456,7 @@ const EquityInvestment = () => {
                         {advisors.map((advisor, index) => (
                             <Card
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
                                 style={{
                                     animationDelay: `${index * 0.1}s`
                                 }}
@@ -470,19 +472,21 @@ const EquityInvestment = () => {
                                     <p className="text-base text-secondary font-semibold">{advisor.experience}</p>
                                 </CardHeader>
 
-                                <CardContent className="text-center">
-                                    <div className="space-y-4">
-                                        <div>
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-base text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-secondary text-lg">{advisor.successRate}%</span>
+                                <CardContent className="text-center flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <div className="space-y-4">
+                                            <div>
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-base text-muted-foreground">Success Rate</span>
+                                                    <span className="font-semibold text-secondary text-lg">{advisor.successRate}%</span>
+                                                </div>
+                                                <Progress value={advisor.successRate} className="h-2" />
                                             </div>
-                                            <Progress value={advisor.successRate} className="h-2" />
-                                        </div>
 
-                                        <div>
-                                            <span className="text-base text-muted-foreground">Specialization</span>
-                                            <p className="font-semibold text-foreground text-lg">{advisor.specialization}</p>
+                                            <div>
+                                                <span className="text-base text-muted-foreground">Specialization</span>
+                                                <p className="font-semibold text-foreground text-lg">{advisor.specialization}</p>
+                                            </div>
                                         </div>
                                     </div>
 

@@ -303,7 +303,7 @@ const LifeInsurance = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, delay: index * 0.12 }}
-                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30 hover:scale-105 hover:ring-2 hover:ring-secondary/30"
+                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30 hover:scale-105 hover:ring-2 hover:ring-secondary/30 flex flex-col"
                                 style={{ animationDelay: `${index * 0.1}s` }}
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -322,29 +322,31 @@ const LifeInsurance = () => {
                                     </CardTitle>
                                 </CardHeader>
 
-                                <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-6 font-crimson text-lg">
-                                        {product.description}
-                                    </p>
+                                <CardContent className="relative z-10 flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <p className="text-muted-foreground mb-6 font-crimson text-lg">
+                                            {product.description}
+                                        </p>
 
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-lg text-muted-foreground">Coverage</span>
-                                            <span className="font-semibold text-foreground text-lg">{product.coverage}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-lg text-muted-foreground">Premium</span>
-                                            <span className="font-semibold text-secondary text-lg">{product.premium}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="mt-6 space-y-2">
-                                        {product.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-lg">
-                                                <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0" />
-                                                <span className="text-muted-foreground">{feature}</span>
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-lg text-muted-foreground">Coverage</span>
+                                                <span className="font-semibold text-foreground text-lg">{product.coverage}</span>
                                             </div>
-                                        ))}
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-lg text-muted-foreground">Premium</span>
+                                                <span className="font-semibold text-secondary text-lg">{product.premium}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="mt-6 space-y-2">
+                                            {product.features.map((feature, idx) => (
+                                                <div key={idx} className="flex items-center text-lg">
+                                                    <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0" />
+                                                    <span className="text-muted-foreground">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>

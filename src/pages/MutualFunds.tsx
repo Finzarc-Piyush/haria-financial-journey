@@ -506,7 +506,7 @@ const MutualFunds = () => {
                         {fundTypes.map((fund, index) => (
                             <motion.div key={fund.id} variants={zoomIn}>
                                 <Card
-                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedFund === fund.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedFund === fund.id ? 'border-secondary/50 bg-secondary/5' : ''
                                         }`}
                                     onClick={() => setSelectedFund(fund.id)}
                                     style={{
@@ -530,25 +530,27 @@ const MutualFunds = () => {
                                         </CardTitle>
                                     </CardHeader>
 
-                                    <CardContent className="relative z-10">
-                                        <p className="text-muted-foreground mb-6 font-crimson text-xl">
-                                            {fund.description}
-                                        </p>
+                                    <CardContent className="relative z-10 flex flex-col flex-grow">
+                                        <div className="flex-grow">
+                                            <p className="text-muted-foreground mb-6 font-crimson text-xl">
+                                                {fund.description}
+                                            </p>
 
-                                        <div className="mb-4">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-base text-muted-foreground">Expected Returns</span>
-                                                <span className="font-semibold text-secondary text-lg">{fund.returns}</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2 mb-6">
-                                            {fund.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center text-base">
-                                                    <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
-                                                    <span className="text-muted-foreground">{feature}</span>
+                                            <div className="mb-4">
+                                                <div className="flex justify-between items-center mb-2">
+                                                    <span className="text-base text-muted-foreground">Expected Returns</span>
+                                                    <span className="font-semibold text-secondary text-lg">{fund.returns}</span>
                                                 </div>
-                                            ))}
+                                            </div>
+
+                                            <div className="space-y-2 mb-6">
+                                                {fund.features.map((feature, idx) => (
+                                                    <div key={idx} className="flex items-center text-base">
+                                                        <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
+                                                        <span className="text-muted-foreground">{feature}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
 
                                         <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
@@ -591,7 +593,7 @@ const MutualFunds = () => {
                         {topFunds.map((fund, index) => (
                             <motion.div key={index} variants={zoomIn}>
                                 <Card
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
                                     style={{
                                         animationDelay: `${index * 0.1}s`
                                     }}
@@ -611,25 +613,27 @@ const MutualFunds = () => {
                                         </CardTitle>
                                     </CardHeader>
 
-                                    <CardContent>
-                                        <div className="space-y-4">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">NAV</span>
-                                                <span className="font-semibold text-foreground text-lg">{fund.nav}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">1 Year Returns</span>
-                                                <span className="font-semibold text-green-600 text-lg">{fund.returns}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Risk Level</span>
-                                                <Badge variant="secondary" className={
-                                                    fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
-                                                        fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
-                                                            'bg-green-500/20 text-green-600'
-                                                }>
-                                                    {fund.risk}
-                                                </Badge>
+                                    <CardContent className="flex flex-col flex-grow">
+                                        <div className="flex-grow">
+                                            <div className="space-y-4">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-base text-muted-foreground">NAV</span>
+                                                    <span className="font-semibold text-foreground text-lg">{fund.nav}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-base text-muted-foreground">1 Year Returns</span>
+                                                    <span className="font-semibold text-green-600 text-lg">{fund.returns}</span>
+                                                </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-base text-muted-foreground">Risk Level</span>
+                                                    <Badge variant="secondary" className={
+                                                        fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
+                                                            fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
+                                                                'bg-green-500/20 text-green-600'
+                                                    }>
+                                                        {fund.risk}
+                                                    </Badge>
+                                                </div>
                                             </div>
                                         </div>
 

@@ -372,7 +372,7 @@ const GeneralInsurance = () => {
                             >
                                 <Card
                                     key={index}
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden relative h-full"
+                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden relative h-full flex flex-col"
                                     style={{
                                         animationDelay: `${index * 0.1}s`,
                                         transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
@@ -403,26 +403,28 @@ const GeneralInsurance = () => {
                                         </CardTitle>
                                     </CardHeader>
 
-                                    <CardContent className="relative z-10">
-                                        <p className="text-muted-foreground mb-6 font-crimson text-lg">
-                                            {subCategory.description}
-                                        </p>
+                                    <CardContent className="relative z-10 flex flex-col flex-grow">
+                                        <div className="flex-grow">
+                                            <p className="text-muted-foreground mb-6 font-crimson text-lg">
+                                                {subCategory.description}
+                                            </p>
 
-                                        {/* Animated Progress Bar for Claims Settlement */}
-                                        {subCategory.badge === "99% claims settled" && (
-                                            <div className="mb-6">
-                                                <div className="flex justify-between text-sm mb-2">
-                                                    <span className="text-muted-foreground">Claims Settlement Rate</span>
-                                                    <span className="font-semibold text-secondary">99%</span>
+                                            {/* Animated Progress Bar for Claims Settlement */}
+                                            {subCategory.badge === "99% claims settled" && (
+                                                <div className="mb-6">
+                                                    <div className="flex justify-between text-sm mb-2">
+                                                        <span className="text-muted-foreground">Claims Settlement Rate</span>
+                                                        <span className="font-semibold text-secondary">99%</span>
+                                                    </div>
+                                                    <div className="w-full bg-muted rounded-full h-2">
+                                                        <div
+                                                            className="bg-gradient-to-r from-green-500 to-secondary h-2 rounded-full transition-all duration-1000 ease-out"
+                                                            style={{ width: '99%' }}
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className="w-full bg-muted rounded-full h-2">
-                                                    <div
-                                                        className="bg-gradient-to-r from-green-500 to-secondary h-2 rounded-full transition-all duration-1000 ease-out"
-                                                        style={{ width: '99%' }}
-                                                    />
-                                                </div>
-                                            </div>
-                                        )}
+                                            )}
+                                        </div>
 
                                         <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Get Quote
@@ -564,7 +566,7 @@ const GeneralInsurance = () => {
                                         >
                                             <Card
                                                 key={index}
-                                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
                                             >
                                                 <CardHeader>
                                                     <div className="flex items-center justify-between">
@@ -573,10 +575,12 @@ const GeneralInsurance = () => {
                                                     </div>
                                                     <CardTitle className="text-xl font-playfair">{subCategory.name}</CardTitle>
                                                 </CardHeader>
-                                                <CardContent>
-                                                    <p className="text-lg text-muted-foreground font-crimson mb-4">
-                                                        {subCategory.description}
-                                                    </p>
+                                                <CardContent className="flex flex-col flex-grow">
+                                                    <div className="flex-grow">
+                                                        <p className="text-lg text-muted-foreground font-crimson mb-4">
+                                                            {subCategory.description}
+                                                        </p>
+                                                    </div>
                                                     <Button size="sm" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                                         Learn More
                                                         <ArrowRight className="ml-2 h-4 w-4" />

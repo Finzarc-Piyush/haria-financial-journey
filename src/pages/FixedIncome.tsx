@@ -308,7 +308,7 @@ const FixedIncome = () => {
                         {products.map((product, index) => (
                             <motion.div
                                 key={product.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedProduct(product.id)}
                                 style={{
@@ -329,29 +329,31 @@ const FixedIncome = () => {
                                     </CardTitle>
                                 </CardHeader>
 
-                                <CardContent className="relative z-10">
-                                    <p className="text-muted-foreground mb-4 font-crimson text-lg">
-                                        {product.description}
-                                    </p>
+                                <CardContent className="relative z-10 flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <p className="text-muted-foreground mb-4 font-crimson text-lg">
+                                            {product.description}
+                                        </p>
 
-                                    <div className="space-y-3 mb-6">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Tenure</span>
-                                            <span className="font-semibold text-foreground text-lg">{product.tenure}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Min Amount</span>
-                                            <span className="font-semibold text-secondary text-lg">{product.minAmount}</span>
-                                        </div>
-                                    </div>
-
-                                    <div className="space-y-2 mb-6">
-                                        {product.features.map((feature, idx) => (
-                                            <div key={idx} className="flex items-center text-sm">
-                                                <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
-                                                <span className="text-muted-foreground text-base">{feature}</span>
+                                        <div className="space-y-3 mb-6">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Tenure</span>
+                                                <span className="font-semibold text-foreground text-lg">{product.tenure}</span>
                                             </div>
-                                        ))}
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Min Amount</span>
+                                                <span className="font-semibold text-secondary text-lg">{product.minAmount}</span>
+                                            </div>
+                                        </div>
+
+                                        <div className="space-y-2 mb-6">
+                                            {product.features.map((feature, idx) => (
+                                                <div key={idx} className="flex items-center text-sm">
+                                                    <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
+                                                    <span className="text-muted-foreground text-base">{feature}</span>
+                                                </div>
+                                            ))}
+                                        </div>
                                     </div>
 
                                     <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
@@ -608,7 +610,7 @@ const FixedIncome = () => {
                         {topBanks.map((bank, index) => (
                             <Card
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer"
+                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
                                 style={{
                                     animationDelay: `${index * 0.1}s`
                                 }}
@@ -627,19 +629,21 @@ const FixedIncome = () => {
                                     </CardTitle>
                                 </CardHeader>
 
-                                <CardContent>
-                                    <div className="space-y-4">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Interest Rate</span>
-                                            <span className="font-semibold text-secondary text-lg">{bank.rate}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Min Amount</span>
-                                            <span className="font-semibold text-foreground text-lg">{bank.minAmount}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Tenure</span>
-                                            <span className="font-semibold text-foreground text-lg">{bank.tenure}</span>
+                                <CardContent className="flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <div className="space-y-4">
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Interest Rate</span>
+                                                <span className="font-semibold text-secondary text-lg">{bank.rate}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Min Amount</span>
+                                                <span className="font-semibold text-foreground text-lg">{bank.minAmount}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-base text-muted-foreground">Tenure</span>
+                                                <span className="font-semibold text-foreground text-lg">{bank.tenure}</span>
+                                            </div>
                                         </div>
                                     </div>
 
