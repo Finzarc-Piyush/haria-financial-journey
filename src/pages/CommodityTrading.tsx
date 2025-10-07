@@ -32,8 +32,6 @@ import {
     XCircle
 } from "lucide-react";
 import { motion } from "framer-motion";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -45,6 +43,7 @@ const CommodityTrading = () => {
     const [pnlValue, setPnlValue] = useState(12500);
     const [riskLevel, setRiskLevel] = useState(65);
     const [volatilityIndex, setVolatilityIndex] = useState(28);
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
     // Mock commodity data for ticker
     const commodities = [
@@ -394,15 +393,24 @@ const CommodityTrading = () => {
                         {tradingStrategies.map((strategy, index) => (
                             <motion.div
                                 key={index}
-                                variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="group"
+                                variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }} className="h-full"
                                 style={{
                                     animationDelay: `${index * 0.1}s`
                                 }}
                             >
-                                <Card className="premium-card hover:scale-105 transition-all duration-500 cursor-pointer">
+                                <Card
+                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
+                                    style={{
+                                        minHeight: '350px',
+                                        transform: hoveredCard === `commodity-strategy-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                    }}
+                                    onMouseEnter={() => setHoveredCard(`commodity-strategy-${index}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
+                                >
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-4">
-                                            <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                            <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                             <Badge className={`${strategy.risk === 'Very Low' ? 'bg-green-500/20 text-green-600' :
                                                 strategy.risk === 'Low' ? 'bg-blue-500/20 text-blue-600' :
                                                     strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
@@ -412,32 +420,34 @@ const CommodityTrading = () => {
                                                 {strategy.risk}
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                        <CardTitle className="text-xl font-playfair text-foreground">
                                             {strategy.name}
                                         </CardTitle>
                                     </CardHeader>
 
-                                    <CardContent>
-                                        <p className="text-muted-foreground mb-4 font-crimson text-base">
-                                            {strategy.description}
-                                        </p>
+                                    <CardContent className="flex flex-col flex-grow">
+                                        <div className="flex-grow flex flex-col justify-between">
+                                            <p className="text-muted-foreground mb-4 font-crimson text-base">
+                                                {strategy.description}
+                                            </p>
 
-                                        <div className="space-y-3 mb-6">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-secondary">{strategy.successRate}%</span>
-                                            </div>
-                                            <Progress value={strategy.successRate} className="h-2" />
+                                            <div className="space-y-3 mb-6">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-base text-muted-foreground">Success Rate</span>
+                                                    <span className="font-semibold text-secondary">{strategy.successRate}%</span>
+                                                </div>
+                                                <Progress value={strategy.successRate} className="h-2" />
 
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Expected Returns</span>
-                                                <span className="font-semibold text-green-600">{strategy.returns}</span>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-base text-muted-foreground">Expected Returns</span>
+                                                    <span className="font-semibold text-green-600">{strategy.returns}</span>
+                                                </div>
                                             </div>
                                         </div>
 
-                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground group-hover:scale-105 transition-all duration-300" onClick={openPopup}>
+                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground group-hover:scale-105 transition-all duration-300 ease-out mt-auto" onClick={openPopup}>
                                             Learn Strategy
-                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-300 ease-out" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -549,8 +559,16 @@ const CommodityTrading = () => {
                         </p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <Card className="premium-card">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'commodity-insight-0' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('commodity-insight-0')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <TrendingUp className="h-8 w-8 text-secondary" />
@@ -558,17 +576,27 @@ const CommodityTrading = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-base">
-                                    Advanced charting with 50+ technical indicators
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-base">
+                                        Advanced charting with 50+ technical indicators
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     View Charts
                                 </Button>
                             </CardContent>
                         </Card>
 
-                        <Card className="premium-card">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'commodity-insight-1' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('commodity-insight-1')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <Globe className="h-8 w-8 text-secondary" />
@@ -576,17 +604,27 @@ const CommodityTrading = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Market Reports</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-base">
-                                    Daily market analysis and expert recommendations
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-base">
+                                        Daily market analysis and expert recommendations
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     Read Reports
                                 </Button>
                             </CardContent>
                         </Card>
 
-                        <Card className="premium-card">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'commodity-insight-2' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('commodity-insight-2')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <Users className="h-8 w-8 text-secondary" />
@@ -594,10 +632,12 @@ const CommodityTrading = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Trading Signals</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-base">
-                                    AI-powered trading signals and alerts
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-base">
+                                        AI-powered trading signals and alerts
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground" onClick={openPopup}>
                                     Get Signals
                                 </Button>

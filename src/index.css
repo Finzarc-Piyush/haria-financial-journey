@@ -229,12 +229,15 @@ All colors MUST be HSL. Professional financial advisory theme.
     background: hsl(var(--card));
     box-shadow: var(--shadow-card);
     border-radius: var(--radius);
-    transition: var(--transition-smooth);
+    /* Remove CSS transitions - let Framer Motion handle animations */
+    transform-origin: center center;
   }
 
   .premium-card:hover {
     box-shadow: var(--shadow-elegant);
-    transform: translateY(-4px);
+    /* Remove CSS transform - let Framer Motion handle hover animations */
+    transform: scale(1.05);
+    transform-origin: center center;
   }
 }
 

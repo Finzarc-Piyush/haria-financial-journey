@@ -29,8 +29,6 @@ import {
     BarChart3
 } from "lucide-react";
 import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -44,6 +42,7 @@ const FixedIncome = () => {
     const { isOpen, openPopup, closePopup } = useContactPopup();
     const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
     const [currentStep, setCurrentStep] = useState(0);
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
     const products = [
         {
@@ -205,9 +204,9 @@ const FixedIncome = () => {
         setTotalInterest(totalInterestEarned);
     }, [investmentAmount, tenure, interestRate]);
 
-    // Initialize AOS
+    // Initialize animations
     useEffect(() => {
-        AOS.init({ duration: 600, once: true });
+        // Remove AOS initialization - using Framer Motion only
     }, []);
 
     // Laddering animation
@@ -308,23 +307,27 @@ const FixedIncome = () => {
                         {products.map((product, index) => (
                             <motion.div
                                 key={product.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                className={`group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedProduct(product.id)}
                                 style={{
-                                    animationDelay: `${index * 0.1}s`
+                                    animationDelay: `${index * 0.1}s`,
+                                    transform: hoveredCard === `fixed-income-product-${product.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                 }}
+                                onMouseEnter={() => setHoveredCard(`fixed-income-product-${product.id}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
                             >
-                                <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                                <div className={`absolute inset-0 bg-gradient-to-br ${product.color} opacity-0 group-hover:opacity-10 transition-all duration-300 ease-out`} />
 
                                 <CardHeader className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                         <Badge className="bg-secondary/20 text-secondary border-secondary/30">
                                             {product.rate}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                    <CardTitle className="text-xl font-playfair text-foreground">
                                         {product.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -358,7 +361,7 @@ const FixedIncome = () => {
 
                                     <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                         Invest Now
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-300 ease-out" />
                                     </Button>
                                 </CardContent>
                             </motion.div>
@@ -610,10 +613,14 @@ const FixedIncome = () => {
                         {topBanks.map((bank, index) => (
                             <Card
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
+                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
                                 style={{
-                                    animationDelay: `${index * 0.1}s`
+                                    animationDelay: `${index * 0.1}s`,
+                                    transform: hoveredCard === `fixed-income-bank-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                 }}
+                                onMouseEnter={() => setHoveredCard(`fixed-income-bank-${index}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
                             >
                                 <CardHeader>
                                     <div className="flex items-center justify-between mb-4">

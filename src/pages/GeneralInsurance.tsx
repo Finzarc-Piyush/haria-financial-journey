@@ -23,8 +23,6 @@ import {
     TrendingUp
 } from "lucide-react";
 import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -372,7 +370,7 @@ const GeneralInsurance = () => {
                             >
                                 <Card
                                     key={index}
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden relative h-full flex flex-col"
+                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
                                     style={{
                                         animationDelay: `${index * 0.1}s`,
                                         transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
@@ -381,13 +379,11 @@ const GeneralInsurance = () => {
                                     onMouseEnter={() => setHoveredCard(`${currentService.id}-${index}`)}
                                     onMouseLeave={() => setHoveredCard(null)}
                                 >
-                                    {/* Animated Background Gradient */}
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${currentService.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
 
                                     <CardHeader className="relative z-10">
                                         <div className="flex items-center justify-between mb-4">
                                             <div className="relative">
-                                                <subCategory.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                                <subCategory.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                                 {subCategory.badge === "99% claims settled" && (
                                                     <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
                                                         <CheckCircle className="h-3 w-3 text-white" />
@@ -398,7 +394,7 @@ const GeneralInsurance = () => {
                                                 {subCategory.badge}
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground">
                                             {subCategory.name}
                                         </CardTitle>
                                     </CardHeader>
@@ -428,7 +424,7 @@ const GeneralInsurance = () => {
 
                                         <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Get Quote
-                                            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                                            <ArrowRight className="ml-2 h-5 w-5" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -542,7 +538,7 @@ const GeneralInsurance = () => {
                         {services.map((service) => (
                             <TabsContent key={service.id} value={service.id} className="mt-8">
                                 <motion.div
-                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                                    className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true, amount: 0.3 }}
@@ -563,19 +559,27 @@ const GeneralInsurance = () => {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true, amount: 0.3 }}
                                             transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                                            className="h-full"
                                         >
                                             <Card
                                                 key={index}
-                                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
+                                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
+                                                style={{
+                                                    animationDelay: `${index * 0.1}s`,
+                                                    transform: hoveredCard === `tab-${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                                }}
+                                                onMouseEnter={() => setHoveredCard(`tab-${currentService.id}-${index}`)}
+                                                onMouseLeave={() => setHoveredCard(null)}
                                             >
-                                                <CardHeader>
+                                                <CardHeader className="relative z-10">
                                                     <div className="flex items-center justify-between">
-                                                        <subCategory.icon className="h-8 w-8 text-secondary" />
+                                                        <subCategory.icon className="h-8 w-8 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                                         <Badge variant="secondary">{subCategory.badge}</Badge>
                                                     </div>
                                                     <CardTitle className="text-xl font-playfair">{subCategory.name}</CardTitle>
                                                 </CardHeader>
-                                                <CardContent className="flex flex-col flex-grow">
+                                                <CardContent className="relative z-10 flex flex-col flex-grow">
                                                     <div className="flex-grow">
                                                         <p className="text-lg text-muted-foreground font-crimson mb-4">
                                                             {subCategory.description}

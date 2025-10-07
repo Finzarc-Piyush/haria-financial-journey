@@ -29,8 +29,6 @@ import {
     Plane
 } from "lucide-react";
 import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -43,6 +41,7 @@ const EquityInvestment = () => {
     const [marketMood, setMarketMood] = useState("bullish");
     const [portfolioValue, setPortfolioValue] = useState(1000000);
     const [portfolioGain, setPortfolioGain] = useState(125000);
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
     // Mock stock data for ticker
     const stocks = [
@@ -174,9 +173,9 @@ const EquityInvestment = () => {
         return () => clearInterval(timer);
     }, []);
 
-    // Initialize AOS
+    // Initialize animations
     useEffect(() => {
-        AOS.init({ duration: 600, once: true });
+        // Remove AOS initialization - using Framer Motion only
     }, []);
 
     const getMoodIcon = (mood: string) => {
@@ -379,16 +378,20 @@ const EquityInvestment = () => {
                         {investmentStrategies.map((strategy, index) => (
                             <Card
                                 key={strategy.id}
-                                className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                className={`group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
                                     }`}
                                 onClick={() => setSelectedStrategy(strategy.id)}
                                 style={{
-                                    animationDelay: `${index * 0.1}s`
+                                    animationDelay: `${index * 0.1}s`,
+                                    transform: hoveredCard === `equity-strategy-${strategy.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                 }}
+                                onMouseEnter={() => setHoveredCard(`equity-strategy-${strategy.id}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
                             >
                                 <CardHeader className="relative z-10">
                                     <div className="flex items-center justify-between mb-4">
-                                        <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                        <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                         <Badge className={`${strategy.risk === 'Very High' ? 'bg-red-500/20 text-red-600' :
                                             strategy.risk === 'High' ? 'bg-orange-500/20 text-orange-600' :
                                                 strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
@@ -397,7 +400,7 @@ const EquityInvestment = () => {
                                             {strategy.risk}
                                         </Badge>
                                     </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                    <CardTitle className="text-2xl font-playfair text-foreground">
                                         {strategy.title}
                                     </CardTitle>
                                 </CardHeader>
@@ -435,7 +438,7 @@ const EquityInvestment = () => {
 
                                     <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                         Learn More
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-300 ease-out" />
                                     </Button>
                                 </CardContent>
                             </Card>
@@ -456,10 +459,14 @@ const EquityInvestment = () => {
                         {advisors.map((advisor, index) => (
                             <Card
                                 key={index}
-                                className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
+                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
                                 style={{
-                                    animationDelay: `${index * 0.1}s`
+                                    animationDelay: `${index * 0.1}s`,
+                                    transform: hoveredCard === `equity-advisor-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                 }}
+                                onMouseEnter={() => setHoveredCard(`equity-advisor-${index}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
                             >
                                 <CardHeader className="text-center">
                                     <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-secondary/20 flex items-center justify-center">
@@ -513,8 +520,16 @@ const EquityInvestment = () => {
                         </motion.p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        <Card className="premium-card">
+                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'equity-feature-0' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('equity-feature-0')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <BarChart3 className="h-8 w-8 text-secondary" />
@@ -522,17 +537,27 @@ const EquityInvestment = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-lg">
-                                    Advanced charting tools with 50+ technical indicators
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-lg">
+                                        Advanced charting tools with 50+ technical indicators
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Explore Tools
                                 </Button>
                             </CardContent>
                         </Card>
 
-                        <Card className="premium-card">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'equity-feature-1' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('equity-feature-1')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <Target className="h-8 w-8 text-secondary" />
@@ -540,17 +565,27 @@ const EquityInvestment = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Risk Assessment</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-lg">
-                                    AI-powered risk analysis and portfolio stress testing
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-lg">
+                                        AI-powered risk analysis and portfolio stress testing
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Assess Risk
                                 </Button>
                             </CardContent>
                         </Card>
 
-                        <Card className="premium-card">
+                        <Card
+                            className="premium-card relative h-full flex flex-col"
+                            style={{
+                                transform: hoveredCard === 'equity-feature-2' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                            }}
+                            onMouseEnter={() => setHoveredCard('equity-feature-2')}
+                            onMouseLeave={() => setHoveredCard(null)}
+                        >
                             <CardHeader>
                                 <div className="flex items-center justify-between">
                                     <Zap className="h-8 w-8 text-secondary" />
@@ -558,10 +593,12 @@ const EquityInvestment = () => {
                                 </div>
                                 <CardTitle className="text-xl font-playfair">Market Insights</CardTitle>
                             </CardHeader>
-                            <CardContent>
-                                <p className="text-muted-foreground mb-4 text-lg">
-                                    Real-time market analysis and expert recommendations
-                                </p>
+                            <CardContent className="flex flex-col flex-grow">
+                                <div className="flex-grow">
+                                    <p className="text-muted-foreground mb-4 text-lg">
+                                        Real-time market analysis and expert recommendations
+                                    </p>
+                                </div>
                                 <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
                                     Get Insights
                                 </Button>

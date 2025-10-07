@@ -25,8 +25,6 @@ import {
     Users
 } from "lucide-react";
 import { motion, useInView } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -69,6 +67,7 @@ const MutualFunds = () => {
     const [riskLevel, setRiskLevel] = useState(3);
     const { isOpen, openPopup, closePopup } = useContactPopup();
     const [selectedFund, setSelectedFund] = useState<string | null>(null);
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
     const morphingTexts = ["Grow", "Prosper", "Achieve"];
     const morphingIndex = Math.floor((Date.now() / 2000) % 3);
@@ -228,9 +227,9 @@ const MutualFunds = () => {
         setTotalGain(totalGainAmount);
     }, [sipAmount, sipDuration, expectedReturn]);
 
-    // Initialize AOS
+    // Initialize animations
     useEffect(() => {
-        AOS.init({ duration: 600, once: true });
+        // Remove AOS initialization - using Framer Motion only
     }, []);
 
     // Risk meter color
@@ -504,20 +503,24 @@ const MutualFunds = () => {
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
                     >
                         {fundTypes.map((fund, index) => (
-                            <motion.div key={fund.id} variants={zoomIn}>
+                            <motion.div key={fund.id} variants={zoomIn} className="h-full">
                                 <Card
-                                    className={`group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden flex flex-col ${selectedFund === fund.id ? 'border-secondary/50 bg-secondary/5' : ''
+                                    className={`group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out ${selectedFund === fund.id ? 'border-secondary/50 bg-secondary/5' : ''
                                         }`}
                                     onClick={() => setSelectedFund(fund.id)}
                                     style={{
-                                        animationDelay: `${index * 0.1}s`
+                                        animationDelay: `${index * 0.1}s`,
+                                        transform: hoveredCard === `mutual-fund-${fund.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                     }}
+                                    onMouseEnter={() => setHoveredCard(`mutual-fund-${fund.id}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
                                 >
-                                    <div className={`absolute inset-0 bg-gradient-to-br ${fund.color} opacity-0 group-hover:opacity-10 transition-opacity duration-500`} />
+                                    <div className={`absolute inset-0 bg-gradient-to-br ${fund.color} opacity-0 group-hover:opacity-10 transition-all duration-300 ease-out`} />
 
                                     <CardHeader className="relative z-10">
                                         <div className="flex items-center justify-between mb-4">
-                                            <fund.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
+                                            <fund.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
                                             <Badge className={`${fund.risk === 'High' ? 'bg-red-500/20 text-red-600' :
                                                 fund.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
                                                     'bg-green-500/20 text-green-600'
@@ -525,7 +528,7 @@ const MutualFunds = () => {
                                                 {fund.risk} Risk
                                             </Badge>
                                         </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground">
                                             {fund.title}
                                         </CardTitle>
                                     </CardHeader>
@@ -555,7 +558,7 @@ const MutualFunds = () => {
 
                                         <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
                                             Explore Funds
-                                            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                                            <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-all duration-300 ease-out" />
                                         </Button>
                                     </CardContent>
                                 </Card>
@@ -591,12 +594,16 @@ const MutualFunds = () => {
                         className="grid grid-cols-1 md:grid-cols-3 gap-8"
                     >
                         {topFunds.map((fund, index) => (
-                            <motion.div key={index} variants={zoomIn}>
+                            <motion.div key={index} variants={zoomIn} className="h-full">
                                 <Card
-                                    className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer flex flex-col"
+                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
                                     style={{
-                                        animationDelay: `${index * 0.1}s`
+                                        animationDelay: `${index * 0.1}s`,
+                                        transform: hoveredCard === `mutual-fund-amc-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
                                     }}
+                                    onMouseEnter={() => setHoveredCard(`mutual-fund-amc-${index}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
                                 >
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-2">

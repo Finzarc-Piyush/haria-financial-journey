@@ -6,8 +6,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { CheckCircle, Shield, TrendingUp, PiggyBank, Users, Star, Award, Clock, ArrowRight } from "lucide-react";
 import { motion } from 'framer-motion';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -18,6 +16,7 @@ const LifeInsurance = () => {
     const [counterValue, setCounterValue] = useState(0);
     const [currentStep, setCurrentStep] = useState(0);
     const [testimonialIndex, setTestimonialIndex] = useState(0);
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
     const { isOpen, openPopup, closePopup } = useContactPopup();
 
     const fullText = "Secure Your Family's Future with Life Insurance";
@@ -203,9 +202,9 @@ const LifeInsurance = () => {
         return () => window.removeEventListener('hashchange', applyHash);
     }, []);
 
-    // Initialize AOS
+    // Initialize animations
     useEffect(() => {
-        AOS.init({ duration: 600, once: true });
+        // Remove AOS initialization - using Framer Motion only
     }, []);
 
     return (
@@ -239,14 +238,14 @@ const LifeInsurance = () => {
                         </span>
                     </h1>
 
-                    <p className={`text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90 transition-all duration-1000 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                    <p className={`text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90 ${subtitleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
                         }`}>
                         Comprehensive protection plans tailored to your life stage
                     </p>
 
                     <Button
                         size="lg"
-                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:-translate-y-1"
+                        className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl hover:scale-105 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 ease-out"
                         onClick={openPopup}
                     >
                         Get Free Consultation
@@ -303,57 +302,65 @@ const LifeInsurance = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, delay: index * 0.12 }}
-                                className="group premium-card cursor-pointer border-2 border-transparent overflow-hidden transition-all duration-300 hover:shadow-lg hover:shadow-secondary/30 hover:scale-105 hover:ring-2 hover:ring-secondary/30 flex flex-col"
-                                style={{ animationDelay: `${index * 0.1}s` }}
+                                className="h-full"
                             >
-                                <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-
-                                <CardHeader id={product.id}
-                                    className="relative z-10"
+                                <Card
+                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
+                                    style={{
+                                        animationDelay: `${index * 0.1}s`,
+                                        transform: hoveredCard === `life-${product.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                    }}
+                                    onMouseEnter={() => setHoveredCard(`life-${product.id}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
                                 >
-                                    <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-transform duration-300" />
-                                        <Badge className="bg-secondary text-secondary-foreground border-secondary/30">
-                                            Popular
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
-                                        {product.title}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent className="relative z-10 flex flex-col flex-grow">
-                                    <div className="flex-grow">
-                                        <p className="text-muted-foreground mb-6 font-crimson text-lg">
-                                            {product.description}
-                                        </p>
-
-                                        <div className="space-y-4">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-lg text-muted-foreground">Coverage</span>
-                                                <span className="font-semibold text-foreground text-lg">{product.coverage}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-lg text-muted-foreground">Premium</span>
-                                                <span className="font-semibold text-secondary text-lg">{product.premium}</span>
-                                            </div>
+                                    <CardHeader id={product.id}
+                                        className="relative z-10"
+                                    >
+                                        <div className="flex items-center justify-between mb-4">
+                                            <product.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            <Badge className="bg-secondary text-secondary-foreground border-secondary/30">
+                                                Popular
+                                            </Badge>
                                         </div>
+                                        <CardTitle className="text-2xl font-playfair text-foreground">
+                                            {product.title}
+                                        </CardTitle>
+                                    </CardHeader>
 
-                                        <div className="mt-6 space-y-2">
-                                            {product.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center text-lg">
-                                                    <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0" />
-                                                    <span className="text-muted-foreground">{feature}</span>
+                                    <CardContent className="relative z-10 flex flex-col flex-grow">
+                                        <div className="flex-grow">
+                                            <p className="text-muted-foreground mb-6 font-crimson text-lg">
+                                                {product.description}
+                                            </p>
+
+                                            <div className="space-y-4">
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-lg text-muted-foreground">Coverage</span>
+                                                    <span className="font-semibold text-foreground text-lg">{product.coverage}</span>
                                                 </div>
-                                            ))}
-                                        </div>
-                                    </div>
+                                                <div className="flex justify-between items-center">
+                                                    <span className="text-lg text-muted-foreground">Premium</span>
+                                                    <span className="font-semibold text-secondary text-lg">{product.premium}</span>
+                                                </div>
+                                            </div>
 
-                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
-                                        Learn More
-                                        <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                                    </Button>
-                                </CardContent>
+                                            <div className="mt-6 space-y-2">
+                                                {product.features.map((feature, idx) => (
+                                                    <div key={idx} className="flex items-center text-lg">
+                                                        <CheckCircle className="h-5 w-5 text-secondary mr-2 flex-shrink-0" />
+                                                        <span className="text-muted-foreground">{feature}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+
+                                        <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
+                                            Learn More
+                                            <ArrowRight className="ml-2 h-5 w-5" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
                             </motion.div>
                         ))}
                     </motion.div>
@@ -376,7 +383,7 @@ const LifeInsurance = () => {
                         className="relative overflow-hidden rounded-2xl bg-gradient-premium p-4 md:p-8"
                     >
                         <div className="w-full overflow-hidden">
-                            <div className="flex transition-transform duration-500 ease-in-out" style={{
+                            <div className="flex" style={{
                                 transform: `translateX(-${testimonialIndex * 100}%)`
                             }}>
                                 {testimonials.map((testimonial, index) => (
@@ -407,7 +414,7 @@ const LifeInsurance = () => {
                             {testimonials.map((_, index) => (
                                 <button
                                     key={index}
-                                    className={`w-3 h-3 rounded-full transition-all duration-300 ${index === testimonialIndex ? 'bg-secondary' : 'bg-muted'
+                                    className={`w-3 h-3 rounded-full ${index === testimonialIndex ? 'bg-secondary' : 'bg-muted'
                                         }`}
                                     onClick={() => setTestimonialIndex(index)}
                                 />
@@ -452,7 +459,7 @@ const LifeInsurance = () => {
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 viewport={{ once: true, amount: 0.2 }}
                                 transition={{ duration: 0.6, delay: index * 0.15 }}
-                                className="process-step text-center relative opacity-100 translate-y-0 transition-all duration-700"
+                                className="process-step text-center relative opacity-100 translate-y-0"
                                 style={{ transitionDelay: `${index * 100}ms` }}
                             >
                                 <div className="relative z-10">

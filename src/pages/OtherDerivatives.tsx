@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Globe, Coins, Activity, Layers, ArrowRight, Shield, CheckCircle } from 'lucide-react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
 const OtherDerivatives = () => {
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
     const { isOpen, openPopup, closePopup } = useContactPopup();
 
     return (
@@ -81,19 +81,31 @@ const OtherDerivatives = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.3 }}
                                 transition={{ duration: 0.6, delay: i * 0.05 }}
+                                className="h-full"
                             >
-                                <Card className="group premium-card hover:scale-105 transition-all duration-500 cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden">
+                                <Card
+                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
+                                    style={{
+                                        minHeight: '220px',
+                                        transform: hoveredCard === `derivatives-${i}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                    }}
+                                    onMouseEnter={() => setHoveredCard(`derivatives-${i}`)}
+                                    onMouseLeave={() => setHoveredCard(null)}
+                                >
                                     <CardHeader>
                                         <div className="flex items-center justify-between mb-3">
                                             <item.icon className="h-10 w-10 text-secondary" />
                                             <Badge className="bg-secondary/20 text-secondary border-secondary/30">{item.badge}</Badge>
                                         </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground group-hover:text-secondary transition-colors duration-300">
+                                        <CardTitle className="text-2xl font-playfair text-foreground">
                                             {item.title}
                                         </CardTitle>
                                     </CardHeader>
-                                    <CardContent>
-                                        <p className="text-muted-foreground font-crimson text-base">{item.desc}</p>
+                                    <CardContent className="flex flex-col flex-grow">
+                                        <div className="flex-grow flex flex-col justify-center">
+                                            <p className="text-muted-foreground font-crimson text-base">{item.desc}</p>
+                                        </div>
                                     </CardContent>
                                 </Card>
                             </motion.div>
@@ -113,11 +125,11 @@ const OtherDerivatives = () => {
                         className="rounded-2xl bg-white/50 backdrop-blur-sm p-8"
                     >
                         <h2 className="text-3xl md:text-4xl font-playfair font-bold text-foreground mb-6 text-center">How We Operate</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground text-base">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-muted-foreground text-base max-w-4xl mx-auto">
                             {["Eligibility and suitability assessment before onboarding", "Playbooks for entries, exits and max loss per trade", "Real-time risk monitoring and prudent leverage", "Periodic reviews and structured reporting"].map((point, idx) => (
-                                <div key={idx} className="flex items-start">
-                                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-0.5" />
-                                    <span>{point}</span>
+                                <div key={idx} className="flex items-start justify-center md:justify-start">
+                                    <CheckCircle className="h-5 w-5 text-secondary mr-2 mt-0.5 flex-shrink-0" />
+                                    <span className="text-center md:text-left">{point}</span>
                                 </div>
                             ))}
                         </div>

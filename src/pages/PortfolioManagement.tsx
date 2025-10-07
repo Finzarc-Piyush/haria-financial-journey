@@ -4,8 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
 import { BarChart3, Award, Users, PieChart, Shield } from "lucide-react";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
 
@@ -56,6 +54,7 @@ const features = [
 
 const PortfolioManagement = () => {
     const { isOpen, openPopup, closePopup } = useContactPopup();
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
     const [heroInView, setHeroInView] = useState(true);
     const heroHeadingRef = useRef(null);
     const heroHeadingInView = useInView(heroHeadingRef, { once: true, amount: 0.3 });
@@ -148,17 +147,28 @@ const PortfolioManagement = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
                         {features.map((feature, idx) => (
-                            <Card className="premium-card" key={feature.title}>
+                            <Card
+                                className="premium-card relative h-full flex flex-col"
+                                key={feature.title}
+                                style={{
+                                    transform: hoveredCard === `pms-feature-${idx}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                }}
+                                onMouseEnter={() => setHoveredCard(`pms-feature-${idx}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
+                            >
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-playfair flex items-center">
                                         <feature.icon className="h-8 w-8 mr-3 text-secondary" />
                                         {feature.title}
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent>
-                                    <p className="text-lg font-crimson text-muted-foreground">{feature.description}</p>
+                                <CardContent className="flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <p className="text-lg font-crimson text-muted-foreground">{feature.description}</p>
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}
@@ -184,17 +194,28 @@ const PortfolioManagement = () => {
                         </p>
                     </motion.div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {pmsTypes.map((type) => (
-                            <Card className="premium-card" key={type.title}>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+                        {pmsTypes.map((type, idx) => (
+                            <Card
+                                className="premium-card relative h-full flex flex-col"
+                                key={type.title}
+                                style={{
+                                    transform: hoveredCard === `pms-type-${idx}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                }}
+                                onMouseEnter={() => setHoveredCard(`pms-type-${idx}`)}
+                                onMouseLeave={() => setHoveredCard(null)}
+                            >
                                 <CardHeader>
                                     <CardTitle className="text-3xl font-playfair flex items-center">
                                         <type.icon className="h-8 w-8 mr-3 text-secondary" />
                                         {type.title}
                                     </CardTitle>
                                 </CardHeader>
-                                <CardContent>
-                                    <p className="text-lg font-crimson text-muted-foreground">{type.description}</p>
+                                <CardContent className="flex flex-col flex-grow">
+                                    <div className="flex-grow">
+                                        <p className="text-lg font-crimson text-muted-foreground">{type.description}</p>
+                                    </div>
                                 </CardContent>
                             </Card>
                         ))}
