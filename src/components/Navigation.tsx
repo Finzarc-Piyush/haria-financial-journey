@@ -196,13 +196,13 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
           <div className="max-w-8xl mx-auto px-0 sm:px-2 lg:px-4">
             <div className="flex items-center justify-between py-2">
               {/* Logo */}
-              <Link to="/" className="flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300 pl-2">
-                <img src={logo} alt="Haria Investments Logo" className="w-14 h-14 object-contain" />
+              <Link to="/" className="flex-shrink sm:flex-shrink-0 flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity duration-300 pl-2">
+                <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 lg:w-14 lg:h-14 object-contain" />
                 <div>
-                  <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-3xl text-tertiary">
+                  <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-2xl lg:text-3xl text-tertiary">
                     Haria Investments
                   </div>
-                  <div className="text-lg font-semibold font-crimson text-center">
+                  <div className="text-base lg:text-lg font-semibold font-crimson text-center">
                     since 1957
                   </div>
                 </div>
@@ -439,7 +439,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               </div>
 
               {/* Desktop CTA */}
-              <div className="hidden lg:flex items-center ml-auto shrink-0 pr-2">
+              <div className="hidden lg:flex items-center ml-auto shrink sm:shrink-0 pr-2">
                 <Button
                   onClick={() => scrollToSection('contact')}
                   className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold text-xl px-6"
