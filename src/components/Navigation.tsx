@@ -202,7 +202,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div style={{ textShadow: 'none' }} className="font-playfair font-bold text-3xl text-tertiary">
                     Haria Investments
                   </div>
-                  <div className="text-lg text-muted-foreground font-crimson text-center">
+                  <div className="text-lg font-semibold font-crimson text-center">
                     since 1957
                   </div>
                 </div>
