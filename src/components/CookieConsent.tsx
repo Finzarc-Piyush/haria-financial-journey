@@ -14,19 +14,42 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
     useEffect(() => {
         // Check if user has already made a choice
         const consent = localStorage.getItem('analytics_consent');
-        if (!consent) {
+        const consentTimestamp = localStorage.getItem('analytics_consent_timestamp');
+
+        if (consent === 'accepted') {
+            // User accepted - never show again
+            setIsVisible(false);
+        } else if (consent === 'declined' && consentTimestamp) {
+            // User declined - check if enough time has passed
+            const declinedTime = parseInt(consentTimestamp);
+            const currentTime = Date.now();
+            const daysSinceDeclined = (currentTime - declinedTime) / (1000 * 60 * 60 * 24);
+
+            // Show banner again after 7 days
+            if (daysSinceDeclined >= 7) {
+                setIsVisible(true);
+                // Clear the old consent data
+                localStorage.removeItem('analytics_consent');
+                localStorage.removeItem('analytics_consent_timestamp');
+            } else {
+                setIsVisible(false);
+            }
+        } else {
+            // No previous choice or expired - show banner
             setIsVisible(true);
         }
     }, []);
 
     const handleAccept = () => {
         localStorage.setItem('analytics_consent', 'accepted');
+        localStorage.removeItem('analytics_consent_timestamp'); // Clear any previous timestamp
         setIsVisible(false);
         onAccept();
     };
 
     const handleDecline = () => {
         localStorage.setItem('analytics_consent', 'declined');
+        localStorage.setItem('analytics_consent_timestamp', Date.now().toString());
         setIsVisible(false);
         onDecline();
     };
@@ -45,7 +68,10 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
                         <Button
                             variant="ghost"
                             size="sm"
-                            onClick={handleDecline}
+                            onClick={() => {
+                                // X button just hides temporarily - no localStorage change
+                                setIsVisible(false);
+                            }}
                             className="h-6 w-6 p-0"
                         >
                             <X className="h-4 w-4" />
