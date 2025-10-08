@@ -39,8 +39,8 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
                 <CardHeader className="pb-3">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2">
-                            <Cookie className="h-5 w-5 text-blue-600" />
-                            <CardTitle className="text-lg font-playfair">Cookie Consent</CardTitle>
+                            <Cookie className="h-6 w-6 text-blue-600" />
+                            <CardTitle className="text-xl font-playfair">Cookie Consent</CardTitle>
                         </div>
                         <Button
                             variant="ghost"
@@ -53,18 +53,18 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                    <CardDescription className="text-sm text-gray-600">
+                    <CardDescription className="text-base text-gray-600">
                         We use analytics cookies to understand how visitors interact with our website.
                         This helps us improve your experience and our services.
                     </CardDescription>
 
                     <div className="space-y-2">
-                        <div className="flex items-center space-x-2 text-sm">
-                            <BarChart3 className="h-4 w-4 text-green-600" />
+                        <div className="flex items-center space-x-2 text-base">
+                            <BarChart3 className="h-5 w-5 text-green-600" />
                             <span>Track page views and user behavior</span>
                         </div>
-                        <div className="flex items-center space-x-2 text-sm">
-                            <Shield className="h-4 w-4 text-blue-600" />
+                        <div className="flex items-center space-x-2 text-base">
+                            <Shield className="h-5 w-5 text-blue-600" />
                             <span>Anonymous data only - no personal information</span>
                         </div>
                     </div>
@@ -72,20 +72,20 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ onAccept, onDecline }) =>
                     <div className="flex space-x-2">
                         <Button
                             onClick={handleAccept}
-                            className="flex-1 bg-blue-600 hover:bg-blue-700"
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 text-base"
                         >
                             Accept All
                         </Button>
                         <Button
                             onClick={handleDecline}
                             variant="outline"
-                            className="flex-1"
+                            className="flex-1 text-base"
                         >
                             Decline
                         </Button>
                     </div>
 
-                    <p className="text-xs text-gray-500">
+                    <p className="text-sm text-gray-500">
                         You can change your preferences anytime in your browser settings.
                     </p>
                 </CardContent>
