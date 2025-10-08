@@ -27,6 +27,7 @@ import { Badge } from '../components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../components/ui/tabs';
 import LogoutButton from '../components/LogoutButton';
+import AnalyticsDashboard from '../components/AnalyticsDashboard';
 import { contactService, Contact, ContactStats } from '../services/contactService';
 
 
@@ -34,6 +35,7 @@ const Dashboard: React.FC = () => {
     const [contacts, setContacts] = useState<Contact[]>([]);
     const [stats, setStats] = useState<ContactStats | null>(null);
     const [loading, setLoading] = useState(true);
+    const [refreshing, setRefreshing] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [statusFilter, setStatusFilter] = useState<string>('all');
     const [serviceFilter, setServiceFilter] = useState<string>('all');
@@ -41,6 +43,8 @@ const Dashboard: React.FC = () => {
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [selectedContact, setSelectedContact] = useState<Contact | null>(null);
     const [showContactModal, setShowContactModal] = useState(false);
+    const [activeTab, setActiveTab] = useState('contacts');
+    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
     // Fetch contacts
     const fetchContacts = async () => {
@@ -82,13 +86,13 @@ const Dashboard: React.FC = () => {
 
     // Refresh data
     const refreshData = async () => {
-        setLoading(true);
+        setRefreshing(true);
         try {
             await Promise.all([fetchContacts(), fetchStats()]);
         } catch (error) {
             console.error('Error refreshing data:', error);
         } finally {
-            setLoading(false);
+            setRefreshing(false);
         }
     };
 
@@ -115,6 +119,14 @@ const Dashboard: React.FC = () => {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
+    };
+
+    // Send email to contact
+    const sendEmailToContact = (contact: Contact) => {
+        const subject = encodeURIComponent(`Re: Your inquiry about ${contact.services.join(', ')}`);
+        const body = encodeURIComponent(`Dear ${contact.firstName} ${contact.lastName},\n\nThank you for your interest in our ${contact.services.join(', ')} services.\n\nWe will get back to you soon.\n\nBest regards,\nHaria Investments Team`);
+        const mailtoLink = `mailto:${contact.email}?subject=${subject}&body=${body}`;
+        window.open(mailtoLink);
     };
 
     useEffect(() => {
@@ -201,29 +213,16 @@ const Dashboard: React.FC = () => {
                     <div className="flex items-center justify-between">
                         <div>
                             <h1 className="text-5xl font-playfair font-bold text-tertiary mb-2">
-                                Contact Dashboard
+                                {activeTab === 'contacts' ? 'Contact Dashboard' : 'Analytics Dashboard'}
                             </h1>
                             <p className="text-xl text-muted-foreground font-crimson">
-                                Manage and track your client inquiries
+                                {activeTab === 'contacts'
+                                    ? 'Manage and track your client inquiries'
+                                    : 'Track visitor behavior and website performance'
+                                }
                             </p>
                         </div>
                         <div className="flex items-center gap-4">
-                            <Button
-                                onClick={refreshData}
-                                variant="outline"
-                                className="border-tertiary/30 text-tertiary text-lg px-6 py-3"
-                                disabled={loading}
-                            >
-                                <RefreshCw className={`w-5 h-5 mr-2 ${loading ? 'animate-spin' : ''}`} />
-                                {loading ? 'Refreshing...' : 'Refresh'}
-                            </Button>
-                            <Button
-                                onClick={exportContacts}
-                                className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground text-lg px-6 py-3"
-                            >
-                                <Download className="w-5 h-5 mr-2" />
-                                Export CSV
-                            </Button>
                             <LogoutButton />
                         </div>
                     </div>
@@ -231,362 +230,490 @@ const Dashboard: React.FC = () => {
             </motion.div>
 
             <div className="max-w-7xl mx-auto px-6 py-8">
-                {/* Statistics Cards */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.1 }}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8"
-                >
-                    <Card className="premium-card hover-lift">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-lg font-crimson text-muted-foreground">Total Contacts</p>
-                                    <p className="text-4xl font-playfair font-bold text-tertiary">
-                                        {stats?.overview.totalContacts || 0}
-                                    </p>
-                                </div>
-                                <Users className="w-8 h-8 text-secondary" />
+                {/* Main Dashboard Tabs */}
+                <Tabs defaultValue="contacts" className="w-full" onValueChange={setActiveTab}>
+                    <TabsList className="grid w-full grid-cols-2 mb-8">
+                        <TabsTrigger value="contacts" className="text-lg">
+                            <Users className="w-5 h-5 mr-2" />
+                            Contact Management
+                        </TabsTrigger>
+                        <TabsTrigger value="analytics" className="text-lg">
+                            <BarChart3 className="w-5 h-5 mr-2" />
+                            Website Analytics
+                        </TabsTrigger>
+                    </TabsList>
+
+                    <TabsContent value="contacts" className="space-y-8">
+                        {/* Controls */}
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className="flex items-center justify-end"
+                        >
+                            <div className="flex items-center gap-4">
+                                <Button
+                                    type="button"
+                                    onClick={refreshData}
+                                    variant="outline"
+                                    className="border-tertiary/30 text-tertiary text-lg px-6 py-3"
+                                    disabled={refreshing}
+                                >
+                                    <RefreshCw className={`w-5 h-5 mr-2 ${refreshing ? 'animate-spin' : ''}`} />
+                                    Refresh
+                                </Button>
+                                <Button
+                                    type="button"
+                                    onClick={exportContacts}
+                                    className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground text-lg px-6 py-3"
+                                >
+                                    <Download className="w-5 h-5 mr-2" />
+                                    Export CSV
+                                </Button>
                             </div>
-                        </CardContent>
-                    </Card>
+                        </motion.div>
 
-                    <Card className="premium-card hover-lift">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-lg font-crimson text-muted-foreground">New Inquiries</p>
-                                    <p className="text-4xl font-playfair font-bold text-blue-600">
-                                        {stats?.overview.newContacts || 0}
-                                    </p>
-                                </div>
-                                <AlertCircle className="w-8 h-8 text-blue-500" />
+                        {/* Loading State for Refresh */}
+                        {refreshing ? (
+                            <div className="flex items-center justify-center py-12">
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.8 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    className="text-center"
+                                >
+                                    <RefreshCw className="w-12 h-12 text-secondary animate-spin mx-auto mb-4" />
+                                    <p className="text-lg font-crimson text-muted-foreground">Refreshing Contacts...</p>
+                                </motion.div>
                             </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="premium-card hover-lift">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-lg font-crimson text-muted-foreground">In Progress</p>
-                                    <p className="text-4xl font-playfair font-bold text-orange-600">
-                                        {stats?.overview.inProgressContacts || 0}
-                                    </p>
-                                </div>
-                                <Clock className="w-8 h-8 text-orange-500" />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="premium-card hover-lift">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-lg font-crimson text-muted-foreground">Completed</p>
-                                    <p className="text-4xl font-playfair font-bold text-green-600">
-                                        {stats?.overview.completedContacts || 0}
-                                    </p>
-                                </div>
-                                <CheckCircle className="w-8 h-8 text-green-500" />
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="premium-card hover-lift">
-                        <CardContent className="p-6">
-                            <div className="flex items-center justify-between">
-                                <div>
-                                    <p className="text-lg font-crimson text-muted-foreground">Contact Rate</p>
-                                    <p className="text-4xl font-playfair font-bold text-secondary">
-                                        {stats?.overview.totalContacts ?
-                                            Math.round((stats.overview.contactedContacts / stats.overview.totalContacts) * 100) : 0}%
-                                    </p>
-                                </div>
-                                <TrendingUp className="w-8 h-8 text-secondary" />
-                            </div>
-                        </CardContent>
-                    </Card>
-                </motion.div>
-
-                {/* Service Statistics */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.2 }}
-                    className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
-                >
-                    <Card className="premium-card">
-                        <CardHeader>
-                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
-                                <PieChart className="w-6 h-6 mr-2" />
-                                Service Distribution
-                            </CardTitle>
-                            <p className="font-crimson text-base text-muted-foreground mt-2">
-                                Shows how many clients are interested in each financial service
-                            </p>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-6">
-                                {stats?.services && Object.entries(stats.services).map(([service, count]) => {
-                                    const countValue = count as number;
-                                    const percentage = stats.overview.totalContacts ? Math.round((countValue / stats.overview.totalContacts) * 100) : 0;
-
-                                    return (
-                                        <div key={service} className="space-y-2">
+                        ) : (
+                            <>
+                                {/* Statistics Cards */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.1 }}
+                                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6 mb-8"
+                                >
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'total-contacts' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('total-contacts')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardContent className="p-6">
                                             <div className="flex items-center justify-between">
-                                                <span className="font-crimson text-lg font-semibold text-tertiary">{service}</span>
-                                                <div className="flex items-center gap-2">
-                                                    <span className="font-crimson font-bold text-xl text-tertiary">
-                                                        {countValue}
-                                                    </span>
-                                                    <span className="font-crimson text-sm text-muted-foreground">
-                                                        ({percentage}%)
-                                                    </span>
+                                                <div>
+                                                    <p className="text-lg font-crimson text-muted-foreground">Total Contacts</p>
+                                                    <p className="text-4xl font-playfair font-bold text-tertiary">
+                                                        {stats?.overview.totalContacts || 0}
+                                                    </p>
+                                                </div>
+                                                <Users className="w-8 h-8 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'new-contacts' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('new-contacts')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardContent className="p-6">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-lg font-crimson text-muted-foreground">New Inquiries</p>
+                                                    <p className="text-4xl font-playfair font-bold text-blue-600">
+                                                        {stats?.overview.newContacts || 0}
+                                                    </p>
+                                                </div>
+                                                <AlertCircle className="w-8 h-8 text-blue-500 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'in-progress' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('in-progress')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardContent className="p-6">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-lg font-crimson text-muted-foreground">In Progress</p>
+                                                    <p className="text-4xl font-playfair font-bold text-orange-600">
+                                                        {stats?.overview.inProgressContacts || 0}
+                                                    </p>
+                                                </div>
+                                                <Clock className="w-8 h-8 text-orange-500 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'completed' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('completed')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardContent className="p-6">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-lg font-crimson text-muted-foreground">Completed</p>
+                                                    <p className="text-4xl font-playfair font-bold text-green-600">
+                                                        {stats?.overview.completedContacts || 0}
+                                                    </p>
+                                                </div>
+                                                <CheckCircle className="w-8 h-8 text-green-500 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'contact-rate' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('contact-rate')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardContent className="p-6">
+                                            <div className="flex items-center justify-between">
+                                                <div>
+                                                    <p className="text-lg font-crimson text-muted-foreground">Contact Rate</p>
+                                                    <p className="text-4xl font-playfair font-bold text-secondary">
+                                                        {stats?.overview.totalContacts ?
+                                                            Math.round((stats.overview.contactedContacts / stats.overview.totalContacts) * 100) : 0}%
+                                                    </p>
+                                                </div>
+                                                <TrendingUp className="w-8 h-8 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+
+                                {/* Service Statistics */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.2 }}
+                                    className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8"
+                                >
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-tertiary/50 overflow-hidden hover:shadow-lg hover:shadow-tertiary/30 hover:ring-2 hover:ring-tertiary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'service-distribution' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('service-distribution')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardHeader>
+                                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                                <PieChart className="w-6 h-6 mr-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                                Service Distribution
+                                            </CardTitle>
+                                            <p className="font-crimson text-base text-muted-foreground mt-2">
+                                                Shows how many clients are interested in each financial service
+                                            </p>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="space-y-6">
+                                                {stats?.services && Object.entries(stats.services).map(([service, count]) => {
+                                                    const countValue = count as number;
+                                                    const percentage = stats.overview.totalContacts ? Math.round((countValue / stats.overview.totalContacts) * 100) : 0;
+
+                                                    return (
+                                                        <div key={service} className="space-y-2">
+                                                            <div className="flex items-center justify-between">
+                                                                <span className="font-crimson text-lg font-semibold text-tertiary">{service}</span>
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="font-crimson font-bold text-xl text-tertiary">
+                                                                        {countValue}
+                                                                    </span>
+                                                                    <span className="font-crimson text-sm text-muted-foreground">
+                                                                        ({percentage}%)
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div className="w-full bg-gray-200 rounded-full h-3">
+                                                                <div
+                                                                    className="bg-gradient-to-r from-secondary to-tertiary h-3 rounded-full transition-all duration-500"
+                                                                    style={{
+                                                                        width: `${percentage}%`
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                })}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'recent-activity' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('recent-activity')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardHeader>
+                                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                                <Activity className="w-6 h-6 mr-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                                Recent Activity
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="space-y-3">
+                                                {contacts.slice(0, 5).map((contact) => (
+                                                    <div key={contact._id} className="flex items-center justify-between p-3 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg">
+                                                        <div>
+                                                            <p className="font-crimson font-semibold text-lg text-tertiary">
+                                                                {contact.firstName} {contact.lastName}
+                                                            </p>
+                                                            <p className="text-base text-muted-foreground">{contact.email}</p>
+                                                        </div>
+                                                        <Badge className={`${getStatusColor(contact.status)} border text-base px-3 py-1`}>
+                                                            {contact.status.replace('_', ' ')}
+                                                        </Badge>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+
+                                {/* Contacts Table */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ delay: 0.3 }}
+                                >
+                                    <Card
+                                        className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative transition-all duration-300 ease-out"
+                                        style={{
+                                            transform: hoveredCard === 'contact-management' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
+                                            transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
+                                        }}
+                                        onMouseEnter={() => setHoveredCard('contact-management')}
+                                        onMouseLeave={() => setHoveredCard(null)}
+                                    >
+                                        <CardHeader>
+                                            <div className="flex items-center justify-between">
+                                                <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
+                                                    <Users className="w-6 h-6 mr-2 group-hover:scale-110 transition-all duration-300 ease-out" />
+                                                    Contact Management
+                                                </CardTitle>
+                                                <div className="flex items-center gap-4">
+                                                    <div className="relative">
+                                                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                                                        <Input
+                                                            placeholder="Search contacts..."
+                                                            value={searchTerm}
+                                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                                            className="pl-10 w-64 border-tertiary/30 focus:ring-tertiary/30 text-lg"
+                                                        />
+                                                    </div>
+                                                    <Select value={statusFilter} onValueChange={setStatusFilter}>
+                                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
+                                                            <SelectValue placeholder="Status" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="all">All Status</SelectItem>
+                                                            <SelectItem value="new">New</SelectItem>
+                                                            <SelectItem value="contacted">Contacted</SelectItem>
+                                                            <SelectItem value="in_progress">In Progress</SelectItem>
+                                                            <SelectItem value="completed">Completed</SelectItem>
+                                                            <SelectItem value="closed">Closed</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <Select value={serviceFilter} onValueChange={setServiceFilter}>
+                                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
+                                                            <SelectValue placeholder="Service" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="all">All Services</SelectItem>
+                                                            <SelectItem value="Insurance">Insurance</SelectItem>
+                                                            <SelectItem value="Mutual Funds">Mutual Funds</SelectItem>
+                                                            <SelectItem value="Equity">Equity</SelectItem>
+                                                            <SelectItem value="Fixed Income">Fixed Income</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                    <Select value={itemsPerPage.toString()} onValueChange={(value) => {
+                                                        setItemsPerPage(parseInt(value));
+                                                        setCurrentPage(1); // Reset to first page when changing limit
+                                                    }}>
+                                                        <SelectTrigger className="w-32 border-tertiary/30 text-lg">
+                                                            <SelectValue placeholder="Limit" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="5">5 per page</SelectItem>
+                                                            <SelectItem value="10">10 per page</SelectItem>
+                                                            <SelectItem value="20">20 per page</SelectItem>
+                                                            <SelectItem value="50">50 per page</SelectItem>
+                                                            <SelectItem value="100">100 per page</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
                                                 </div>
                                             </div>
-                                            <div className="w-full bg-gray-200 rounded-full h-3">
-                                                <div
-                                                    className="bg-gradient-to-r from-secondary to-tertiary h-3 rounded-full transition-all duration-500"
-                                                    style={{
-                                                        width: `${percentage}%`
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    );
-                                })}
-                            </div>
-                        </CardContent>
-                    </Card>
-
-                    <Card className="premium-card">
-                        <CardHeader>
-                            <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
-                                <Activity className="w-6 h-6 mr-2" />
-                                Recent Activity
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="space-y-3">
-                                {contacts.slice(0, 5).map((contact) => (
-                                    <div key={contact._id} className="flex items-center justify-between p-3 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg">
-                                        <div>
-                                            <p className="font-crimson font-semibold text-lg text-tertiary">
-                                                {contact.firstName} {contact.lastName}
-                                            </p>
-                                            <p className="text-base text-muted-foreground">{contact.email}</p>
-                                        </div>
-                                        <Badge className={`${getStatusColor(contact.status)} border text-base px-3 py-1`}>
-                                            {contact.status.replace('_', ' ')}
-                                        </Badge>
-                                    </div>
-                                ))}
-                            </div>
-                        </CardContent>
-                    </Card>
-                </motion.div>
-
-                {/* Contacts Table */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                >
-                    <Card className="premium-card">
-                        <CardHeader>
-                            <div className="flex items-center justify-between">
-                                <CardTitle className="font-playfair text-2xl text-tertiary flex items-center">
-                                    <Users className="w-6 h-6 mr-2" />
-                                    Contact Management
-                                </CardTitle>
-                                <div className="flex items-center gap-4">
-                                    <div className="relative">
-                                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                                        <Input
-                                            placeholder="Search contacts..."
-                                            value={searchTerm}
-                                            onChange={(e) => setSearchTerm(e.target.value)}
-                                            className="pl-10 w-64 border-tertiary/30 focus:ring-tertiary/30 text-lg"
-                                        />
-                                    </div>
-                                    <Select value={statusFilter} onValueChange={setStatusFilter}>
-                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
-                                            <SelectValue placeholder="Status" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">All Status</SelectItem>
-                                            <SelectItem value="new">New</SelectItem>
-                                            <SelectItem value="contacted">Contacted</SelectItem>
-                                            <SelectItem value="in_progress">In Progress</SelectItem>
-                                            <SelectItem value="completed">Completed</SelectItem>
-                                            <SelectItem value="closed">Closed</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <Select value={serviceFilter} onValueChange={setServiceFilter}>
-                                        <SelectTrigger className="w-40 border-tertiary/30 text-lg">
-                                            <SelectValue placeholder="Service" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="all">All Services</SelectItem>
-                                            <SelectItem value="Insurance">Insurance</SelectItem>
-                                            <SelectItem value="Mutual Funds">Mutual Funds</SelectItem>
-                                            <SelectItem value="Equity">Equity</SelectItem>
-                                            <SelectItem value="Fixed Income">Fixed Income</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <Select value={itemsPerPage.toString()} onValueChange={(value) => {
-                                        setItemsPerPage(parseInt(value));
-                                        setCurrentPage(1); // Reset to first page when changing limit
-                                    }}>
-                                        <SelectTrigger className="w-32 border-tertiary/30 text-lg">
-                                            <SelectValue placeholder="Limit" />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="5">5 per page</SelectItem>
-                                            <SelectItem value="10">10 per page</SelectItem>
-                                            <SelectItem value="20">20 per page</SelectItem>
-                                            <SelectItem value="50">50 per page</SelectItem>
-                                            <SelectItem value="100">100 per page</SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                </div>
-                            </div>
-                        </CardHeader>
-                        <CardContent>
-                            <div className="overflow-x-auto">
-                                <table className="w-full">
-                                    <thead>
-                                        <tr className="border-b border-tertiary/20">
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Name</th>
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Email</th>
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Services</th>
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Status</th>
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Date</th>
-                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Actions</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {paginatedContacts.map((contact) => (
-                                            <motion.tr
-                                                key={contact._id}
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                className="border-b border-tertiary/10 hover:bg-gradient-to-r hover:from-tertiary/5 hover:to-champagne/10 transition-all duration-200"
-                                            >
-                                                <td className="py-4 px-4">
-                                                    <div>
-                                                        <p className="font-crimson font-semibold text-lg text-tertiary">
-                                                            {contact.firstName} {contact.lastName}
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td className="py-4 px-4">
-                                                    <p className="font-crimson text-lg text-muted-foreground">{contact.email}</p>
-                                                </td>
-                                                <td className="py-4 px-4">
-                                                    <div className="flex flex-wrap gap-1">
-                                                        {contact.services.map((service) => (
-                                                            <Badge key={service} variant="outline" className="text-base border-tertiary/30 text-tertiary px-2 py-1">
-                                                                {service}
-                                                            </Badge>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="overflow-x-auto">
+                                                <table className="w-full">
+                                                    <thead>
+                                                        <tr className="border-b border-tertiary/20">
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Name</th>
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Email</th>
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Services</th>
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Status</th>
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Date</th>
+                                                            <th className="text-left py-3 px-4 font-crimson font-semibold text-lg text-tertiary">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {paginatedContacts.map((contact) => (
+                                                            <motion.tr
+                                                                key={contact._id}
+                                                                initial={{ opacity: 0 }}
+                                                                animate={{ opacity: 1 }}
+                                                                className="border-b border-tertiary/10 hover:bg-gradient-to-r hover:from-tertiary/5 hover:to-champagne/10 transition-all duration-200"
+                                                            >
+                                                                <td className="py-4 px-4">
+                                                                    <div>
+                                                                        <p className="font-crimson font-semibold text-lg text-tertiary">
+                                                                            {contact.firstName} {contact.lastName}
+                                                                        </p>
+                                                                    </div>
+                                                                </td>
+                                                                <td className="py-4 px-4">
+                                                                    <p className="font-crimson text-lg text-muted-foreground">{contact.email}</p>
+                                                                </td>
+                                                                <td className="py-4 px-4">
+                                                                    <div className="flex flex-wrap gap-1">
+                                                                        {contact.services.map((service) => (
+                                                                            <Badge key={service} variant="outline" className="text-base border-tertiary/30 text-tertiary px-2 py-1">
+                                                                                {service}
+                                                                            </Badge>
+                                                                        ))}
+                                                                    </div>
+                                                                </td>
+                                                                <td className="py-4 px-4">
+                                                                    <Badge className={`${getStatusColor(contact.status)} border flex items-center gap-2 w-fit text-base px-3 py-1`}>
+                                                                        {getStatusIcon(contact.status)}
+                                                                        {contact.status.replace('_', ' ')}
+                                                                    </Badge>
+                                                                </td>
+                                                                <td className="py-4 px-4">
+                                                                    <p className="font-crimson text-lg text-muted-foreground">
+                                                                        {new Date(contact.createdAt).toLocaleDateString()}
+                                                                    </p>
+                                                                </td>
+                                                                <td className="py-4 px-4">
+                                                                    <div className="flex items-center gap-3">
+                                                                        <Button
+                                                                            size="sm"
+                                                                            variant="outline"
+                                                                            onClick={() => {
+                                                                                setSelectedContact(contact);
+                                                                                setShowContactModal(true);
+                                                                            }}
+                                                                            className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                                                        >
+                                                                            <Eye className="w-4 h-4 mr-1" />
+                                                                            View
+                                                                        </Button>
+                                                                        <Select
+                                                                            value={contact.status}
+                                                                            onValueChange={(value) => updateContactStatus(contact._id, value)}
+                                                                        >
+                                                                            <SelectTrigger className="w-36 h-10 text-base border-tertiary/30">
+                                                                                <SelectValue />
+                                                                            </SelectTrigger>
+                                                                            <SelectContent>
+                                                                                <SelectItem value="new">New</SelectItem>
+                                                                                <SelectItem value="contacted">Contacted</SelectItem>
+                                                                                <SelectItem value="in_progress">In Progress</SelectItem>
+                                                                                <SelectItem value="completed">Completed</SelectItem>
+                                                                                <SelectItem value="closed">Closed</SelectItem>
+                                                                            </SelectContent>
+                                                                        </Select>
+                                                                    </div>
+                                                                </td>
+                                                            </motion.tr>
                                                         ))}
-                                                    </div>
-                                                </td>
-                                                <td className="py-4 px-4">
-                                                    <Badge className={`${getStatusColor(contact.status)} border flex items-center gap-2 w-fit text-base px-3 py-1`}>
-                                                        {getStatusIcon(contact.status)}
-                                                        {contact.status.replace('_', ' ')}
-                                                    </Badge>
-                                                </td>
-                                                <td className="py-4 px-4">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            {/* Pagination */}
+                                            <div className="flex items-center justify-between mt-8 p-4 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg border border-tertiary/20">
+                                                <div className="flex items-center gap-4">
                                                     <p className="font-crimson text-lg text-muted-foreground">
-                                                        {new Date(contact.createdAt).toLocaleDateString()}
+                                                        Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredContacts.length)} of {filteredContacts.length} contacts
                                                     </p>
-                                                </td>
-                                                <td className="py-4 px-4">
-                                                    <div className="flex items-center gap-3">
-                                                        <Button
-                                                            size="sm"
-                                                            variant="outline"
-                                                            onClick={() => {
-                                                                setSelectedContact(contact);
-                                                                setShowContactModal(true);
-                                                            }}
-                                                            className="border-tertiary/30 text-tertiary text-base px-4 py-2"
-                                                        >
-                                                            <Eye className="w-4 h-4 mr-1" />
-                                                            View
-                                                        </Button>
-                                                        <Select
-                                                            value={contact.status}
-                                                            onValueChange={(value) => updateContactStatus(contact._id, value)}
-                                                        >
-                                                            <SelectTrigger className="w-36 h-10 text-base border-tertiary/30">
+                                                    <div className="flex items-center gap-2">
+                                                        <span className="font-crimson text-base text-tertiary">Page:</span>
+                                                        <Select value={currentPage.toString()} onValueChange={(value) => setCurrentPage(parseInt(value))}>
+                                                            <SelectTrigger className="w-20 h-8 text-base border-tertiary/30">
                                                                 <SelectValue />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                <SelectItem value="new">New</SelectItem>
-                                                                <SelectItem value="contacted">Contacted</SelectItem>
-                                                                <SelectItem value="in_progress">In Progress</SelectItem>
-                                                                <SelectItem value="completed">Completed</SelectItem>
-                                                                <SelectItem value="closed">Closed</SelectItem>
+                                                                {Array.from({ length: totalPages }, (_, i) => (
+                                                                    <SelectItem key={i + 1} value={(i + 1).toString()}>
+                                                                        {i + 1}
+                                                                    </SelectItem>
+                                                                ))}
                                                             </SelectContent>
                                                         </Select>
+                                                        <span className="font-crimson text-base text-muted-foreground">of {totalPages}</span>
                                                     </div>
-                                                </td>
-                                            </motion.tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
+                                                </div>
+                                                <div className="flex items-center gap-3">
+                                                    <Button
+                                                        variant="outline"
+                                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                                                        disabled={currentPage === 1}
+                                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                                    >
+                                                        Previous
+                                                    </Button>
+                                                    <Button
+                                                        variant="outline"
+                                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                                                        disabled={currentPage === totalPages}
+                                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
+                                                    >
+                                                        Next
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </motion.div>
+                            </>
+                        )}
+                    </TabsContent>
 
-                            {/* Pagination */}
-                            <div className="flex items-center justify-between mt-8 p-4 bg-gradient-to-r from-tertiary/5 to-champagne/10 rounded-lg border border-tertiary/20">
-                                <div className="flex items-center gap-4">
-                                    <p className="font-crimson text-lg text-muted-foreground">
-                                        Showing {((currentPage - 1) * itemsPerPage) + 1} to {Math.min(currentPage * itemsPerPage, filteredContacts.length)} of {filteredContacts.length} contacts
-                                    </p>
-                                    <div className="flex items-center gap-2">
-                                        <span className="font-crimson text-base text-tertiary">Page:</span>
-                                        <Select value={currentPage.toString()} onValueChange={(value) => setCurrentPage(parseInt(value))}>
-                                            <SelectTrigger className="w-20 h-8 text-base border-tertiary/30">
-                                                <SelectValue />
-                                            </SelectTrigger>
-                                            <SelectContent>
-                                                {Array.from({ length: totalPages }, (_, i) => (
-                                                    <SelectItem key={i + 1} value={(i + 1).toString()}>
-                                                        {i + 1}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                        <span className="font-crimson text-base text-muted-foreground">of {totalPages}</span>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3">
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                                        disabled={currentPage === 1}
-                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
-                                    >
-                                        Previous
-                                    </Button>
-                                    <Button
-                                        variant="outline"
-                                        onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                                        disabled={currentPage === totalPages}
-                                        className="border-tertiary/30 text-tertiary text-base px-4 py-2"
-                                    >
-                                        Next
-                                    </Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
-                </motion.div>
+                    <TabsContent value="analytics">
+                        <AnalyticsDashboard />
+                    </TabsContent>
+                </Tabs>
             </div>
 
             {/* Contact Detail Modal */}
@@ -705,7 +832,10 @@ const Dashboard: React.FC = () => {
                                     >
                                         Close
                                     </Button>
-                                    <Button className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground">
+                                    <Button
+                                        className="bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground"
+                                        onClick={() => sendEmailToContact(selectedContact)}
+                                    >
                                         <Mail className="w-4 h-4 mr-2" />
                                         Send Email
                                     </Button>

@@ -25,6 +25,9 @@ import PortfolioManagement from "./pages/PortfolioManagement";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AnalyticsProvider from "./components/AnalyticsProvider";
+import CookieConsent from "./components/CookieConsent";
+import { useAnalyticsContext } from "./components/AnalyticsProvider";
 
 // ErrorBoundary component
 class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { hasError: boolean; }> {
@@ -44,8 +47,8 @@ class ErrorBoundary extends React.Component<{ children: React.ReactNode; }, { ha
 
 // Analytics integration placeholder
 if (typeof window !== 'undefined') {
-  // Example: window.gtag('config', 'GA_MEASUREMENT_ID');
-  // Or Segment analytics.load('SEGMENT_WRITE_KEY');
+  // Analytics is now handled by our custom analytics system
+  // No need for external analytics services
 }
 
 const queryClient = new QueryClient();
@@ -53,6 +56,7 @@ const queryClient = new QueryClient();
 const AppContent = () => {
   const location = useLocation();
   const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+  const { enableAnalytics, disableAnalytics } = useAnalyticsContext();
 
   return (
     <>
@@ -82,6 +86,12 @@ const AppContent = () => {
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!isAdminPage && <Footer />}
+
+      {/* Cookie Consent Banner */}
+      <CookieConsent
+        onAccept={enableAnalytics}
+        onDecline={disableAnalytics}
+      />
     </>
   );
 };
@@ -93,7 +103,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <AppContent />
+          <AnalyticsProvider>
+            <AppContent />
+          </AnalyticsProvider>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
