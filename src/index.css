@@ -137,12 +137,72 @@ All colors MUST be HSL. Professional financial advisory theme.
 
 /* Professional animations and utilities */
 @layer components {
+  /* Dialog overlay and content should appear above navigation */
+  [data-radix-dialog-overlay],
+  [data-radix-dialog-content] {
+    z-index: 10000 !important;
+  }
+
+  /* Enhanced navbar visibility on all backgrounds */
+  header[class*="fixed"] {
+    box-shadow: 
+      0 4px 20px rgba(0, 0, 0, 0.08),
+      0 1px 3px rgba(0, 0, 0, 0.12),
+      inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  }
+
+  /* Enhanced text shadow for navbar elements */
+  header[class*="fixed"] .font-playfair,
+  header[class*="fixed"] .font-crimson,
+  header[class*="fixed"] button {
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8), 0 0 8px rgba(255, 255, 255, 0.3);
+  }
+
+  /* Ensure all main content accounts for fixed navbar */
+  main,
+  section:first-of-type,
+  .main-content {
+    padding-top: 5rem; /* 80px for navbar height */
+  }
+
+  /* Special case for hero sections that should be full height */
+  section#hero,
+  .hero-section {
+    padding-top: 5rem;
+  }
+
+  /* Mobile adjustments for navbar spacing */
+  @media (max-width: 1023px) {
+    main,
+    section:first-of-type,
+    .main-content {
+      padding-top: 5rem; /* 80px for navbar on mobile */
+    }
+    
+    section#hero,
+    .hero-section {
+      padding-top: 5rem;
+    }
+  }
 
   /* Teal blue color for dark text and icons on tertiary background */
   .bg-tertiary .text-secondary,
   .bg-tertiary .text-secondary-foreground,
   .bg-tertiary [class*="text-secondary"] {
     color: hsl(var(--on-tertiary)) !important;
+  }
+
+  /* Video background optimizations */
+  video {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+
+  /* Ensure video doesn't cause layout shift */
+  video[preload="auto"] {
+    background-color: transparent;
   }
 
   /* Specific icon fixes for tertiary sections */

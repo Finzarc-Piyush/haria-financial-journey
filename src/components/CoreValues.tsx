@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils";
 import {
     IconShieldCheck,
     IconAward,
@@ -7,60 +6,7 @@ import {
     IconLock,
     IconUsers,
 } from "@tabler/icons-react";
-
-const ValueCard = ({
-    title,
-    description,
-    icon,
-    index,
-}: {
-    title: string;
-    description: string;
-    icon: React.ReactNode;
-    index: number;
-}) => {
-    const getBorderClasses = () => {
-        let classes = "border-b border-gray-200"; // Always bottom border
-
-        // Right border logic
-        if (index % 3 === 2) {
-            // Last column in 3-column layout (lg)
-            classes += " lg:border-r-0";
-        } else if (index % 2 === 1) {
-            // Last column in 2-column layout (md)
-            classes += " md:border-r-0 lg:border-r";
-        } else {
-            classes += " border-r border-gray-200";
-        }
-
-        return classes;
-    };
-
-    return (
-        <div className={`flex flex-col py-10 relative group/feature transition ${getBorderClasses()}`}>
-            {/* Hover gradient overlay */}
-            <div className="opacity-0 group-hover/feature:opacity-100 transition duration-300 absolute inset-0 h-full w-full bg-gradient-to-b from-white/60 to-transparent pointer-events-none" />
-
-            {/* Icon */}
-            <div className="mb-6 relative z-10 px-10 text-secondary text-3xl">
-                {icon}
-            </div>
-
-            {/* Title */}
-            <div className="text-2xl font-semibold mb-4 relative z-10 px-10">
-                <div className="absolute left-0 inset-y-0 h-6 group-hover/feature:h-8 w-1 rounded-tr-full rounded-br-full bg-gray-700 group-hover/feature:bg-secondary transition-all duration-300" />
-                <span className="group-hover/feature:translate-x-2 transition duration-300 inline-block text-tertiary">
-                    {title}
-                </span>
-            </div>
-
-            {/* Description */}
-            <p className="text-xl text-tertiary/80 leading-relaxed font-crimson relative z-10 px-10">
-                {description}
-            </p>
-        </div>
-    );
-};
+import { motion } from "framer-motion";
 
 const CoreValues = () => {
     const values = [
@@ -103,26 +49,53 @@ const CoreValues = () => {
     ];
 
     return (
-        <section id="core-values" className=" py-20">
-            {/* Section header */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center mb-16">
-                <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
-                    Our Core Values
-                </h2>
-                <p className="font-crimson text-xl text-tertiary/80 max-w-3xl mx-auto">
-                    At Haria Investments, our values guide every interaction with clients,
-                    prospects, and the community. They are the foundation of the trust
-                    we’ve built over generations.
-                </p>
-            </div>
+        <section id="core-values" className="py-16 bg-white">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                {/* Section header */}
+                <div className="text-center mb-16">
+                    <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                        OUR VALUES
+                    </p>
+                    <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-tertiary mb-6 leading-tight">
+                        Guided by Integrity and Excellence
+                    </h2>
+                    <p className="font-crimson text-lg md:text-xl text-tertiary/80 max-w-4xl mx-auto leading-relaxed">
+                        At Haria Investments, our values guide every interaction with clients,
+                        prospects, and the community. They are the foundation of the trust
+                        we've built over generations.
+                    </p>
+                </div>
 
-            {/* Grid with proper borders */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 
-                            border border-gray-200
-                            max-w-7xl mx-auto rounded-lg overflow-hidden shadow-sm">
-                {values.map((value, index) => (
-                    <ValueCard key={value.title} {...value} index={index} />
-                ))}
+                {/* Values Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {values.map((value, index) => (
+                        <motion.div
+                            key={value.title}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.5, delay: index * 0.1 }}
+                            className="bg-gradient-to-br from-secondary/10 to-secondary/5 rounded-3xl p-8 hover:shadow-xl transition-all duration-300 group"
+                        >
+                            {/* Icon */}
+                            <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                <div className="text-white">
+                                    {value.icon}
+                                </div>
+                            </div>
+
+                            {/* Title */}
+                            <h3 className="font-playfair text-2xl md:text-3xl font-bold text-tertiary mb-4">
+                                {value.title}
+                            </h3>
+
+                            {/* Description */}
+                            <p className="font-crimson text-base md:text-lg text-tertiary/80 leading-relaxed">
+                                {value.description}
+                            </p>
+                        </motion.div>
+                    ))}
+                </div>
             </div>
         </section>
     );

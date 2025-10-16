@@ -167,14 +167,16 @@ const ContactSection = () => {
 
 
   return (
-    <section id="contact" className="py-20 bg-white">
+    <section id="contact" className="py-16 bg-tertiary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div data-aos="fade-up" className="text-center mb-16">
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-4">
+          <p className="text-sm font-crimson text-white/70 uppercase tracking-wider mb-4">
+            GET IN TOUCH
+          </p>
+          <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Let's Connect
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-          <p className="font-crimson text-xl md:text-2xl text-tertiary/80 max-w-3xl mx-auto">
+          <p className="font-crimson text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
             We're here to help you take the next confident step in your financial journey. Reach out for a complimentary consultation or visit us in person.
           </p>
         </div>

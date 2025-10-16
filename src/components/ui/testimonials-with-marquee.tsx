@@ -21,15 +21,18 @@ export function TestimonialsSection({
     return (
         <section className={cn(
             "bg-background text-foreground",
-            "py-12 sm:py-24 md:py-32 px-0",
+            "py-12 sm:py-24 md:py-32",
             className
         )}>
-            <div className="mx-auto flex max-w-container flex-col items-center gap-4 text-center sm:gap-16">
-                <div className="flex flex-col items-center gap-4 px-4 sm:gap-8">
-                    <h2 className="max-w-[720px] text-3xl font-semibold leading-tight sm:text-5xl sm:leading-tight">
+            <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 text-center sm:gap-16 px-4 sm:px-6 lg:px-8">
+                <div className="flex flex-col items-center gap-4 sm:gap-8">
+                    <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider">
+                        CLIENT TESTIMONIALS
+                    </p>
+                    <h2 className="max-w-[720px] text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-tertiary">
                         {title}
                     </h2>
-                    <p className="text-md max-w-[600px] font-medium text-muted-foreground sm:text-xl">
+                    <p className="text-lg md:text-xl max-w-[700px] font-crimson text-tertiary/80 leading-relaxed">
                         {description}
                     </p>
                 </div>

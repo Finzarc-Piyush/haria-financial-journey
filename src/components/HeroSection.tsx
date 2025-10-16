@@ -1,101 +1,7 @@
-import { useEffect, useState, useRef } from 'react';
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { ChevronDown, Award, Users, TrendingUp, Building, HeartHandshake, PiggyBank, Scale, LineChart } from "lucide-react"; // Import new icons
-import heroBackground from "@/assets/hero-office-background.jpg";
-import advisorHeadshot from "@/assets/advisor-headshot.jpg";
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import gsap from 'gsap';
+import { ArrowRight } from "lucide-react";
 import { motion } from 'framer-motion';
 
 const HeroSection = () => {
-  const currentYear = new Date().getFullYear();
-  const [counters, setCounters] = useState({
-    year: currentYear,
-    aum: 0,
-    clients: 0,
-    generations: 0
-  });
-  const [isVisible, setIsVisible] = useState(false);
-  const headlineRef = useRef(null);
-  const bgRef = useRef(null);
-
-  // Define your services with appropriate icons
-  const services = [
-    { name: "Life & General Insurance", icon: HeartHandshake },
-    { name: "Mutual Funds & Equity", icon: PiggyBank },
-    { name: "Fixed Income", icon: Scale }, // Changed from LineChart for a slightly different feel
-    { name: "Commodity Derivative Trading", icon: LineChart }, // Changed from LineChart to distinguish
-  ];
-
-  useEffect(() => {
-    AOS.init({ duration: 500, once: true });
-    setIsVisible(true);
-
-    // Typewriter effect for headline
-    if (headlineRef.current) {
-      const el = headlineRef.current;
-      const text = 'Comprehensive Financial Planning';
-      el.textContent = '';
-      let i = 0;
-      const type = () => {
-        if (i < text.length) {
-          el.textContent += text.charAt(i);
-          i++;
-          setTimeout(type, 40);
-        }
-      };
-      type();
-    }
-
-    // Parallax/zoom-in background
-    if (bgRef.current) {
-      gsap.fromTo(bgRef.current, { scale: 1.08, opacity: 0.7 }, { scale: 1, opacity: 1, duration: 1.2, ease: 'power2.out' });
-    }
-
-    // Animate counters on scroll (IntersectionObserver)
-    const section = document.getElementById('hero');
-    let triggered = false;
-    const observer = new window.IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !triggered) {
-          triggered = true;
-          const animateYearCounter = (key, startYear, endYear, duration) => {
-            let current = startYear;
-            const step = (startYear - endYear) / (duration / 16);
-            const timer = setInterval(() => {
-              current -= step;
-              if (current <= endYear) {
-                current = endYear;
-                clearInterval(timer);
-              }
-              setCounters(prev => ({ ...prev, [key]: Math.floor(current) }));
-            }, 16);
-          };
-          const animateCounter = (key, target, duration) => {
-            let start = 0;
-            const increment = target / (duration / 16);
-            const timer = setInterval(() => {
-              start += increment;
-              if (start >= target) {
-                start = target;
-                clearInterval(timer);
-              }
-              setCounters(prev => ({ ...prev, [key]: Math.floor(start) }));
-            }, 16);
-          };
-          animateYearCounter('year', currentYear, 1957, 2000);
-          animateCounter('aum', 100, 2500);
-          animateCounter('clients', 1000, 2000);
-          animateCounter('generations', 4, 1500);
-        }
-      },
-      { threshold: 0.3 }
-    );
-    if (section) observer.observe(section);
-    return () => observer.disconnect();
-  }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -105,167 +11,116 @@ const HeroSection = () => {
   };
 
   return (
-    <section
+    <section 
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-      style={{
-        backgroundImage: `linear-gradient(rgba(245,241,232,0.7), rgba(0,0,0,0.18)), url(${heroBackground})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundAttachment: 'fixed'
-      }}
+      className="relative w-full overflow-hidden min-h-screen flex items-center"
     >
-      <div ref={bgRef} className="absolute inset-0 w-full h-full z-0" aria-hidden="true" />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
-        <div className="text-center">
-          {/* Main Headline with Typewriter Effect */}
-          <div className={`mb-6 mt-36 transition-all duration-1000 delay-300 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}
-            data-aos="fade-up"
-            style={{ position: 'relative' }}>
-            {/* Ghost headline to reserve space and prevent layout shift */}
-            <h1
-              aria-hidden="true"
-              className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight invisible select-none pointer-events-none"
-              style={{
-                color: '#f8fafc',
-                textShadow: '0 2px 8px rgba(0,0,0,0.32), 2px 2px 6px rgba(0,0,0,0.7)',
-                letterSpacing: '-0.5px',
-                minHeight: '2.5em',
-                display: 'inline-block',
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                zIndex: 0,
-              }}
-            >
-              Comprehensive Financial Planning
-              <br />
-              <span className="text-secondary" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.22)' }}>for Successful Professionals</span>
-            </h1>
-            {/* Actual animated headline */}
-            <h1 ref={headlineRef} className="font-playfair text-4xl md:text-6xl lg:text-7xl font-bold mb-4 leading-tight relative z-10"
-              style={{
-                color: '#f8fafc',
-                textShadow: '0 2px 8px rgba(0,0,0,0.32), 2px 2px 6px rgba(0,0,0,0.7)',
-                letterSpacing: '-0.5px',
-                minHeight: '2.5em',
-                display: 'inline-block',
-              }}
-            >
-              {/* Typewriter text will be injected here */}
-              Comprehensive Financial Planning
-              <br />
-              <span className="text-secondary" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.22)' }}>for Successful Professionals</span>
-            </h1>
-          </div>
+      <div className="w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+          {/* Left Side - Content */}
+          <div className="relative bg-tertiary px-4 sm:px-6 lg:px-12 py-20 lg:py-0 flex items-center overflow-hidden">
+            {/* Decorative Partial Logo */}
+            <div className="absolute bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none">
+              <img 
+                src="/logo-wbg.png" 
+                alt="" 
+                className="w-full h-full object-contain transform translate-x-1/3 translate-y-1/3 scale-150"
+                style={{ filter: 'brightness(0) invert(1)' }}
+              />
+            </div>
 
-          {/* Strategic Subtitle */}
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, y: 48 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
-          >
-            <p className="font-crimson text-2xl md:text-3xl max-w-4xl mx-auto leading-relaxed"
-              style={{
-                color: '#f3f4f6',
-                textShadow: '0 1px 6px rgba(0,0,0,0.22), 1px 1px 3px rgba(0,0,0,0.5)',
-                fontWeight: 500,
-              }}
-            >
-              Insurance, Investments, and Wealth Solutions—All in One Place
-            </p>
-          </motion.div>
-
-          {/* New: Services Grid */}
-          <motion.div
-            className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mb-12"
-            initial={{ opacity: 0, y: 48 }}
-            animate={isVisible ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 1.2, delay: 0.25, ease: [0.22, 0.61, 0.36, 1] }}
-          >
-            {services.map((service) => (
-              <div
-                key={service.name}
-                className="bg-white p-6 text-center hover-lift rounded-lg shadow-lg"
+            <div className="relative z-10 max-w-2xl mx-auto lg:mx-0">
+              {/* Label */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+                className="mb-6"
               >
-                <service.icon className="w-8 h-8 text-secondary mx-auto mb-3" />
-                <div className="font-crimson text-lg text-muted-foreground">
-                  {service.name}
+                <span className="text-xs md:text-sm font-crimson text-white/70 uppercase tracking-wider">
+                  YOUR ONE STOP FINANCIAL SOLUTION
+                </span>
+              </motion.div>
+
+              {/* Main Headline */}
+              <motion.h1 
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-white mb-6"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                Comprehensive Financial Planning for{' '}
+                <span className="relative inline-block">
+                  <span className="relative z-10">Successful Professionals</span>
+                  <span className="absolute bottom-0 left-0 w-full h-3 bg-secondary/30 -z-0"></span>
+                </span>
+              </motion.h1>
+
+              {/* Description */}
+              <motion.p 
+                className="text-base md:text-lg font-crimson text-white/90 leading-relaxed mb-8"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                Insurance, Investments, and Wealth Solutions, All in One Place. Build your financial future with comprehensive planning backed by decades of expertise.
+              </motion.p>
+
+              {/* CTA Buttons */}
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+              >
+                <button 
+                  onClick={() => scrollToSection('contact')}
+                  className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                >
+                  <span>Schedule Consultation</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button 
+                  onClick={() => scrollToSection('features')}
+                  className="border-2 border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all backdrop-blur-sm flex items-center justify-center"
+                >
+                  Learn More
+                </button>
+              </motion.div>
+
+              {/* Trust Badge */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.8 }}
+                className="mt-8 flex items-center gap-2 text-white/60 text-sm font-crimson"
+              >
+                <div className="flex -space-x-2">
+                  <div className="w-8 h-8 rounded-full bg-secondary border-2 border-tertiary"></div>
+                  <div className="w-8 h-8 rounded-full bg-white/20 border-2 border-tertiary"></div>
+                  <div className="w-8 h-8 rounded-full bg-white/10 border-2 border-tertiary"></div>
                 </div>
-              </div>
-            ))}
-          </motion.div>
-
-          {/* Counters */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto mt-12" data-aos="fade-up" data-aos-delay="200">
-            <div className="premium-card p-6 text-center hover-lift">
-              <Building className="w-8 h-8 text-secondary mx-auto mb-3" />
-              <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
-                Since {counters.year}
-              </div>
-              <div className="font-crimson text-lg text-muted-foreground">
-                Years of Heritage
-              </div>
-            </div>
-            <div className="premium-card p-6 text-center hover-lift">
-              <TrendingUp className="w-8 h-8 text-secondary mx-auto mb-3" />
-              <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
-                ₹{counters.aum}+ Cr
-              </div>
-              <div className="font-crimson text-lg text-muted-foreground">
-                AUM Managed
-              </div>
-            </div>
-            <div className="premium-card p-6 text-center hover-lift">
-              <Users className="w-8 h-8 text-secondary mx-auto mb-3" />
-              <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
-                {counters.clients}+
-              </div>
-              <div className="font-crimson text-lg text-muted-foreground">
-                Satisfied Clients
-              </div>
-            </div>
-            <div className="premium-card p-6 text-center hover-lift">
-              <Award className="w-8 h-8 text-secondary mx-auto mb-3" />
-              <div className="font-playfair text-3xl font-bold text-tertiary mb-1">
-                {counters.generations}
-              </div>
-              <div className="font-crimson text-lg text-muted-foreground">
-                Generations Served
-              </div>
+                <span>Trusted by 1000+ families since 1957</span>
+              </motion.div>
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-12" data-aos="fade-up" data-aos-delay="600">
-            <Button
-              onClick={() => scrollToSection('contact')}
-              size="lg"
-              className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-3 text-lg"
+          {/* Right Side - Video */}
+          <div className="relative bg-gray-900 min-h-[400px] lg:min-h-screen overflow-hidden">
+            {/* Hero Video */}
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="absolute inset-0 w-full h-full object-cover"
             >
-              Schedule Consultation
-            </Button>
-            <Button
-              onClick={() => scrollToSection('contact')}
-              variant="outline"
-              size="lg"
-              className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground font-crimson font-semibold px-8 py-3 text-lg"
-            >
-              Learn More
-            </Button>
+              <source src="/hero-section-video.mp4" type="video/mp4" />
+            </video>
+            
+            {/* Decorative Yellow Shape (like in reference) */}
+            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary opacity-20 rounded-full transform translate-x-1/2 translate-y-1/2 z-10"></div>
           </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <button
-            onClick={() => scrollToSection('contact')}
-            className="text-tertiary/60 hover:text-secondary transition-colors duration-300"
-          >
-            <ChevronDown className="w-8 h-8" />
-          </button>
         </div>
       </div>
     </section>

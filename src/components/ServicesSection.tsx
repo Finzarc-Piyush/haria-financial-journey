@@ -1,11 +1,11 @@
-import { useEffect, useState, useCallback, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from "@/components/ui/card";
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
 import {
   TrendingUp,
@@ -15,246 +15,258 @@ import {
   FileText,
   Building,
   Heart,
-  ChevronRight,
-  DollarSign
+  ArrowRight
 } from "lucide-react";
+import { motion } from 'framer-motion';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-// --- ExpandableCardContent ---
-const ExpandableCardContent = ({ expanded, children }) => {
-  const contentRef = useRef(null);
-  const [maxHeight, setMaxHeight] = useState(0);
-  const [opacity, setOpacity] = useState(0);
-  const [rendered, setRendered] = useState(expanded);
-  const collapseTimeout = useRef<number | null>(null);
+interface SubService {
+  id: string;
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  process: string[];
+  details: string;
+  specializations: string[];
+}
 
-  useEffect(() => {
-    if (expanded) {
-      setRendered(true);
-      setTimeout(() => {
-        if (contentRef.current) {
-          setMaxHeight(contentRef.current.scrollHeight);
-          setOpacity(1);
-        }
-      }, 0);
-    } else {
-      setOpacity(0);
-      if (contentRef.current) {
-        collapseTimeout.current = window.setTimeout(() => {
-          setMaxHeight(0);
-          setTimeout(() => setRendered(false), 500);
-        }, 30);
-      }
-    }
+interface ServiceCategory {
+  id: string;
+  title: string;
+  description: string;
+  bgColor: string;
+  buttonColor: string;
+  buttonTextColor: string;
+  services: SubService[];
+}
 
-    return () => {
-      if (collapseTimeout.current !== null) {
-        clearTimeout(collapseTimeout.current);
-        collapseTimeout.current = null;
-      }
-    };
-  }, [expanded]);
-
-  return (
-    <div
-      style={{
-        overflow: 'hidden',
-        transition: 'max-height 0.5s cubic-bezier(0.4,0,0.2,1), opacity 0.3s ease',
-        maxHeight: expanded ? maxHeight : 0,
-        opacity: expanded ? 1 : 0,
-      }}
-    >
-      <div
-        ref={contentRef}
-        aria-hidden={!expanded}
-        className={`transition-all duration-300 ease-in-out ${expanded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'}`}
-        style={{
-          opacity: opacity,
-          transform: expanded ? 'translateY(0px)' : 'translateY(8px)',
-          pointerEvents: expanded ? 'auto' : 'none',
-        }}
-      >
-        {rendered ? children : null}
-      </div>
-    </div>
-  );
-};
-
-// --- ServicesSection Component ---
 const ServicesSection = () => {
-  const [expandedService, setExpandedService] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<ServiceCategory | null>(null);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
   }, []);
 
-  const handleServiceClick = useCallback((serviceId) => {
-    setExpandedService(prev => {
-      const newValue = prev === serviceId ? null : serviceId;
-      setTimeout(() => AOS.refresh(), 0);
-      return newValue;
-    });
-  }, []);
-
-  const wealthServices = [
+  const serviceCategories: ServiceCategory[] = [
     {
-      id: 'portfolio',
-      icon: TrendingUp,
-      title: 'Investment Portfolio Management',
-      description: 'Customized portfolio construction using modern portfolio theory and tactical asset allocation',
-      process: ['Initial risk assessment', 'Strategic allocation', 'Implementation', 'Ongoing monitoring', 'Quarterly reviews'],
-      details: 'As your fiduciary, we are legally bound to act in your best interest at all times.',
-      specializations: ['Equity portfolio management', 'Fixed income strategies', 'Alternative investments']
+      id: 'wealth',
+      title: 'Wealth Management Services',
+      description: 'We help you build, grow, and protect your wealth through comprehensive portfolio solutions. From strategic asset allocation to tax optimization, we provide data-driven strategies you can trust.',
+      bgColor: 'bg-gradient-to-br from-secondary/15 to-secondary/5',
+      buttonColor: 'bg-tertiary',
+      buttonTextColor: 'text-white',
+      services: [
+        {
+          id: 'portfolio',
+          icon: TrendingUp,
+          title: 'Investment Portfolio Management',
+          description: 'Customized portfolio construction using modern portfolio theory and tactical asset allocation',
+          process: ['Initial risk assessment', 'Strategic allocation', 'Implementation', 'Ongoing monitoring', 'Quarterly reviews'],
+          details: 'As your fiduciary, we are legally bound to act in your best interest at all times.',
+          specializations: ['Equity portfolio management', 'Fixed income strategies', 'Alternative investments']
+        },
+        {
+          id: 'swp',
+          icon: PiggyBank,
+          title: 'SWP Calculator',
+          description: 'Plan your regular withdrawals with a Systematic Withdrawal Plan (SWP) for steady income.',
+          process: ['Current analysis', 'Goal setting', 'Gap analysis', 'Strategy implementation', 'Annual reviews'],
+          details: 'Specializing in SWP strategies and tax-efficient withdrawal planning.',
+          specializations: ['Systematic Withdrawal Plan', 'Retirement income', 'Tax-efficient withdrawals']
+        },
+        {
+          id: 'tax',
+          icon: Calculator,
+          title: 'Tax Optimization Strategies',
+          description: 'Tax-loss harvesting, charitable giving strategies, and estate planning coordination',
+          process: ['Annual tax planning', 'Strategy implementation', 'Year-end reviews', 'Next year planning'],
+          details: 'Typically save clients 15–25% in annual tax obligations.',
+          specializations: ['Tax-loss harvesting', 'ELSS planning', 'Section 80C optimization']
+        }
+      ]
     },
     {
-      id: 'swp',
-      icon: PiggyBank,
-      title: 'SWP Calculator',
-      description: 'Plan your regular withdrawals with a Systematic Withdrawal Plan (SWP) for steady income.',
-      process: ['Current analysis', 'Goal setting', 'Gap analysis', 'Strategy implementation', 'Annual reviews'],
-      details: 'Specializing in SWP strategies and tax-efficient withdrawal planning.',
-      specializations: ['Systematic Withdrawal Plan', 'Retirement income', 'Tax-efficient withdrawals']
-    },
-    {
-      id: 'tax',
-      icon: Calculator,
-      title: 'Tax Optimization Strategies',
-      description: 'Tax-loss harvesting, charitable giving strategies, and estate planning coordination',
-      process: ['Annual tax planning', 'Strategy implementation', 'Year-end reviews', 'Next year planning'],
-      details: 'Typically save clients 15–25% in annual tax obligations.',
-      specializations: ['Tax-loss harvesting', 'ELSS planning', 'Section 80C optimization']
+      id: 'insurance',
+      title: 'Insurance & Protection Services',
+      description: 'Struggling to find the right protection for your loved ones? You\'re not alone. Our insurance solutions make safeguarding your family\'s future simpler, clearer, anywhere.',
+      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100/50',
+      buttonColor: 'bg-tertiary',
+      buttonTextColor: 'text-white',
+      services: [
+        {
+          id: 'life',
+          icon: Shield,
+          title: 'Life Insurance Analysis',
+          description: 'Comprehensive review of term vs. permanent insurance, estate planning integration',
+          process: ['Needs analysis', 'Product comparison', 'Implementation', 'Annual reviews'],
+          details: 'Specializing in key person coverage and business succession planning.',
+          specializations: ['Executive life insurance', 'Key person coverage', 'Business succession']
+        },
+        {
+          id: 'health',
+          icon: Heart,
+          title: 'Health & Disability Insurance',
+          description: 'Group benefits optimization, supplemental coverage analysis, disability income planning',
+          process: ['Current coverage review', 'Gap analysis', 'Recommendations', 'Implementation support'],
+          details: 'For professionals requiring comprehensive coverage and income protection.',
+          specializations: ['Group benefits optimization', 'Supplemental coverage', 'Disability planning']
+        },
+        {
+          id: 'estate',
+          icon: FileText,
+          title: 'Estate Planning Coordination',
+          description: 'Will and trust review, beneficiary coordination, tax-efficient wealth transfer',
+          process: ['Estate analysis', 'Attorney coordination', 'Implementation', 'Regular updates'],
+          details: 'Comprehensive estate planning to ensure smooth wealth transfer.',
+          specializations: ['Will optimization', 'Trust structures', 'Beneficiary planning']
+        }
+      ]
     }
   ];
 
-  const insuranceServices = [
-    {
-      id: 'life',
-      icon: Shield,
-      title: 'Life Insurance Analysis',
-      description: 'Comprehensive review of term vs. permanent insurance, estate planning integration',
-      process: ['Needs analysis', 'Product comparison', 'Implementation', 'Annual reviews'],
-      details: 'Specializing in key person coverage and business succession planning.',
-      specializations: ['Executive life insurance', 'Key person coverage', 'Business succession']
-    },
-    {
-      id: 'health',
-      icon: Heart,
-      title: 'Health & Disability Insurance',
-      description: 'Group benefits optimization, supplemental coverage analysis, disability income planning',
-      process: ['Current coverage review', 'Gap analysis', 'Recommendations', 'Implementation support'],
-      details: 'For professionals requiring comprehensive coverage and income protection.',
-      specializations: ['Group benefits optimization', 'Supplemental coverage', 'Disability planning']
-    },
-    {
-      id: 'estate',
-      icon: FileText,
-      title: 'Estate Planning Coordination',
-      description: 'Will and trust review, beneficiary coordination, tax-efficient wealth transfer',
-      process: ['Estate analysis', 'Attorney coordination', 'Implementation', 'Regular updates'],
-      details: 'Comprehensive estate planning to ensure smooth wealth transfer.',
-      specializations: ['Will optimization', 'Trust structures', 'Beneficiary planning']
-    }
-  ];
-
-  const renderServiceCard = (service, index, section) => {
-    const uniqueId = `${section}-${service.id}`;
-    const isExpanded = expandedService === uniqueId;
-
-    return (
-      <Card
-        key={uniqueId}
-        data-aos="fade-up"
-        data-aos-delay={index * 120}
-        className={`premium-card cursor-pointer transition-all duration-500 group hover:shadow-lg hover:border-secondary focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 ${isExpanded ? 'border-2 border-secondary shadow-secondary/40' : ''}`}
-        style={{ boxShadow: isExpanded ? '0 0 0 4px rgba(212,165,116,0.18)' : undefined }}
-        onClick={() => handleServiceClick(uniqueId)}
-      >
-        <CardHeader>
-          <div className="flex items-center justify-between mb-4">
-            <service.icon className="w-8 h-8 text-secondary group-hover:animate-pulse transition-all duration-300" />
-            <ChevronRight className={`w-5 h-5 text-tertiary/60 transition-transform duration-300 ${isExpanded ? 'rotate-90' : ''}`} />
-          </div>
-          <CardTitle className="font-playfair text-2xl text-tertiary">
-            {service.title}
-          </CardTitle>
-          <CardDescription className="font-crimson text-lg text-tertiary/70">
-            {service.description}
-          </CardDescription>
-        </CardHeader>
-        <ExpandableCardContent expanded={isExpanded}>
-          <CardContent className="pt-0">
-            <div className="space-y-4">
-              <div>
-                <h4 className="font-playfair font-semibold text-tertiary mb-2">Process Overview:</h4>
-                <ul className="space-y-1">
-                  {service.process.map((step, i) => (
-                    <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-center">
-                      <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2" />
-                      {step}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div>
-                <p className="font-crimson text-sm text-tertiary/70 mb-3">{service.details}</p>
-                <div className="flex flex-wrap gap-2">
-                  {service.specializations.map((spec, i) => (
-                    <Badge key={i} variant="secondary" className="text-xs">
-                      {spec}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </ExpandableCardContent>
-      </Card>
-    );
+  const handleCategoryClick = (category: ServiceCategory) => {
+    setSelectedCategory(category);
+    setIsDialogOpen(true);
   };
 
   return (
-    <section id="services" className="py-20 bg-white">
+    <section id="services" className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Title */}
         <div data-aos="fade-down" className="text-center mb-16">
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-tertiary mb-6">
+          <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+            WHAT WE OFFER
+          </p>
+          <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-tertiary mb-6 leading-tight">
             Our Comprehensive Financial Services
           </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6 underline-animate"></div>
-          <p className="font-crimson text-2xl text-tertiary/80 max-w-3xl mx-auto">
+          <p className="font-crimson text-lg md:text-xl text-tertiary/80 max-w-4xl mx-auto leading-relaxed">
             Transparent, comprehensive financial planning with clear fee structure and proven results
           </p>
         </div>
 
-        {/* Wealth Services */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">Wealth Management Services</h3>
-            <div className="flex items-center justify-center">
-              <Building className="w-6 h-6 text-secondary mr-2" />
-              <span className="font-crimson text-xl text-tertiary/70">Comprehensive Portfolio Solutions</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {wealthServices.map((service, index) => renderServiceCard(service, index, 'wealth'))}
-          </div>
+        {/* Service Category Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {serviceCategories.map((category, index) => (
+            <motion.div
+              key={category.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: index * 0.2 }}
+              className={`${category.bgColor} rounded-3xl p-8 md:p-12 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group flex flex-col min-h-[450px]`}
+              onClick={() => handleCategoryClick(category)}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Building className="w-8 h-8 text-tertiary" />
+                <span className="text-sm font-crimson text-tertiary/70 uppercase tracking-wider">
+                  {category.id === 'wealth' ? 'Wealth Management' : 'Insurance & Protection'}
+                </span>
+              </div>
+
+              <h3 className="font-playfair text-3xl md:text-4xl font-bold text-tertiary mb-6 leading-tight">
+                {category.title}
+              </h3>
+
+              <p className="font-crimson text-base md:text-lg text-tertiary/80 mb-8 leading-relaxed flex-grow">
+                {category.description}
+              </p>
+
+              <div>
+                <button
+                  className={`${category.buttonColor} ${category.buttonTextColor} hover:scale-105 transition-transform duration-300 px-8 py-4 rounded-full font-semibold font-crimson flex items-center gap-2 group-hover:gap-4 transition-all`}
+                >
+                  Learn more
+                  <ArrowRight className="w-5 h-5" />
+                </button>
+              </div>
+            </motion.div>
+          ))}
         </div>
 
-        {/* Insurance Services */}
-        <div className="mb-16">
-          <div className="text-center mb-12">
-            <h3 className="font-playfair text-3xl font-bold text-tertiary mb-4">Insurance & Protection Services</h3>
-            <div className="flex items-center justify-center">
-              <Shield className="w-6 h-6 text-secondary mr-2" />
-              <span className="font-crimson text-xl text-tertiary/70">Comprehensive Risk Management</span>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {insuranceServices.map((service, index) => renderServiceCard(service, index, 'insurance'))}
-          </div>
-        </div>
+        {/* Services Detail Modal */}
+        <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+          <DialogContent className="max-w-5xl max-h-[85vh] bg-white p-0 overflow-hidden flex flex-col top-[52%] translate-y-[-50%] z-[10000]">
+            {selectedCategory && (
+              <div className="flex flex-col h-full overflow-hidden">
+                {/* Fixed Header */}
+                <div className="px-6 pt-6 pb-4 border-b border-gray-200 flex-shrink-0">
+                  <DialogHeader>
+                    <DialogTitle className="text-2xl md:text-3xl font-playfair text-tertiary mb-3 pr-8">
+                      {selectedCategory.title}
+                    </DialogTitle>
+                    <DialogDescription className="text-base md:text-lg font-crimson text-tertiary/80 leading-relaxed">
+                      {selectedCategory.description}
+                    </DialogDescription>
+                  </DialogHeader>
+                </div>
+
+                {/* Scrollable Content */}
+                <div className="flex-1 overflow-y-auto px-6 py-6">
+
+                {/* Sub-Services Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
+                  {selectedCategory.services.map((service, index) => (
+                    <motion.div
+                      key={service.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.4, delay: index * 0.1 }}
+                      className="border border-gray-200 rounded-2xl p-6 hover:border-secondary/50 hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="flex-shrink-0 w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                          <service.icon className="w-6 h-6 text-secondary" />
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-playfair text-xl md:text-2xl font-bold text-tertiary mb-3">
+                            {service.title}
+                          </h4>
+                          <p className="font-crimson text-base text-tertiary/80 mb-4 leading-relaxed">
+                            {service.description}
+                          </p>
+
+                          {/* Process Overview */}
+                          <div className="mb-4">
+                            <h5 className="font-playfair font-semibold text-tertiary mb-2 text-sm">
+                              Process Overview:
+                            </h5>
+                            <ul className="space-y-1">
+                              {service.process.map((step, i) => (
+                                <li key={i} className="font-crimson text-sm text-tertiary/70 flex items-center">
+                                  <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 flex-shrink-0" />
+                                  {step}
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+
+                          {/* Details */}
+                          <p className="font-crimson text-sm text-tertiary/70 mb-3 italic">
+                            {service.details}
+                          </p>
+
+                          {/* Specializations */}
+                          <div className="flex flex-wrap gap-2">
+                            {service.specializations.map((spec, i) => (
+                              <Badge key={i} variant="secondary" className="text-xs font-crimson">
+                                {spec}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
 
       </div>
     </section>

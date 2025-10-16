@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import HeroSection from "@/components/HeroSection";
+import { FeaturesSection } from "@/components/ui/features-section";
 import AboutSection from "@/components/AboutSection";
 import ServicesSection from "@/components/ServicesSection";
 import ProcessSection from "@/components/ProcessSection";
@@ -56,6 +57,7 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       <HeroSection />
+      <FeaturesSection />
       <TestimonialsSection
         title="Trusted by families across India"
         description="Thoughtful financial planning and consistent execution for long-term wealth creation."

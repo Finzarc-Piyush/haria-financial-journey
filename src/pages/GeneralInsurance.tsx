@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -221,7 +220,6 @@ const GeneralInsurance = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
 
             {/* Hero Section */}
             <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
@@ -537,8 +535,9 @@ const GeneralInsurance = () => {
 
                         {services.map((service) => (
                             <TabsContent key={service.id} value={service.id} className="mt-8">
-                                <motion.div
-                                    className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
+                                <div id={service.id}>
+                                    <motion.div
+                                        className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
                                     initial="hidden"
                                     whileInView="show"
                                     viewport={{ once: true, amount: 0.3 }}
@@ -594,6 +593,7 @@ const GeneralInsurance = () => {
                                         </motion.div>
                                     ))}
                                 </motion.div>
+                                </div>
                             </TabsContent>
                         ))}
                     </Tabs>

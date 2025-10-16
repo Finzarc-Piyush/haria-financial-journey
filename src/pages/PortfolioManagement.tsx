@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { motion, useInView } from "framer-motion";
@@ -74,8 +73,6 @@ const PortfolioManagement = () => {
 
     return (
         <div className="min-h-screen bg-background">
-            <Navigation isTransparent={heroInView} />
-
             {/* Hero Section */}
             <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8">
                 {/* Background Image */}

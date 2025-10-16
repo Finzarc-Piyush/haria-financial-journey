@@ -1,42 +1,30 @@
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect } from 'react';
 import { Badge } from "@/components/ui/badge";
 import {
   MessageCircle,
   FileBarChart,
   Settings,
   RefreshCw,
-  Clock,
   CheckCircle,
   Users,
-  Shield,
-  Phone,
-  Calendar,
-  Smartphone,
-  Monitor
+  Shield
 } from "lucide-react";
+import { Timeline } from "@/components/ui/timeline";
+import ColorChangeCards from "@/components/ui/color-change-card";
 // @ts-ignore: AOS has no types by default
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const ProcessSection = () => {
-  const [isVisible, setIsVisible] = useState(false);
+// Import commitment images directly
+import responseTimeImg from '@/assets/commitment/Response-Time.png';
+import meetingsImg from '@/assets/commitment/Meetings.jpg';
+import reportingImg from '@/assets/commitment/Reporting.jpg';
+import technologyAccessImg from '@/assets/commitment/Technology-Access.jpg';
 
+
+const ProcessSection = () => {
   useEffect(() => {
     AOS.init({ duration: 500, once: true });
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
-      },
-      { threshold: 0.2 }
-    );
-    const element = document.getElementById('process');
-    if (element) {
-      observer.observe(element);
-    }
-    return () => observer.disconnect();
   }, []);
 
   const processSteps = [
@@ -125,164 +113,126 @@ const ProcessSection = () => {
 
   const communicationStandards = [
     {
-      icon: Clock,
-      title: 'Response Time',
+      heading: 'Response Time',
       description: 'All inquiries answered within 24 hours',
-      commitment: '24 Hour Guarantee'
+      badge: '24 Hour Guarantee',
+      imgSrc: responseTimeImg
     },
     {
-      icon: Calendar,
-      title: 'Meeting Frequency',
+      heading: 'Meeting Frequency',
       description: 'Quarterly reviews, annual planning, ad-hoc as needed',
-      commitment: 'Regular Schedule'
+      badge: 'Regular Schedule',
+      imgSrc: meetingsImg
     },
     {
-      icon: FileBarChart,
-      title: 'Reporting',
+      heading: 'Reporting',
       description: 'Monthly statements, quarterly performance reports',
-      commitment: 'Comprehensive Reporting'
+      badge: 'Comprehensive Reporting',
+      imgSrc: reportingImg
     },
     {
-      icon: Smartphone,
-      title: 'Technology Access',
+      heading: 'Technology Access',
       description: 'Secure client portal, mobile app, video conferencing',
-      commitment: 'Modern Tools'
+      badge: 'Modern Tools',
+      imgSrc: technologyAccessImg
     }
   ];
 
 
-  return (
-    <section id="process" className="py-20 bg-tertiary text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div data-aos="fade-up" className={`text-center mb-16 transition-all duration-1000 ${isVisible ? 'animate-fade-in' : 'opacity-0'}`}>
-          <h2 className="font-playfair text-4xl md:text-5xl font-bold text-white mb-6">
-            Our Client-Focused Process
-          </h2>
-          <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
-          <p className="font-crimson text-xl text-white/80 max-w-3xl mx-auto">
-            A systematic, transparent approach designed to reduce anxiety and build confidence
-            throughout your financial planning journey.
-          </p>
-        </div>
-
-        {/* Process Steps */}
-        <div className="space-y-12">
-          {processSteps.map((step, index) => (
-            <div key={step.id} data-aos="fade-up" data-aos-delay={index * 120}>
-              <Card className="premium-card hover-lift bg-white/10">
-                <CardHeader>
-                  <div className="flex flex-col md:flex-row items-start gap-6">
-                    <div className="flex-shrink-0 flex flex-col items-center">
-                      <div className="w-16 h-16 bg-secondary rounded-full flex items-center justify-center">
-                        <step.icon className="w-8 h-8 text-secondary-foreground" />
-                      </div>
-                      <div className="text-center mt-2">
-                        <Badge className="bg-tertiary text-lg text-white font-playfair font-bold">
-                          {step.number}
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <CardTitle className="font-playfair text-2xl text-white">
-                          {step.title}
-                        </CardTitle>
-                        <Badge variant="outline" className="border-secondary text-md text-secondary w-fit">
-                          {step.duration}
-                        </Badge>
-                      </div>
-                      <CardDescription className="font-crimson text-xl text-white/70 mb-6">
-                        {step.description}
-                      </CardDescription>
-                    </div>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <div>
-                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
-                        <CheckCircle className="w-5 h-5 text-secondary mr-2" />
-                        What to Expect:
-                      </h4>
-                      <ul className="space-y-2">
-                        {step.expectations.map((expectation, i) => (
-                          <li key={i} className="font-crimson text-lg text-white/70 flex items-start">
-                            <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
-                            {expectation}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
-                        <Users className="w-5 h-5 text-secondary mr-2" />
-                        Your Preparation:
-                      </h4>
-                      <ul className="space-y-2">
-                        {step.preparation.map((prep, i) => (
-                          <li key={i} className="font-crimson text-lg text-white/70 flex items-start">
-                            <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2"></div>
-                            {prep}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div>
-                      <h4 className="font-playfair font-semibold text-xl text-white mb-3 flex items-center">
-                        <Shield className="w-5 h-5 text-secondary mr-2" />
-                        Outcome:
-                      </h4>
-                      <div className="p-4 bg-champagne/20 rounded-lg">
-                        <p className="font-crimson text-lg text-white/80">
-                          {step.outcome}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+  // Transform processSteps into timeline data
+  const timelineData = processSteps.map((step) => ({
+    title: step.title,
+    content: (
+      <div className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-xl border border-white/10">
+        {/* Icon and Duration Header */}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-secondary rounded-full flex items-center justify-center flex-shrink-0">
+              <step.icon className="w-7 h-7 text-white" />
             </div>
-          ))}
+            <Badge className="bg-secondary text-white text-sm font-crimson px-4 py-1">
+              {step.duration}
+            </Badge>
+          </div>
         </div>
 
-        {/* Communication Standards */}
-        <div data-aos="fade-up" data-aos-delay="400" className={`mb-16 mt-16 transition-all duration-1000 delay-600 ${isVisible ? 'animate-slide-up' : 'opacity-0'}`}>
-          <div className="text-center mb-8">
-            <h3 className="font-playfair text-3xl font-bold text-white mb-4">
-              Our Communication Standards
-            </h3>
-            <p className="font-crimson text-xl text-white/70">
-              Clear expectations for responsive, professional service
+        {/* Description */}
+        <p className="text-white/90 dark:text-white/90 text-base md:text-lg font-crimson mb-8 leading-relaxed">
+          {step.description}
+        </p>
+
+        {/* Three Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {/* What to Expect */}
+          <div className="bg-white/5 rounded-xl p-5">
+            <h4 className="font-playfair font-semibold text-lg text-white mb-4 flex items-center">
+              <CheckCircle className="w-5 h-5 text-secondary mr-2 flex-shrink-0" />
+              What to Expect
+            </h4>
+            <ul className="space-y-3">
+              {step.expectations.map((expectation, i) => (
+                <li key={i} className="text-white/80 dark:text-white/80 text-sm md:text-base font-crimson flex items-start">
+                  <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2 flex-shrink-0"></div>
+                  {expectation}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Your Preparation */}
+          <div className="bg-white/5 rounded-xl p-5">
+            <h4 className="font-playfair font-semibold text-lg text-white mb-4 flex items-center">
+              <Users className="w-5 h-5 text-secondary mr-2 flex-shrink-0" />
+              Your Preparation
+            </h4>
+            <ul className="space-y-3">
+              {step.preparation.map((prep, i) => (
+                <li key={i} className="text-white/80 dark:text-white/80 text-sm md:text-base font-crimson flex items-start">
+                  <div className="w-1.5 h-1.5 bg-secondary rounded-full mr-2 mt-2 flex-shrink-0"></div>
+                  {prep}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Outcome */}
+          <div className="bg-secondary/20 rounded-xl p-5 border border-secondary/30">
+            <h4 className="font-playfair font-semibold text-lg text-white mb-4 flex items-center">
+              <Shield className="w-5 h-5 text-secondary mr-2 flex-shrink-0" />
+              Outcome
+            </h4>
+            <p className="text-white/90 dark:text-white/90 text-sm md:text-base font-crimson leading-relaxed">
+              {step.outcome}
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {communicationStandards.map((standard, index) => (
-              <Card
-                key={index}
-                className={`premium-card hover-lift text-center transition-all duration-300 bg-white/10`}
-                data-aos="fade-up"
-                data-aos-delay={index * 100}
-              >
-                <CardHeader>
-                  <standard.icon className="w-8 h-8 text-secondary mx-auto mb-4" />
-                  <CardTitle className="font-playfair text-2xl text-white">
-                    {standard.title}
-                  </CardTitle>
-                  <CardDescription className="font-crimson text-lg text-white/70">
-                    {standard.description}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <Badge className="bg-secondary text-md text-secondary-foreground">
-                    {standard.commitment}
-                  </Badge>
-                </CardContent>
-              </Card>
-            ))}
+        </div>
+      </div>
+    ),
+  }));
+
+  return (
+    <section id="process" className="bg-tertiary">
+      {/* Timeline Component */}
+      <Timeline data={timelineData} />
+
+      {/* Communication Standards */}
+      <div className="bg-gray-50 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div data-aos="fade-up" className="mb-12">
+            <div className="text-center mb-12">
+              <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                OUR COMMITMENT
+              </p>
+              <h3 className="font-playfair text-3xl md:text-4xl lg:text-5xl font-bold text-tertiary mb-4 leading-tight">
+                Communication Standards
+              </h3>
+              <p className="font-crimson text-lg md:text-xl text-tertiary/80 max-w-3xl mx-auto leading-relaxed">
+                Clear expectations for responsive, professional service
+              </p>
+            </div>
+            <ColorChangeCards cards={communicationStandards} />
           </div>
         </div>
-
       </div>
     </section>
   );
