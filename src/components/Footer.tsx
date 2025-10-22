@@ -157,9 +157,9 @@ const Footer = () => {
                         {/* Logo */}
                         <div className="flex items-center justify-start gap-0.5 sm:gap-1 md:gap-3">
                             <img src={logo} alt="Haria Investments Logo" className="w-5 h-5 sm:w-6 sm:h-6 md:w-10 md:h-10 object-contain flex-shrink-0" />
-                            <div className="min-w-0 flex items-center">
+                            <div className="min-w-0">
                                 <div className="font-playfair font-bold text-[8px] sm:text-sm md:text-xl text-tertiary whitespace-nowrap">Haria Investments</div>
-                                <div className="font-crimson text-[10px] sm:text-xs text-tertiary/60 hidden md:block ml-0 md:ml-0">since 1957</div>
+                                <div className="font-crimson text-[10px] sm:text-xs text-tertiary/60 hidden md:block">since 1957</div>
                             </div>
                         </div>
 
