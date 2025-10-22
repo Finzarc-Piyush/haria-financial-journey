@@ -312,7 +312,7 @@ export const CircularCarousel = ({
               onMouseLeave={() => setHoverPrev(false)}
               aria-label="Previous product"
             >
-              <ArrowLeft size={28} color="#ffffff" />
+              <ArrowLeft className="arrow-icon" color="#ffffff" />
             </button>
             <button
               className="arrow-button next-button"
@@ -324,7 +324,7 @@ export const CircularCarousel = ({
               onMouseLeave={() => setHoverNext(false)}
               aria-label="Next product"
             >
-              <ArrowRight size={28} color="#ffffff" />
+              <ArrowRight className="arrow-icon" color="#ffffff" />
             </button>
           </div>
         </div>
@@ -333,18 +333,49 @@ export const CircularCarousel = ({
         .carousel-container {
           width: 100%;
           max-width: 70rem;
-          padding: 2rem 1rem;
+          padding: 1rem 0.5rem;
           margin: 0 auto;
         }
         .carousel-grid {
           display: grid;
-          gap: 3rem;
+          gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+          .carousel-container {
+            padding: 1.5rem 1rem;
+          }
+          .carousel-grid {
+            gap: 2rem;
+          }
+        }
+        @media (min-width: 1024px) {
+          .carousel-container {
+            padding: 2rem 1rem;
+          }
+          .carousel-grid {
+            gap: 3rem;
+          }
         }
         .image-container {
           position: relative;
           width: 100%;
-          height: 28rem;
+          height: 16rem;
           perspective: 1000px;
+        }
+        @media (min-width: 640px) {
+          .image-container {
+            height: 20rem;
+          }
+        }
+        @media (min-width: 768px) {
+          .image-container {
+            height: 24rem;
+          }
+        }
+        @media (min-width: 1024px) {
+          .image-container {
+            height: 28rem;
+          }
         }
         .product-card {
           position: absolute;
@@ -383,10 +414,22 @@ export const CircularCarousel = ({
         .product-title {
           font-weight: bold;
           margin-bottom: 0.25rem;
+          font-size: 1.25rem;
+        }
+        @media (min-width: 640px) {
+          .product-title {
+            font-size: 1.5rem;
+          }
         }
         .product-description {
           margin-bottom: 1.5rem;
           line-height: 1.6;
+          font-size: 0.875rem;
+        }
+        @media (min-width: 640px) {
+          .product-description {
+            font-size: 0.925rem;
+          }
         }
         .product-details {
           margin-bottom: 1.5rem;
@@ -434,8 +477,8 @@ export const CircularCarousel = ({
           border-top: 1px solid #e5e7eb;
         }
         .arrow-button {
-          width: 3.5rem;
-          height: 3.5rem;
+          width: 2.5rem;
+          height: 2.5rem;
           border-radius: 50%;
           display: flex;
           align-items: center;
@@ -443,6 +486,34 @@ export const CircularCarousel = ({
           cursor: pointer;
           transition: background-color 0.3s;
           border: none;
+        }
+        @media (min-width: 640px) {
+          .arrow-button {
+            width: 3rem;
+            height: 3rem;
+          }
+        }
+        @media (min-width: 768px) {
+          .arrow-button {
+            width: 3.5rem;
+            height: 3.5rem;
+          }
+        }
+        .arrow-icon {
+          width: 20px;
+          height: 20px;
+        }
+        @media (min-width: 640px) {
+          .arrow-icon {
+            width: 24px;
+            height: 24px;
+          }
+        }
+        @media (min-width: 768px) {
+          .arrow-icon {
+            width: 28px;
+            height: 28px;
+          }
         }
         @media (min-width: 768px) {
           .carousel-grid {

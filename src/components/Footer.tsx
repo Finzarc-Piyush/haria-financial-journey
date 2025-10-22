@@ -153,32 +153,32 @@ const Footer = () => {
 
                 {/* Bottom Section */}
                 <div className="border-t border-tertiary/20 pt-8 mt-8">
-                    <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="grid grid-cols-3 gap-2 md:gap-4">
                         {/* Logo */}
-                        <div className="flex items-center gap-3">
-                            <img src={logo} alt="Haria Investments Logo" className="w-10 h-10 object-contain" />
-                            <div>
-                                <div className="font-playfair font-bold text-xl text-tertiary">Haria Investments</div>
-                                <div className="font-crimson text-xs text-tertiary/60">since 1957</div>
+                        <div className="flex items-center justify-start gap-1 md:gap-3">
+                            <img src={logo} alt="Haria Investments Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain flex-shrink-0" />
+                            <div className="min-w-0">
+                                <div className="font-playfair font-bold text-xs sm:text-sm md:text-xl text-tertiary truncate">Haria Investments</div>
+                                <div className="font-crimson text-[10px] sm:text-xs text-tertiary/60">since 1957</div>
                             </div>
                         </div>
 
                         {/* Copyright (Center) */}
-                        <div className="text-center">
-                            <p className="font-crimson text-sm text-tertiary/60">
+                        <div className="text-center flex items-center justify-center">
+                            <p className="font-crimson text-[10px] sm:text-xs md:text-sm text-tertiary/60">
                                 © Haria Investments {new Date().getFullYear()}
                             </p>
                         </div>
 
                         {/* Credit (Right) */}
-                        <div>
+                        <div className="flex items-center justify-end">
                             <a 
                                 href="https://finzarc.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-secondary transition-colors flex items-center gap-1 font-crimson text-sm text-tertiary/70"
+                                className="hover:text-secondary transition-colors flex items-center gap-1 font-crimson text-[10px] sm:text-xs md:text-sm text-tertiary/70"
                             >
-                                Made with <Heart className="w-3 h-3 fill-current" /> by Finzarc
+                                Made with <Heart className="w-2 h-2 md:w-3 md:h-3 fill-current" /> by Finzarc
                             </a>
                         </div>
                     </div>

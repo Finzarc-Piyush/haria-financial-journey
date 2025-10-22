@@ -193,7 +193,7 @@ const OrbitingAMC = memo(({ config, angle }: OrbitingAMCProps) => {
         className={`
           relative w-full h-full bg-white
           rounded-full flex items-center justify-center
-          transition-all duration-300 cursor-pointer border-2
+          transition-all duration-300 border-2
           ${isHovered ? 'scale-125 shadow-2xl border-secondary' : 'shadow-lg hover:shadow-xl border-gray-200'}
         `}
         style={{
@@ -295,16 +295,16 @@ export default function OrbitingAMCs() {
   return (
     <div className="w-full flex items-center justify-center overflow-hidden">
       <div 
-        className="relative w-full max-w-[450px] aspect-square flex items-center justify-center"
+        className="relative w-full max-w-[280px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[450px] aspect-square flex items-center justify-center"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
       >
         
         {/* Central Icon with brand colors */}
-        <div className="w-20 h-20 bg-gradient-to-br from-secondary to-tertiary rounded-full flex items-center justify-center z-10 relative shadow-2xl">
+        <div className="w-16 h-16 sm:w-18 sm:h-18 md:w-20 md:h-20 bg-gradient-to-br from-secondary to-tertiary rounded-full flex items-center justify-center z-10 relative shadow-2xl">
           <div className="absolute inset-0 rounded-full bg-secondary/30 blur-xl animate-pulse"></div>
           <div className="absolute inset-0 rounded-full bg-tertiary/20 blur-2xl animate-pulse" style={{ animationDelay: '1s' }}></div>
-          <div className="relative z-10 text-white font-bold font-playfair text-xl">
+          <div className="relative z-10 text-white font-bold font-playfair text-lg sm:text-xl">
             45+
           </div>
         </div>

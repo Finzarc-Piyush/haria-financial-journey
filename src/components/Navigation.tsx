@@ -345,7 +345,13 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 initial={{ opacity: 0, height: 0 }}
                 animate={{ opacity: 1, height: 'auto' }}
                 exit={{ opacity: 0, height: 0 }}
-                className="lg:hidden bg-white border-t border-gray-200 py-4"
+                className="lg:hidden py-4"
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.85)',
+                  backdropFilter: 'blur(20px) saturate(180%)',
+                  WebkitBackdropFilter: 'blur(20px) saturate(180%)',
+                  borderTop: '1px solid rgba(0,0,0,0.1)'
+                }}
               >
                 <div className="space-y-4">
                   {/* Mobile Insurance */}
