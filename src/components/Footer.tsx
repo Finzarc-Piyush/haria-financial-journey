@@ -153,19 +153,19 @@ const Footer = () => {
 
                 {/* Bottom Section */}
                 <div className="border-t border-tertiary/20 pt-8 mt-8">
-                    <div className="grid grid-cols-3 gap-2 md:gap-4">
+                    <div className="grid grid-cols-3 gap-1 sm:gap-2 md:gap-4">
                         {/* Logo */}
-                        <div className="flex items-center justify-start gap-1 md:gap-3">
-                            <img src={logo} alt="Haria Investments Logo" className="w-6 h-6 md:w-10 md:h-10 object-contain flex-shrink-0" />
-                            <div className="min-w-0">
-                                <div className="font-playfair font-bold text-[10px] sm:text-sm md:text-xl text-tertiary truncate">Haria Investments</div>
-                                <div className="font-crimson text-[10px] sm:text-xs text-tertiary/60 hidden md:block">since 1957</div>
+                        <div className="flex items-center justify-start gap-0.5 sm:gap-1 md:gap-3">
+                            <img src={logo} alt="Haria Investments Logo" className="w-5 h-5 sm:w-6 sm:h-6 md:w-10 md:h-10 object-contain flex-shrink-0" />
+                            <div className="min-w-0 flex items-center">
+                                <div className="font-playfair font-bold text-[8px] sm:text-sm md:text-xl text-tertiary whitespace-nowrap">Haria Investments</div>
+                                <div className="font-crimson text-[10px] sm:text-xs text-tertiary/60 hidden md:block ml-0 md:ml-0">since 1957</div>
                             </div>
                         </div>
 
                         {/* Copyright (Center) */}
-                        <div className="text-center flex items-center justify-center">
-                            <p className="font-crimson text-[9px] sm:text-xs md:text-sm text-tertiary/60 leading-tight">
+                        <div className="text-center flex items-center justify-center px-1">
+                            <p className="font-crimson text-[8px] sm:text-xs md:text-sm text-tertiary/60 leading-tight whitespace-nowrap">
                                 © Haria Investments {new Date().getFullYear()}
                             </p>
                         </div>
@@ -176,9 +176,9 @@ const Footer = () => {
                                 href="https://finzarc.com"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="hover:text-secondary transition-colors flex items-center gap-0.5 md:gap-1 font-crimson text-[9px] sm:text-xs md:text-sm text-tertiary/70 leading-tight"
+                                className="hover:text-secondary transition-colors flex items-center gap-0.5 md:gap-1 font-crimson text-[8px] sm:text-xs md:text-sm text-tertiary/70 leading-tight whitespace-nowrap"
                             >
-                                Made with <Heart className="w-2 h-2 md:w-3 md:h-3 fill-current flex-shrink-0" /> by Finzarc
+                                Made with <Heart className="w-1.5 h-1.5 md:w-3 md:h-3 fill-current flex-shrink-0" /> by Finzarc
                             </a>
                         </div>
                     </div>
