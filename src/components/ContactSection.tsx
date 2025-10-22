@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Phone, Mail, MapPin, Clock, Calendar } from "lucide-react";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useEffect, useState, useRef } from 'react';
@@ -167,86 +166,82 @@ const ContactSection = () => {
 
 
   return (
-    <section id="contact" className="pt-48 pb-16 bg-tertiary">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div data-aos="fade-up" className="text-center mb-16">
-          <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Let's Connect
-          </h2>
-          <p className="font-crimson text-lg md:text-xl text-white/90 max-w-4xl mx-auto leading-relaxed">
-            We're here to help you take the next confident step in your financial journey. Reach out for a complimentary consultation or visit us in person.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Info Card */}
-          <Card data-aos="fade-up" data-aos-delay="100" className="premium-card shadow-floating border border-secondary/20 bg-gradient-to-br from-white via-champagne/5 to-secondary/5 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="font-playfair text-2xl text-tertiary flex items-center gap-2">
-                <Calendar className="w-6 h-6 text-secondary" /> Contact Information
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-8">
-              {/* Phone */}
-              <div className="flex items-start group">
-                <Phone className="w-6 h-6 text-secondary mr-4 mt-1" />
-                <div>
-                  <div className="font-crimson font-semibold text-tertiary text-xl">Phone</div>
-                  <a
-                    href="tel:+917738686126"
-                    className="font-crimson text-tertiary/80 text-xl underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
-                    tabIndex={0}
-                    title="Tap to call directly"
-                  >
-                    +91 77386 86126
-                  </a>
+    <section id="contact" className="pt-4 bg-tertiary">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          {/* Left Side - Contact Info */}
+          <div data-aos="fade-up" className="space-y-8">
+            {/* Main Heading */}
+            <div className="space-y-4">
+              <h1 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                Let's Connect
+              </h1>
+              <p className="font-crimson text-base md:text-lg text-white/80 leading-relaxed max-w-xl">
+                We're here to help you take the next confident step in your financial journey. Reach out for a complimentary consultation or visit us in person.
+              </p>
+            </div>
+
+            {/* Contact Details Section */}
+            <div className="space-y-6 pt-8">
+              <h2 className="font-playfair text-2xl md:text-3xl font-bold text-white">
+                Contact Details
+              </h2>
+              
+              <div className="space-y-4">
+                {/* Phone */}
+                <div className="flex items-start gap-3">
+                  <span className="font-crimson text-white/90 text-lg">•</span>
+                  <div>
+                    <span className="font-crimson font-semibold text-white text-lg">Phone: </span>
+                    <a
+                      href="tel:+917738686126"
+                      className="font-crimson text-white/90 text-lg hover:text-secondary transition-colors underline"
+                    >
+                      +91 77386 86126
+                    </a>
+                  </div>
                 </div>
-              </div>
-              {/* Email */}
-              <div className="flex items-start group">
-                <Mail className="w-6 h-6 text-secondary mr-4 mt-1" />
-                <div>
-                  <div className="font-crimson font-semibold text-tertiary text-xl">Email</div>
-                  <a
-                    href="mailto:hariainvestments9@gmail.com"
-                    className="font-crimson text-tertiary/80 text-xl underline-offset-4 transition-colors duration-200 group-hover:text-secondary group-hover:underline focus:text-secondary"
-                  >
-                    hariainvestments9@gmail.com
-                  </a>
+
+                {/* Email */}
+                <div className="flex items-start gap-3">
+                  <span className="font-crimson text-white/90 text-lg">•</span>
+                  <div>
+                    <span className="font-crimson font-semibold text-white text-lg">Email: </span>
+                    <a
+                      href="mailto:hariainvestments9@gmail.com"
+                      className="font-crimson text-white/90 text-lg hover:text-secondary transition-colors underline"
+                    >
+                      hariainvestments9@gmail.com
+                    </a>
+                  </div>
                 </div>
-              </div>
-              {/* Address */}
-              <div className="flex items-start">
-                <MapPin className="w-6 h-6 text-secondary mr-4 mt-1" />
-                <div>
-                  <div className="font-crimson font-semibold text-tertiary text-xl">Office Address</div>
-                  <div className="font-crimson text-tertiary/70 text-xl">
-                    1st Floor, Shree Krishna Niwas,<br />
-                    Above Panshikhar Sweets, Opposite Ajay Shopping Centre,<br />
-                    T.H.Kataria Marg, Matunga West, Mumbai – 400016
+
+                {/* Address */}
+                <div className="flex items-start gap-3">
+                  <span className="font-crimson text-white/90 text-lg">•</span>
+                  <div>
+                    <span className="font-crimson font-semibold text-white text-lg">Address: </span>
+                    <span className="font-crimson text-white/90 text-lg">
+                      1st Floor, Shree Krishna Niwas, Above Panshikhar Sweets, Opposite Ajay Shopping Centre, T.H.Kataria Marg, Matunga West, Mumbai – 400016
+                    </span>
+                  </div>
+                </div>
+
+                {/* Office Hours */}
+                <div className="flex items-start gap-3">
+                  <span className="font-crimson text-white/90 text-lg">•</span>
+                  <div>
+                    <span className="font-crimson font-semibold text-white text-lg">Office Hours: </span>
+                    <span className="font-crimson text-white/90 text-lg">
+                      Monday-Friday: 9:00 AM - 7:00 PM, Saturday: 11:00 AM - 6:00 PM
+                    </span>
                   </div>
                 </div>
               </div>
-              {/* Hours */}
-              <div className="flex items-start">
-                <Clock className="w-6 h-6 text-secondary mr-4 mt-1" />
-                <div>
-                  <div className="font-crimson font-semibold text-tertiary text-xl">Office Hours</div>
-                  <div className="font-crimson text-tertiary/70 text-xl">
-                    Monday-Friday: 9:00 AM - 7:00 PM<br />
-                    Saturday: 11:00 AM - 6:00 PM
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-          {/* Booking Card */}
-          <Card data-aos="fade-up" data-aos-delay="200" className="premium-card shadow-floating border border-tertiary/20 bg-gradient-to-br from-tertiary/5 via-champagne/20 to-secondary/10 flex flex-col justify-between backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="font-playfair text-2xl text-tertiary">
-                Book a Free Consultation
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
+            </div>
+          </div>
+          {/* Right Side - Contact Form */}
+          <div data-aos="fade-up" data-aos-delay="200" className="bg-white/5 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-6 md:p-8">
               {/* Always show the form, even when confirmation is showing */}
               <form
                 ref={formRef}
@@ -258,64 +253,106 @@ const ContactSection = () => {
                 {/* Name fields */}
                 <div className="flex flex-col md:flex-row gap-4">
                   <div className="flex-1">
-                    <label htmlFor="firstName" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">First Name <span className="text-red-500">*</span></label>
-                    <input id="firstName" name="firstName" type="text" required className={`w-full rounded-lg border-2 ${touched.firstName && formErrors.firstName ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="given-name" value={formValues.firstName} onChange={handleInputChange} onBlur={handleBlur} />
-                    {touched.firstName && formErrors.firstName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.firstName}</div>}
+                    <label htmlFor="firstName" className="block font-crimson text-white mb-2 text-base font-medium">First Name</label>
+                    <input 
+                      id="firstName" 
+                      name="firstName" 
+                      type="text" 
+                      required 
+                      placeholder="First Name"
+                      className={`w-full rounded-lg border ${touched.firstName && formErrors.firstName ? 'border-red-500' : 'border-white/30'} bg-white/10 text-white placeholder:text-white/50 px-4 py-3 font-crimson text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-200`} 
+                      autoComplete="given-name" 
+                      value={formValues.firstName} 
+                      onChange={handleInputChange} 
+                      onBlur={handleBlur} 
+                    />
+                    {touched.firstName && formErrors.firstName && <div className="text-red-400 text-sm mt-1">{formErrors.firstName}</div>}
                   </div>
                   <div className="flex-1">
-                    <label htmlFor="lastName" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Last Name <span className="text-red-500">*</span></label>
-                    <input id="lastName" name="lastName" type="text" required className={`w-full rounded-lg border-2 ${touched.lastName && formErrors.lastName ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="family-name" value={formValues.lastName} onChange={handleInputChange} onBlur={handleBlur} />
-                    {touched.lastName && formErrors.lastName && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.lastName}</div>}
+                    <label htmlFor="lastName" className="block font-crimson text-white mb-2 text-base font-medium">Last Name</label>
+                    <input 
+                      id="lastName" 
+                      name="lastName" 
+                      type="text" 
+                      required 
+                      placeholder="Last Name"
+                      className={`w-full rounded-lg border ${touched.lastName && formErrors.lastName ? 'border-red-500' : 'border-white/30'} bg-white/10 text-white placeholder:text-white/50 px-4 py-3 font-crimson text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-200`} 
+                      autoComplete="family-name" 
+                      value={formValues.lastName} 
+                      onChange={handleInputChange} 
+                      onBlur={handleBlur} 
+                    />
+                    {touched.lastName && formErrors.lastName && <div className="text-red-400 text-sm mt-1">{formErrors.lastName}</div>}
                   </div>
                 </div>
                 {/* Email */}
                 <div>
-                  <label htmlFor="email" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Email <span className="text-red-500">*</span></label>
-                  <input id="email" name="email" type="email" required className={`w-full rounded-lg border-2 ${touched.email && formErrors.email ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm`} autoComplete="email" value={formValues.email} onChange={handleInputChange} onBlur={handleBlur} />
-                  {touched.email && formErrors.email && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.email}</div>}
+                  <label htmlFor="email" className="block font-crimson text-white mb-2 text-base font-medium">Email</label>
+                  <input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    required 
+                    placeholder="Email"
+                    className={`w-full rounded-lg border ${touched.email && formErrors.email ? 'border-red-500' : 'border-white/30'} bg-white/10 text-white placeholder:text-white/50 px-4 py-3 font-crimson text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-200`} 
+                    autoComplete="email" 
+                    value={formValues.email} 
+                    onChange={handleInputChange} 
+                    onBlur={handleBlur} 
+                  />
+                  {touched.email && formErrors.email && <div className="text-red-400 text-sm mt-1">{formErrors.email}</div>}
                 </div>
                 {/* Services checkboxes */}
                 <div>
-                  <label className="block font-crimson text-tertiary mb-3 text-xl font-semibold">Which services are you looking for? <span className="text-red-500">*</span></label>
-                  <div className="flex flex-wrap gap-6">
-                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
-                      <input type="checkbox" name="services" value="Insurance" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
+                  <label className="block font-crimson text-white mb-2 text-base font-medium">Which services are you looking for? <span className="text-red-400">*</span></label>
+                  <div className="flex flex-wrap gap-4">
+                    <label className="inline-flex items-center gap-2 font-crimson text-white/90 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Insurance" className="accent-secondary w-4 h-4 rounded border border-white/30 focus:ring-2 focus:ring-secondary/50 transition-all duration-200" checked={formValues.services.includes('Insurance')} onChange={handleInputChange} onBlur={handleBlur} /> Insurance
                     </label>
-                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
-                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
+                    <label className="inline-flex items-center gap-2 font-crimson text-white/90 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Mutual Funds" className="accent-secondary w-4 h-4 rounded border border-white/30 focus:ring-2 focus:ring-secondary/50 transition-all duration-200" checked={formValues.services.includes('Mutual Funds')} onChange={handleInputChange} onBlur={handleBlur} /> Mutual Funds
                     </label>
-                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
-                      <input type="checkbox" name="services" value="Equity" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
+                    <label className="inline-flex items-center gap-2 font-crimson text-white/90 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Equity" className="accent-secondary w-4 h-4 rounded border border-white/30 focus:ring-2 focus:ring-secondary/50 transition-all duration-200" checked={formValues.services.includes('Equity')} onChange={handleInputChange} onBlur={handleBlur} /> Equity
                     </label>
-                    <label className="inline-flex items-center gap-3 font-crimson text-tertiary text-lg font-medium hover:text-tertiary/80 transition-colors duration-200 cursor-pointer">
-                      <input type="checkbox" name="services" value="Fixed Income" className="accent-tertiary w-6 h-6 rounded border-2 border-tertiary/30 focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
+                    <label className="inline-flex items-center gap-2 font-crimson text-white/90 text-sm font-medium hover:text-white transition-colors duration-200 cursor-pointer">
+                      <input type="checkbox" name="services" value="Fixed Income" className="accent-secondary w-4 h-4 rounded border border-white/30 focus:ring-2 focus:ring-secondary/50 transition-all duration-200" checked={formValues.services.includes('Fixed Income')} onChange={handleInputChange} onBlur={handleBlur} /> Fixed Income
                     </label>
                   </div>
-                  {touched.services && formErrors.services && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.services}</div>}
+                  {touched.services && formErrors.services && <div className="text-red-400 text-sm mt-1">{formErrors.services}</div>}
                 </div>
                 {/* Comment/Message */}
                 <div>
-                  <label htmlFor="message" className="block font-crimson text-tertiary mb-2 text-xl font-semibold">Comment or Message</label>
-                  <textarea id="message" name="message" rows={4} className={`w-full rounded-lg border-2 ${touched.message && formErrors.message ? 'border-red-500 bg-red-50' : 'border-tertiary/30 bg-white/90 hover:border-tertiary/50'} px-4 py-3 font-crimson text-tertiary text-xl focus:outline-none focus:ring-2 focus:ring-tertiary/30 focus:border-tertiary transition-all duration-200 shadow-sm resize-none`} value={formValues.message} onChange={handleInputChange} onBlur={handleBlur} />
-                  {touched.message && formErrors.message && <div className="text-red-500 text-base mt-1 transition-all duration-200">{formErrors.message}</div>}
+                  <label htmlFor="message" className="block font-crimson text-white mb-2 text-base font-medium">Comment or Message</label>
+                  <textarea 
+                    id="message" 
+                    name="message" 
+                    rows={4} 
+                    placeholder="Type your message here..."
+                    className={`w-full rounded-lg border ${touched.message && formErrors.message ? 'border-red-500' : 'border-white/30'} bg-white/10 text-white placeholder:text-white/50 px-4 py-3 font-crimson text-base focus:outline-none focus:ring-2 focus:ring-secondary/50 focus:border-secondary transition-all duration-200 resize-none`} 
+                    value={formValues.message} 
+                    onChange={handleInputChange} 
+                    onBlur={handleBlur} 
+                  />
+                  {touched.message && formErrors.message && <div className="text-red-400 text-sm mt-1">{formErrors.message}</div>}
                 </div>
                 {/* Submit Button */}
                 <div className="pt-2">
                   <Button
                     asChild
-                    className="w-full bg-gradient-to-r from-secondary to-secondary/90 text-secondary-foreground hover:from-secondary/90 hover:to-secondary font-crimson font-semibold px-6 py-4 text-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-secondary/60 focus:ring-offset-2 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 rounded-xl"
+                    className="w-full bg-white hover:bg-white/90 text-tertiary font-crimson font-semibold px-6 py-3 text-base transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white/50 focus:ring-offset-2 shadow-lg hover:shadow-xl rounded-xl"
                     disabled={isSubmitting || !isFormValid}
                   >
                     <motion.button
                       type="submit"
                       whileTap={{ scale: 0.97 }}
-                      animate={isSubmitting ? { scale: [1, 1.05, 1], boxShadow: '0 0 0 4px #FFD70044' } : {}}
+                      animate={isSubmitting ? { scale: [1, 1.05, 1] } : {}}
                       transition={{ duration: 0.5, repeat: isSubmitting ? Infinity : 0, repeatType: 'reverse' }}
                       style={{ width: '100%' }}
                     >
                       {isSubmitting ? (
                         <span className="flex items-center justify-center gap-2">
-                          <span className="animate-spin rounded-full border-2 border-gray-300 border-t-2 border-t-secondary h-5 w-5 mr-2"></span>
+                          <span className="animate-spin rounded-full border-2 border-tertiary/30 border-t-2 border-t-tertiary h-5 w-5 mr-2"></span>
                           Submitting…
                         </span>
                       ) : 'Submit'}
@@ -323,8 +360,7 @@ const ContactSection = () => {
                   </Button>
                 </div>
               </form>
-            </CardContent>
-          </Card>
+          </div>
         </div>
       </div>
 

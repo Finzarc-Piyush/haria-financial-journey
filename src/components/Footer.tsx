@@ -24,7 +24,7 @@ const Footer = () => {
     return (
         <footer className="relative bg-gradient-to-br from-secondary/10 to-secondary/5 text-tertiary overflow-hidden">
             {/* Decorative Logo on Right Side */}
-            <div className="absolute right-0 bottom-0 w-1/3 max-w-md opacity-5 pointer-events-none hidden lg:block">
+            <div className="absolute right-0 top-32 w-1/3 max-w-md opacity-5 pointer-events-none hidden lg:block">
                 <img 
                     src="/logo-wbg.png" 
                     alt="Haria Investments Decorative Logo" 
@@ -148,6 +148,23 @@ const Footer = () => {
                                 <MessageCircle className="w-5 h-5" />
                             </a>
                         </div>
+                    </div>
+                </div>
+
+                {/* Map Section */}
+                <div className="border-t border-tertiary/20 pt-8 mt-8">
+                    <h4 className="font-playfair text-lg font-bold mb-4 text-tertiary uppercase tracking-wide text-center">Visit Our Office</h4>
+                    <div className="w-full h-64 md:h-80 rounded-lg overflow-hidden shadow-lg">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3771.8449!2d72.8399!3d19.0268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7cec92f4ddd2f%3A0x4c8c4e4e4e4e4e4e!2s1st%20Floor%2C%20Shree%20Krishna%20Niwas%2C%20Above%20Panshikhar%20Sweets%2C%20T.H.Kataria%20Marg%2C%20Matunga%20West%2C%20Mumbai%20-%20400016!5e0!3m2!1sen!2sin!4v1234567890"
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen={true}
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Haria Investments Office Location"
+                        ></iframe>
                     </div>
                 </div>
 
