@@ -167,12 +167,9 @@ const ContactSection = () => {
 
 
   return (
-    <section id="contact" className="py-16 bg-tertiary">
+    <section id="contact" className="pt-48 pb-16 bg-tertiary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div data-aos="fade-up" className="text-center mb-16">
-          <p className="text-sm font-crimson text-white/70 uppercase tracking-wider mb-4">
-            GET IN TOUCH
-          </p>
           <h2 className="font-playfair text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
             Let's Connect
           </h2>

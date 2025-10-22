@@ -1,86 +1,75 @@
-import { cn } from "@/lib/utils";
-import { Avatar, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { cn } from "@/lib/utils"
+import { User, UserRound } from "lucide-react"
 
 export interface TestimonialAuthor {
-    name: string;
-    handle: string;
-    avatar: string;
+  name: string
+  handle: string
+  avatar: string
 }
 
 export interface TestimonialCardProps {
-    author: TestimonialAuthor;
-    text: string;
-    href?: string;
-    className?: string;
+  author: TestimonialAuthor
+  text: string
+  href?: string
+  className?: string
 }
 
-export function TestimonialCard({
-    author,
-    text,
-    href,
-    className
-}: TestimonialCardProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
-    const Card: any = href ? 'a' : 'div';
-    const isLongText = text.length > 100;
-    const displayText = isExpanded || !isLongText ? text : text.substring(0, 100) + '...';
+// Function to detect gender based on name
+const detectGender = (name: string): 'male' | 'female' => {
+  const firstName = name.split(' ')[0].toLowerCase();
+  const femaleNames = ['isha', 'priya', 'anjali', 'neha', 'pooja', 'kavita', 'sneha', 'divya', 'swati', 'nikita'];
+  return femaleNames.includes(firstName) ? 'female' : 'male';
+};
 
-    return (
-        <Card
-            {...(href ? { href } : {})}
-            className={cn(
-                "flex flex-col rounded-lg border-t",
-                "bg-gradient-to-b from-muted/50 to-muted/10",
-                "p-6 text-start sm:p-8",
-                "hover:from-muted/60 hover:to-muted/20",
-                "max-w-[400px] sm:max-w-[450px]",
-                "transition-all duration-300",
-                "cursor-pointer",
-                className
-            )}
-            onClick={(e) => {
-                if (isLongText && !href) {
-                    e.preventDefault();
-                    setIsExpanded(!isExpanded);
-                }
-            }}
-        >
-            <div className="flex items-center gap-4">
-                <Avatar className="h-16 w-16">
-                    <AvatarImage src={author.avatar} alt={author.name} />
-                </Avatar>
-                <div className="flex flex-col items-start">
-                    <h3 className="text-lg font-semibold leading-none">
-                        {author.name}
-                    </h3>
-                    <p className="text-lg text-muted-foreground">
-                        {author.handle}
-                    </p>
-                </div>
-            </div>
-            <p className="text-lg sm:text-xl mt-6 text-muted-foreground leading-relaxed">
-                {displayText}
-            </p>
-            {isLongText && (
-                <button
-                    className="mt-4 flex items-center gap-1 text-base text-secondary hover:text-secondary/80 transition-colors self-start"
-                    onClick={(e) => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setIsExpanded(!isExpanded);
-                    }}
-                >
-                    {isExpanded ? (
-                        <>Show less <ChevronUp className="w-4 h-4" /></>
-                    ) : (
-                        <>Read more <ChevronDown className="w-4 h-4" /></>
-                    )}
-                </button>
-            )}
-        </Card>
-    );
+export function TestimonialCard({ 
+  author,
+  text,
+  href,
+  className
+}: TestimonialCardProps) {
+  const Card: any = href ? 'a' : 'div'
+  const gender = detectGender(author.name);
+  
+  return (
+    <Card
+      {...(href ? { href } : {})}
+      className={cn(
+        "flex flex-col rounded-lg border-t border-secondary/20",
+        "bg-gradient-to-b from-muted/50 to-muted/10",
+        "p-4 text-start sm:p-6",
+        "hover:from-muted/60 hover:to-muted/20",
+        "max-w-[320px] sm:max-w-[320px]",
+        "transition-colors duration-300",
+        className
+      )}
+    >
+      <div className="flex items-center gap-3">
+        <div className={cn(
+          "h-12 w-12 rounded-full flex items-center justify-center shrink-0",
+          gender === 'female' 
+            ? "bg-pink-100 text-pink-600" 
+            : "bg-blue-100 text-blue-600"
+        )}>
+          {gender === 'female' ? (
+            <UserRound className="w-6 h-6" />
+          ) : (
+            <User className="w-6 h-6" />
+          )}
+        </div>
+        <div className="flex flex-col items-start">
+          <h3 className="text-md font-semibold leading-none font-playfair">
+            {author.name}
+          </h3>
+          <p className="text-sm text-muted-foreground font-crimson">
+            {author.handle}
+          </p>
+        </div>
+      </div>
+      <p className="sm:text-md mt-4 text-sm text-muted-foreground font-crimson leading-relaxed">
+        {text}
+      </p>
+    </Card>
+  )
 }
 
 

@@ -1,12 +1,9 @@
 import { useEffect, useState, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
     Car,
     Home,
-    Heart,
     Plane,
     Shield,
     CheckCircle,
@@ -17,52 +14,108 @@ import {
     Flame,
     Globe,
     MapPin,
-    Clock,
-    Award,
-    TrendingUp
 } from "lucide-react";
 import { motion } from 'framer-motion';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
+import { useNavigate } from 'react-router-dom';
+import CTASection from '@/components/CTASection';
+import CircularCarousel from '@/components/ui/circular-carousel';
 
 const GeneralInsurance = () => {
-    const [heroInView, setHeroInView] = useState(true);
     const [selectedService, setSelectedService] = useState("car");
-    const [animatedText, setAnimatedText] = useState("");
     const { isOpen, openPopup, closePopup } = useContactPopup();
-    const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
     const [activeTabRect, setActiveTabRect] = useState({ left: 0, width: 0 });
     const tabsListRef = useRef<HTMLDivElement>(null);
     const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
-
-    const fullText = "Complete Protection for Your Assets";
+    const navigate = useNavigate();
 
     const services = [
         {
             id: "car",
-            title: "Car Insurance",
+            title: "Motor Insurance",
             icon: Car,
             description: "Comprehensive protection for your vehicle",
-            color: "from-blue-500 to-cyan-500",
             subCategories: [
                 {
-                    name: "Comprehensive",
-                    description: "Complete coverage including own damage",
+                    id: "comprehensive-coverage",
+                    title: "Comprehensive Coverage",
+                    description: "Complete coverage including own damage and third party",
                     badge: "99% claims settled",
-                    icon: Shield
+                    icon: Shield,
+                    rate: "Starting ₹5,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹5,000",
+                    features: ["Own damage cover", "Third party liability", "24/7 roadside assistance", "Cashless repairs"],
+                    image: "/General insurance/comprehensive.jpg"
                 },
                 {
-                    name: "Third Party",
-                    description: "Legal compliance coverage",
+                    id: "third-party-only",
+                    title: "Third Party Only",
+                    description: "Legal compliance coverage for third party damages",
                     badge: "Mandatory",
-                    icon: CheckCircle
+                    icon: CheckCircle,
+                    rate: "Starting ₹2,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹2,000",
+                    features: ["Legal compliance", "Third party liability", "Affordable premium", "Quick issuance"],
+                    image: "/General insurance/third-party.jpg"
                 },
                 {
-                    name: "Zero Depreciation",
-                    description: "New car value guarantee",
+                    id: "zero-depreciation",
+                    title: "Zero Depreciation",
+                    description: "Get full claim value without depreciation",
                     badge: "Premium",
-                    icon: Star
+                    icon: Star,
+                    rate: "Starting ₹8,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹8,000",
+                    features: ["No depreciation", "Full claim value", "Premium coverage", "New car benefits"],
+                    image: "/General insurance/zero-depreciation.jpg"
+                }
+            ]
+        },
+        {
+            id: "fire",
+            title: "Fire Insurance",
+            icon: Flame,
+            description: "Comprehensive fire protection coverage",
+            subCategories: [
+                {
+                    id: "fire-allied-perils",
+                    title: "Fire & Allied Perils",
+                    description: "Covers loss due to fire, lightning, explosion etc.",
+                    badge: "Essential",
+                    icon: Flame,
+                    rate: "Starting ₹5,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹15 Lakhs",
+                    features: ["Fire damage cover", "Lightning protection", "Explosion coverage", "Quick settlement"],
+                    image: "/General insurance/Fire-Allied-Perils.jpg"
+                },
+                {
+                    id: "electrical-fire",
+                    title: "Electrical Fire",
+                    description: "Protects from fire due to electrical faults",
+                    badge: "Sensitive zones",
+                    icon: Shield,
+                    rate: "Starting ₹8,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹20 Lakhs",
+                    features: ["Electrical fault cover", "Short circuit protection", "Equipment damage", "Wiring coverage"],
+                    image: "/General insurance/Electrical-Fire.jpg"
+                },
+                {
+                    id: "natural-calamity-fire",
+                    title: "Natural Calamity Fire",
+                    description: "Covers fire caused by natural calamities",
+                    badge: "Disaster coverage",
+                    icon: Globe,
+                    rate: "Starting ₹10,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹25 Lakhs",
+                    features: ["Natural disaster cover", "Wildfire protection", "Storm damage", "Comprehensive coverage"],
+                    image: "/General insurance/Natural-Calamity.jpg"
                 }
             ]
         },
@@ -71,52 +124,42 @@ const GeneralInsurance = () => {
             title: "Property Insurance",
             icon: Home,
             description: "Protect your home and commercial properties",
-            color: "from-green-500 to-emerald-500",
             subCategories: [
                 {
-                    name: "Home Insurance",
-                    description: "Complete home protection",
-                    badge: "Shield protection",
-                    icon: Shield
+                    id: "home-insurance",
+                    title: "Home Insurance",
+                    description: "Complete home structure and contents protection",
+                    badge: "Recommended",
+                    icon: Home,
+                    rate: "Starting ₹3,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹10 Lakhs",
+                    features: ["Structure cover", "Contents protection", "Natural calamities", "Theft coverage"],
+                    image: "/General insurance/home-insurance.jpg"
                 },
                 {
-                    name: "Commercial Property",
-                    description: "Business property coverage",
-                    badge: "Building blocks",
-                    icon: Building
+                    id: "commercial-property",
+                    title: "Commercial Property",
+                    description: "Business property and assets coverage",
+                    badge: "Business",
+                    icon: Building,
+                    rate: "Starting ₹10,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹25 Lakhs",
+                    features: ["Business assets", "Inventory cover", "Fire & theft", "Business interruption"],
+                    image: "/General insurance/commercial-property.jpg"
                 },
                 {
-                    name: "Fire Insurance",
-                    description: "Fire and allied perils",
-                    badge: "Fire protection",
-                    icon: Flame
-                }
-            ]
-        },
-        {
-            id: "fire",
-            title: "Fire Insurance",
-            icon: Flame,
-            description: "Fire damage protection for assets and property",
-            color: "from-orange-500 to-red-500",
-            subCategories: [
-                {
-                    name: "Fire & Allied Perils",
-                    description: "Covers loss due to fire, lightning, explosion etc.",
+                    id: "fire-insurance",
+                    title: "Fire Insurance",
+                    description: "Protection against fire and related perils",
                     badge: "Essential",
-                    icon: Flame
-                },
-                {
-                    name: "Electrical Fire",
-                    description: "Protects from fire due to electrical faults",
-                    badge: "Sensitive zones",
-                    icon: Shield
-                },
-                {
-                    name: "Natural Calamity Fire",
-                    description: "Covers fire caused by natural calamities",
-                    badge: "Disaster coverage",
-                    icon: Globe
+                    icon: Flame,
+                    rate: "Starting ₹5,000/year",
+                    tenure: "1-3 years",
+                    minAmount: "₹15 Lakhs",
+                    features: ["Fire damage", "Smoke damage", "Allied perils", "Quick settlement"],
+                    image: "/General insurance/Fire-insurance.jpg"
                 }
             ]
         },
@@ -125,79 +168,64 @@ const GeneralInsurance = () => {
             title: "Travel Insurance",
             icon: Plane,
             description: "Global travel protection and assistance",
-            color: "from-purple-500 to-indigo-500",
             subCategories: [
                 {
-                    name: "Domestic Travel",
-                    description: "In-country travel protection",
-                    badge: "Local coverage",
-                    icon: MapPin
+                    id: "domestic-travel",
+                    title: "Domestic Travel",
+                    description: "Within-country travel protection",
+                    badge: "Local",
+                    icon: MapPin,
+                    rate: "Starting ₹50/day",
+                    tenure: "Per trip",
+                    minAmount: "₹1 Lakh",
+                    features: ["Medical emergencies", "Trip cancellation", "Baggage loss", "Flight delay"],
+                    image: "/General insurance/domestic-travel.jpg"
                 },
                 {
-                    name: "International Travel",
-                    description: "Global travel coverage",
-                    badge: "Worldwide",
-                    icon: Globe
+                    id: "international-travel",
+                    title: "International Travel",
+                    description: "Worldwide travel coverage and assistance",
+                    badge: "Global",
+                    icon: Globe,
+                    rate: "Starting ₹500/day",
+                    tenure: "Per trip",
+                    minAmount: "₹5 Lakhs",
+                    features: ["Global coverage", "Emergency evacuation", "Passport loss", "24/7 assistance"],
+                    image: "/General insurance/international-travel.jpg"
                 },
                 {
-                    name: "Business Travel",
-                    description: "Corporate travel protection",
-                    badge: "Business",
-                    icon: Building
+                    id: "business-travel",
+                    title: "Business Travel",
+                    description: "Corporate travel protection plans",
+                    badge: "Corporate",
+                    icon: Building,
+                    rate: "Starting ₹300/day",
+                    tenure: "Annual/Per trip",
+                    minAmount: "₹3 Lakhs",
+                    features: ["Business equipment", "Meeting delays", "Corporate benefits", "Multi-trip options"],
+                    image: "/General insurance/business travel.jpg"
                 }
             ]
         }
     ];
 
-    useEffect(() => {
-        const hero = document.getElementById("hero");
-        if (!hero) return;
-        const observer = new window.IntersectionObserver(
-            ([entry]) => setHeroInView(entry.isIntersecting),
-            { threshold: 0.3 }
-        );
-        observer.observe(hero);
-        return () => observer.disconnect();
-    }, []);
-
     // Select tab from URL hash and scroll to section
     useEffect(() => {
         const applyHash = () => {
             const hash = window.location.hash.replace('#', '');
-            if (hash && ['car', 'property', 'fire', 'travel'].includes(hash)) {
+            if (hash && ['car', 'fire', 'property', 'travel'].includes(hash)) {
                 setSelectedService(hash);
                 const target = document.getElementById('all-services');
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
                 }
             }
         };
         applyHash();
         window.addEventListener('hashchange', applyHash);
         return () => window.removeEventListener('hashchange', applyHash);
-    }, []);
-
-    // Animated text effect
-    useEffect(() => {
-        let index = 0;
-        const timer = setInterval(() => {
-            if (index <= fullText.length) {
-                setAnimatedText(fullText.slice(0, index));
-                index++;
-            } else {
-                clearInterval(timer);
-            }
-        }, 50);
-        return () => clearInterval(timer);
-    }, []);
-
-    // Mouse tracking for magnetic effect
-    useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            setMousePosition({ x: e.clientX, y: e.clientY });
-        };
-        window.addEventListener('mousemove', handleMouseMove);
-        return () => window.removeEventListener('mousemove', handleMouseMove);
     }, []);
 
     // Update active tab indicator position on tab change or resize
@@ -218,305 +246,158 @@ const GeneralInsurance = () => {
 
     const currentService = services.find(s => s.id === selectedService);
 
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     return (
         <div className="min-h-screen bg-background">
 
-            {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
-                {/* Background Image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-general-insurance.webp')" }}
-                />
-                <div className="absolute inset-0 bg-black/40" />
+            {/* Hero Section - Landing Page Style */}
+            <section 
+                id="hero"
+                className="relative w-full overflow-hidden min-h-screen flex items-center"
+            >
+                <div className="w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+                        {/* Left Side - Content */}
+                        <div className="relative bg-tertiary px-4 sm:px-6 lg:px-12 py-20 lg:py-0 flex items-center overflow-hidden">
+                            {/* Decorative Partial Logo */}
+                            <div className="absolute bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none">
+                                <img 
+                                    src="/logo-wbg.png" 
+                                    alt="" 
+                                    className="w-full h-full object-contain transform translate-x-1/3 translate-y-1/3 scale-150"
+                                    style={{ filter: 'brightness(0) invert(1)' }}
+                                />
+                            </div>
 
-                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <motion.h1
-                        className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6 overflow-hidden"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                    >
-                        <span className="inline-block animate-typewriter">
-                            {animatedText}
-                            <span className="animate-pulse">|</span>
-                        </span>
-                    </motion.h1>
-                    <motion.p
-                        className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
-                    >
-                        Comprehensive insurance solutions for all your assets and needs
-                    </motion.p>
-                    <motion.div
-                        className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12"
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, amount: 0.3 }}
-                        variants={{
-                            hidden: {},
-                            show: {
-                                transition: {
-                                    staggerChildren: 0.12,
-                                    delayChildren: 0.1
-                                }
-                            }
-                        }}
-                    >
-                        {services.map((service, index) => (
-                            <motion.button
-                                key={service.id}
-                                onClick={() => setSelectedService(service.id)}
-                                className={`group relative p-6 rounded-2xl transition-all duration-500 transform w-full ${selectedService === service.id
-                                    ? 'bg-white/20 backdrop-blur-sm border-2 border-white/50'
-                                    : 'bg-white/10 backdrop-blur-sm border-2 border-transparent hover:border-white/30'
-                                    }`}
-                                style={{
-                                    transform: hoveredCard === service.id ? 'scale(1.05) translateY(-5px)' : 'scale(1)',
-                                    transition: 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(service.id)}
-                                onMouseLeave={() => setHoveredCard(null)}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                                whileHover={{ scale: 1.05, transition: { duration: 0.01 } }}
-                                whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
-                            >
-                                <div>
-                                    <service.icon className="h-8 w-8 mx-auto mb-3 text-white group-hover:scale-110 transition-transform duration-300" />
-                                </div>
-                                <div>
-                                    <div className="text-sm font-semibold text-white truncate" style={{ width: '8.5rem', display: 'inline-block' }}>{service.title}</div>
-                                </div>
-                            </motion.button>
-                        ))}
-                    </motion.div>
-                    <Button
-                        asChild
-                        className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-semibold px-8 py-4 text-xl hover:scale-105"
-                        onClick={openPopup}
-                    >
-                        <motion.button
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.7, delay: 0.2 }}
-                            whileHover={{ scale: 1.05, transition: { duration: 0.01 } }}
-                            whileTap={{ scale: 0.98, transition: { duration: 0.01 } }}
-                        >
-                            Get Instant Quote
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </motion.button>
-                    </Button>
-                </div>
-            </section>
-
-            {/* Service Details Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
-                <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <motion.h2
-                            className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                        >
-                            {currentService?.title}
-                        </motion.h2>
-                        <motion.p
-                            className="text-2xl font-crimson text-muted-foreground"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
-                        >
-                            {currentService?.description}
-                        </motion.p>
-                    </div>
-
-                    {/* Service Cards with Advanced Animations */}
-                    <motion.div
-                        className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16 items-stretch"
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, amount: 0.3 }}
-                        variants={{
-                            hidden: {},
-                            show: {
-                                transition: {
-                                    staggerChildren: 0.12,
-                                    delayChildren: 0.1
-                                }
-                            }
-                        }}
-                    >
-                        {currentService?.subCategories.map((subCategory, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 40 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true, amount: 0.3 }}
-                                transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                                className="h-full"
-                            >
-                                <Card
-                                    key={index}
-                                    className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
-                                    style={{
-                                        animationDelay: `${index * 0.1}s`,
-                                        transform: hoveredCard === `${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                        transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                    }}
-                                    onMouseEnter={() => setHoveredCard(`${currentService.id}-${index}`)}
-                                    onMouseLeave={() => setHoveredCard(null)}
-                                >
-
-                                    <CardHeader className="relative z-10">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <div className="relative">
-                                                <subCategory.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
-                                                {subCategory.badge === "99% claims settled" && (
-                                                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                                                        <CheckCircle className="h-3 w-3 text-white" />
-                                                    </div>
-                                                )}
-                                            </div>
-                                            <Badge className="bg-secondary/20 text-secondary border-secondary/30 animate-pulse">
-                                                {subCategory.badge}
-                                            </Badge>
-                                        </div>
-                                        <CardTitle className="text-2xl font-playfair text-foreground">
-                                            {subCategory.name}
-                                        </CardTitle>
-                                    </CardHeader>
-
-                                    <CardContent className="relative z-10 flex flex-col flex-grow">
-                                        <div className="flex-grow">
-                                            <p className="text-muted-foreground mb-6 font-crimson text-lg">
-                                                {subCategory.description}
-                                            </p>
-
-                                            {/* Animated Progress Bar for Claims Settlement */}
-                                            {subCategory.badge === "99% claims settled" && (
-                                                <div className="mb-6">
-                                                    <div className="flex justify-between text-sm mb-2">
-                                                        <span className="text-muted-foreground">Claims Settlement Rate</span>
-                                                        <span className="font-semibold text-secondary">99%</span>
-                                                    </div>
-                                                    <div className="w-full bg-muted rounded-full h-2">
-                                                        <div
-                                                            className="bg-gradient-to-r from-green-500 to-secondary h-2 rounded-full transition-all duration-1000 ease-out"
-                                                            style={{ width: '99%' }}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            )}
-                                        </div>
-
-                                        <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
-                                            Get Quote
-                                            <ArrowRight className="ml-2 h-5 w-5" />
-                                        </Button>
-                                    </CardContent>
-                                </Card>
-                            </motion.div>
-                        ))}
-                    </motion.div>
-
-                    {/* Service-specific Features */}
-                    <motion.div
-                        className="bg-white/50 backdrop-blur-sm rounded-2xl p-8"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                    >
-                        <motion.h3
-                            className="text-3xl font-playfair font-bold text-foreground mb-6 text-center"
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                        >
-                            Why Choose Our {currentService?.title}?
-                        </motion.h3>
-                        <motion.div
-                            className="grid grid-cols-1 md:grid-cols-3 gap-6"
-                            initial="hidden"
-                            whileInView="show"
-                            viewport={{ once: true, amount: 0.3 }}
-                            variants={{
-                                hidden: {},
-                                show: {
-                                    transition: {
-                                        staggerChildren: 0.12,
-                                        delayChildren: 0.1
-                                    }
-                                }
-                            }}
-                        >
-                            {[0, 1, 2].map((i) => (
+                            <div className="relative z-10 max-w-2xl mx-auto lg:mx-0">
+                                {/* Label */}
                                 <motion.div
-                                    key={i}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
-                                    viewport={{ once: true, amount: 0.3 }}
-                                    transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6 }}
+                                    className="mb-6"
                                 >
-                                    <div className="text-center">
-                                        <div className="inline-flex items-center justify-center w-16 h-16 bg-secondary/20 rounded-full mb-4">
-                                            <Shield className="h-8 w-8 text-secondary" />
-                                        </div>
-                                        <h4 className="font-playfair font-semibold text-foreground mb-2 text-lg">Comprehensive Coverage</h4>
-                                        <p className="text-lg text-muted-foreground font-crimson">
-                                            Complete protection with extensive coverage options
-                                        </p>
-                                    </div>
+                                    <span className="text-xs md:text-sm font-crimson text-white/70 uppercase tracking-wider">
+                                        GENERAL INSURANCE SOLUTIONS
+                                    </span>
                                 </motion.div>
-                            ))}
-                        </motion.div>
-                    </motion.div>
+
+                                {/* Main Headline */}
+                                <motion.h1 
+                                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-white mb-6"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                >
+                                    Complete Protection for{' '}
+                                    <span className="relative inline-block">
+                                        <span className="relative z-10">Your Assets</span>
+                                        <span className="absolute bottom-0 left-0 w-full h-3 bg-secondary/30 -z-0"></span>
+                                    </span>
+                                </motion.h1>
+
+                                {/* Description */}
+                                <motion.p 
+                                    className="text-base md:text-lg font-crimson text-white/90 leading-relaxed mb-8"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                >
+                                    Comprehensive insurance solutions for all your assets and needs. From motor and fire to property and travel - we've got you covered.
+                                </motion.p>
+
+                                {/* CTA Buttons */}
+                                <motion.div 
+                                    className="flex flex-col sm:flex-row gap-4"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.6 }}
+                                >
+                                    <button 
+                                        onClick={() => navigate('/contact')}
+                                        className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                    >
+                                        <span>Get Instant Quote</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                    <button 
+                                        onClick={() => scrollToSection('all-services')}
+                                        className="border-2 border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all backdrop-blur-sm flex items-center justify-center"
+                                    >
+                                        View Plans
+                                    </button>
+                                </motion.div>
+
+                                {/* Trust Badge */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.8, delay: 0.8 }}
+                                    className="mt-8 flex items-center gap-2 text-white/60 text-sm font-crimson"
+                                >
+                                    <div className="flex -space-x-2">
+                                        <div className="w-8 h-8 rounded-full bg-secondary border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/20 border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/10 border-2 border-tertiary"></div>
+                                    </div>
+                                    <span>Trusted by families since 1957</span>
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        {/* Right Side - Image */}
+                        <div className="relative bg-gray-900 min-h-[400px] lg:min-h-screen overflow-hidden">
+                            <img 
+                                src="/Hero Section/general-insurance.png" 
+                                alt="General Insurance"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary opacity-20 rounded-full transform translate-x-1/2 translate-y-1/2 z-10"></div>
+                        </div>
+                    </div>
                 </div>
             </section>
 
             {/* All Services Overview */}
-            <section id="all-services" className="py-20 px-4 bg-background">
-                <div className="max-w-7xl mx-auto">
+            <section id="all-services" className="py-16 bg-gradient-to-br from-secondary/10 to-secondary/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            OUR INSURANCE SERVICES
+                        </p>
                         <motion.h2
-                            className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4"
+                            className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
+                            transition={{ duration: 0.6 }}
                         >
                             All Insurance Services
                         </motion.h2>
                         <motion.p
-                            className="text-2xl font-crimson text-muted-foreground"
+                            className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto"
                             initial={{ opacity: 0, y: 40 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
                         >
                             Complete protection for every aspect of your life
                         </motion.p>
                     </div>
 
                     <Tabs value={selectedService} onValueChange={setSelectedService} className="w-full">
-                        <TabsList ref={tabsListRef} className="grid w-full grid-cols-4 bg-muted/50 relative overflow-hidden">
+                        <TabsList ref={tabsListRef} className="grid w-full grid-cols-4 bg-white/50 relative overflow-hidden">
                             {/* Sliding indicator */}
                             <motion.div
-                                className="absolute top-0 left-0 h-full rounded-md bg-secondary z-0 transition-colors"
+                                className="absolute top-0 left-0 h-full rounded-md bg-secondary z-0"
                                 animate={{ left: activeTabRect.left, width: activeTabRect.width }}
-                                transition={{ type: 'tween', duration: 0.45, ease: [0.42, 0, 0.58, 1] }}
+                                transition={{ type: 'tween', duration: 0.4 }}
                                 style={{ pointerEvents: 'none' }}
                             />
                             {services.map((service) => (
@@ -524,7 +405,7 @@ const GeneralInsurance = () => {
                                     key={service.id}
                                     value={service.id}
                                     ref={el => (tabRefs.current[service.id] = el)}
-                                    className="data-[state=active]:bg-transparent data-[state=active]:text-secondary-foreground data-[state=active]:z-10 relative transition-colors text-lg"
+                                    className="data-[state=active]:bg-transparent data-[state=active]:text-white data-[state=active]:z-10 relative transition-colors font-crimson"
                                 >
                                     <service.icon className="h-4 w-4 mr-2" />
                                     <span className="md:hidden">{service.title.split(' ')[0]}</span>
@@ -536,63 +417,21 @@ const GeneralInsurance = () => {
                         {services.map((service) => (
                             <TabsContent key={service.id} value={service.id} className="mt-8">
                                 <div id={service.id}>
-                                    <motion.div
-                                        className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch"
-                                    initial="hidden"
-                                    whileInView="show"
-                                    viewport={{ once: true, amount: 0.3 }}
-                                    variants={{
-                                        hidden: {},
-                                        show: {
-                                            transition: {
-                                                staggerChildren: 0.12,
-                                                delayChildren: 0.1
-                                            }
-                                        }
-                                    }}
-                                >
-                                    {service.subCategories.map((subCategory, index) => (
-                                        <motion.div
-                                            key={index}
-                                            initial={{ opacity: 0, y: 40 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, amount: 0.3 }}
-                                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                                            className="h-full"
-                                        >
-                                            <Card
-                                                key={index}
-                                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
-                                                style={{
-                                                    animationDelay: `${index * 0.1}s`,
-                                                    transform: hoveredCard === `tab-${currentService.id}-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                                }}
-                                                onMouseEnter={() => setHoveredCard(`tab-${currentService.id}-${index}`)}
-                                                onMouseLeave={() => setHoveredCard(null)}
-                                            >
-                                                <CardHeader className="relative z-10">
-                                                    <div className="flex items-center justify-between">
-                                                        <subCategory.icon className="h-8 w-8 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
-                                                        <Badge variant="secondary">{subCategory.badge}</Badge>
-                                                    </div>
-                                                    <CardTitle className="text-xl font-playfair">{subCategory.name}</CardTitle>
-                                                </CardHeader>
-                                                <CardContent className="relative z-10 flex flex-col flex-grow">
-                                                    <div className="flex-grow">
-                                                        <p className="text-lg text-muted-foreground font-crimson mb-4">
-                                                            {subCategory.description}
-                                                        </p>
-                                                    </div>
-                                                    <Button size="sm" className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
-                                                        Learn More
-                                                        <ArrowRight className="ml-2 h-4 w-4" />
-                                                    </Button>
-                                                </CardContent>
-                                            </Card>
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
+                                    <CircularCarousel
+                                        products={service.subCategories}
+                                        autoplay={true}
+                                        colors={{
+                                            title: "#1a5f7a",
+                                            description: "#6b7280",
+                                            content: "#4b5563",
+                                        }}
+                                        fontSizes={{
+                                            title: "28px",
+                                            description: "16px",
+                                            content: "16px",
+                                        }}
+                                        onInvestNow={() => navigate('/contact')}
+                                    />
                                 </div>
                             </TabsContent>
                         ))}
@@ -600,65 +439,134 @@ const GeneralInsurance = () => {
                 </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
-                <div className="max-w-4xl mx-auto text-center">
-                    <motion.h2
-                        className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                    >
-                        Get Protected Today
-                    </motion.h2>
-                    <motion.p
-                        className="text-2xl font-crimson text-white/80 mb-8"
-                        initial={{ opacity: 0, y: 40 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        viewport={{ once: true, amount: 0.3 }}
-                        transition={{ duration: 0.6, delay: 0.1, ease: [0.42, 0, 0.58, 1] }}
-                    >
-                        Choose the right insurance plan for your needs and get instant quotes
-                    </motion.p>
+            {/* Why Choose Us Section */}
+            <section className="py-16 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <motion.div
-                        className="flex flex-col sm:flex-row gap-4 justify-center"
-                        initial="hidden"
-                        whileInView="show"
-                        viewport={{ once: true, amount: 0.3 }}
-                        variants={{
-                            hidden: {},
-                            show: {
-                                transition: {
-                                    staggerChildren: 0.12,
-                                    delayChildren: 0.1
-                                }
-                            }
-                        }}
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
                     >
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                        >
-                            <Button size="lg" className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
-                                Get Instant Quote
-                            </Button>
-                        </motion.div>
-                        <motion.div
-                            initial={{ opacity: 0, y: 40 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true, amount: 0.3 }}
-                            transition={{ duration: 0.6, ease: [0.42, 0, 0.58, 1] }}
-                        >
-                            <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
-                                Talk to Expert
-                            </Button>
-                        </motion.div>
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            WHY CHOOSE US
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Why Choose Our Insurance Services?
+                        </h2>
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Comprehensive protection with expert guidance and support
+                        </p>
                     </motion.div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+                        {/* Left Column - Benefits List */}
+                        <div className="space-y-8 md:space-y-10">
+                            {/* Benefit 01 */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6 }}
+                                className="space-y-3"
+                            >
+                                <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20">
+                                    01
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary">
+                                    99% Claims Settled
+                                </h3>
+                                <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                    Fast and hassle-free claims processing with one of the highest settlement rates in the industry.
+                                </p>
+                            </motion.div>
+
+                            {/* Benefit 02 */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.1 }}
+                                className="space-y-3"
+                            >
+                                <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20">
+                                    02
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary">
+                                    24/7 Support
+                                </h3>
+                                <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                    Round-the-clock assistance for all your insurance needs with our dedicated support team.
+                                </p>
+                            </motion.div>
+
+                            {/* Benefit 03 */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.2 }}
+                                className="space-y-3"
+                            >
+                                <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20">
+                                    03
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary">
+                                    Best Prices
+                                </h3>
+                                <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                    Competitive premiums with maximum coverage, ensuring you get the best value for your money.
+                                </p>
+                            </motion.div>
+
+                            {/* Benefit 04 */}
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: 0.3 }}
+                                className="space-y-3"
+                            >
+                                <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20">
+                                    04
+                                </div>
+                                <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary">
+                                    Expert Guidance
+                                </h3>
+                                <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                    Get personalized advice from our insurance experts to choose the right coverage for your needs.
+                                </p>
+                                <button
+                                    onClick={() => navigate('/contact')}
+                                    className="inline-flex items-center gap-2 bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl mt-4"
+                                >
+                                    <span>Get Started</span>
+                                    <ArrowRight className="w-5 h-5" />
+                                </button>
+                            </motion.div>
+                        </div>
+
+                        {/* Right Column - Image */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.8 }}
+                            className="relative h-[500px] md:h-[600px] lg:h-[700px] rounded-2xl overflow-hidden shadow-2xl"
+                        >
+                            <img
+                                src="/insurance-services.png"
+                                alt="Insurance Services"
+                                className="w-full h-full object-cover"
+                            />
+                        </motion.div>
+                    </div>
                 </div>
             </section>
+
+            {/* CTA Section */}
+            <CTASection />
 
             {/* Contact Popup */}
             <ContactPopup
@@ -671,4 +579,4 @@ const GeneralInsurance = () => {
     );
 };
 
-export default GeneralInsurance; 
+export default GeneralInsurance;

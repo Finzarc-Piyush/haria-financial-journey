@@ -20,8 +20,8 @@ export function TestimonialsSection({
 }: TestimonialsSectionProps) {
     return (
         <section className={cn(
-            "bg-background text-foreground",
-            "py-12 sm:py-24 md:py-32",
+            "bg-[#FAFAFA] text-foreground",
+            "py-16",
             className
         )}>
             <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 text-center sm:gap-16 px-4 sm:px-6 lg:px-8">
@@ -51,8 +51,8 @@ export function TestimonialsSection({
                         </div>
                     </div>
 
-                    <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-gradient-to-r from-background sm:block" />
-                    <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-background sm:block" />
+                    <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/3 bg-gradient-to-r from-[#FAFAFA] sm:block" />
+                    <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/3 bg-gradient-to-l from-[#FAFAFA] sm:block" />
                 </div>
             </div>
         </section>

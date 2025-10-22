@@ -35,7 +35,8 @@ interface ServiceCategory {
   id: string;
   title: string;
   description: string;
-  bgColor: string;
+  bgImage: string;
+  bgOverlay: string;
   buttonColor: string;
   buttonTextColor: string;
   services: SubService[];
@@ -54,8 +55,9 @@ const ServicesSection = () => {
       id: 'wealth',
       title: 'Wealth Management Services',
       description: 'We help you build, grow, and protect your wealth through comprehensive portfolio solutions. From strategic asset allocation to tax optimization, we provide data-driven strategies you can trust.',
-      bgColor: 'bg-gradient-to-br from-secondary/15 to-secondary/5',
-      buttonColor: 'bg-tertiary',
+      bgImage: '/wealth-management.png',
+      bgOverlay: 'bg-tertiary/85',
+      buttonColor: 'bg-secondary',
       buttonTextColor: 'text-white',
       services: [
         {
@@ -91,7 +93,8 @@ const ServicesSection = () => {
       id: 'insurance',
       title: 'Insurance & Protection Services',
       description: 'Struggling to find the right protection for your loved ones? You\'re not alone. Our insurance solutions make safeguarding your family\'s future simpler, clearer, anywhere.',
-      bgColor: 'bg-gradient-to-br from-blue-50 to-blue-100/50',
+      bgImage: '/insurance-services.png',
+      bgOverlay: 'bg-secondary/80',
       buttonColor: 'bg-tertiary',
       buttonTextColor: 'text-white',
       services: [
@@ -132,7 +135,7 @@ const ServicesSection = () => {
   };
 
   return (
-    <section id="services" className="py-16 bg-white">
+    <section id="services" className="py-16 bg-[#FAFAFA]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         {/* Section Title */}
@@ -157,31 +160,42 @@ const ServicesSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`${category.bgColor} rounded-3xl p-8 md:p-12 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group flex flex-col min-h-[450px]`}
+              className="relative rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer group flex flex-col min-h-[350px] overflow-hidden"
               onClick={() => handleCategoryClick(category)}
+              style={{
+                backgroundImage: `url('${category.bgImage}')`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+              }}
             >
-              <div className="flex items-center gap-3 mb-6">
-                <Building className="w-8 h-8 text-tertiary" />
-                <span className="text-sm font-crimson text-tertiary/70 uppercase tracking-wider">
-                  {category.id === 'wealth' ? 'Wealth Management' : 'Insurance & Protection'}
-                </span>
-              </div>
+              {/* Color Overlay */}
+              <div className={`absolute inset-0 ${category.bgOverlay}`}></div>
 
-              <h3 className="font-playfair text-3xl md:text-4xl font-bold text-tertiary mb-6 leading-tight">
-                {category.title}
-              </h3>
+              {/* Content */}
+              <div className="relative z-10 p-6 md:p-8 flex flex-col h-full">
+                <div className="flex items-center gap-3 mb-6">
+                  <Building className="w-8 h-8 text-white" />
+                  <span className="text-sm font-crimson text-white/90 uppercase tracking-wider">
+                    {category.id === 'wealth' ? 'Wealth Management' : 'Insurance & Protection'}
+                  </span>
+                </div>
 
-              <p className="font-crimson text-base md:text-lg text-tertiary/80 mb-8 leading-relaxed flex-grow">
-                {category.description}
-              </p>
+                <h3 className="font-playfair text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">
+                  {category.title}
+                </h3>
 
-              <div>
-                <button
-                  className={`${category.buttonColor} ${category.buttonTextColor} hover:scale-105 transition-transform duration-300 px-8 py-4 rounded-full font-semibold font-crimson flex items-center gap-2 group-hover:gap-4 transition-all`}
-                >
-                  Learn more
-                  <ArrowRight className="w-5 h-5" />
-                </button>
+                <p className="font-crimson text-base md:text-lg text-white/90 mb-8 leading-relaxed flex-grow">
+                  {category.description}
+                </p>
+
+                <div>
+                  <button
+                    className={`${category.buttonColor} ${category.buttonTextColor} hover:scale-105 transition-transform duration-300 px-8 py-4 rounded-full font-semibold font-crimson flex items-center gap-2 group-hover:gap-4 transition-all`}
+                  >
+                    Learn more
+                    <ArrowRight className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -250,12 +264,27 @@ const ServicesSection = () => {
                           </p>
 
                           {/* Specializations */}
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-wrap gap-2 mb-4">
                             {service.specializations.map((spec, i) => (
                               <Badge key={i} variant="secondary" className="text-xs font-crimson">
                                 {spec}
                               </Badge>
                             ))}
+                          </div>
+                          
+                          {/* Schedule Now Button */}
+                          <div className="flex justify-end">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setIsDialogOpen(false);
+                                window.location.href = '/contact';
+                              }}
+                              className="bg-secondary hover:bg-secondary/90 text-white px-6 py-2.5 rounded-full font-semibold font-crimson transition-all shadow-md hover:shadow-lg flex items-center gap-2"
+                            >
+                              Schedule Now
+                              <ArrowRight className="w-4 h-4" />
+                            </button>
                           </div>
                         </div>
                       </div>

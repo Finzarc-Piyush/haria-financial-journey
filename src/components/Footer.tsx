@@ -3,17 +3,28 @@ import logo from "@/assets/logo.png";
 import { MapPin, Phone, Mail, Award, Heart, Shield, Instagram, MessageCircle } from "lucide-react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Footer = () => {
+    const location = useLocation();
+
     useEffect(() => {
         AOS.init({ duration: 600, once: true });
     }, []);
 
+    const handleServiceClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
+        // Check if we're already on the target page
+        if (location.pathname === path) {
+            e.preventDefault();
+            // Scroll to hero section (top of page)
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    };
+
     return (
-        <footer className="relative bg-gray-50 text-tertiary overflow-hidden">
+        <footer className="relative bg-gradient-to-br from-secondary/10 to-secondary/5 text-tertiary overflow-hidden">
             {/* Decorative Logo on Right Side */}
-            <div className="absolute right-0 bottom-0 w-1/3 max-w-md opacity-10 pointer-events-none hidden lg:block">
+            <div className="absolute right-0 bottom-0 w-1/3 max-w-md opacity-5 pointer-events-none hidden lg:block">
                 <img 
                     src="/logo-wbg.png" 
                     alt="Haria Investments Decorative Logo" 
@@ -54,11 +65,18 @@ const Footer = () => {
                                 { label: 'General Insurance', to: '/general-insurance' },
                                 { label: 'Mutual Funds', to: '/mutual-funds' },
                                 { label: 'Equity Trading', to: '/equity-investment' },
+                                { label: 'Portfolio Management', to: '/portfolio-management' },
                                 { label: 'Fixed Income', to: '/fixed-income' },
                                 { label: 'Commodity Trading', to: '/commodity-trading' },
+                                { label: 'Gold & Silver', to: '/gold-silver' },
+                                { label: 'Other Derivatives', to: '/other-derivatives' },
                             ].map((item) => (
                                 <li key={item.label}>
-                                    <Link to={item.to} className="hover:text-secondary transition-colors duration-300">
+                                    <Link 
+                                        to={item.to} 
+                                        onClick={(e) => handleServiceClick(e, item.to)}
+                                        className="hover:text-secondary transition-colors duration-300"
+                                    >
                                         {item.label}
                                     </Link>
                                 </li>
@@ -121,7 +139,7 @@ const Footer = () => {
                                 <Instagram className="w-5 h-5" />
                             </a>
                             <a 
-                                href="https://wa.me/917738686126" 
+                                href="https://api.whatsapp.com/send?phone=917738686126&text=Hi%20Haria%20Investments,%20I%20would%20like%20to%20know%20more%20about%20your%20services." 
                                 target="_blank" 
                                 rel="noopener noreferrer" 
                                 aria-label="WhatsApp" 

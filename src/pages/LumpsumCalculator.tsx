@@ -87,62 +87,65 @@ const LumpsumCalculator = () => {
         <CalculatorPageLayout>
             <CalculatorHero
                 title="Lumpsum Calculator"
-                subtitle="Calculate your investment growth with a one-time lumpsum investment."
+                subtitle="FINANCIAL CALCULATOR"
+                description="Calculate your investment growth with a one-time lumpsum investment. Understand how your money grows with compound interest over time."
                 breadcrumbs={[
-                    { label: 'Invest Smart', to: '/' },
+                    { label: 'Home', to: '/' },
                     { label: 'Lumpsum Calculator' }
                 ]}
                 icon={<Coins />}
+                image="/Hero Section/Calculator.png"
             />
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 px-4 items-stretch">
-                <div className="col-span-1 flex items-center">
-                    <CalculatorFormCard title="Lumpsum Details" subtitle="Enter your investment details below">
-                        <CalculatorInput
-                            label="Principal Amount (₹)"
-                            value={inputs.principal}
-                            onChange={handleInputChange('principal')}
-                            min={1000}
-                            max={100000000}
-                            step={1000}
-                            currency
-                            error={errors.principal}
+            <div className="calculator-section bg-gradient-to-br from-secondary/10 to-secondary/5 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 items-stretch">
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorFormCard title="Lumpsum Details" subtitle="Enter your investment details below">
+                            <CalculatorInput
+                                label="Principal Amount (₹)"
+                                value={inputs.principal}
+                                onChange={handleInputChange('principal')}
+                                min={1000}
+                                max={100000000}
+                                step={1000}
+                                currency
+                                error={errors.principal}
+                            />
+                            <CalculatorInput
+                                label="Duration (years)"
+                                value={inputs.durationYears}
+                                onChange={handleInputChange('durationYears')}
+                                min={1}
+                                max={50}
+                                error={errors.durationYears}
+                            />
+                            <CalculatorInput
+                                label="Expected Returns (%)"
+                                value={inputs.expectedReturns}
+                                onChange={handleInputChange('expectedReturns')}
+                                min={1}
+                                max={25}
+                                step={0.1}
+                                error={errors.expectedReturns}
+                            />
+                        </CalculatorFormCard>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorResultCard
+                            title="Lumpsum Summary"
+                            subtitle="Your investment projection"
+                            metrics={metrics}
+                            chart={
+                                <ChartWrapper>
+                                    <LumpsumBarChart
+                                        invested={results.invested || 0}
+                                        returns={results.returns || 0}
+                                        maturity={results.maturity || 0}
+                                    />
+                                </ChartWrapper>
+                            }
+                            explanations={explanations}
                         />
-                        <CalculatorInput
-                            label="Duration (years)"
-                            value={inputs.durationYears}
-                            onChange={handleInputChange('durationYears')}
-                            min={1}
-                            max={50}
-                            error={errors.durationYears}
-                        />
-                        <CalculatorInput
-                            label="Expected Returns (%)"
-                            value={inputs.expectedReturns}
-                            onChange={handleInputChange('expectedReturns')}
-                            min={1}
-                            max={25}
-                            step={0.1}
-                            error={errors.expectedReturns}
-                        />
-                        {/* {warnings.length > 0 && (
-                            <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
-                                {warnings.map((w, i) => <div key={i}>{w}</div>)}
-                            </div>
-                        )} */}
-                    </CalculatorFormCard>
-                </div>
-                <div className="col-span-1 flex items-center">
-                    <CalculatorResultCard
-                        title="Lumpsum Summary"
-                        subtitle="Your lumpsum projection"
-                        metrics={metrics}
-                        chart={
-                            <ChartWrapper>
-                                <LumpsumBarChart invested={results.invested || 0} returns={results.returns || 0} maturity={results.maturity || 0} />
-                            </ChartWrapper>
-                        }
-                        explanations={explanations}
-                    />
+                    </div>
                 </div>
             </div>
             <FAQSection faqs={faqList} />
@@ -150,4 +153,4 @@ const LumpsumCalculator = () => {
     );
 };
 
-export default LumpsumCalculator; 
+export default LumpsumCalculator;

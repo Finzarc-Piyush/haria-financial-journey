@@ -115,25 +115,21 @@ const ProcessSection = () => {
     {
       heading: 'Response Time',
       description: 'All inquiries answered within 24 hours',
-      badge: '24 Hour Guarantee',
       imgSrc: responseTimeImg
     },
     {
       heading: 'Meeting Frequency',
       description: 'Quarterly reviews, annual planning, ad-hoc as needed',
-      badge: 'Regular Schedule',
       imgSrc: meetingsImg
     },
     {
       heading: 'Reporting',
       description: 'Monthly statements, quarterly performance reports',
-      badge: 'Comprehensive Reporting',
       imgSrc: reportingImg
     },
     {
       heading: 'Technology Access',
       description: 'Secure client portal, mobile app, video conferencing',
-      badge: 'Modern Tools',
       imgSrc: technologyAccessImg
     }
   ];
@@ -196,12 +192,12 @@ const ProcessSection = () => {
           </div>
 
           {/* Outcome */}
-          <div className="bg-secondary/20 rounded-xl p-5 border border-secondary/30">
-            <h4 className="font-playfair font-semibold text-lg text-white mb-4 flex items-center">
+          <div className="bg-gray-50 rounded-xl p-5 border border-gray-200">
+            <h4 className="font-playfair font-semibold text-lg text-tertiary mb-4 flex items-center">
               <Shield className="w-5 h-5 text-secondary mr-2 flex-shrink-0" />
               Outcome
             </h4>
-            <p className="text-white/90 dark:text-white/90 text-sm md:text-base font-crimson leading-relaxed">
+            <p className="text-tertiary/80 text-sm md:text-base font-crimson leading-relaxed">
               {step.outcome}
             </p>
           </div>
@@ -211,12 +207,26 @@ const ProcessSection = () => {
   }));
 
   return (
-    <section id="process" className="bg-tertiary">
+    <section id="process" className="bg-tertiary py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-2">
+          <p className="text-sm font-crimson text-white/60 uppercase tracking-wider mb-4">
+            OUR PROCESS
+          </p>
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mb-4">
+            Our Client-Focused Process
+          </h2>
+          <p className="text-lg md:text-xl font-crimson text-white/80 max-w-3xl mx-auto">
+            A systematic, transparent approach designed to reduce anxiety and build confidence throughout your financial planning journey.
+          </p>
+        </div>
+      </div>
+      
       {/* Timeline Component */}
       <Timeline data={timelineData} />
 
       {/* Communication Standards */}
-      <div className="bg-gray-50 py-16">
+      <div className="bg-[#FAFAFA] py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div data-aos="fade-up" className="mb-12">
             <div className="text-center mb-12">

@@ -35,7 +35,6 @@ function formatINR(num: number) {
 }
 
 function CAGRLineChart({ initialValue, finalValue, durationYears }: { initialValue: number; finalValue: number; durationYears: number; }) {
-    // Generate data points for each year
     const data = Array.from({ length: durationYears + 1 }, (_, i) => {
         const value = initialValue * Math.pow(finalValue / initialValue, i / durationYears);
         return { year: i, value };
@@ -81,63 +80,66 @@ const CAGRCalculator = () => {
         <CalculatorPageLayout>
             <CalculatorHero
                 title="CAGR Calculator"
-                subtitle="Calculate the Compound Annual Growth Rate of your investment."
+                subtitle="FINANCIAL CALCULATOR"
+                description="Calculate the Compound Annual Growth Rate of your investment. Understand your investment's annualized return over time."
                 breadcrumbs={[
-                    { label: 'Invest Smart', to: '/' },
+                    { label: 'Home', to: '/' },
                     { label: 'CAGR Calculator' }
                 ]}
                 icon={<LucideLineChart />}
+                image="/Hero Section/Calculator.png"
             />
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 px-4 items-stretch">
-                <div className="col-span-1 flex items-center">
-                    <CalculatorFormCard title="CAGR Details" subtitle="Enter your investment details below">
-                        <CalculatorInput
-                            label="Initial Value (₹)"
-                            value={inputs.initialValue}
-                            onChange={handleInputChange('initialValue')}
-                            min={100}
-                            max={100000000}
-                            step={100}
-                            currency
-                            error={errors.initialValue}
+            <div className="calculator-section bg-gradient-to-br from-secondary/10 to-secondary/5 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 items-stretch">
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorFormCard title="CAGR Details" subtitle="Enter your investment details below">
+                            <CalculatorInput
+                                label="Initial Value (₹)"
+                                value={inputs.initialValue}
+                                onChange={handleInputChange('initialValue')}
+                                min={100}
+                                max={100000000}
+                                step={100}
+                                currency
+                                error={errors.initialValue}
+                            />
+                            <CalculatorInput
+                                label="Final Value (₹)"
+                                value={inputs.finalValue}
+                                onChange={handleInputChange('finalValue')}
+                                min={100}
+                                max={100000000}
+                                step={100}
+                                currency
+                                error={errors.finalValue}
+                            />
+                            <CalculatorInput
+                                label="Duration (years)"
+                                value={inputs.durationYears}
+                                onChange={handleInputChange('durationYears')}
+                                min={1}
+                                max={50}
+                                error={errors.durationYears}
+                            />
+                        </CalculatorFormCard>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorResultCard
+                            title="CAGR Summary"
+                            subtitle="Your growth rate"
+                            metrics={metrics}
+                            chart={
+                                <ChartWrapper>
+                                    <CAGRLineChart
+                                        initialValue={inputs.initialValue}
+                                        finalValue={inputs.finalValue}
+                                        durationYears={inputs.durationYears}
+                                    />
+                                </ChartWrapper>
+                            }
+                            explanations={explanations}
                         />
-                        <CalculatorInput
-                            label="Final Value (₹)"
-                            value={inputs.finalValue}
-                            onChange={handleInputChange('finalValue')}
-                            min={100}
-                            max={100000000}
-                            step={100}
-                            currency
-                            error={errors.finalValue}
-                        />
-                        <CalculatorInput
-                            label="Duration (years)"
-                            value={inputs.durationYears}
-                            onChange={handleInputChange('durationYears')}
-                            min={1}
-                            max={50}
-                            error={errors.durationYears}
-                        />
-                        {warnings.length > 0 && (
-                            <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
-                                {warnings.map((w, i) => <div key={i}>{w}</div>)}
-                            </div>
-                        )}
-                    </CalculatorFormCard>
-                </div>
-                <div className="col-span-1 flex items-center">
-                    <CalculatorResultCard
-                        title="CAGR Summary"
-                        subtitle="Your CAGR calculation"
-                        metrics={metrics}
-                        chart={
-                            <ChartWrapper>
-                                <CAGRLineChart initialValue={inputs.initialValue} finalValue={inputs.finalValue} durationYears={inputs.durationYears} />
-                            </ChartWrapper>
-                        }
-                        explanations={explanations}
-                    />
+                    </div>
                 </div>
             </div>
             <FAQSection faqs={faqList} />
@@ -145,4 +147,4 @@ const CAGRCalculator = () => {
     );
 };
 
-export default CAGRCalculator; 
+export default CAGRCalculator;

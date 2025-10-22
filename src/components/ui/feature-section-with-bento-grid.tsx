@@ -21,7 +21,7 @@ export function FeaturesSectionWithBentoGrid({
   features: BentoFeature[];
 }) {
   return (
-    <div className="relative z-20 py-10 lg:py-20 max-w-7xl mx-auto">
+    <div className="relative z-20 py-6 lg:py-12 max-w-7xl mx-auto">
       <div className="px-8">
         <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-white font-playfair">
           {title}
@@ -33,7 +33,7 @@ export function FeaturesSectionWithBentoGrid({
       </div>
 
       <div className="relative">
-        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-6 mt-12 xl:border rounded-md border-white/20">
+        <div className="grid grid-cols-1 md:grid-cols-6 lg:grid-cols-6 mt-5 xl:border rounded-md border-white/20">
           {features.map((feature) => (
             <FeatureCard key={feature.title} className={feature.className}>
               <FeatureTitle>{feature.title}</FeatureTitle>
@@ -55,7 +55,7 @@ const FeatureCard = ({
   className?: string;
 }) => {
   return (
-    <div className={cn(`p-4 sm:p-8 relative overflow-hidden`, className)}>
+    <div className={cn(`p-2.5 sm:p-3.5 relative overflow-hidden`, className)}>
       {children}
     </div>
   );
@@ -63,7 +63,7 @@ const FeatureCard = ({
 
 const FeatureTitle = ({ children }: { children?: React.ReactNode }) => {
   return (
-    <p className="max-w-5xl mx-auto text-left tracking-tight text-white text-2xl md:text-3xl lg:text-4xl md:leading-snug font-playfair font-semibold">
+    <p className="max-w-5xl text-left tracking-tight text-white text-2xl md:text-3xl lg:text-4xl md:leading-snug font-playfair font-semibold">
       {children}
     </p>
   );
@@ -73,9 +73,9 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
   return (
     <p
       className={cn(
-        "text-base md:text-lg lg:text-xl max-w-4xl text-left mx-auto",
+        "text-base md:text-lg lg:text-xl max-w-full text-left",
         "text-white/90 font-normal font-crimson leading-relaxed",
-        "text-left max-w-full mx-0 my-3"
+        "mt-2 mb-3"
       )}
     >
       {children}
@@ -85,9 +85,9 @@ const FeatureDescription = ({ children }: { children?: React.ReactNode }) => {
 
 export const SkeletonOne = ({ imageSrc }: { imageSrc: string }) => {
   return (
-    <div className="relative flex py-4 px-2 gap-10 h-full items-center justify-center">
-      <div className="w-3/4 max-w-md p-3 mx-auto bg-white/10 backdrop-blur-sm shadow-2xl group rounded-lg">
-        <div className="flex flex-1 w-full flex-col space-y-2">
+    <div className="relative flex py-2 px-2 h-full items-center justify-center">
+      <div className="w-3/4 max-w-md p-2 mx-auto bg-white/10 backdrop-blur-sm shadow-2xl group rounded-lg">
+        <div className="flex flex-1 w-full flex-col">
           <img
             src={imageSrc}
             alt="Team"
@@ -123,33 +123,33 @@ export const SkeletonStats = ({
   stat2: { value: string; label: string };
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center h-full gap-8 p-8">
+    <div className="flex flex-col items-center justify-center h-full gap-4 p-4">
       <motion.div
-        className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center w-full border border-white/20 shadow-xl"
+        className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 text-center w-full border border-white/20 shadow-xl"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
         whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(196, 163, 90, 0.3)" }}
       >
-        <div className="text-4xl md:text-5xl font-bold text-secondary mb-2 font-playfair">
+        <div className="text-3xl md:text-4xl font-bold text-secondary mb-2 font-playfair">
           {stat1.value}
         </div>
-        <div className="text-base md:text-lg text-white/80 font-crimson">{stat1.label}</div>
+        <div className="text-sm md:text-base text-white/80 font-crimson">{stat1.label}</div>
       </motion.div>
 
       <motion.div
-        className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 text-center w-full border border-white/20 shadow-xl"
+        className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 text-center w-full border border-white/20 shadow-xl"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
         whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(196, 163, 90, 0.3)" }}
       >
-        <div className="text-4xl md:text-5xl font-bold text-secondary mb-2 font-playfair">
+        <div className="text-3xl md:text-4xl font-bold text-secondary mb-2 font-playfair">
           {stat2.value}
         </div>
-        <div className="text-base md:text-lg text-white/80 font-crimson">{stat2.label}</div>
+        <div className="text-sm md:text-base text-white/80 font-crimson">{stat2.label}</div>
       </motion.div>
     </div>
   );

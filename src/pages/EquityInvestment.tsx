@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,42 +7,32 @@ import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import {
     TrendingUp,
-    TrendingDown,
     Search,
     ArrowRight,
-    Star,
-    Award,
     Users,
     Target,
     BarChart3,
     PieChart,
     DollarSign,
-    Percent,
-    Calendar,
     Zap,
-    Shield,
-    Globe,
-    Building,
-    Car,
-    Heart,
-    Plane
+    CheckCircle,
 } from "lucide-react";
 import { motion } from 'framer-motion';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
+import { useNavigate } from 'react-router-dom';
+import CTASection from '@/components/CTASection';
+import CircularCarousel from '@/components/ui/circular-carousel';
 
 const EquityInvestment = () => {
-    const [heroInView, setHeroInView] = useState(true);
     const [stockTicker, setStockTicker] = useState(0);
     const [searchQuery, setSearchQuery] = useState("");
     const { isOpen, openPopup, closePopup } = useContactPopup();
-    const [selectedStrategy, setSelectedStrategy] = useState<string | null>(null);
     const [marketMood, setMarketMood] = useState("bullish");
-    const [portfolioValue, setPortfolioValue] = useState(1000000);
-    const [portfolioGain, setPortfolioGain] = useState(125000);
-    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+    const [portfolioValue] = useState(1000000);
+    const [portfolioGain] = useState(125000);
+    const navigate = useNavigate();
 
-    // Mock stock data for ticker
     const stocks = [
         { symbol: "RELIANCE", price: 2456.78, change: +2.34 },
         { symbol: "TCS", price: 3890.45, change: -1.23 },
@@ -57,40 +47,52 @@ const EquityInvestment = () => {
             title: "Value Investing",
             description: "Invest in undervalued stocks with strong fundamentals",
             icon: Target,
+            rate: "Moderate Risk",
+            tenure: "3-5 years",
+            minAmount: "₹25,000",
             successRate: 85,
-            risk: "Moderate",
             returns: "12-18%",
-            features: ["Fundamental analysis", "Long-term focus", "Dividend income", "Risk management"]
+            features: ["Fundamental analysis", "Long-term focus", "Dividend income", "Risk management"],
+            image: "/Equity investment/Value-investing.jpg"
         },
         {
             id: "growth",
             title: "Growth Investing",
             description: "Focus on companies with high growth potential",
             icon: TrendingUp,
+            rate: "High Risk",
+            tenure: "5-10 years",
+            minAmount: "₹50,000",
             successRate: 78,
-            risk: "High",
             returns: "15-25%",
-            features: ["High growth potential", "Innovation focus", "Market leadership", "Scalability"]
+            features: ["High growth potential", "Innovation focus", "Market leadership", "Scalability"],
+            image: "/Equity investment/Growth-investing.jpg"
         },
         {
             id: "dividend",
             title: "Dividend Investing",
             description: "Generate regular income through dividend-paying stocks",
             icon: DollarSign,
+            rate: "Low Risk",
+            tenure: "3+ years",
+            minAmount: "₹20,000",
             successRate: 92,
-            risk: "Low",
             returns: "8-12%",
-            features: ["Regular income", "Stable companies", "Lower volatility", "Tax benefits"]
+            features: ["Regular income", "Stable companies", "Lower volatility", "Tax benefits"],
+            image: "/Equity investment/Dividend-investing.jpg"
         },
         {
             id: "momentum",
             title: "Momentum Trading",
             description: "Trade based on price momentum and market trends",
             icon: Zap,
+            rate: "Very High Risk",
+            tenure: "Short-term",
+            minAmount: "₹1,00,000",
             successRate: 65,
-            risk: "Very High",
             returns: "20-35%",
-            features: ["Technical analysis", "Short-term focus", "High frequency", "Trend following"]
+            features: ["Technical analysis", "Short-term focus", "High frequency", "Trend following"],
+            image: "/Equity investment/Momentum-trading.jpg"
         }
     ];
 
@@ -101,7 +103,6 @@ const EquityInvestment = () => {
             experience: "15+ years",
             successRate: 89,
             specialization: "Large Cap Stocks",
-            image: "/src/assets/advisor-headshot.jpg"
         },
         {
             name: "Priya Sharma",
@@ -109,7 +110,6 @@ const EquityInvestment = () => {
             experience: "12+ years",
             successRate: 92,
             specialization: "Growth Stocks",
-            image: "/src/assets/advisor-headshot.jpg"
         },
         {
             name: "Amit Patel",
@@ -117,7 +117,6 @@ const EquityInvestment = () => {
             experience: "10+ years",
             successRate: 76,
             specialization: "Momentum Trading",
-            image: "/src/assets/advisor-headshot.jpg"
         }
     ];
 
@@ -130,17 +129,6 @@ const EquityInvestment = () => {
         { name: "Others", weight: 18, color: "bg-gray-500" }
     ];
 
-    useEffect(() => {
-        const hero = document.getElementById("hero");
-        if (!hero) return;
-        const observer = new window.IntersectionObserver(
-            ([entry]) => setHeroInView(entry.isIntersecting),
-            { threshold: 0.3 }
-        );
-        observer.observe(hero);
-        return () => observer.disconnect();
-    }, []);
-
     // Handle hash-based scrolling
     useEffect(() => {
         const scrollToHash = () => {
@@ -148,12 +136,14 @@ const EquityInvestment = () => {
             if (!hash) return;
             const el = document.getElementById(hash);
             if (el) {
+                setTimeout(() => {
                 el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
             }
         };
-        const t = setTimeout(scrollToHash, 50);
+        scrollToHash();
         window.addEventListener('hashchange', scrollToHash);
-        return () => { clearTimeout(t); window.removeEventListener('hashchange', scrollToHash); };
+        return () => window.removeEventListener('hashchange', scrollToHash);
     }, []);
 
     // Stock ticker animation
@@ -172,11 +162,6 @@ const EquityInvestment = () => {
         return () => clearInterval(timer);
     }, []);
 
-    // Initialize animations
-    useEffect(() => {
-        // Remove AOS initialization - using Framer Motion only
-    }, []);
-
     const getMoodIcon = (mood: string) => {
         switch (mood) {
             case "bullish": return "📈";
@@ -193,121 +178,205 @@ const EquityInvestment = () => {
         }
     };
 
-    // Animation variants for scroll-based reveal
-    const fadeSlideUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
         <div className="min-h-screen bg-background">
 
-            {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
-                {/* Background Image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-equity-investments.webp')" }}
-                />
-                <div className="absolute inset-0 bg-black/40" />
+            {/* Hero Section - Landing Page Style */}
+            <section 
+                id="hero"
+                className="relative w-full overflow-hidden min-h-screen flex items-center"
+            >
+                <div className="w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+                        {/* Left Side - Content */}
+                        <div className="relative bg-tertiary px-4 sm:px-6 lg:px-12 py-20 lg:py-0 flex items-center overflow-hidden">
+                            {/* Decorative Partial Logo */}
+                            <div className="absolute bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none">
+                                <img 
+                                    src="/logo-wbg.png" 
+                                    alt="" 
+                                    className="w-full h-full object-contain transform translate-x-1/3 translate-y-1/3 scale-150"
+                                    style={{ filter: 'brightness(0) invert(1)' }}
+                                />
+                            </div>
 
-                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
-                        <span className="inline-block mr-4">Build Wealth Through</span>
-                        <span className="inline-block text-secondary animate-pulse">Strategic</span>
-                        <br />
-                        <span className="inline-block text-secondary">Equity Investment</span>
+                            <div className="relative z-10 max-w-2xl mx-auto lg:mx-0">
+                                {/* Label */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6 }}
+                                    className="mb-6"
+                                >
+                                    <span className="text-xs md:text-sm font-crimson text-white/70 uppercase tracking-wider">
+                                        EQUITY INVESTMENT SERVICES
+                                    </span>
+                                </motion.div>
+
+                                {/* Main Headline */}
+                                <motion.h1 
+                                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-white mb-6"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                >
+                                    Build Wealth Through{' '}
+                                    <span className="relative inline-block">
+                                        <span className="relative z-10">Strategic Equity</span>
+                                        <span className="absolute bottom-0 left-0 w-full h-3 bg-secondary/30 -z-0"></span>
+                                    </span>
                     </motion.h1>
 
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
-                        Expert guidance for direct stock investment and portfolio management
+                                {/* Description */}
+                                <motion.p 
+                                    className="text-base md:text-lg font-crimson text-white/90 leading-relaxed mb-8"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                >
+                                    Expert guidance for direct stock investment and portfolio management. Access 5000+ stocks with zero brokerage fees.
                     </motion.p>
 
                     {/* Live Stock Ticker */}
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8 max-w-2xl mx-auto">
-                        <div className="flex items-center justify-between text-lg">
-                            <span className="text-white/80">Live Market</span>
-                            <span className={`flex items-center ${getMoodColor(marketMood)}`}>
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.5 }}
+                                    className="bg-white/10 backdrop-blur-sm rounded-lg p-4 mb-8"
+                                >
+                                    <div className="flex items-center justify-between text-sm mb-2">
+                                        <span className="text-white/80 font-crimson">Live Market</span>
+                                        <span className={`flex items-center font-crimson ${getMoodColor(marketMood)}`}>
                                 {getMoodIcon(marketMood)} {marketMood.toUpperCase()}
                             </span>
                         </div>
-                        <div className="flex items-center justify-between mt-2">
-                            <span className="font-semibold">{stocks[stockTicker].symbol}</span>
-                            <span className="font-semibold">₹{stocks[stockTicker].price.toLocaleString()}</span>
-                            <span className={`font-semibold ${stocks[stockTicker].change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                    <div className="flex items-center justify-between">
+                                        <span className="font-semibold text-white font-playfair">{stocks[stockTicker].symbol}</span>
+                                        <span className="font-semibold text-white font-playfair">₹{stocks[stockTicker].price.toLocaleString()}</span>
+                                        <span className={`font-semibold font-playfair ${stocks[stockTicker].change >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                                 {stocks[stockTicker].change >= 0 ? '+' : ''}{stocks[stockTicker].change}%
                             </span>
                         </div>
                     </motion.div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button
-                            size="lg"
-                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-xl"
-                            onClick={openPopup}
-                        >
-                            Start Investing
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-xl"
-                            onClick={openPopup}
-                        >
-                            Get Portfolio Review
-                        </Button>
+                                {/* CTA Buttons */}
+                                <motion.div 
+                                    className="flex flex-col sm:flex-row gap-4"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.6 }}
+                                >
+                                    <button 
+                                        onClick={() => navigate('/contact')}
+                                        className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                    >
+                                        <span>Start Investing</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                    <button 
+                                        onClick={() => scrollToSection('direct-stock-investment')}
+                                        className="border-2 border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all backdrop-blur-sm flex items-center justify-center"
+                                    >
+                                        Explore Stocks
+                                    </button>
+                                </motion.div>
+
+                                {/* Trust Badge */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.8, delay: 0.8 }}
+                                    className="mt-8 flex items-center gap-2 text-white/60 text-sm font-crimson"
+                                >
+                                    <div className="flex -space-x-2">
+                                        <div className="w-8 h-8 rounded-full bg-secondary border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/20 border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/10 border-2 border-tertiary"></div>
+                                    </div>
+                                    <span>Trusted by families since 1957</span>
+                                </motion.div>
+                            </div>
+                        </div>
+
+                        {/* Right Side - Image */}
+                        <div className="relative bg-gray-900 min-h-[400px] lg:min-h-screen overflow-hidden">
+                            <img 
+                                src="/Hero Section/equity-investment.png" 
+                                alt="Equity Investment"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary opacity-20 rounded-full transform translate-x-1/2 translate-y-1/2 z-10"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
             {/* Direct Stock Investment Section */}
-            <section id="direct-stock-investment" className="py-20 px-4 bg-gradient-premium">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-                            Direct Stock Investment
-                        </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
-                            Build your portfolio with carefully selected stocks
-                        </motion.p>
+            <section id="direct-stock-investment" className="py-16 bg-gradient-to-br from-secondary/10 to-secondary/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            DIRECT STOCK INVESTMENT
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Build Your Portfolio
+                        </h2>
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Invest in carefully selected stocks with expert guidance
+                        </p>
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Stock Search */}
-                        <Card className="premium-card">
+                        <Card>
                             <CardHeader>
-                                <CardTitle className="text-2xl font-playfair flex items-center">
+                                <CardTitle className="text-2xl font-playfair flex items-center text-tertiary">
                                     <Search className="h-6 w-6 mr-2 text-secondary" />
                                     Find Your Perfect Stock
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <div>
-                                    <Label className="text-lg font-semibold text-foreground">Search Stocks</Label>
+                                    <Label className="text-base font-crimson font-semibold text-tertiary">Search Stocks</Label>
                                     <div className="relative mt-2">
                                         <Input
                                             placeholder="Enter stock name or symbol..."
                                             value={searchQuery}
                                             onChange={(e) => setSearchQuery(e.target.value)}
-                                            className="pl-10"
+                                            className="pl-10 font-crimson"
                                         />
-                                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-tertiary/60" />
                                     </div>
                                 </div>
 
                                 <div className="grid grid-cols-2 gap-4">
-                                    <div className="text-center p-4 bg-muted/50 rounded-lg">
-                                        <div className="text-2xl font-playfair font-bold text-foreground">5000+</div>
-                                        <div className="text-lg text-muted-foreground">Stocks Available</div>
+                                    <div className="text-center p-4 bg-secondary/10 rounded-lg">
+                                        <div className="text-2xl font-playfair font-bold text-tertiary">5000+</div>
+                                        <div className="text-sm text-tertiary/70 font-crimson">Stocks Available</div>
                                     </div>
-                                    <div className="text-center p-4 bg-muted/50 rounded-lg">
+                                    <div className="text-center p-4 bg-secondary/10 rounded-lg">
                                         <div className="text-2xl font-playfair font-bold text-secondary">₹0</div>
-                                        <div className="text-lg text-muted-foreground">Brokerage Fee</div>
+                                        <div className="text-sm text-tertiary/70 font-crimson">Brokerage Fee</div>
                                     </div>
                                 </div>
 
-                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
+                                <Button 
+                                    className="w-full bg-secondary hover:bg-secondary/90 text-white font-crimson font-semibold" 
+                                    onClick={() => navigate('/contact')}
+                                >
                                     Explore Stocks
                                     <ArrowRight className="ml-2 h-4 w-4" />
                                 </Button>
@@ -315,29 +384,29 @@ const EquityInvestment = () => {
                         </Card>
 
                         {/* Portfolio Diversification */}
-                        <Card className="premium-card">
+                        <Card>
                             <CardHeader>
-                                <CardTitle className="text-2xl font-playfair flex items-center">
+                                <CardTitle className="text-2xl font-playfair flex items-center text-tertiary">
                                     <PieChart className="h-6 w-6 mr-2 text-secondary" />
                                     Portfolio Diversification
                                 </CardTitle>
                             </CardHeader>
                             <CardContent>
                                 <div className="space-y-4">
-                                    {sectors.map((sector, index) => (
+                                    {sectors.map((sector) => (
                                         <div key={sector.name} className="flex items-center justify-between">
                                             <div className="flex items-center">
                                                 <div className={`w-4 h-4 rounded-full ${sector.color} mr-3`} />
-                                                <span className="text-lg font-medium text-foreground">{sector.name}</span>
+                                                <span className="text-sm font-crimson text-tertiary">{sector.name}</span>
                                             </div>
                                             <div className="flex items-center space-x-2">
-                                                <div className="w-24 bg-muted rounded-full h-2">
+                                                <div className="w-24 bg-gray-200 rounded-full h-2">
                                                     <div
-                                                        className={`h-2 rounded-full ${sector.color.replace('bg-', 'bg-')}`}
+                                                        className={`h-2 rounded-full ${sector.color}`}
                                                         style={{ width: `${sector.weight}%` }}
                                                     />
                                                 </div>
-                                                <span className="text-sm text-muted-foreground w-8">{sector.weight}%</span>
+                                                <span className="text-sm text-tertiary/70 font-crimson w-8">{sector.weight}%</span>
                                             </div>
                                         </div>
                                     ))}
@@ -345,12 +414,12 @@ const EquityInvestment = () => {
 
                                 <div className="mt-6 p-4 bg-secondary/10 rounded-lg">
                                     <div className="flex justify-between items-center">
-                                        <span className="text-sm text-muted-foreground">Portfolio Value</span>
-                                        <span className="font-semibold text-foreground">₹{portfolioValue.toLocaleString()}</span>
+                                        <span className="text-sm text-tertiary/70 font-crimson">Portfolio Value</span>
+                                        <span className="font-semibold text-tertiary font-playfair">₹{portfolioValue.toLocaleString()}</span>
                                     </div>
                                     <div className="flex justify-between items-center mt-2">
-                                        <span className="text-sm text-muted-foreground">Total Gain</span>
-                                        <span className="font-semibold text-green-600">+₹{portfolioGain.toLocaleString()}</span>
+                                        <span className="text-sm text-tertiary/70 font-crimson">Total Gain</span>
+                                        <span className="font-semibold text-green-600 font-playfair">+₹{portfolioGain.toLocaleString()}</span>
                                     </div>
                                 </div>
                             </CardContent>
@@ -360,274 +429,203 @@ const EquityInvestment = () => {
             </section>
 
             {/* Portfolio Advisory Section */}
-            <section id="expert-portfolio-advisory" className="py-20 px-4 bg-background">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-                            Expert Portfolio Advisory
-                        </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
+            <section id="expert-portfolio-advisory" className="py-16 bg-[#FAFAFA]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            EXPERT PORTFOLIO ADVISORY
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Investment Strategies
+                        </h2>
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
                             Get personalized investment strategies from our expert advisors
-                        </motion.p>
+                        </p>
                     </motion.div>
 
-                    {/* Investment Strategies */}
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                        {investmentStrategies.map((strategy, index) => (
-                            <Card
-                                key={strategy.id}
-                                className={`group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out ${selectedStrategy === strategy.id ? 'border-secondary/50 bg-secondary/5' : ''
-                                    }`}
-                                onClick={() => setSelectedStrategy(strategy.id)}
-                                style={{
-                                    animationDelay: `${index * 0.1}s`,
-                                    transform: hoveredCard === `equity-strategy-${strategy.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(`equity-strategy-${strategy.id}`)}
-                                onMouseLeave={() => setHoveredCard(null)}
-                            >
-                                <CardHeader className="relative z-10">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <strategy.icon className="h-12 w-12 text-secondary group-hover:scale-110 transition-all duration-300 ease-out" />
-                                        <Badge className={`${strategy.risk === 'Very High' ? 'bg-red-500/20 text-red-600' :
-                                            strategy.risk === 'High' ? 'bg-orange-500/20 text-orange-600' :
-                                                strategy.risk === 'Moderate' ? 'bg-yellow-500/20 text-yellow-600' :
-                                                    'bg-green-500/20 text-green-600'
-                                            }`}>
-                                            {strategy.risk}
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground">
-                                        {strategy.title}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent className="relative z-10 flex flex-col flex-grow">
-                                    <div className="flex-grow">
-                                        <p className="text-muted-foreground mb-4 font-crimson text-lg">
-                                            {strategy.description}
-                                        </p>
-
-                                        <div className="mb-4">
-                                            <div className="flex justify-between items-center mb-2">
-                                                <span className="text-base text-muted-foreground">Success Rate</span>
-                                                <span className="font-semibold text-secondary text-lg">{strategy.successRate}%</span>
-                                            </div>
-                                            <Progress value={strategy.successRate} className="h-2" />
-                                        </div>
-
-                                        <div className="mb-4">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Expected Returns</span>
-                                                <span className="font-semibold text-green-600 text-lg">{strategy.returns}</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="space-y-2 mb-6">
-                                            {strategy.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center text-base">
-                                                    <div className="w-2 h-2 bg-secondary rounded-full mr-3 flex-shrink-0" />
-                                                    <span className="text-muted-foreground">{feature}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                        Learn More
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-300 ease-out" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </motion.div>
+                    {/* Investment Strategies - Carousel */}
+                    <div className="mb-16">
+                        <CircularCarousel
+                            products={investmentStrategies}
+                            autoplay={true}
+                            colors={{
+                                title: "#1a5f7a",
+                                description: "#6b7280",
+                                content: "#4b5563",
+                            }}
+                            fontSizes={{
+                                title: "28px",
+                                description: "16px",
+                                content: "16px",
+                            }}
+                            onInvestNow={() => navigate('/contact')}
+                        />
+                    </div>
 
                     {/* Expert Advisors */}
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-12">
-                        <motion.h3 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl font-playfair font-bold text-foreground mb-4">
+                    <div className="text-center mb-12">
+                        <h3 className="text-3xl md:text-4xl font-playfair font-bold text-tertiary mb-4">
                             Meet Our Expert Advisors
-                        </motion.h3>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-lg font-crimson text-muted-foreground">
+                        </h3>
+                        <p className="text-lg font-crimson text-tertiary/80">
                             Get personalized guidance from industry experts
-                        </motion.p>
-                    </motion.div>
+                        </p>
+                    </div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <motion.div
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={{
+                            hidden: {},
+                            show: { transition: { staggerChildren: 0.1 }}
+                        }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    >
                         {advisors.map((advisor, index) => (
-                            <Card
+                            <motion.div
                                 key={index}
-                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`,
-                                    transform: hoveredCard === `equity-advisor-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(`equity-advisor-${index}`)}
-                                onMouseLeave={() => setHoveredCard(null)}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
+                                className="flex flex-col items-center"
                             >
-                                <CardHeader className="text-center">
-                                    <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-secondary/20 flex items-center justify-center">
-                                        <Users className="h-10 w-10 text-secondary" />
+                                {/* Circular Icon */}
+                                <div className="relative mb-6">
+                                    <div className="w-48 h-48 rounded-full overflow-hidden shadow-lg border-4 border-white bg-secondary/20 flex items-center justify-center">
+                                        <Users className="w-24 h-24 text-secondary" />
                                     </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground">
+                                </div>
+
+                                {/* Content */}
+                                <div className="text-center mb-6">
+                                    <h4 className="text-xl md:text-2xl font-playfair font-bold text-tertiary mb-2">
                                         {advisor.name}
-                                    </CardTitle>
-                                    <p className="text-muted-foreground text-lg">{advisor.role}</p>
-                                    <p className="text-base text-secondary font-semibold">{advisor.experience}</p>
-                                </CardHeader>
-
-                                <CardContent className="text-center flex flex-col flex-grow">
-                                    <div className="flex-grow">
-                                        <div className="space-y-4">
-                                            <div>
-                                                <div className="flex justify-between items-center mb-2">
-                                                    <span className="text-base text-muted-foreground">Success Rate</span>
-                                                    <span className="font-semibold text-secondary text-lg">{advisor.successRate}%</span>
-                                                </div>
-                                                <Progress value={advisor.successRate} className="h-2" />
-                                            </div>
-
-                                            <div>
-                                                <span className="text-base text-muted-foreground">Specialization</span>
-                                                <p className="font-semibold text-foreground text-lg">{advisor.specialization}</p>
-                                            </div>
-                                        </div>
+                                    </h4>
+                                    <p className="text-base font-crimson text-tertiary/80 mb-1">
+                                        {advisor.role}
+                                    </p>
+                                    <p className="text-sm text-secondary font-semibold font-playfair mb-3">
+                                        {advisor.experience}
+                                    </p>
+                                    <div className="flex items-center justify-center gap-2 mb-2">
+                                        <span className="text-sm text-tertiary/70 font-crimson">Success Rate:</span>
+                                        <span className="font-semibold text-secondary font-playfair">{advisor.successRate}%</span>
                                     </div>
+                                    <p className="text-sm text-tertiary/70 font-crimson">
+                                        <span className="font-semibold">Specialization:</span> {advisor.specialization}
+                                    </p>
+                                </div>
 
-                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold text-lg" onClick={openPopup}>
-                                        Book Consultation
-                                        <ArrowRight className="ml-2 h-5 w-5" />
-                                    </Button>
-                                </CardContent>
-                            </Card>
+                                {/* Book Consultation Button */}
+                                <button
+                                    onClick={() => navigate('/contact')}
+                                    className="bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                                >
+                                    <Users className="w-4 h-4" />
+                                    <span>Book Consultation</span>
+                                </button>
+                            </motion.div>
                         ))}
                     </motion.div>
                 </div>
             </section>
 
             {/* Advanced Features Section */}
-            <section className="py-20 px-4 bg-gradient-premium">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-                            Advanced Trading Features
-                        </motion.h2>
-                        <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-muted-foreground">
-                            Professional tools for serious investors
-                        </motion.p>
+            <section className="py-16 bg-gradient-to-br from-secondary/10 to-secondary/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            ADVANCED FEATURES
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Professional Trading Tools
+                        </h2>
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Advanced features for serious investors
+                        </p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
-                        <Card
-                            className="premium-card relative h-full flex flex-col"
-                            style={{
-                                transform: hoveredCard === 'equity-feature-0' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                            }}
-                            onMouseEnter={() => setHoveredCard('equity-feature-0')}
-                            onMouseLeave={() => setHoveredCard(null)}
-                        >
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <BarChart3 className="h-8 w-8 text-secondary" />
-                                    <Badge className="bg-secondary/20 text-secondary">Pro</Badge>
+                    <motion.div
+                        initial="hidden"
+                        whileInView="show"
+                        viewport={{ once: true, amount: 0.2 }}
+                        variants={{
+                            hidden: {},
+                            show: { transition: { staggerChildren: 0.1 }}
+                        }}
+                        className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    >
+                        {[
+                            { title: "Technical Analysis", desc: "Advanced charting tools with 50+ technical indicators", badge: "Pro", image: "/technical-analysis.jpg" },
+                            { title: "Risk Assessment", desc: "AI-powered risk analysis and portfolio stress testing", badge: "New", image: "/risk-assessment.jpg" },
+                            { title: "Market Insights", desc: "Real-time market analysis and expert recommendations", badge: "Live", image: "/market-insights.jpg" }
+                        ].map((feature, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 40 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, amount: 0.3 }}
+                                transition={{ duration: 0.6 }}
+                                className="h-full"
+                            >
+                                <div className="relative h-full flex flex-col shadow-lg rounded-xl overflow-hidden transition-all duration-300 hover:shadow-2xl group min-h-[350px]">
+                                    {/* Background Image */}
+                                    <div className="absolute inset-0">
+                                        <img 
+                                            src={feature.image} 
+                                            alt={feature.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        {/* Bluish Overlay */}
+                                        <div className="absolute inset-0 bg-tertiary/80 group-hover:bg-tertiary/70 transition-all duration-300"></div>
+                                    </div>
+                                    
+                                    {/* Content */}
+                                    <div className="relative z-10 flex flex-col flex-grow p-6">
+                                        <div className="flex justify-end mb-4">
+                                            <Badge className="bg-secondary/90 text-white">{feature.badge}</Badge>
+                                        </div>
+                                        
+                                        <div className="flex-grow flex flex-col justify-center">
+                                            <h3 className="text-2xl font-playfair font-bold text-white mb-3">
+                                                {feature.title}
+                                            </h3>
+                                            <p className="text-white/90 mb-6 font-crimson text-base leading-relaxed">
+                                                {feature.desc}
+                                            </p>
+                                        </div>
+                                        
+                                        <button
+                                            onClick={() => navigate('/contact')}
+                                            className="bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                        >
+                                            Explore
+                                            <ArrowRight className="w-4 h-4" />
+                                        </button>
+                                    </div>
                                 </div>
-                                <CardTitle className="text-xl font-playfair">Technical Analysis</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow">
-                                <div className="flex-grow">
-                                    <p className="text-muted-foreground mb-4 text-lg">
-                                        Advanced charting tools with 50+ technical indicators
-                                    </p>
-                                </div>
-                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                    Explore Tools
-                                </Button>
-                            </CardContent>
-                        </Card>
-
-                        <Card
-                            className="premium-card relative h-full flex flex-col"
-                            style={{
-                                transform: hoveredCard === 'equity-feature-1' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                            }}
-                            onMouseEnter={() => setHoveredCard('equity-feature-1')}
-                            onMouseLeave={() => setHoveredCard(null)}
-                        >
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <Target className="h-8 w-8 text-secondary" />
-                                    <Badge className="bg-secondary/20 text-secondary">New</Badge>
-                                </div>
-                                <CardTitle className="text-xl font-playfair">Risk Assessment</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow">
-                                <div className="flex-grow">
-                                    <p className="text-muted-foreground mb-4 text-lg">
-                                        AI-powered risk analysis and portfolio stress testing
-                                    </p>
-                                </div>
-                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                    Assess Risk
-                                </Button>
-                            </CardContent>
-                        </Card>
-
-                        <Card
-                            className="premium-card relative h-full flex flex-col"
-                            style={{
-                                transform: hoveredCard === 'equity-feature-2' ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                            }}
-                            onMouseEnter={() => setHoveredCard('equity-feature-2')}
-                            onMouseLeave={() => setHoveredCard(null)}
-                        >
-                            <CardHeader>
-                                <div className="flex items-center justify-between">
-                                    <Zap className="h-8 w-8 text-secondary" />
-                                    <Badge className="bg-secondary/20 text-secondary">Live</Badge>
-                                </div>
-                                <CardTitle className="text-xl font-playfair">Market Insights</CardTitle>
-                            </CardHeader>
-                            <CardContent className="flex flex-col flex-grow">
-                                <div className="flex-grow">
-                                    <p className="text-muted-foreground mb-4 text-lg">
-                                        Real-time market analysis and expert recommendations
-                                    </p>
-                                </div>
-                                <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                    Get Insights
-                                </Button>
-                            </CardContent>
-                        </Card>
+                            </motion.div>
+                        ))}
                     </motion.div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
-                <div className="max-w-4xl mx-auto text-center">
-                    <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
-                        Start Your Equity Investment Journey
-                    </motion.h2>
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-white/80 mb-8">
-                        Join thousands of successful investors building wealth through stocks
-                    </motion.p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl">
-                            <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open Demat Account</a>
-                        </Button>
-                        <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">
-                            <a href="https://invest.motilaloswal.com/" target="_blank" rel="noopener noreferrer">Motilal Oswal Client Login</a>
-                        </Button>
-                        <Button size="lg" asChild className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl">
-                            <a href="https://users.madosx.co.in/pages/auth/login" target="_blank" rel="noopener noreferrer">Mutual Fund Client Login</a>
-                        </Button>
-                    </div>
-                </div>
-            </section>
+            <CTASection />
 
             {/* Contact Popup */}
             <ContactPopup

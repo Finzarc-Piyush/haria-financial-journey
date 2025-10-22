@@ -27,7 +27,7 @@ const teamMembers: TooltipItem[] = [
     name: "Amritlal Devji Haria",
     designation: "Founder",
     image: amritlalDevjiHaria,
-    bio: "Our journey began with Late Shri Amritlal Devji Haria. Being a graduate, he joined LIC right from its inception. Over the decades, he dedicated his entire career to serving people through insurance, retiring as a Development Officer and later continuing as an agent. His unwavering commitment touched the lives of thousands of families, laying a strong foundation for the generations to come."
+    bio: "Our journey began with Late Shri Amritlal Devji Haria. Being a graduate, he joined LIC right from its inception. Over the decades, he dedicated his entire career to serving people through insurance, retiring as a Development Officer and later continuing as an agent. His unwavering commitment touched the lives of families, laying a strong foundation for the generations to come."
   },
   {
     id: 2,
@@ -72,25 +72,15 @@ const bentoFeatures: BentoFeature[] = [
   {
     title: "Our Legacy",
     description:
-      "Building trust since 1957, serving over 1000+ satisfied families across generations.",
+      "Building trust since 1957, serving families across generations.",
     skeleton: <SkeletonStats stat1={{ value: "1957", label: "Legacy Since" }} stat2={{ value: "1000+", label: "Families Served" }} />,
     className: "col-span-1 md:col-span-2 lg:col-span-2 border-b border-white/20",
   },
   {
     title: "Vision",
     description:
-      "To be recognized as a leading wealth and protection partner that combines innovation, integrity, and personalized care—enabling every client to build sustainable wealth, safeguard their future, and achieve financial freedom across generations.",
-    skeleton: (
-      <div className="relative flex py-8 px-2 gap-10 h-full">
-        <div className="w-full mx-auto bg-white/10 backdrop-blur-sm shadow-2xl group h-full rounded-lg overflow-hidden">
-          <img 
-            src="/Commitment/Vision.jpg" 
-            alt="Vision" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-    ),
+      "To be recognized as a leading wealth and protection partner that combines innovation, integrity, and personalized care, enabling every client to build sustainable wealth, safeguard their future, and achieve financial freedom across generations.",
+    skeleton: <div></div>,
     className:
       "col-span-1 md:col-span-3 lg:col-span-3 border-b md:border-r border-white/20",
   },
@@ -98,38 +88,14 @@ const bentoFeatures: BentoFeature[] = [
     title: "Mission",
     description:
       "To provide holistic financial solutions that help individuals and families protect, grow, and diversify their wealth. Through trusted advice, research-driven strategies, and a wide spectrum of offerings, we empower clients to achieve financial security, prosperity, and peace of mind.",
-    skeleton: (
-      <div className="relative flex py-8 px-2 gap-10 h-full items-center justify-center">
-        <div className="w-full max-w-md mx-auto bg-white/10 backdrop-blur-sm shadow-2xl rounded-lg overflow-hidden">
-          <video 
-            autoPlay 
-            loop 
-            muted 
-            playsInline
-            className="w-full h-full object-cover"
-          >
-            <source src="/Commitment/Mission.mp4" type="video/mp4" />
-          </video>
-        </div>
-      </div>
-    ),
+    skeleton: <div></div>,
     className: "col-span-1 md:col-span-3 lg:col-span-3 border-b md:border-r border-white/20",
   },
   {
     title: "Our Commitment",
     description:
       "Our vision, values, and tireless dedication continue to inspire us as we serve our clients today. We are proud to be the second and third generation reaping the rewards of our founders' hard work, and more importantly, carrying forward a tradition of trust and service that spans decades.",
-    skeleton: (
-      <div className="relative flex py-8 px-2 gap-10 h-full">
-        <div className="w-full mx-auto bg-white/10 backdrop-blur-sm shadow-2xl group h-full rounded-lg overflow-hidden">
-          <img 
-            src="/Commitment/commit.png" 
-            alt="Our Commitment" 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-    ),
+    skeleton: <div></div>,
     className: "col-span-1 md:col-span-6 lg:col-span-6 border-b md:border-none",
   },
 ];
@@ -165,7 +131,7 @@ const AboutSection = () => {
 
         {/* Animated Team Member Avatars */}
         <motion.div 
-          className="flex justify-center mb-20"
+          className="flex justify-center mb-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -1,47 +1,37 @@
-import { useEffect, useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Progress } from "@/components/ui/progress";
+import { CircularCarousel } from "@/components/ui/circular-carousel";
+import { Timeline } from "@/components/ui/timeline";
 import {
-    TrendingUp,
-    Shield,
     Building,
-    Award,
     ArrowRight,
-    Star,
-    CheckCircle,
-    DollarSign,
-    Percent,
-    Calendar,
-    Lock,
+    PiggyBank,
     Flag,
     Building2,
-    PiggyBank,
-    Target,
-    Zap,
-    Users,
-    Clock,
-    BarChart3
+    Award,
+    TrendingUp,
+    Shield,
+    DollarSign,
 } from "lucide-react";
 import { motion } from 'framer-motion';
 import ContactPopup from '@/components/ui/ContactPopup';
 import { useContactPopup } from '@/hooks/useContactPopup';
+import { useNavigate } from 'react-router-dom';
+import CTASection from '@/components/CTASection';
 
 const FixedIncome = () => {
-    const [heroInView, setHeroInView] = useState(true);
     const [investmentAmount, setInvestmentAmount] = useState(100000);
     const [tenure, setTenure] = useState(5);
     const [interestRate, setInterestRate] = useState(7.5);
     const [maturityValue, setMaturityValue] = useState(0);
     const [totalInterest, setTotalInterest] = useState(0);
     const { isOpen, openPopup, closePopup } = useContactPopup();
-    const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
-    const [currentStep, setCurrentStep] = useState(0);
-    const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const products = [
         {
@@ -49,131 +39,159 @@ const FixedIncome = () => {
             title: "Fixed Deposits",
             description: "Guaranteed returns with capital protection",
             icon: PiggyBank,
-            color: "from-green-500 to-emerald-500",
             rate: "6.5-8.5%",
             tenure: "7 days - 10 years",
             minAmount: "₹10,000",
             features: ["Guaranteed returns", "Capital protection", "Flexible tenure", "Quarterly interest"],
-            animation: "vault-opening"
+            image: "/Fixed Income/Fixed-deposits.jpg",
         },
         {
             id: "bonds",
             title: "Corporate Bonds",
             description: "Higher returns from corporate debt instruments",
             icon: Building,
-            color: "from-blue-500 to-cyan-500",
             rate: "8-12%",
             tenure: "3-10 years",
             minAmount: "₹10,000",
             features: ["Higher returns", "Regular income", "Credit rating", "Liquidity"],
-            animation: "certificate-unrolling"
+            image: "/Fixed Income/corporate-bonds.jpg",
         },
         {
             id: "gsec",
             title: "Government Securities",
             description: "Sovereign guarantee with stable returns",
             icon: Flag,
-            color: "from-purple-500 to-indigo-500",
             rate: "6-7.5%",
             tenure: "1-30 years",
             minAmount: "₹10,000",
             features: ["Sovereign guarantee", "Zero default risk", "Tax benefits", "Liquidity"],
-            animation: "flag-waving"
+            image: "/Fixed Income/government-securities.jpg",
         },
         {
             id: "ncd",
             title: "NCDs",
             description: "Non-convertible debentures for higher yields",
             icon: Building2,
-            color: "from-orange-500 to-red-500",
             rate: "9-14%",
             tenure: "1-7 years",
             minAmount: "₹10,000",
             features: ["Higher yields", "Credit rating", "Regular interest", "Listing benefits"],
-            animation: "logo-verification"
+            image: "/Fixed Income/NCDs.jpg",
         },
         {
             id: "cgb",
             title: "Capital Gain Bonds",
             description: "Save tax on long-term capital gains under Section 54EC",
-            icon: Award, // Or any suitable icon like BarChart3
-            color: "from-yellow-500 to-amber-500",
-            rate: "5.25% (approx)",
-            tenure: "5 years (locked-in)",
-            minAmount: "₹10,000",
-            features: ["Tax exemption", "RBI approved", "Safe returns", "No premature exit"],
-            animation: "tax-saving"
-        }
-
-    ];
-
-    const ladderingStrategies = [
-        {
-            year: 1,
-            amount: 200000,
-            rate: 7.2,
-            maturity: 2025
-        },
-        {
-            year: 2,
-            amount: 200000,
-            rate: 7.5,
-            maturity: 2026
-        },
-        {
-            year: 3,
-            amount: 200000,
-            rate: 7.8,
-            maturity: 2027
-        },
-        {
-            year: 4,
-            amount: 200000,
-            rate: 8.0,
-            maturity: 2028
-        },
-        {
-            year: 5,
-            amount: 200000,
-            rate: 8.2,
-            maturity: 2029
+            icon: Award,
+            rate: "5-6%",
+            tenure: "5 years",
+            minAmount: "₹50 Lakhs",
+            features: ["Tax savings on LTCG", "Section 54EC benefits", "Lock-in period", "Sovereign guarantee"],
+            image: "/Fixed Income/capital-gain-bonds.jpg",
         }
     ];
 
-    const topBanks = [
-        {
-            name: "HDFC Bank",
-            rate: "7.75%",
-            rating: "AAA",
+    const topBankFDs = [
+        { 
+            bank: "HDFC Bank", 
+            rate: "7.75%", 
             minAmount: "₹10,000",
-            tenure: "1-10 years"
+            tenure: "1-10 years",
+            description: "Interest Rate",
+            rating: "AAA",
+            image: "/Client Logos/HDFC.jpg"
+        },
+        { 
+            bank: "ICICI Bank", 
+            rate: "7.50%", 
+            minAmount: "₹10,000",
+            tenure: "1-10 years",
+            description: "Interest Rate",
+            rating: "AAA",
+            image: "/Client Logos/ICICI.png"
+        },
+        { 
+            bank: "SBI", 
+            rate: "7.25%", 
+            minAmount: "₹10,000",
+            tenure: "1-10 years",
+            description: "Interest Rate",
+            rating: "AAA",
+            image: "/Client Logos/SBI.jpg"
+        },
+    ];
+
+    // Laddering Strategy Data
+    const ladderSteps = [
+        {
+            year: 'Year 1',
+            amount: '₹2,00,000',
+            rate: '7.2%',
+            maturity: '2025'
         },
         {
-            name: "ICICI Bank",
-            rate: "7.50%",
-            rating: "AAA",
-            minAmount: "₹10,000",
-            tenure: "1-10 years"
+            year: 'Year 2',
+            amount: '₹2,00,000',
+            rate: '7.5%',
+            maturity: '2026'
         },
         {
-            name: "SBI",
-            rate: "7.25%",
-            rating: "AAA",
-            minAmount: "₹10,000",
-            tenure: "1-10 years"
+            year: 'Year 3',
+            amount: '₹2,00,000',
+            rate: '7.8%',
+            maturity: '2027'
+        },
+        {
+            year: 'Year 4',
+            amount: '₹2,00,000',
+            rate: '8%',
+            maturity: '2028'
+        },
+        {
+            year: 'Year 5',
+            amount: '₹2,00,000',
+            rate: '8.2%',
+            maturity: '2029'
         }
     ];
 
+    // Transform ladder steps into timeline data
+    const ladderTimelineData = ladderSteps.map((step, index) => ({
+        title: step.year,
+        content: (
+            <div className="bg-white rounded-2xl p-6 md:p-8 shadow-xl border-2 border-secondary/20">
+                <div className="space-y-4">
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        <span className="text-tertiary/70 font-crimson font-semibold">Amount</span>
+                        <span className="text-xl font-playfair font-bold text-tertiary">{step.amount}</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center py-3 border-b border-gray-200">
+                        <span className="text-tertiary/70 font-crimson font-semibold">Rate</span>
+                        <span className="text-xl font-playfair font-bold text-secondary">{step.rate}</span>
+                    </div>
+                    
+                    <div className="flex justify-between items-center py-3">
+                        <span className="text-tertiary/70 font-crimson font-semibold">Maturity</span>
+                        <span className="text-xl font-playfair font-bold text-tertiary">{step.maturity}</span>
+                    </div>
+                </div>
+            </div>
+        ),
+    }));
+
+    // FD Calculator
     useEffect(() => {
-        const hero = document.getElementById("hero");
-        if (!hero) return;
-        const observer = new window.IntersectionObserver(
-            ([entry]) => setHeroInView(entry.isIntersecting),
-            { threshold: 0.3 }
-        );
-        observer.observe(hero);
-        return () => observer.disconnect();
-    }, []);
+        const principal = investmentAmount;
+        const rate = interestRate / 100;
+        const time = tenure;
+        
+        const maturity = principal * Math.pow(1 + rate, time);
+        const interest = maturity - principal;
+        
+        setMaturityValue(maturity);
+        setTotalInterest(interest);
+    }, [investmentAmount, tenure, interestRate]);
 
     // Handle hash-based scrolling
     useEffect(() => {
@@ -182,219 +200,295 @@ const FixedIncome = () => {
             if (!hash) return;
             const el = document.getElementById(hash);
             if (el) {
-                el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                setTimeout(() => {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
             }
         };
-        const t = setTimeout(scrollToHash, 50);
+        scrollToHash();
         window.addEventListener('hashchange', scrollToHash);
-        return () => { clearTimeout(t); window.removeEventListener('hashchange', scrollToHash); };
+        return () => window.removeEventListener('hashchange', scrollToHash);
     }, []);
 
-    // Fixed deposit calculator
-    useEffect(() => {
-        const principal = investmentAmount;
-        const rate = interestRate / 100;
-        const time = tenure;
-
-        const maturityAmount = principal * Math.pow(1 + rate, time);
-        const totalInterestEarned = maturityAmount - principal;
-
-        setMaturityValue(maturityAmount);
-        setTotalInterest(totalInterestEarned);
-    }, [investmentAmount, tenure, interestRate]);
-
-    // Initialize animations
-    useEffect(() => {
-        // Remove AOS initialization - using Framer Motion only
-    }, []);
-
-    // Laddering animation
-    useEffect(() => {
-        const observer = new IntersectionObserver(
-            (entries) => {
-                entries.forEach((entry, index) => {
-                    if (entry.isIntersecting) {
-                        setTimeout(() => setCurrentStep(index), index * 200);
-                    }
-                });
-            },
-            { threshold: 0.5 }
-        );
-
-        const steps = document.querySelectorAll('.ladder-step');
-        steps.forEach(step => observer.observe(step));
-        return () => observer.disconnect();
-    }, []);
-
-    // Animation variants for scroll-based reveal
-    const fadeSlideUp = {
-        hidden: { opacity: 0, y: 40 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.7 } }
+    const scrollToSection = (sectionId: string) => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+        }
     };
 
     return (
         <div className="min-h-screen bg-background">
-
-            {/* Hero Section */}
-            <section id="hero" className="relative min-h-[60vh] md:min-h-screen flex items-center justify-center overflow-hidden px-4 md:px-8 pt-20 md:pt-0">
-                {/* Background Image */}
-                <div
-                    className="absolute inset-0 bg-cover bg-center"
-                    style={{ backgroundImage: "url('/hero-fixed-income.webp')" }}
-                />
-                <div className="absolute inset-0 bg-black/40" />
-
-                <div className="relative z-10 text-center text-white w-full max-w-3xl mx-auto py-12 md:py-24">
-                    <motion.h1 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-playfair font-bold mb-6">
-                        <span className="inline-block mr-4">Steady Returns,</span>
-                        <br />
-                        <span className="inline-block text-secondary animate-pulse">Guaranteed Security</span>
-                    </motion.h1>
-
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-xl sm:text-2xl md:text-3xl font-crimson mb-8 text-white/90">
-                        Build wealth with stable, predictable returns through fixed income investments
-                    </motion.p>
-
-                    {/* Trust Seal Animation */}
-                    <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 mb-8 max-w-2xl mx-auto">
-                        <div className="flex items-center justify-center space-x-4">
-                            <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center animate-pulse">
-                                <Shield className="h-6 w-6 text-secondary" />
+            {/* Hero Section - Landing Page Style */}
+            <section 
+                id="hero"
+                className="relative w-full overflow-hidden min-h-screen flex items-center"
+            >
+                <div className="w-full">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 min-h-screen">
+                        {/* Left Side - Content */}
+                        <div className="relative bg-tertiary px-4 sm:px-6 lg:px-12 py-20 lg:py-0 flex items-center overflow-hidden">
+                            {/* Decorative Partial Logo */}
+                            <div className="absolute bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none">
+                                <img 
+                                    src="/logo-wbg.png" 
+                                    alt="" 
+                                    className="w-full h-full object-contain transform translate-x-1/3 translate-y-1/3 scale-150"
+                                    style={{ filter: 'brightness(0) invert(1)' }}
+                                />
                             </div>
-                            <div className="text-left">
-                                <div className="font-semibold text-white">Capital Protection</div>
-                                <div className="text-sm text-white/80">Guaranteed by RBI regulations</div>
+
+                            <div className="relative z-10 max-w-2xl mx-auto lg:mx-0">
+                                {/* Label */}
+                                <motion.div
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.6 }}
+                                    className="mb-6"
+                                >
+                                    <span className="text-xs md:text-sm font-crimson text-white/70 uppercase tracking-wider">
+                                        FIXED INCOME INVESTMENTS
+                                    </span>
+                                </motion.div>
+
+                                {/* Main Headline */}
+                                <motion.h1 
+                                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-white mb-6"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.2 }}
+                                >
+                                    Stable Returns with{' '}
+                                    <span className="relative inline-block">
+                                        <span className="relative z-10">Fixed Income</span>
+                                        <span className="absolute bottom-0 left-0 w-full h-3 bg-secondary/30 -z-0"></span>
+                                    </span>
+                                </motion.h1>
+
+                                {/* Description */}
+                                <motion.p 
+                                    className="text-base md:text-lg font-crimson text-white/90 leading-relaxed mb-8"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.4 }}
+                                >
+                                    Secure your financial future with guaranteed returns. From FDs to government securities, choose the perfect fixed income instrument.
+                                </motion.p>
+
+                                {/* CTA Buttons */}
+                                <motion.div 
+                                    className="flex flex-col sm:flex-row gap-4"
+                                    initial={{ opacity: 0, y: 20 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    transition={{ duration: 0.8, delay: 0.6 }}
+                                >
+                                    <button 
+                                        onClick={() => navigate('/contact')}
+                                        className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                                    >
+                                        <span>Get Started</span>
+                                        <ArrowRight className="w-4 h-4" />
+                                    </button>
+                                    <button 
+                                        onClick={() => scrollToSection('products')}
+                                        className="border-2 border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all backdrop-blur-sm flex items-center justify-center"
+                                    >
+                                        View Products
+                                    </button>
+                                </motion.div>
+
+                                {/* Trust Badge */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ duration: 0.8, delay: 0.8 }}
+                                    className="mt-8 flex items-center gap-2 text-white/60 text-sm font-crimson"
+                                >
+                                    <div className="flex -space-x-2">
+                                        <div className="w-8 h-8 rounded-full bg-secondary border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/20 border-2 border-tertiary"></div>
+                                        <div className="w-8 h-8 rounded-full bg-white/10 border-2 border-tertiary"></div>
+                                    </div>
+                                    <span>Trusted by families since 1957</span>
+                                </motion.div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button
-                            size="lg"
-                            className="bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold px-8 py-4 text-lg"
-                            onClick={openPopup}
-                        >
-                            Invest Now
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
-                        <Button
-                            size="lg"
-                            variant="outline"
-                            className="border-white text-secondary hover:bg-white hover:text-secondary font-crimson font-semibold px-8 py-4 text-lg"
-                            onClick={openPopup}
-                        >
-                            Compare Rates
-                        </Button>
+                        {/* Right Side - Image */}
+                        <div className="relative bg-gray-900 min-h-[400px] lg:min-h-screen overflow-hidden">
+                            <img 
+                                src="/Hero Section/fixed-income-investment.png" 
+                                alt="Fixed Income"
+                                className="absolute inset-0 w-full h-full object-cover"
+                            />
+                            <div className="absolute bottom-0 right-0 w-96 h-96 bg-secondary opacity-20 rounded-full transform translate-x-1/2 translate-y-1/2 z-10"></div>
+                        </div>
                     </div>
                 </div>
             </section>
 
-            {/* Product Showcase Section */}
-            <section id="products" className="py-20 px-4 bg-gradient-premium">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+            {/* Products Section */}
+            <section id="products" className="py-16 bg-[#FAFAFA]">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            OUR PRODUCTS
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
                             Fixed Income Products
                         </h2>
-                        <p className="text-2xl font-crimson text-muted-foreground">
-                            Choose from a range of secure investment options
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Choose from a wide range of fixed income instruments
                         </p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                        {products.map((product, index) => (
+                    {/* Carousel */}
+                    <CircularCarousel
+                        products={products}
+                        autoplay={true}
+                        colors={{
+                            title: "#1a5f7a",
+                            description: "#6b7280",
+                            content: "#4b5563",
+                        }}
+                        fontSizes={{
+                            title: "28px",
+                            description: "16px",
+                            content: "16px",
+                        }}
+                        onInvestNow={() => navigate('/contact')}
+                    />
+                </div>
+            </section>
+
+            {/* Top Bank FDs Section */}
+            <section id="top-bank-fds" className="py-16 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            TOP PERFORMING
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Top Bank FDs
+                        </h2>
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Best fixed deposit rates from leading banks
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        {topBankFDs.map((fd, index) => (
                             <motion.div
-                                key={product.id}
-                                className={`group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out ${selectedProduct === product.id ? 'border-secondary/50 bg-secondary/5' : ''
-                                    }`}
-                                onClick={() => setSelectedProduct(product.id)}
-                                style={{
-                                    animationDelay: `${index * 0.1}s`,
-                                    transform: hoveredCard === `fixed-income-product-${product.id}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(`fixed-income-product-${product.id}`)}
-                                onMouseLeave={() => setHoveredCard(null)}
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.6, delay: index * 0.1 }}
                             >
-                                <CardHeader className="relative z-10">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <product.icon className="h-12 w-12 text-secondary" />
-                                        <Badge className="bg-secondary/20 text-secondary border-secondary/30">
-                                            {product.rate}
-                                        </Badge>
-                                    </div>
-                                    <CardTitle className="text-xl font-playfair text-foreground">
-                                        {product.title}
-                                    </CardTitle>
-                                </CardHeader>
+                                <Card className="hover:shadow-xl transition-all duration-300 border-2 border-transparent hover:border-secondary/30">
+                                    <CardContent className="p-8">
+                                        {/* Icon Placeholder */}
+                                        <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-tertiary/5 flex items-center justify-center">
+                                            <img
+                                                src={fd.image}
+                                                alt={fd.bank}
+                                                className="w-10 h-10 object-contain"
+                                            />
+                                        </div>
 
-                                <CardContent className="relative z-10 flex flex-col flex-grow">
-                                    <div className="flex-grow">
-                                        <p className="text-muted-foreground mb-4 font-crimson text-lg">
-                                            {product.description}
-                                        </p>
+                                        {/* Bank Name */}
+                                        <h3 className="text-2xl font-playfair font-bold text-tertiary mb-2 text-center">
+                                            {fd.bank}
+                                        </h3>
 
+                                        {/* Rating Badge */}
+                                        <div className="flex justify-center mb-4">
+                                            <Badge className="bg-secondary/20 text-secondary px-3 py-1">
+                                                {fd.rating}
+                                            </Badge>
+                                        </div>
+
+                                        {/* Details */}
                                         <div className="space-y-3 mb-6">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Tenure</span>
-                                                <span className="font-semibold text-foreground text-lg">{product.tenure}</span>
+                                            <div className="flex justify-between items-center text-center border-b border-tertiary/10 pb-2">
+                                                <span className="text-sm text-tertiary/70 font-crimson">{fd.description}</span>
+                                                <span className="text-lg font-playfair font-bold text-secondary">{fd.rate}</span>
                                             </div>
                                             <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Min Amount</span>
-                                                <span className="font-semibold text-secondary text-lg">{product.minAmount}</span>
+                                                <span className="text-sm text-tertiary/70 font-crimson">Min Amount</span>
+                                                <span className="font-semibold text-tertiary font-playfair text-sm">{fd.minAmount}</span>
+                                            </div>
+                                            <div className="flex justify-between items-center">
+                                                <span className="text-sm text-tertiary/70 font-crimson">Tenure</span>
+                                                <span className="font-semibold text-tertiary font-playfair text-sm">{fd.tenure}</span>
                                             </div>
                                         </div>
 
-                                        <div className="space-y-2 mb-6">
-                                            {product.features.map((feature, idx) => (
-                                                <div key={idx} className="flex items-center text-sm">
-                                                    <CheckCircle className="h-4 w-4 text-secondary mr-2 flex-shrink-0" />
-                                                    <span className="text-muted-foreground text-base">{feature}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-
-                                    <Button className="w-full bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                        Invest Now
-                                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-all duration-300 ease-out" />
-                                    </Button>
-                                </CardContent>
+                                        {/* Invest Button */}
+                                        <Button 
+                                            className="w-full bg-secondary hover:bg-secondary/90 text-white font-crimson font-semibold"
+                                            onClick={openPopup}
+                                        >
+                                            Invest Now
+                                            <ArrowRight className="ml-2 h-4 w-4" />
+                                        </Button>
+                                    </CardContent>
+                                </Card>
                             </motion.div>
                         ))}
-                    </motion.div>
+                    </div>
                 </div>
             </section>
 
             {/* FD Calculator Section */}
-            <section className="py-20 px-4 bg-background">
-                <div className="max-w-6xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-                            Fixed Deposit Calculator
+            <section className="py-16 bg-gradient-to-br from-secondary/10 to-secondary/5">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            CALCULATE RETURNS
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            FD Calculator
                         </h2>
-                        <p className="text-2xl font-crimson text-muted-foreground">
-                            Calculate your returns and plan your investments
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Calculate your fixed deposit maturity amount
                         </p>
                     </motion.div>
 
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
                         {/* Calculator Inputs */}
-                        <Card className="premium-card">
+                        <Card>
                             <CardHeader>
-                                <CardTitle className="text-2xl font-playfair flex items-center">
-                                    <Target className="h-6 w-6 mr-2 text-secondary" />
-                                    Calculate Your Returns
+                                <CardTitle className="text-2xl font-playfair text-tertiary">
+                                    Investment Details
                                 </CardTitle>
                             </CardHeader>
                             <CardContent className="space-y-6">
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Investment Amount (₹)</Label>
+                                    <Label className="text-base font-crimson font-semibold text-tertiary">Investment Amount (₹)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[investmentAmount]}
                                             onValueChange={(value) => setInvestmentAmount(value[0])}
-                                            max={10000000}
+                                            max={5000000}
                                             min={10000}
                                             step={10000}
                                             className="flex-1"
@@ -402,13 +496,13 @@ const FixedIncome = () => {
                                         <Input
                                             value={investmentAmount.toLocaleString()}
                                             onChange={(e) => setInvestmentAmount(parseInt(e.target.value.replace(/,/g, '')) || 0)}
-                                            className="w-32 text-center"
+                                            className="w-32 text-center font-crimson"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Tenure (Years)</Label>
+                                    <Label className="text-base font-crimson font-semibold text-tertiary">Tenure (Years)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[tenure]}
@@ -421,26 +515,26 @@ const FixedIncome = () => {
                                         <Input
                                             value={tenure}
                                             onChange={(e) => setTenure(parseInt(e.target.value) || 0)}
-                                            className="w-16 text-center"
+                                            className="w-16 text-center font-crimson"
                                         />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <Label className="text-sm font-semibold text-foreground">Interest Rate (%)</Label>
+                                    <Label className="text-base font-crimson font-semibold text-tertiary">Interest Rate (%)</Label>
                                     <div className="flex items-center space-x-4 mt-2">
                                         <Slider
                                             value={[interestRate]}
                                             onValueChange={(value) => setInterestRate(value[0])}
                                             max={12}
-                                            min={5}
+                                            min={4}
                                             step={0.1}
                                             className="flex-1"
                                         />
                                         <Input
                                             value={interestRate}
                                             onChange={(e) => setInterestRate(parseFloat(e.target.value) || 0)}
-                                            className="w-16 text-center"
+                                            className="w-20 text-center font-crimson"
                                         />
                                     </div>
                                 </div>
@@ -449,247 +543,195 @@ const FixedIncome = () => {
 
                         {/* Results Display */}
                         <div className="space-y-6">
-                            <Card className="premium-card bg-gradient-to-br from-secondary/10 to-transparent border-secondary/20">
+                            <Card className="bg-gradient-to-br from-secondary/20 to-transparent border-secondary/20">
                                 <CardContent className="p-6">
                                     <div className="text-center">
                                         <div className="text-3xl font-playfair font-bold text-secondary mb-2">
                                             ₹{maturityValue.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-muted-foreground font-crimson text-lg">Maturity Value</p>
+                                        <p className="text-tertiary/70 font-crimson">Maturity Amount</p>
                                     </div>
                                 </CardContent>
                             </Card>
 
                             <div className="grid grid-cols-2 gap-4">
-                                <Card className="premium-card">
+                                <Card>
                                     <CardContent className="p-4 text-center">
-                                        <div className="text-xl font-playfair font-bold text-foreground mb-1">
-                                            ₹{investmentAmount.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
+                                        <div className="text-xl font-playfair font-bold text-tertiary mb-1">
+                                            ₹{investmentAmount.toLocaleString('en-IN')}
                                         </div>
-                                        <p className="text-base text-muted-foreground">Principal Amount</p>
+                                        <p className="text-sm text-tertiary/70 font-crimson">Principal Amount</p>
                                     </CardContent>
                                 </Card>
 
-                                <Card className="premium-card">
+                                <Card>
                                     <CardContent className="p-4 text-center">
                                         <div className="text-xl font-playfair font-bold text-green-600 mb-1">
                                             ₹{totalInterest.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                                         </div>
-                                        <p className="text-base text-muted-foreground">Total Interest</p>
+                                        <p className="text-sm text-tertiary/70 font-crimson">Total Interest</p>
                                     </CardContent>
                                 </Card>
                             </div>
-
-                            {/* Tax Calculation */}
-                            <Card className="premium-card">
-                                <CardContent className="p-6">
-                                    <h4 className="font-semibold text-foreground mb-4">Tax Implications</h4>
-                                    <div className="space-y-3">
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Interest Income</span>
-                                            <span className="font-semibold text-foreground text-lg">₹{totalInterest.toLocaleString()}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center">
-                                            <span className="text-base text-muted-foreground">Tax Rate (30%)</span>
-                                            <span className="font-semibold text-red-600 text-lg">₹{(totalInterest * 0.3).toLocaleString()}</span>
-                                        </div>
-                                        <div className="flex justify-between items-center border-t pt-2">
-                                            <span className="text-sm font-semibold text-foreground">Net Returns</span>
-                                            <span className="font-semibold text-green-600">₹{(totalInterest * 0.7).toLocaleString()}</span>
-                                        </div>
-                                    </div>
-                                </CardContent>
-                            </Card>
                         </div>
                     </div>
                 </div>
             </section>
 
             {/* Laddering Strategy Section */}
-            <section id="laddering-strategy" className="py-20 px-4 bg-gradient-premium">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
+            <section className="bg-tertiary py-16">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-2"
+                    >
+                        <p className="text-sm font-crimson text-white/60 uppercase tracking-wider mb-4">
+                            INVESTMENT STRATEGY
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-white mb-4">
                             Laddering Strategy
                         </h2>
-                        <p className="text-2xl font-crimson text-muted-foreground">
+                        <p className="text-lg md:text-xl font-crimson text-white/80 max-w-3xl mx-auto">
                             Optimize your returns with systematic investment laddering
                         </p>
                     </motion.div>
-
-                    <div className="relative">
-                        {/* Connecting Timeline */}
-                        <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-secondary/30 transform -translate-y-1/2 hidden lg:block" />
-
-                        <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                            {ladderingStrategies.map((strategy, index) => (
-                                <motion.div
-                                    key={index}
-                                    className={`ladder-step text-center relative ${index <= currentStep ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                                        } transition-all duration-700`}
-                                    style={{ transitionDelay: `${index * 200}ms` }}
-                                >
-                                    <Card className="premium-card">
-                                        <CardContent className="p-6">
-                                            <div className="text-3xl font-playfair font-bold text-secondary mb-2">
-                                                Year {strategy.year}
-                                            </div>
-                                            <div className="space-y-3">
-                                                <div>
-                                                    <div className="text-base text-muted-foreground">Amount</div>
-                                                    <div className="font-semibold text-foreground text-lg">₹{strategy.amount.toLocaleString()}</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-base text-muted-foreground">Rate</div>
-                                                    <div className="font-semibold text-secondary text-lg">{strategy.rate}%</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-base text-muted-foreground">Maturity</div>
-                                                    <div className="font-semibold text-foreground text-lg">{strategy.maturity}</div>
-                                                </div>
-                                            </div>
-                                        </CardContent>
-                                    </Card>
-
-                                    {/* Year Badge */}
-                                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-secondary rounded-full flex items-center justify-center text-white font-bold text-sm">
-                                        {strategy.year}
-                                    </div>
-                                </motion.div>
-                            ))}
-                        </motion.div>
-                    </div>
-
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mt-12">
-                        <div className="bg-white/50 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
-                            <h3 className="text-3xl font-playfair font-bold text-foreground mb-4">
-                                Benefits of Laddering
-                            </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                                <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
-                                        <TrendingUp className="h-6 w-6 text-secondary" />
-                                    </div>
-                                    <div className="font-semibold text-foreground">Higher Returns</div>
-                                    <div className="text-base text-muted-foreground">Lock in better rates</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
-                                        <Shield className="h-6 w-6 text-secondary" />
-                                    </div>
-                                    <div className="font-semibold text-foreground">Risk Management</div>
-                                    <div className="text-base text-muted-foreground">Spread maturity dates</div>
-                                </div>
-                                <div className="text-center">
-                                    <div className="w-12 h-12 mx-auto mb-3 bg-secondary/20 rounded-full flex items-center justify-center">
-                                        <DollarSign className="h-6 w-6 text-secondary" />
-                                    </div>
-                                    <div className="font-semibold text-foreground">Regular Income</div>
-                                    <div className="text-base text-muted-foreground">Quarterly interest</div>
-                                </div>
-                            </div>
-                        </div>
-                    </motion.div>
                 </div>
+                
+                {/* Timeline Component */}
+                <Timeline data={ladderTimelineData} />
             </section>
 
-            {/* Top Banks Section */}
-            <section id="top-bank-fds" className="py-20 px-4 bg-background">
-                <div className="max-w-7xl mx-auto">
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-playfair font-bold text-foreground mb-4">
-                            Top Bank FDs
+            {/* Benefits of Laddering Section */}
+            <section className="py-16 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        initial={{ opacity: 0, y: 40 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, amount: 0.2 }}
+                        transition={{ duration: 0.8 }}
+                        className="text-center mb-16"
+                    >
+                        <p className="text-sm font-crimson text-tertiary/60 uppercase tracking-wider mb-4">
+                            BENEFITS OF LADDERING
+                        </p>
+                        <h2 className="text-4xl md:text-5xl lg:text-6xl font-playfair font-bold text-tertiary mb-4">
+                            Strategic Advantages
                         </h2>
-                        <p className="text-2xl font-crimson text-muted-foreground">
-                            Compare rates from leading banks
+                        <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl mx-auto">
+                            Strategic advantages of a well-planned laddering approach
                         </p>
                     </motion.div>
 
-                    <motion.div variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        {topBanks.map((bank, index) => (
-                            <Card
-                                key={index}
-                                className="group premium-card cursor-pointer border-2 border-transparent hover:border-secondary/50 overflow-hidden hover:shadow-lg hover:shadow-secondary/30 hover:ring-2 hover:ring-secondary/30 relative h-full flex flex-col transition-all duration-300 ease-out"
-                                style={{
-                                    animationDelay: `${index * 0.1}s`,
-                                    transform: hoveredCard === `fixed-income-bank-${index}` ? 'scale(1.05) rotateY(5deg)' : 'scale(1) rotateY(0deg)',
-                                    transition: 'all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)'
-                                }}
-                                onMouseEnter={() => setHoveredCard(`fixed-income-bank-${index}`)}
-                                onMouseLeave={() => setHoveredCard(null)}
-                            >
-                                <CardHeader>
-                                    <div className="flex items-center justify-between mb-4">
-                                        <div className="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
-                                            <Building className="h-6 w-6 text-secondary" />
-                                        </div>
-                                        <Badge className="bg-green-500/20 text-green-600 border-green-500/30">
-                                            {bank.rating}
-                                        </Badge>
+                    <div className="space-y-8 md:space-y-12 max-w-4xl mx-auto">
+                        {/* Benefit 01 - Higher Returns */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6 }}
+                            className="space-y-4"
+                        >
+                            <div className="flex items-start gap-6">
+                                <div className="flex-shrink-0">
+                                    <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center">
+                                        <TrendingUp className="w-8 h-8 text-secondary" />
                                     </div>
-                                    <CardTitle className="text-2xl font-playfair text-foreground">
-                                        {bank.name}
-                                    </CardTitle>
-                                </CardHeader>
-
-                                <CardContent className="flex flex-col flex-grow">
-                                    <div className="flex-grow">
-                                        <div className="space-y-4">
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Interest Rate</span>
-                                                <span className="font-semibold text-secondary text-lg">{bank.rate}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Min Amount</span>
-                                                <span className="font-semibold text-foreground text-lg">{bank.minAmount}</span>
-                                            </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-base text-muted-foreground">Tenure</span>
-                                                <span className="font-semibold text-foreground text-lg">{bank.tenure}</span>
-                                            </div>
-                                        </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20 mb-2">
+                                        01
                                     </div>
+                                    <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary mb-3">
+                                        Higher Returns
+                                    </h3>
+                                    <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                        Lock in better rates by investing across different time periods. Longer-term deposits typically offer higher interest rates, allowing you to maximize overall portfolio returns.
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
 
-                                    <Button className="w-full mt-6 bg-secondary hover:bg-secondary/90 text-secondary-foreground font-crimson font-semibold" onClick={openPopup}>
-                                        Invest Now
+                        {/* Benefit 02 - Risk Management */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.1 }}
+                            className="space-y-4"
+                        >
+                            <div className="flex items-start gap-6">
+                                <div className="flex-shrink-0">
+                                    <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center">
+                                        <Shield className="w-8 h-8 text-secondary" />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20 mb-2">
+                                        02
+                                    </div>
+                                    <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary mb-3">
+                                        Risk Management
+                                    </h3>
+                                    <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed">
+                                        Spread maturity dates to reduce interest rate risk. As deposits mature regularly, you can reinvest at current market rates, protecting against rate fluctuations.
+                                    </p>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Benefit 03 - Regular Income */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                            className="space-y-4"
+                        >
+                            <div className="flex items-start gap-6">
+                                <div className="flex-shrink-0">
+                                    <div className="w-16 h-16 rounded-full bg-secondary/10 flex items-center justify-center">
+                                        <DollarSign className="w-8 h-8 text-secondary" />
+                                    </div>
+                                </div>
+                                <div className="flex-1">
+                                    <div className="text-5xl md:text-6xl font-bold font-playfair text-tertiary/20 mb-2">
+                                        03
+                                    </div>
+                                    <h3 className="text-xl md:text-2xl font-bold font-playfair text-tertiary mb-3">
+                                        Regular Income
+                                    </h3>
+                                    <p className="text-base md:text-lg font-crimson text-tertiary/70 leading-relaxed mb-4">
+                                        Quarterly interest payouts provide consistent cash flow. Staggered maturities ensure regular access to funds without compromising on returns or breaking deposits prematurely.
+                                    </p>
+                                    <Button
+                                        className="bg-secondary hover:bg-secondary/90 text-white font-crimson font-semibold"
+                                        onClick={() => navigate('/contact')}
+                                    >
+                                        Plan Your Ladder Strategy
                                         <ArrowRight className="ml-2 h-4 w-4" />
                                     </Button>
-                                </CardContent>
-                            </Card>
-                        ))}
-                    </motion.div>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
                 </div>
             </section>
 
             {/* CTA Section */}
-            <section className="py-20 px-4 bg-gradient-to-br from-secondary to-tertiary">
-                <div className="max-w-4xl mx-auto text-center">
-                    <motion.h2 variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-4xl md:text-5xl font-playfair font-bold text-white mb-6">
-                        Start Your Fixed Income Journey
-                    </motion.h2>
-                    <motion.p variants={fadeSlideUp} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.3 }} className="text-2xl font-crimson text-white/80 mb-8">
-                        Secure your future with guaranteed returns and capital protection
-                    </motion.p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button size="lg" asChild className="bg-white text-secondary hover:bg-white/90 font-crimson font-semibold px-8 py-4 text-xl">
-                            <a href="https://mosl.co/OWxY3P3cRN" target="_blank" rel="noopener noreferrer">Open FD Account</a>
-                        </Button>
-                        <Button size="lg" className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-crimson font-semibold px-8 py-4 text-xl" onClick={openPopup}>
-                            Get Expert Advice
-                        </Button>
-                    </div>
-                </div>
-            </section>
+            <CTASection />
 
             {/* Contact Popup */}
             <ContactPopup
                 isOpen={isOpen}
                 onClose={closePopup}
-                title="Start Your Fixed Income Investment"
-                description="Secure your future with stable returns through fixed income investments."
+                title="Start Your Fixed Income Journey"
+                description="Get expert guidance on fixed income investments tailored to your goals."
             />
         </div>
     );
 };
 
-export default FixedIncome; 
+export default FixedIncome;

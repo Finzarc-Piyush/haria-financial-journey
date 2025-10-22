@@ -14,10 +14,10 @@ import { calculateSWP } from '@/utils';
 import { SWPResult } from '@/types/calculator';
 
 const defaultInputs = {
-    corpus: 1200000, // ₹12 lakh - more realistic for SWP
-    withdrawalAmount: 10000, // ₹10,000 per month
-    durationYears: 10, // 10 years
-    expectedReturns: 7, // 7% annual return
+    corpus: 1200000,
+    withdrawalAmount: 10000,
+    durationYears: 10,
+    expectedReturns: 7,
 };
 
 const validationRules = {
@@ -65,7 +65,6 @@ const SWPCalculator = () => {
                 inputs.expectedReturns
             );
 
-            // Check if investment depletes before the desired period
             if (result.maturityCorpus <= 0) {
                 return {
                     ...result,
@@ -116,92 +115,83 @@ const SWPCalculator = () => {
         <CalculatorPageLayout>
             <CalculatorHero
                 title="SWP Calculator"
-                subtitle="Plan your regular withdrawals with confidence"
+                subtitle="FINANCIAL CALCULATOR"
+                description="Plan your systematic withdrawals with confidence. Calculate how long your investment will last with regular monthly withdrawals and optimal returns."
                 breadcrumbs={[
-                    { label: 'Invest Smart', to: '/' },
-                    { label: 'SWP Calculator' }
+                    { label: 'Home', to: '/' },
+                    { label: 'SWP Calculator' },
                 ]}
                 icon={<FaUserClock />}
+                image="/Hero Section/Calculator.png"
             />
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 px-4 items-stretch">
-                {/* Left: Form */}
-                <div className="col-span-1 flex items-center">
-                    <CalculatorFormCard
-                        title="SWP Details"
-                        subtitle="Enter your withdrawal plan details below"
-                    >
-                        <CalculatorInput
-                            label="Corpus Amount (₹)"
-                            value={inputs.corpus}
-                            onChange={handleInputChange('corpus')}
-                            min={50000}
-                            max={50000000}
-                            step={10000}
-                            currency
-                            error={errors.corpus}
-                        />
-                        <CalculatorInput
-                            label="Withdrawal Amount (₹/month)"
-                            value={inputs.withdrawalAmount}
-                            onChange={handleInputChange('withdrawalAmount')}
-                            min={500}
-                            max={500000}
-                            step={500}
-                            currency
-                            error={errors.withdrawalAmount}
-                        />
-                        <CalculatorInput
-                            label="Duration (years)"
-                            value={inputs.durationYears}
-                            onChange={handleInputChange('durationYears')}
-                            min={1}
-                            max={50}
-                            error={errors.durationYears}
-                        />
-                        <CalculatorInput
-                            label="Expected Returns (%)"
-                            value={inputs.expectedReturns}
-                            onChange={handleInputChange('expectedReturns')}
-                            min={3}
-                            max={25}
-                            step={0.1}
-                            error={errors.expectedReturns}
-                        />
-                        {results.warning && (
-                            <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
-                                <p className="text-amber-600 text-sm font-crimson">
-                                    ⚠️ {results.warning}
-                                </p>
-                            </div>
-                        )}
-                    </CalculatorFormCard>
-                </div>
-                {/* Right: Results/Chart */}
-                <div className="col-span-1 flex items-center">
-                    <CalculatorResultCard
-                        title="SWP Summary"
-                        subtitle={results.warning ? "Warning: Unsustainable Withdrawal Plan" : "Your SWP projection"}
-                        metrics={metrics}
-                        chart={
-                            <ChartWrapper>
-                                {!results.warning ? (
-                                    <SWPBarChart
+            <div className="calculator-section bg-gradient-to-br from-secondary/10 to-secondary/5 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 items-stretch">
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorFormCard title="SWP Details" subtitle="Enter your withdrawal details below">
+                            <CalculatorInput
+                                label="Corpus Amount"
+                                value={inputs.corpus}
+                                onChange={handleInputChange('corpus')}
+                                min={50000}
+                                max={50000000}
+                                step={10000}
+                                currency
+                                error={errors.corpus}
+                            />
+                            <CalculatorInput
+                                label="Withdrawal Amount"
+                                value={inputs.withdrawalAmount}
+                                onChange={handleInputChange('withdrawalAmount')}
+                                min={500}
+                                max={500000}
+                                step={500}
+                                currency
+                                error={errors.withdrawalAmount}
+                            />
+                            <CalculatorInput
+                                label="Duration (years)"
+                                value={inputs.durationYears}
+                                onChange={handleInputChange('durationYears')}
+                                min={1}
+                                max={50}
+                                error={errors.durationYears}
+                            />
+                            <CalculatorInput
+                                label="Expected Returns (%)"
+                                value={inputs.expectedReturns}
+                                onChange={handleInputChange('expectedReturns')}
+                                min={3}
+                                max={25}
+                                step={0.1}
+                                error={errors.expectedReturns}
+                            />
+                            {warnings.length > 0 && (
+                                <div className="text-yellow-600 text-sm font-crimson animate-fade-in p-4 bg-yellow-50 rounded-lg">
+                                    {warnings.map((w, index) => (
+                                        <div key={index}>{w}</div>
+                                    ))}
+                                </div>
+                            )}
+                        </CalculatorFormCard>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorResultCard
+                            title="SWP Summary"
+                            subtitle="Your withdrawal projection"
+                            metrics={metrics}
+                            chart={
+                                <ChartWrapper>
+                                    <SWPBarChart 
                                         corpus={inputs.corpus}
                                         withdrawn={results.totalWithdrawn || 0}
                                         returns={results.returns || 0}
                                         corpusLeft={results.maturityCorpus || 0}
                                     />
-                                ) : (
-                                    <div className="flex items-center justify-center h-64 text-amber-600">
-                                        <p className="text-center font-crimson">
-                                            ⚠️ Investment won't last for the desired period. Please adjust your inputs.
-                                        </p>
-                                    </div>
-                                )}
-                            </ChartWrapper>
-                        }
-                        explanations={explanations}
-                    />
+                                </ChartWrapper>
+                            }
+                            explanations={explanations}
+                        />
+                    </div>
                 </div>
             </div>
             <FAQSection faqs={faqList} />

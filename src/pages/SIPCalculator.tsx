@@ -47,17 +47,11 @@ const faqList = [
 ];
 
 const SIPCalculator = () => {
-    const { inputs, setInputs, errors, results, warnings, loading, chartReady } = useCalculator(
+    const { inputs, setInputs, errors, results } = useCalculator(
         defaultInputs,
         calculateSIP,
         validationRules
     );
-
-    console.log('SIPCalculator: Rendered at', new Date().toISOString(), 'with inputs:', inputs, 'results:', results);
-
-    const chartKey = useMemo(() => {
-        return `${inputs.monthlyInvestment}-${inputs.durationYears}-${inputs.expectedReturns}-${inputs.stepUpPercent}`;
-    }, [inputs]);
 
     const metrics = useMemo(() => {
         if (!results) {
@@ -131,7 +125,6 @@ const SIPCalculator = () => {
     }
 
     const handleInputChange = (key: keyof SIPCalculatorInputs) => (value: number) => {
-        console.log(`SIPCalculator: Changing ${key} to ${value} at`, new Date().toISOString());
         setInputs((prev) => ({
             ...prev,
             [key]: value,
@@ -141,77 +134,74 @@ const SIPCalculator = () => {
     return (
         <CalculatorPageLayout>
             <CalculatorHero
-                title="Systematic Investment Plan"
-                subtitle="Grow your wealth with disciplined investing"
+                title="SIP Calculator"
+                subtitle="FINANCIAL CALCULATOR"
+                description="Calculate your wealth growth through Systematic Investment Plans. Plan your future with disciplined monthly investments and watch your wealth compound over time."
                 breadcrumbs={[
-                    { label: 'Invest Smart', to: '/' },
+                    { label: 'Home', to: '/' },
                     { label: 'SIP Calculator' },
                 ]}
                 icon={<FaRupeeSign />}
+                image="/Hero Section/Calculator.png"
             />
-            <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 py-12 px-4 items-stretch">
-                <div className="col-span-1 flex items-center">
-                    <CalculatorFormCard title="SIP Details" subtitle="Enter your investment details below">
-                        <CalculatorInput
-                            label="Monthly Amount"
-                            value={inputs.monthlyInvestment}
-                            onChange={handleInputChange('monthlyInvestment')}
-                            min={500}
-                            max={500000}
-                            step={500}
-                            currency
-                            error={errors.monthlyInvestment}
+            <div className="calculator-section bg-gradient-to-br from-secondary/10 to-secondary/5 py-16">
+                <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 items-stretch">
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorFormCard title="SIP Details" subtitle="Enter your investment details below">
+                            <CalculatorInput
+                                label="Monthly Amount"
+                                value={inputs.monthlyInvestment}
+                                onChange={handleInputChange('monthlyInvestment')}
+                                min={500}
+                                max={500000}
+                                step={500}
+                                currency
+                                error={errors.monthlyInvestment}
+                            />
+                            <CalculatorInput
+                                label="Duration (years)"
+                                value={inputs.durationYears}
+                                onChange={handleInputChange('durationYears')}
+                                min={1}
+                                max={30}
+                                error={errors.durationYears}
+                            />
+                            <CalculatorInput
+                                label="Expected Returns (%)"
+                                value={inputs.expectedReturns}
+                                onChange={handleInputChange('expectedReturns')}
+                                min={8}
+                                max={25}
+                                step={0.1}
+                                error={errors.expectedReturns}
+                            />
+                            <CalculatorInput
+                                label="Step-Up (%)"
+                                value={inputs.stepUpPercent}
+                                onChange={handleInputChange('stepUpPercent')}
+                                min={0}
+                                max={20}
+                                step={0.1}
+                                error={errors.stepUpPercent}
+                            />
+                        </CalculatorFormCard>
+                    </div>
+                    <div className="col-span-1 flex items-center">
+                        <CalculatorResultCard
+                            title="SIP Summary"
+                            subtitle="Your SIP projection"
+                            metrics={metrics}
+                            chart={
+                                <ChartWrapper>
+                                    <SIPDonutChart
+                                        invested={results.invested || 0}
+                                        returns={results.returns || 0}
+                                    />
+                                </ChartWrapper>
+                            }
+                            explanations={explanations}
                         />
-                        <CalculatorInput
-                            label="Duration (years)"
-                            value={inputs.durationYears}
-                            onChange={handleInputChange('durationYears')}
-                            min={1}
-                            max={30}
-                            error={errors.durationYears}
-                        />
-                        <CalculatorInput
-                            label="Expected Returns (%)"
-                            value={inputs.expectedReturns}
-                            onChange={handleInputChange('expectedReturns')}
-                            min={8}
-                            max={25}
-                            step={0.1}
-                            error={errors.expectedReturns}
-                        />
-                        <CalculatorInput
-                            label="Step-Up (%)"
-                            value={inputs.stepUpPercent}
-                            onChange={handleInputChange('stepUpPercent')}
-                            min={0}
-                            max={20}
-                            step={0.1}
-                            error={errors.stepUpPercent}
-                        />
-                        {/* {warnings.length > 0 && (
-                            <div className="text-yellow-600 text-xs font-crimson mb-2 animate-fade-in">
-                                {warnings.map((w, index) => (
-                                    <div key={index}>{w}</div>
-                                ))}
-                            </div>
-                        )} */}
-                    </CalculatorFormCard>
-                </div>
-                <div className="col-span-1 flex items-center">
-                    <CalculatorResultCard
-                        title="SIP Summary"
-                        subtitle="Your SIP projection"
-                        metrics={metrics}
-                        chart={
-                            <ChartWrapper>
-                                <SIPDonutChart
-                                    invested={results.invested || 0}
-                                    returns={results.returns || 0}
-                                />
-                            </ChartWrapper>
-                        }
-                        explanations={explanations}
-                    />
+                    </div>
                 </div>
             </div>
             <FAQSection faqs={faqList} />

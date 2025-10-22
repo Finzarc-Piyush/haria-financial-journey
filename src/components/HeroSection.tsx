@@ -1,7 +1,9 @@
 import { ArrowRight } from "lucide-react";
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -74,7 +76,7 @@ const HeroSection = () => {
                 transition={{ duration: 0.8, delay: 0.6 }}
               >
                 <button 
-                  onClick={() => scrollToSection('contact')}
+                  onClick={() => navigate('/contact')}
                   className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                 >
                   <span>Schedule Consultation</span>

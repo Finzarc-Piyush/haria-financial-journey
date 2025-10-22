@@ -4,7 +4,7 @@ import OrbitingAMCs from '@/components/ui/orbiting-amcs';
 
 const AMCShowcase: React.FC = () => {
     return (
-        <section className="w-full py-16 bg-white">
+        <section className="w-full pt-4 pb-16 bg-[#FAFAFA]">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
                     {/* Orbiting AMCs Component */}

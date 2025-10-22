@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, Shield, BarChart3, PiggyBank, Zap, Calculator, Heart, Umbrella, TrendingUp, PieChart, Plus, Minus, Coins, LineChart, Gem, PackageSearch, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronDown, Shield, BarChart3, PiggyBank, Zap, Calculator, Plus, Minus, ArrowRight } from "lucide-react";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { FaRupeeSign, FaUserClock } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion';
 import logo from '@/assets/logo.png';
 
@@ -17,9 +16,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
   const [isInvestmentDropdownOpen, setIsInvestmentDropdownOpen] = useState(false);
   const [isCalcDropdownOpen, setIsCalcDropdownOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [hoveredInsuranceParent, setHoveredInsuranceParent] = useState<string | null>(null);
-  const [hoveredInvestmentParent, setHoveredInvestmentParent] = useState<string | null>(null);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -33,19 +30,6 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  // Handle hash navigation (for #contact links)
-  useEffect(() => {
-    if (location.hash === '#contact') {
-      const timer = setTimeout(() => {
-        const contactElement = document.getElementById('contact');
-        if (contactElement) {
-          contactElement.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-      return () => clearTimeout(timer);
-    }
-  }, [location.hash]);
 
   // Disable body scroll when mobile menu is open
   useEffect(() => {
@@ -63,133 +47,76 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
     };
   }, [isMobileMenuOpen]);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMobileMenuOpen(false);
-    }
-  };
-
   const handleScheduleConsultation = () => {
     setIsMobileMenuOpen(false);
+    navigate('/contact');
+  };
+
+  const handleNavigationClick = (to: string) => {
+    setIsMobileMenuOpen(false);
+    setIsInsuranceDropdownOpen(false);
+    setIsInvestmentDropdownOpen(false);
+    setIsCalcDropdownOpen(false);
+    setOpenDropdown(null);
+    navigate(to);
+  };
+
+  const handleLogoClick = () => {
+    setIsMobileMenuOpen(false);
+    setIsInsuranceDropdownOpen(false);
+    setIsInvestmentDropdownOpen(false);
+    setIsCalcDropdownOpen(false);
+    setOpenDropdown(null);
     
-    // If we're on the landing page, scroll to contact section
     if (location.pathname === '/') {
-      const contactElement = document.getElementById('contact');
-      if (contactElement) {
-        contactElement.scrollIntoView({ behavior: 'smooth' });
+      // Already on landing page, scroll to hero
+      const heroElement = document.getElementById('hero');
+      if (heroElement) {
+        heroElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     } else {
-      // If we're on any other page, navigate to landing page contact section
-      navigate('/#contact');
-      // Small delay to ensure navigation completes before scrolling
+      // Navigate to landing page
+      navigate('/');
+      // Scroll to hero after navigation
       setTimeout(() => {
-        const contactElement = document.getElementById('contact');
-        if (contactElement) {
-          contactElement.scrollIntoView({ behavior: 'smooth' });
+        const heroElement = document.getElementById('hero');
+        if (heroElement) {
+          heroElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
         }
       }, 100);
     }
   };
 
   const insuranceLinks = [
-    {
-      label: 'Life Insurance',
-      to: '/life-insurance',
-      icon: <Heart className="text-secondary w-5 h-5 mr-2" />,
-      children: [
-        { label: 'Term Insurance', to: '/life-insurance#term-insurance' },
-        { label: 'Whole Life Insurance', to: '/life-insurance#whole-life-insurance' },
-        { label: 'Endowment Plans', to: '/life-insurance#endowment-plans' },
-        { label: 'ULIP Plans', to: '/life-insurance#ulip-plans' },
-        { label: 'Money-Back Plans', to: '/life-insurance#money-back-plans' },
-        { label: 'Pension Plans', to: '/life-insurance#pension-plans' },
-      ]
-    },
-    {
-      label: 'General Insurance',
-      to: '/general-insurance',
-      icon: <Umbrella className="text-secondary w-5 h-5 mr-2" />,
-      children: [
-        { label: 'Car Insurance', to: '/general-insurance#car' },
-        { label: 'Property Insurance', to: '/general-insurance#property' },
-        { label: 'Fire Insurance', to: '/general-insurance#fire' },
-        { label: 'Travel Insurance', to: '/general-insurance#travel' },
-      ]
-    },
+    { label: 'Life Insurance', to: '/life-insurance' },
+    { label: 'General Insurance', to: '/general-insurance' },
   ];
 
   const investmentLinks = [
-    {
-      label: 'Mutual Funds',
-      to: '/mutual-funds',
-      icon: <TrendingUp className="text-secondary w-5 h-5 mr-2" />,
-      children: [
-        { label: 'Investment Categories', to: '/mutual-funds#investment-categories' },
-        { label: 'Top Performing Funds', to: '/mutual-funds#top-funds' },
-      ]
-    },
-    {
-      label: 'Equity Investment',
-      to: '/equity-investment',
-      icon: <PieChart className="text-secondary w-5 h-5 mr-2" />,
-      children: [
-        { label: 'Direct Stock Investment', to: '/equity-investment#direct-stock-investment' },
-        { label: 'Expert Portfolio Advisory', to: '/equity-investment#expert-portfolio-advisory' },
-      ]
-    },
-    {
-      label: 'PMS',
-      to: '/portfolio-management',
-      icon: <BarChart3 className="text-secondary w-5 h-5 mr-2" />,
-    },
+    { label: 'Mutual Funds', to: '/mutual-funds' },
+    { label: 'Equity Investment', to: '/equity-investment' },
+    { label: 'Portfolio Management', to: '/portfolio-management' },
   ];
 
   const calculatorLinks = [
-    {
-      label: 'SIP Calculator',
-      to: '/sip-calculator',
-      icon: <FaRupeeSign className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'SWP Calculator',
-      to: '/swp-calculator',
-      icon: <FaUserClock className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'Lumpsum Calculator',
-      to: '/lumpsum-calculator',
-      icon: <Coins className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'CAGR Calculator',
-      to: '/cagr-calculator',
-      icon: <LineChart className="text-secondary w-5 h-5 mr-2" />,
-    },
+    { label: 'SIP Calculator', to: '/sip-calculator' },
+    { label: 'SWP Calculator', to: '/swp-calculator' },
+    { label: 'Lumpsum Calculator', to: '/lumpsum-calculator' },
+    { label: 'CAGR Calculator', to: '/cagr-calculator' },
   ];
 
   const commodityLinks = [
-    {
-      label: 'Commodity Overview',
-      to: '/commodity-trading',
-      icon: <Zap className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'Gold & Silver',
-      to: '/gold-silver',
-      icon: <Gem className="text-secondary w-5 h-5 mr-2" />,
-    },
-    {
-      label: 'Other Derivatives',
-      to: '/other-derivatives',
-      icon: <PackageSearch className="text-secondary w-5 h-5 mr-2" />,
-    },
+    { label: 'Commodity Trading', to: '/commodity-trading' },
+    { label: 'Gold & Silver', to: '/gold-silver' },
+    { label: 'Other Derivatives', to: '/other-derivatives' },
   ];
 
   return (
     <>
-      {/* Simple, reliable navbar */}
       <header 
         className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-300 ${
           isScrolled 
@@ -209,24 +136,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <button 
-              onClick={() => {
-                if (location.pathname === '/') {
-                  // Already on landing page, scroll to hero
-                  const heroElement = document.getElementById('hero');
-                  if (heroElement) {
-                    heroElement.scrollIntoView({ behavior: 'smooth' });
-                  }
-                } else {
-                  // Navigate to landing page then scroll to hero
-                  navigate('/');
-                  setTimeout(() => {
-                    const heroElement = document.getElementById('hero');
-                    if (heroElement) {
-                      heroElement.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }, 100);
-                }
-              }}
+              onClick={handleLogoClick}
               className="flex items-center gap-3 hover:opacity-80 transition-opacity cursor-pointer"
             >
               <img src={logo} alt="Haria Investments Logo" className="w-12 h-12 object-contain" />
@@ -252,9 +162,11 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 onMouseEnter={() => setIsInsuranceDropdownOpen(true)}
                 onMouseLeave={() => setIsInsuranceDropdownOpen(false)}
               >
-                <button className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" style={{ 
-                  textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' 
-                }}>
+                <button 
+                  onClick={() => handleNavigationClick('/life-insurance')}
+                  className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" 
+                  style={{ textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' }}
+                >
                   Insurance
                   <ChevronDown className={`w-4 h-4 transition-transform ${isInsuranceDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -264,41 +176,17 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-100"
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-xl rounded-lg p-3 border border-gray-100"
                     >
                       {insuranceLinks.map(link => (
-                        <div
+                        <Link
                           key={link.to}
-                          className="relative"
-                          onMouseEnter={() => setHoveredInsuranceParent(link.label)}
-                          onMouseLeave={() => setHoveredInsuranceParent(null)}
+                          to={link.to}
+                          onClick={() => handleNavigationClick(link.to)}
+                          className="block px-4 py-2.5 rounded-lg text-tertiary hover:bg-secondary/5 hover:text-secondary transition-colors font-crimson"
                         >
-                          <Link
-                            to={link.to}
-                            className="flex items-center justify-between px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson"
-                          >
-                            <div className="flex items-center">
-                              {link.icon}
-                              {link.label}
-                            </div>
-                            {link.children && <ChevronDown className="w-4 h-4 opacity-60" />}
-                          </Link>
-                          {link.children && hoveredInsuranceParent === link.label && (
-                            <div className="absolute left-full top-0 ml-2">
-                              <div className="w-56 bg-white shadow-xl rounded-lg p-3 border border-gray-100">
-                                {link.children.map(child => (
-                                  <Link 
-                                    key={child.to} 
-                                    to={child.to} 
-                                    className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson text-sm"
-                                  >
-                                    {child.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                          {link.label}
+                        </Link>
                       ))}
                     </motion.div>
                   )}
@@ -309,11 +197,13 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
               <div
                 className="relative"
                 onMouseEnter={() => setIsInvestmentDropdownOpen(true)}
-                onMouseLeave={() => { setIsInvestmentDropdownOpen(false); setHoveredInvestmentParent(null); }}
+                onMouseLeave={() => setIsInvestmentDropdownOpen(false)}
               >
-                <button className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" style={{ 
-                  textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' 
-                }}>
+                <button 
+                  onClick={() => handleNavigationClick('/mutual-funds')}
+                  className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" 
+                  style={{ textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' }}
+                >
                   Investment
                   <ChevronDown className={`w-4 h-4 transition-transform ${isInvestmentDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -323,84 +213,44 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-100"
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-xl rounded-lg p-3 border border-gray-100"
                     >
                       {investmentLinks.map(link => (
-                        <div
+                        <Link
                           key={link.to}
-                          className="relative"
-                          onMouseEnter={() => setHoveredInvestmentParent(link.label)}
-                          onMouseLeave={() => setHoveredInvestmentParent(null)}
+                          to={link.to}
+                          onClick={() => handleNavigationClick(link.to)}
+                          className="block px-4 py-2.5 rounded-lg text-tertiary hover:bg-secondary/5 hover:text-secondary transition-colors font-crimson"
                         >
-                          <Link
-                            to={link.to}
-                            className="flex items-center justify-between px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson"
-                          >
-                            <div className="flex items-center">
-                              {link.icon}
-                              {link.label}
-                            </div>
-                            {link.children && <ChevronDown className="w-4 h-4 opacity-60" />}
-                          </Link>
-                          {link.children && hoveredInvestmentParent === link.label && (
-                            <div className="absolute left-full top-0 ml-2">
-                              <div className="w-64 bg-white shadow-xl rounded-lg p-3 border border-gray-100">
-                                {link.children.map(child => (
-                                  <Link 
-                                    key={child.to} 
-                                    to={child.to} 
-                                    className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson text-sm"
-                                  >
-                                    {child.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                          {link.label}
+                        </Link>
                       ))}
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              {/* Fixed Income */}
-              <div
-                className="relative"
-                onMouseEnter={() => setOpenDropdown('fixed-income')}
-                onMouseLeave={() => setOpenDropdown(null)}
+              {/* Fixed Income - Single Page */}
+              <Link
+                to="/fixed-income"
+                onClick={() => handleNavigationClick('/fixed-income')}
+                className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg"
+                style={{ textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' }}
               >
-                <button className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" style={{ 
-                  textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' 
-                }}>
-                  Fixed Income
-                  <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'fixed-income' ? 'rotate-180' : ''}`} />
-                </button>
-                <AnimatePresence>
-                  {openDropdown === 'fixed-income' && (
-                    <motion.div
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-100"
-                    >
-                      <Link to="/fixed-income#products" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson">Products</Link>
-                      <Link to="/fixed-income#laddering-strategy" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson">Laddering Strategy</Link>
-                      <Link to="/fixed-income#top-bank-fds" className="block px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson">Top Bank FDs</Link>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </div>
+                Fixed Income
+              </Link>
 
-              {/* Commodities */}
+              {/* Commodities Dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setOpenDropdown('commodities')}
                 onMouseLeave={() => setOpenDropdown(null)}
               >
-                <button className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" style={{ 
-                  textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' 
-                }}>
+                <button 
+                  onClick={() => handleNavigationClick('/commodity-trading')}
+                  className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" 
+                  style={{ textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' }}
+                >
                   Commodities
                   <ChevronDown className={`w-4 h-4 transition-transform ${openDropdown === 'commodities' ? 'rotate-180' : ''}`} />
                 </button>
@@ -410,15 +260,15 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-100"
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-xl rounded-lg p-3 border border-gray-100"
                     >
                       {commodityLinks.map(link => (
                         <Link
                           key={link.to}
                           to={link.to}
-                          className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson"
+                          onClick={() => handleNavigationClick(link.to)}
+                          className="block px-4 py-2.5 rounded-lg text-tertiary hover:bg-secondary/5 hover:text-secondary transition-colors font-crimson"
                         >
-                          {link.icon}
                           {link.label}
                         </Link>
                       ))}
@@ -427,15 +277,17 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                 </AnimatePresence>
               </div>
 
-              {/* Calculator */}
+              {/* Calculator Dropdown */}
               <div
                 className="relative"
                 onMouseEnter={() => setIsCalcDropdownOpen(true)}
                 onMouseLeave={() => setIsCalcDropdownOpen(false)}
               >
-                <button className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" style={{ 
-                  textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' 
-                }}>
+                <button 
+                  onClick={() => handleNavigationClick('/sip-calculator')}
+                  className="text-tertiary hover:text-secondary transition-colors font-crimson font-semibold text-lg flex items-center gap-1" 
+                  style={{ textShadow: '0 1px 2px rgba(255,255,255,0.8), 0 0 6px rgba(255,255,255,0.3)' }}
+                >
                   Calculator
                   <ChevronDown className={`w-4 h-4 transition-transform ${isCalcDropdownOpen ? 'rotate-180' : ''}`} />
                 </button>
@@ -445,15 +297,15 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 10 }}
-                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-64 bg-white shadow-xl rounded-lg p-4 border border-gray-100"
+                      className="absolute left-1/2 -translate-x-1/2 mt-2 w-56 bg-white shadow-xl rounded-lg p-3 border border-gray-100"
                     >
                       {calculatorLinks.map(link => (
                         <Link
                           key={link.to}
                           to={link.to}
-                          className="flex items-center px-3 py-2 rounded-lg text-tertiary hover:bg-gray-50 transition-colors font-crimson"
+                          onClick={() => handleNavigationClick(link.to)}
+                          className="block px-4 py-2.5 rounded-lg text-tertiary hover:bg-secondary/5 hover:text-secondary transition-colors font-crimson"
                         >
-                          {link.icon}
                           {link.label}
                         </Link>
                       ))}
@@ -467,7 +319,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
             <div className="hidden lg:flex">
               <button 
                 onClick={handleScheduleConsultation}
-                className="bg-secondary hover:bg-secondary/90 text-white px-6 py-2.5 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
+                className="bg-secondary hover:bg-secondary/90 text-white px-8 py-3 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center gap-2"
               >
                 <span>Schedule Consultation</span>
                 <ArrowRight className="w-4 h-4" />
@@ -511,30 +363,14 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                     {openDropdown === 'insurance' && (
                       <div className="mt-2 pl-8 space-y-1">
                         {insuranceLinks.map(link => (
-                          <div key={link.to}>
-                            <Link
-                              to={link.to}
-                              className="flex items-center py-2 text-tertiary font-crimson"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {link.icon}
-                              {link.label}
-                            </Link>
-                            {link.children && (
-                              <div className="pl-6 space-y-1">
-                                {link.children.map(child => (
-                                  <Link
-                                    key={child.to}
-                                    to={child.to}
-                                    className="block py-1 text-tertiary/80 font-crimson text-sm"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                  >
-                                    {child.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                          <Link
+                            key={link.to}
+                            to={link.to}
+                            className="block py-2 text-tertiary font-crimson hover:text-secondary transition-colors"
+                            onClick={() => handleNavigationClick(link.to)}
+                          >
+                            {link.label}
+                          </Link>
                         ))}
                       </div>
                     )}
@@ -555,55 +391,28 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                     {openDropdown === 'investment' && (
                       <div className="mt-2 pl-8 space-y-1">
                         {investmentLinks.map(link => (
-                          <div key={link.to}>
-                            <Link
-                              to={link.to}
-                              className="flex items-center py-2 text-tertiary font-crimson"
-                              onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                              {link.icon}
-                              {link.label}
-                            </Link>
-                            {link.children && (
-                              <div className="pl-6 space-y-1">
-                                {link.children.map(child => (
-                                  <Link
-                                    key={child.to}
-                                    to={child.to}
-                                    className="block py-1 text-tertiary/80 font-crimson text-sm"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                  >
-                                    {child.label}
-                                  </Link>
-                                ))}
-                              </div>
-                            )}
-                          </div>
+                          <Link
+                            key={link.to}
+                            to={link.to}
+                            className="block py-2 text-tertiary font-crimson hover:text-secondary transition-colors"
+                            onClick={() => handleNavigationClick(link.to)}
+                          >
+                            {link.label}
+                          </Link>
                         ))}
                       </div>
                     )}
                   </div>
 
-                  {/* Mobile Fixed Income */}
-                  <div>
-                    <button
-                      onClick={() => setOpenDropdown(openDropdown === 'fixed-income' ? null : 'fixed-income')}
-                      className="flex items-center justify-between w-full text-tertiary font-crimson font-semibold text-lg py-2"
-                    >
-                      <span className="flex items-center">
-                        <PiggyBank className="w-5 h-5 mr-3" />
-                        Fixed Income
-                      </span>
-                      {openDropdown === 'fixed-income' ? <Minus className="w-5 h-5" /> : <Plus className="w-5 h-5" />}
-                    </button>
-                    {openDropdown === 'fixed-income' && (
-                      <div className="mt-2 pl-8 space-y-1">
-                        <Link to="/fixed-income#products" className="block py-1 text-tertiary font-crimson" onClick={() => setIsMobileMenuOpen(false)}>Products</Link>
-                        <Link to="/fixed-income#laddering-strategy" className="block py-1 text-tertiary font-crimson" onClick={() => setIsMobileMenuOpen(false)}>Laddering Strategy</Link>
-                        <Link to="/fixed-income#top-bank-fds" className="block py-1 text-tertiary font-crimson" onClick={() => setIsMobileMenuOpen(false)}>Top Bank FDs</Link>
-                      </div>
-                    )}
-                  </div>
+                  {/* Mobile Fixed Income - Direct Link */}
+                  <Link
+                    to="/fixed-income"
+                    className="flex items-center text-tertiary font-crimson font-semibold text-lg py-2 hover:text-secondary transition-colors"
+                    onClick={() => handleNavigationClick('/fixed-income')}
+                  >
+                    <PiggyBank className="w-5 h-5 mr-3" />
+                    Fixed Income
+                  </Link>
 
                   {/* Mobile Commodities */}
                   <div>
@@ -623,10 +432,9 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           <Link
                             key={link.to}
                             to={link.to}
-                            className="flex items-center py-2 text-tertiary font-crimson"
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block py-2 text-tertiary font-crimson hover:text-secondary transition-colors"
+                            onClick={() => handleNavigationClick(link.to)}
                           >
-                            {link.icon}
                             {link.label}
                           </Link>
                         ))}
@@ -652,10 +460,9 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                           <Link
                             key={link.to}
                             to={link.to}
-                            className="flex items-center py-2 text-tertiary font-crimson"
-                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="block py-2 text-tertiary font-crimson hover:text-secondary transition-colors"
+                            onClick={() => handleNavigationClick(link.to)}
                           >
-                            {link.icon}
                             {link.label}
                           </Link>
                         ))}
@@ -666,7 +473,7 @@ const Navigation: React.FC<NavigationProps> = ({ isTransparent = false }) => {
                   <div className="pt-4">
                     <button 
                       onClick={handleScheduleConsultation}
-                      className="w-full bg-secondary hover:bg-secondary/90 text-white px-6 py-3 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+                      className="w-full bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                     >
                       <span>Schedule Consultation</span>
                       <ArrowRight className="w-4 h-4" />
