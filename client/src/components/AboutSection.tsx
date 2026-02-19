@@ -5,7 +5,7 @@ import amritlalDevjiHaria from "@/assets/Amritlal-Haria.jpg";
 import anilAmritlalHaria from "@/assets/Anil-Haria.jpg";
 import rohanHaria from "@/assets/Rohan-Haria.jpg";
 import rajHaria from "@/assets/Raj-Haria.jpg";
-import meetSavla from "@/assets/Meet-Savla.jpg";
+import meetSavla from "@/assets/Meet-Savla1.jpeg";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
@@ -31,7 +31,7 @@ const AboutSection = () => {
         {/* Block 1: Grandfather - Amritlal Devji Haria */}
         <div data-aos="fade-up" data-aos-delay="100" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="order-1 lg:order-1">
               <img
                 src={amritlalDevjiHaria}
                 alt="Amritlal Devji Haria"
@@ -40,7 +40,7 @@ const AboutSection = () => {
                 data-aos-delay="100"
               />
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="order-2 lg:order-2">
               <div className="flex items-center mb-6">
                 <Building2 className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Amritlal Devji Haria</h3>
@@ -55,7 +55,7 @@ const AboutSection = () => {
         {/* Block 2: Father - Anil Amritlal Haria */}
         <div data-aos="fade-up" data-aos-delay="200" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-1 lg:order-1">
+            <div className="order-2 lg:order-1">
               <div className="flex items-center mb-6">
                 <Building2 className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Anil Amritlal Haria</h3>
@@ -64,7 +64,7 @@ const AboutSection = () => {
                 Carrying this legacy forward, Mr. <strong>Anil Amritlal Haria</strong> embraced entrepreneurship early on. After beginning his career in the textile business, he chose to dedicate himself fully to the insurance profession to honor his father's vision. He expanded the family business beyond life insurance into health insurance and broader financial solutions, ensuring that our services evolved with the needs of our clients.
               </p>
             </div>
-            <div className="order-2 lg:order-2">
+            <div className="order-1 lg:order-2">
               <img
                 src={anilAmritlalHaria}
                 alt="Anil Amritlal Haria"
@@ -79,7 +79,7 @@ const AboutSection = () => {
         {/* Block 3: Rohan Haria */}
         <div data-aos="fade-up" data-aos-delay="300" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="order-1 lg:order-1">
               <img
                 src={rohanHaria}
                 alt="Rohan Haria"
@@ -88,7 +88,7 @@ const AboutSection = () => {
                 data-aos-delay="300"
               />
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="order-2 lg:order-2">
               <div className="flex items-center mb-6">
                 <Award className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Rohan Haria</h3>
@@ -112,7 +112,7 @@ const AboutSection = () => {
         {/* Block 4: Raj Haria */}
         <div data-aos="fade-up" data-aos-delay="400" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-1 lg:order-1">
+            <div className="order-2 lg:order-1">
               <div className="flex items-center mb-6">
                 <Award className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Raj Haria</h3>
@@ -124,7 +124,7 @@ const AboutSection = () => {
                 MBA – NMIMS
               </Badge>
             </div>
-            <div className="order-2 lg:order-2">
+            <div className="order-1 lg:order-2">
               <img
                 src={rajHaria}
                 alt="Raj Haria"
@@ -139,7 +139,7 @@ const AboutSection = () => {
         {/* Block 5: Meet Savla */}
         <div data-aos="fade-up" data-aos-delay="500" className="mb-20">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div className="order-2 lg:order-1">
+            <div className="order-1 lg:order-1">
               <img
                 src={meetSavla}
                 alt="Meet Savla"
@@ -148,13 +148,13 @@ const AboutSection = () => {
                 data-aos-delay="500"
               />
             </div>
-            <div className="order-1 lg:order-2">
+            <div className="order-2 lg:order-2">
               <div className="flex items-center mb-6">
                 <Award className="w-6 h-6 text-secondary mr-3" />
                 <h3 className="font-playfair text-2xl font-semibold">Meet Savla</h3>
               </div>
               <p className="font-crimson text-xl leading-relaxed mb-6 text-white/90 text-justify">
-                Since 2017, he has been actively engaged in the financial markets, with a strong focus on technical analysis, and over time, he specialized in trading precious metals such as gold and silver. His approach blends data-driven insights with hands-on market experience, enabling him to identify opportunities, manage risk effectively, and navigate dynamic market conditions with discipline.
+                Since 2017, he has been actively engaged in the financial markets, with a strong focus on technical analysis. His approach blends data-driven insights with hands-on market experience, enabling him to identify opportunities, manage risk effectively, and navigate dynamic market conditions with discipline.
               </p>
               <Badge className="bg-secondary text-secondary-foreground">
                 Technical Specialist
