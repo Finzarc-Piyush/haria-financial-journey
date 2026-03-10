@@ -131,7 +131,7 @@ const MutualFunds = () => {
     return (
         <div className="min-h-screen bg-background">
             {/* Hero Section - Landing Page Style */}
-            <section 
+            <section
                 id="hero"
                 className="relative w-full overflow-hidden min-h-screen flex items-center"
             >
@@ -141,9 +141,9 @@ const MutualFunds = () => {
                         <div className="relative bg-tertiary px-4 sm:px-6 lg:px-12 py-20 lg:py-0 flex items-center overflow-hidden">
                             {/* Decorative Partial Logo */}
                             <div className="absolute bottom-0 right-0 w-64 h-64 opacity-5 pointer-events-none">
-                                <img 
-                                    src="/logo-wbg.png" 
-                                    alt="" 
+                                <img
+                                    src="/logo-wbg.png"
+                                    alt=""
                                     className="w-full h-full object-contain transform translate-x-1/3 translate-y-1/3 scale-150"
                                     style={{ filter: 'brightness(0) invert(1)' }}
                                 />
@@ -163,7 +163,7 @@ const MutualFunds = () => {
                                 </motion.div>
 
                                 {/* Main Headline */}
-                                <motion.h1 
+                                <motion.h1
                                     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold font-playfair leading-tight text-white mb-6"
                                     initial={{ opacity: 0, y: 30 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -177,7 +177,7 @@ const MutualFunds = () => {
                                 </motion.h1>
 
                                 {/* Description */}
-                                <motion.p 
+                                <motion.p
                                     className="text-base md:text-lg font-crimson text-white/90 leading-relaxed mb-8"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
@@ -187,20 +187,20 @@ const MutualFunds = () => {
                                 </motion.p>
 
                                 {/* CTA Buttons */}
-                                <motion.div 
+                                <motion.div
                                     className="flex flex-col sm:flex-row gap-4"
                                     initial={{ opacity: 0, y: 20 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: 0.6 }}
                                 >
-                                    <button 
+                                    <button
                                         onClick={() => navigate('/contact')}
                                         className="bg-secondary hover:bg-secondary/90 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
                                     >
                                         <span>Start SIP</span>
                                         <ArrowRight className="w-4 h-4" />
                                     </button>
-                                    <button 
+                                    <button
                                         onClick={() => scrollToSection('investment-categories')}
                                         className="border-2 border-white/30 hover:bg-white/10 text-white px-8 py-4 rounded-full font-semibold font-crimson transition-all backdrop-blur-sm flex items-center justify-center"
                                     >
@@ -213,8 +213,8 @@ const MutualFunds = () => {
 
                         {/* Right Side - Image */}
                         <div className="relative bg-gray-900 min-h-[400px] lg:min-h-screen overflow-hidden">
-                            <img 
-                                src="/Hero Section/mutual-funds.png" 
+                            <img
+                                src="/Hero Section/mutual-funds.png"
                                 alt="Mutual Funds"
                                 className="absolute inset-0 w-full h-full object-cover"
                             />
@@ -242,8 +242,8 @@ const MutualFunds = () => {
                         </h2>
                         <div className="flex justify-center">
                             <p className="text-lg md:text-xl font-crimson text-tertiary/80 max-w-3xl text-center">
-                            Select the right fund type based on your goals and risk appetite
-                        </p>
+                                Select the right fund type based on your goals and risk appetite
+                            </p>
                         </div>
                     </motion.div>
 
@@ -302,31 +302,31 @@ const MutualFunds = () => {
                                         <div className="mb-4">
                                             <h4 className="font-playfair font-semibold text-tertiary mb-3 text-lg">
                                                 {fund.id === "equity" ? "Classification of Equity Funds –" :
-                                                 fund.id === "debt" ? "Classification of Debt Funds" :
-                                                 fund.id === "hybrid" ? "Classification of Hybrid Funds" :
-                                                 "Classifications"}
+                                                    fund.id === "debt" ? "Classification of Debt Funds" :
+                                                        fund.id === "hybrid" ? "Classification of Hybrid Funds" :
+                                                            "Classifications"}
                                             </h4>
                                             <div className="space-y-3">
                                                 {Object.entries(fund.classifications).map(([category, items], catIndex) => (
                                                     <div key={catIndex} className="mb-3">
                                                         <h5 className="font-crimson font-semibold text-tertiary mb-2 text-sm">
                                                             {category === "Market Cap Based Active Funds" ? "Market Cap Based Active Funds –" :
-                                                             category === "Index Funds" ? "Index Funds –" :
-                                                             category === "Sectoral and Thematic Funds" ? "Sectoral and Thematic Funds –" :
-                                                             category === "Short Term Debt Funds" ? "Short Term Debt Funds –" :
-                                                             category === "Medium Term to Long Term Debt Funds" ? "Medium Term to Long Term Debt Funds –" :
-                                                             category === "Government Securities Fund" ? "Government Securities Fund –" :
-                                                             category === "Equity Oriented Hybrid Funds" ? "Equity Oriented Hybrid Funds" :
-                                                             category === "Debt Oriented Hybrid Funds" ? "Debt Oriented Hybrid Funds" :
-                                                             category === "Multi Asset Funds" ? "Multi Asset Funds" :
-                                                             category}
+                                                                category === "Index Funds" ? "Index Funds –" :
+                                                                    category === "Sectoral and Thematic Funds" ? "Sectoral and Thematic Funds –" :
+                                                                        category === "Short Term Debt Funds" ? "Short Term Debt Funds –" :
+                                                                            category === "Medium Term to Long Term Debt Funds" ? "Medium Term to Long Term Debt Funds –" :
+                                                                                category === "Government Securities Fund" ? "Government Securities Fund –" :
+                                                                                    category === "Equity Oriented Hybrid Funds" ? "Equity Oriented Hybrid Funds" :
+                                                                                        category === "Debt Oriented Hybrid Funds" ? "Debt Oriented Hybrid Funds" :
+                                                                                            category === "Multi Asset Funds" ? "Multi Asset Funds" :
+                                                                                                category}
                                                         </h5>
                                                         {items.length > 0 && (
                                                             <div className="flex flex-wrap gap-2 ml-4">
                                                                 {items.map((item, itemIndex) => (
-                                                                    <Badge 
-                                                                        key={itemIndex} 
-                                                                        variant="outline" 
+                                                                    <Badge
+                                                                        key={itemIndex}
+                                                                        variant="outline"
                                                                         className="text-xs font-crimson border-tertiary/30 text-tertiary/80 bg-tertiary/5"
                                                                     >
                                                                         {item}
@@ -413,6 +413,183 @@ const MutualFunds = () => {
 
             {/* AMC Showcase Section */}
             <AMCShowcase />
+
+            {/* NAV Applicability Guide Section */}
+            <section className="py-16 bg-white">
+                <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="text-center mb-10">
+                        <h2 className="text-3xl md:text-4xl font-playfair font-bold text-tertiary mb-0">
+                            Applicability of NAV
+                        </h2>
+                    </div>
+
+                    <div className="bg-[#FAFAFA] border border-gray-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div className="grid grid-cols-3 text-sm md:text-base lg:text-lg bg-tertiary text-white font-crimson">
+                            <div className="px-4 py-3 font-semibold text-center border-b md:border-b-0 border-r border-white/10">
+                                Transaction Type
+                            </div>
+                            <div className="px-4 py-3 font-semibold text-center border-b md:border-b-0 border-r border-white/10">
+                                Condition
+                            </div>
+                            <div className="px-4 py-3 font-semibold text-center">
+                                Applicable NAV
+                            </div>
+                        </div>
+
+                        <div className="divide-y divide-gray-200 text-sm md:text-base lg:text-lg font-crimson text-tertiary/80">
+                            {/* Purchase (Liquid / Overnight) */}
+                            <div className="grid grid-cols-3">
+                                <div className="px-3 sm:px-4 py-3 sm:py-4 border-r border-gray-200 flex items-center">
+                                    <p className="font-semibold">Purchase (Liquid / Overnight)</p>
+                                </div>
+                                <div className="col-span-2 leading-snug break-words">
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Before 1:30 PM &amp; funds credited same day</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Previous business day NAV</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 py-1">
+                                            <p>After 1:30 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1">
+                                            <p>Same day NAV (if credited before next cut-off)</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Funds credited after cut-off</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>NAV of day funds are credited</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Purchase (Equity/Debt/Hybrid ≤ ₹2L) */}
+                            <div className="grid grid-cols-3 bg-white">
+                                <div className="px-3 sm:px-4 py-3 sm:py-4 border-r border-gray-200 flex items-center">
+                                    <p className="font-semibold">
+                                        Purchase (Equity/Debt/
+                                        <br className="sm:hidden" />
+                                        Hybrid ≤ ₹2L)
+                                    </p>
+                                </div>
+                                <div className="col-span-2 leading-snug break-words">
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Before 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Same day NAV</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>After 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Next business day NAV</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Purchase (> ₹2L) */}
+                            <div className="grid grid-cols-3">
+                                <div className="px-3 sm:px-4 py-3 sm:py-4 border-r border-gray-200 flex items-center">
+                                    <p className="font-semibold">Purchase (&gt; ₹2L)</p>
+                                </div>
+                                <div className="col-span-2 leading-snug break-words">
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Funds credited before 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Same day NAV</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Funds credited after 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>NAV of day funds are credited</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Redemption (All Funds) */}
+                            <div className="grid grid-cols-3 bg-white">
+                                <div className="px-3 sm:px-4 py-3 sm:py-4 border-r border-gray-200 flex items-center">
+                                    <p className="font-semibold">Redemption (All Funds)</p>
+                                </div>
+                                <div className="col-span-2 leading-snug break-words">
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Before 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Same day NAV</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>After 3:00 PM</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Next business day NAV</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Switch Transactions */}
+                            <div className="grid grid-cols-3">
+                                <div className="px-3 sm:px-4 py-3 sm:py-4 border-r border-gray-200 flex items-center">
+                                    <p className="font-semibold">Switch Transactions</p>
+                                </div>
+                                <div className="col-span-2 leading-snug break-words">
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200 border-b border-gray-200">
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Switch-Out treated as Redemption</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 pt-3 sm:pt-4 pb-1">
+                                            <p>Redemption cut-off applies</p>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 divide-x divide-gray-200">
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Switch-In treated as Purchase</p>
+                                        </div>
+                                        <div className="px-3 sm:px-4 py-1 pb-3 sm:pb-4">
+                                            <p>Purchase cut-off applies</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="mt-6 bg-white border border-gray-200 rounded-2xl p-5 md:p-6">
+                        <p className="font-playfair font-semibold text-tertiary mb-3">
+                            Important Notes
+                        </p>
+                        <ul className="list-decimal list-inside space-y-1 text-base md:text-lg font-crimson text-tertiary/80">
+                            <li>Funds credited means actual realization in AMC’s bank account, not cheque submission.</li>
+                            <li>Business day excludes weekends and market holidays.</li>
+                            <li>For online transactions, AMC/RTA system timestamp is considered.</li>
+                            <li>For amounts above ₹2 lakh, realization timing determines NAV applicability.</li>
+                            <li>In switch transactions, both legs (outgoing and incoming) are treated separately.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
 
             {/* CTA Section */}
             <CTASection />
