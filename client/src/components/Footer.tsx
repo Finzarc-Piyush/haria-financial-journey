@@ -94,7 +94,22 @@ const Footer = () => {
                             </li>
                             <li className="flex items-start gap-2">
                                 <Shield className="w-4 h-4 text-secondary mt-0.5 flex-shrink-0" />
-                                <span>Authorized Person of Motilal Oswal</span>
+                                <div>
+                                    <span>Authorized Person of Motilal Oswal</span>
+                                    {/* Registration numbers, one per exchange, from the exchange letters Rohan sent on
+                                        2026-10-15 after Motilal Oswal's audit asked for them on the site. NSE issues one
+                                        code per segment (CM, FO, CD), all on the same number. */}
+                                    <ul className="mt-2 space-y-1 text-sm text-tertiary/60" aria-label="Authorized Person registration numbers">
+                                        <li><span className="text-secondary tracking-wider mr-1.5">BSE</span>AP01044601128270</li>
+                                        <li>
+                                            <span className="text-secondary tracking-wider mr-1.5">NSE</span>
+                                            <span className="inline-block whitespace-nowrap mr-3">CM-AP0297147531</span>
+                                            <span className="inline-block whitespace-nowrap mr-3">FO-AP0297147531</span>
+                                            <span className="inline-block whitespace-nowrap">CD-AP0297147531</span>
+                                        </li>
+                                        <li><span className="text-secondary tracking-wider mr-1.5">MCX</span>MCX/AP/149839</li>
+                                    </ul>
+                                </div>
                             </li>
                         </ul>
                     </div>
