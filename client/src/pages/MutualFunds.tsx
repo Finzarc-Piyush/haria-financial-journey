@@ -41,13 +41,13 @@ const MutualFunds = () => {
         {
             id: "debt",
             title: "Debt Funds",
-            description: "Stable returns with lower risk profile",
+            description: "Regular income with lower risk profile",
             icon: Shield,
             rate: "Low Risk",
             tenure: "1-3 years",
             minAmount: "₹500",
             returns: "6-9%",
-            features: ["Stable returns", "Lower risk", "Regular income", "Capital preservation"],
+            features: ["Regular income", "Lower risk", "Capital preservation"],
             image: "/Mutual funds/debt.jpg",
             classifications: {
                 "Short Term Debt Funds": ["Liquid Funds", "Ultra Short Term Funds", "Money Market Funds", "Low Duration Funds"],
@@ -183,7 +183,7 @@ const MutualFunds = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: 0.4 }}
                                 >
-                                    Systematic investment planning for long-term wealth creation. From equity to debt funds, find the perfect mix for your financial goals.
+                                    Systematic investment planning for long-term wealth building. From equity to debt funds, find the perfect mix for your financial goals.
                                 </motion.p>
 
                                 {/* CTA Buttons */}

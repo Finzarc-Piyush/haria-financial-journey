@@ -9,12 +9,12 @@ export function FeaturesSection() {
     {
       image: "/Commitment/Mutual-funds.png",
       title: "Mutual Funds & Equity",
-      description: "Strategic investment solutions for long-term wealth creation"
+      description: "Strategic investment solutions for long-term wealth building"
     },
     {
       image: "/Commitment/Fixed-income.jpg",
       title: "Fixed Income",
-      description: "Stable returns through diversified fixed income instruments"
+      description: "Regular income through diversified fixed income instruments"
     },
     {
       image: "/Commitment/Commodity-market.png",

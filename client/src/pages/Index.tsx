@@ -72,7 +72,7 @@ const Index = () => {
       <StatsSection />
       <TestimonialsSection
         title="Trusted by 1500+ clients across India"
-        description="Thoughtful financial planning and consistent execution for long-term wealth creation."
+        description="Thoughtful financial planning and consistent execution for long-term wealth building."
         testimonials={testimonials}
       />
       <FeaturesSection />

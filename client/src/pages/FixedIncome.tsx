@@ -56,7 +56,7 @@ const FixedIncome = () => {
         {
             id: "gsec",
             title: "Government Securities",
-            description: "Sovereign guarantee with stable returns",
+            description: "Sovereign guarantee with regular income",
             icon: Flag,
             rate: "6-7.5%",
             tenure: "1-30 years",
@@ -225,7 +225,7 @@ const FixedIncome = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: 0.2 }}
                                 >
-                                    Stable Returns with{' '}
+                                    Regular Income with{' '}
                                     <span className="relative inline-block">
                                         <span className="relative z-10">Fixed Income</span>
                                         <span className="absolute bottom-0 left-0 w-full h-3 bg-secondary/30 -z-0"></span>

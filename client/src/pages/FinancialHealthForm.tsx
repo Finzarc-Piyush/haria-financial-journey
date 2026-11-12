@@ -637,7 +637,7 @@ const FinancialHealthForm = () => {
                         <SelectItem value="capital-preservation">Capital Preservation</SelectItem>
                         <SelectItem value="regular-income">Regular Income</SelectItem>
                         <SelectItem value="balanced">Balanced Growth & Income</SelectItem>
-                        <SelectItem value="wealth-creation">Wealth Creation</SelectItem>
+                        <SelectItem value="wealth-creation">Wealth Building</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>

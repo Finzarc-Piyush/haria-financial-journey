@@ -268,7 +268,7 @@ const EquityInvestment = () => {
         {
             id: "indian-equities",
             title: "Indian Equities",
-            description: "Direct ownership in listed Indian companies across market caps. Built for long term wealth creation with disciplined stock selection.",
+            description: "Direct ownership in listed Indian companies across market caps. Built for long term wealth building with disciplined stock selection.",
             icon: TrendingUp,
             rate: "High Risk",
             tenure: "5+ years",
@@ -630,7 +630,7 @@ const EquityInvestment = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     transition={{ duration: 0.8, delay: 0.4 }}
                                 >
-                                    Expert guidance for direct stock investment and portfolio management. Access 5000+ stocks with zero brokerage fees.
+                                    Expert guidance for direct stock investment and portfolio management. Access to 5,000+ stocks across NSE and BSE.
                     </motion.p>
 
                                 {/* CTA Buttons */}

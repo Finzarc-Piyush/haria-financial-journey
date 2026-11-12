@@ -109,6 +109,14 @@ const Footer = () => {
                                         </li>
                                         <li><span className="text-secondary tracking-wider mr-1.5">MCX</span>MCX/AP/149839</li>
                                     </ul>
+                                    {/* Motilal Oswal's own registrations, copied 2026-11-12 from the "Registration Nos." disclosure
+                                        in motilaloswal.com's footer. Rohan asked for them on 2026-11-11 (item 4). */}
+                                    <p className="mt-3 text-xs leading-relaxed text-tertiary/60">
+                                        Motilal Oswal Financial Services Ltd. (MOFSL), Member of NSE, BSE, MCX, NCDEX.
+                                        SEBI Reg. No.: INZ000158836 (BSE/NSE/MCX/NCDEX); CDSL and NSDL: IN-DP-16-2015;
+                                        Research Analyst: INH000000412; BSE Enlistment No.: 5028; AMFI ARN 146822;
+                                        APMI: APRN00233; Insurance Corporate Agent: CA0579; CIN L67190MH2005PLC153397.
+                                    </p>
                                 </div>
                             </li>
                         </ul>
