@@ -11,5 +11,11 @@
             "src": "/(.*)",
             "dest": "server.js"
         }
+    ],
+    "crons": [
+        {
+            "path": "/api/v1/reports/weekly",
+            "schedule": "30 3 * * 1"
+        }
     ]
 }
