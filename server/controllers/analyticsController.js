@@ -36,10 +36,11 @@ const collectAnalytics = async (req, res) => {
         }
 
         // Get client IP address
-        const ipAddress = req.ip || req.connection.remoteAddress || req.socket.remoteAddress ||
-            (req.connection.socket ? req.connection.socket.remoteAddress : null) ||
-            req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
+        // Behind Vercel the socket address is the platform's own proxy, so the visitor's address is
+        // only in the forwarded headers. Reading req.ip first stored 127.0.0.1 for every visitor.
+        const ipAddress = req.headers['x-forwarded-for']?.split(',')[0]?.trim() ||
             req.headers['x-real-ip'] ||
+            req.ip || req.socket?.remoteAddress ||
             'unknown';
 
         // Create analytics record
