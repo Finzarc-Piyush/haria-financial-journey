@@ -11,7 +11,7 @@
     ],
     "headers": [
         {
-            "source": "/(.*)",
+            "source": "/((?!api/v1/portal/).*)",
             "headers": [
                 {
                     "key": "Cache-Control",
