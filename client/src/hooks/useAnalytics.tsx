@@ -1,3 +1,4 @@
+import { isPrivatePath } from '@/lib/privatePaths';
 import { useEffect, useRef, useCallback, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import analyticsService, { AnalyticsEvent } from '../services/analyticsService';
@@ -95,7 +96,7 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
         if (!enabled) return;
 
         // Skip tracking for admin pages
-        const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+        const isAdminPage = isPrivatePath(location.pathname);
         if (isAdminPage) {
             debugLog('Skipping custom event tracking for admin page', { eventName, pathname: location.pathname });
             return;
@@ -188,7 +189,7 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
         if (!enabled || !trackPageViews) return;
 
         // Skip tracking for admin pages (login and dashboard)
-        const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+        const isAdminPage = isPrivatePath(location.pathname);
         if (isAdminPage) {
             debugLog('Skipping analytics for admin page', { pathname: location.pathname });
             return;
@@ -234,7 +235,7 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
         if (!enabled || !trackTimeOnPage) return;
 
         // Skip tracking for admin pages
-        const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+        const isAdminPage = isPrivatePath(location.pathname);
         if (isAdminPage) return;
 
         debugLog('Setting up visibility change listener');
@@ -253,7 +254,7 @@ export const useAnalytics = (options: UseAnalyticsOptions = {}): UseAnalyticsRet
         if (!enabled || !trackTimeOnPage) return;
 
         // Skip tracking for admin pages
-        const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+        const isAdminPage = isPrivatePath(location.pathname);
         if (isAdminPage) return;
 
         const handleBeforeUnload = () => {

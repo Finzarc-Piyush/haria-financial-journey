@@ -28,6 +28,9 @@ import AnalyticsProvider from "./components/AnalyticsProvider";
 import CookieConsent from "./components/CookieConsent";
 import { useAnalyticsContext } from "./components/AnalyticsProvider";
 import Contact from "./pages/Contact";
+import { isPrivatePath } from "@/lib/privatePaths";
+const ClientPortal = React.lazy(() => import("./portal/ClientPortal"));
+const AdminPortal = React.lazy(() => import("./portal/AdminPortal"));
 import FinancialHealthForm from "./pages/FinancialHealthForm";
 import WealthManagement from "./pages/WealthManagement";
 import InsuranceProtection from "./pages/InsuranceProtection";
@@ -59,7 +62,7 @@ const queryClient = new QueryClient();
 
 const AppContent = () => {
   const location = useLocation();
-  const isAdminPage = location.pathname === '/login' || location.pathname === '/dashboard';
+  const isAdminPage = isPrivatePath(location.pathname);
   const { enableAnalytics, disableAnalytics } = useAnalyticsContext();
 
   return (
@@ -90,6 +93,8 @@ const AppContent = () => {
             <Dashboard />
           </ProtectedRoute>
         } />
+        <Route path="/userdashboard/*" element={<React.Suspense fallback={<div className="min-h-screen bg-[#0b1424]" />}><ClientPortal /></React.Suspense>} />
+        <Route path="/admindash/*" element={<React.Suspense fallback={<div className="min-h-screen bg-[#0b1424]" />}><AdminPortal /></React.Suspense>} />
         <Route path="*" element={<NotFound />} />
       </Routes>
       {!isAdminPage && <Footer />}
@@ -98,10 +103,10 @@ const AppContent = () => {
       {!isAdminPage && <WhatsAppButton />}
 
       {/* Cookie Consent Banner */}
-      <CookieConsent
+      {!isAdminPage && <CookieConsent
         onAccept={enableAnalytics}
         onDecline={disableAnalytics}
-      />
+      />}
     </>
   );
 };

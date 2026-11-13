@@ -1,6 +1,10 @@
 {
     "rewrites": [
         {
+            "source": "/api/v1/portal/:path*",
+            "destination": "https://haria-financial-journey-qyoa.vercel.app/api/v1/portal/:path*"
+        },
+        {
             "source": "/(.*)",
             "destination": "/index.html"
         }
